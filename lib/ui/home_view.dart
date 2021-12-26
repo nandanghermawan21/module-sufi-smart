@@ -19,6 +19,7 @@ class HomeView extends StatefulWidget {
   final VoidCallback? gotoInstallment;
   final VoidCallback? gotoPayment;
   final VoidCallback? gotoShowAll;
+  final ValueChanged<ImgNewsModel>? gotoDetailNews;
 
   const HomeView({
     Key? key,
@@ -31,6 +32,7 @@ class HomeView extends StatefulWidget {
     this.gotoInstallment,
     this.gotoPayment,
     this.gotoShowAll,
+    this.gotoDetailNews,
   }) : super(key: key);
 
   @override
@@ -276,7 +278,11 @@ class _HomeViewState extends State<HomeView> {
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 itemBuilder: (ctx, i) {
-                  return photos(homeViewModel.listNews[i]);
+                  return GestureDetector(
+                      onTap: () {
+                        widget.gotoDetailNews!(homeViewModel.listNews[i]);
+                      },
+                      child: photos(homeViewModel.listNews[i]));
                 },
               ),
             ),

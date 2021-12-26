@@ -5,25 +5,11 @@ import 'package:sufismart/recource/color_ui.dart';
 import 'package:sufismart/view_model/home_view_model.dart';
 
 class AllNews extends StatefulWidget {
-  final VoidCallback? gotoSignup;
-  final VoidCallback? gotoForgotPassword;
-  final VoidCallback? gotoPromo;
-  final VoidCallback? gotoProduct;
-  final VoidCallback? gotoBranch;
-  final VoidCallback? gotoCredit;
-  final VoidCallback? gotoInstallment;
-  final VoidCallback? gotoPayment;
+  final ValueChanged<ImgNewsModel>? gotoDetailNews;
 
   const AllNews({
     Key? key,
-    this.gotoSignup,
-    this.gotoForgotPassword,
-    this.gotoPromo,
-    this.gotoProduct,
-    this.gotoBranch,
-    this.gotoCredit,
-    this.gotoInstallment,
-    this.gotoPayment,
+    this.gotoDetailNews,
   }) : super(key: key);
 
   @override
@@ -68,13 +54,20 @@ class _AllNewsState extends State<AllNews> {
     return RefreshIndicator(
       triggerMode: RefreshIndicatorTriggerMode.anywhere,
       onRefresh: homeViewModel.onRefreshHomePage,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: List.generate(
-            homeViewModel.listNews.length,
-            (i) => photos(homeViewModel.listNews[i]),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: List.generate(
+              homeViewModel.listNews.length,
+              (i) => GestureDetector(
+                  onTap: () {
+                    widget.gotoDetailNews!(homeViewModel.listNews[i]);
+                  },
+                  child: photos(homeViewModel.listNews[i])),
+            ),
           ),
         ),
       ),
@@ -82,12 +75,12 @@ class _AllNewsState extends State<AllNews> {
   }
 
   Widget photos(ImgNewsModel pm) {
-    double width = (MediaQuery.of(context).size.width - 50) > 400
+    double width = (MediaQuery.of(context).size.width - 10) >= 400
         ? 400
-        : MediaQuery.of(context).size.width - 50;
+        : MediaQuery.of(context).size.width - 10;
     return Container(
-        margin: const EdgeInsets.all(5),
-        color: Colors.red,
+        margin: const EdgeInsets.only(bottom: 10),
+        width: width,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Image.network(
