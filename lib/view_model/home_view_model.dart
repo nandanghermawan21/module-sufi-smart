@@ -34,26 +34,54 @@ class HomeViewModel extends ChangeNotifier {
   String get name => _name;
   set setName(String name) {
     _name = name;
+    commit();
   }
 
   String _phone = "";
   String get phone => _phone;
   set setPhone(String phone) {
     _phone = phone;
+    commit();
   }
 
   String _email = "";
   String get email => _email;
   set setEmail(String email) {
     _email = email;
+    commit();
   }
 
   String _message = "";
   String get message => _message;
   set setMessage(String message) {
     _message = message;
+    commit();
   }
 
   final GlobalKey<FormState> formKeyContact = GlobalKey<FormState>();
 
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController passwordTextEditingController = TextEditingController();
+  bool _emailValidation = false;
+  bool get emailValidation => _emailValidation;
+  set setEmailValidation(bool emailValidation) {
+    _emailValidation = emailValidation;
+    commit();
+  }
+
+  bool _passwordValidation = false;
+  bool get passwordValidation => _passwordValidation;
+  set setPasswordValidation(bool passwordValidation) {
+    _passwordValidation = passwordValidation;
+    commit();
+  }
+
+  bool _showPassword = false;
+  bool get showPassword => _showPassword;
+  set setShowPassword(bool showPassword) {
+    _showPassword = showPassword;
+    commit();
+  }
+
+  
 }
