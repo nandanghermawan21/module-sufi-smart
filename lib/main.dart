@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Sufi Smart',
+      title: Strings.appName,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -22,8 +22,19 @@ class MyApp extends StatelessWidget {
               gotoShowAll: () {
                 Navigator.pushNamed(context, RouteName.allNews);
               },
+              gotoBranch: () {},
+              gotoCredit: () {},
+              gotoDetailNews: (e) {},
+              gotoForgotPassword: () {},
+              gotoInstallment: () {},
+              gotoPayment: () {},
+              gotoProduct: () {},
+              gotoPromo: () {},
+              gotoSignup: () {},
             ),
-        RouteName.allNews: (BuildContext context) => const AllNews(),
+        RouteName.allNews: (BuildContext context) => AllNews(
+              gotoDetailNews: (e) {},
+            ),
       },
       initialRoute: RouteName.home,
     );
