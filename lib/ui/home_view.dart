@@ -711,7 +711,7 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: homeViewModel.login,
               child: Container(
                 height: 50,
                 width: double.infinity,
