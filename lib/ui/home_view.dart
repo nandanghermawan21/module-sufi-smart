@@ -267,7 +267,7 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            // padding: const EdgeInsets.symmetric(vertical: 10.0),
             height: MediaQuery.of(context).size.height * 0.33,
             color: Colors.transparent,
             child: Container(
