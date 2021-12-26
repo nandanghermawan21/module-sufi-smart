@@ -519,9 +519,9 @@ class _HomeViewState extends State<HomeView> {
                         return (Strings.phoneNumber) +
                             (" " + Strings.canNotBeEmpty);
                       } else if (value.length < 10) {
-                        return 'Nomor telepon minimal 8 digit';
+                        return Strings.phoneNumberAtLeast8Digits;
                       } else if (value.length > 15) {
-                        return 'Nomor telepon maximal 15 digit';
+                        return Strings.maximumPhoneNumber15Digits;
                       }
                       return null;
                     },
@@ -546,7 +546,7 @@ class _HomeViewState extends State<HomeView> {
                       if (value!.isEmpty) {
                         return (Strings.email) + (" " + Strings.canNotBeEmpty);
                       } else if (!regex.hasMatch(value)) {
-                        return 'Masukan email yang valid';
+                        return Strings.enterAValidEmail;
                       }
                       return null;
                     },
@@ -584,44 +584,6 @@ class _HomeViewState extends State<HomeView> {
                           .validate()) {
                         debugPrint(
                             "homeViewModel.formKeyContact.currentState ${homeViewModel.formKeyContact.currentState}");
-                        //   // No any error in validation
-                        //   _formKey.currentState.save();
-                        //   print(_name);
-                        //   print(_email);
-                        //   print(_phone);
-                        //   print(_pesan);
-                        //   var keluhan = await model.sendKeluhan(
-                        //       _name,
-                        //       _email,
-                        //       _phone,
-                        //       _pesan,
-                        //       context);
-                        //   if (keluhan == true) {
-                        //     Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //           builder: (context) => SuccessView(),
-                        //         )
-                        //     );
-                        //     setState(() {
-                        //       _error = "";
-                        //       _name = "";
-                        //       _phone = "";
-                        //       _email = "";
-                        //       _pesan = "";
-                        //     });
-                        //   } else {
-                        //     final SharedPreferences prefs = await SharedPreferences.getInstance();
-                        //     setState(() {
-                        //       _error = prefs.getString('message');
-                        //     });
-                        //   }
-                        // } else {
-                        //   // validation error
-                        //   setState(() {
-                        //     _error = "";
-                        //     _autoValidate = true;
-                        //   });
                       }
                     },
                     child: Container(
@@ -661,7 +623,7 @@ class _HomeViewState extends State<HomeView> {
               margin: const EdgeInsets.only(top: 5),
               width: MediaQuery.of(context).size.width,
               child: const Text(
-                "Selamat Datang Kembali,",
+                Strings.welcomeBack,
                 style: TextStyle(
                     color: ColorUi.colorff0d306b,
                     fontSize: 22,
@@ -673,7 +635,8 @@ class _HomeViewState extends State<HomeView> {
               margin: const EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width,
               child: const Text(
-                "Masukan email dan password anda yang terdaftar di aplikasi SUFI SMART",
+                Strings
+                    .enterYourEmailAndPasswordRegisteredInTheSUFISMARTApplication,
                 style: TextStyle(
                   color: ColorUi.colorff0d306b,
                   fontSize: 16,
@@ -686,7 +649,7 @@ class _HomeViewState extends State<HomeView> {
               decoration: InputDecoration(
                 labelText: '${Strings.enterThe} ${Strings.email}',
                 errorText: homeViewModel.emailValidation
-                    ? '${Strings.email} Can\'t Be Empty'
+                    ? '${Strings.email} ${Strings.cantBeEmpty}'
                     : null,
               ),
             ),
@@ -696,7 +659,7 @@ class _HomeViewState extends State<HomeView> {
               decoration: InputDecoration(
                 labelText: '${Strings.enterThe} ${Strings.password}',
                 errorText: homeViewModel.passwordValidation
-                    ? '${Strings.password} Can\'t Be Empty'
+                    ? '${Strings.password} ${Strings.cantBeEmpty}'
                     : null,
                 suffixIcon: IconButton(
                   onPressed: () {
@@ -732,7 +695,9 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                widget.gotoSignup!();
+              },
               child: Container(
                 margin: const EdgeInsets.only(bottom: 5),
                 height: 50,

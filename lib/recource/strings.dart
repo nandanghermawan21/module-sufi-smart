@@ -30,6 +30,13 @@ class Strings {
   static const String username= "username";
   static const String password= "password";
   static const String enterThe= "Enter the";
+  static const String welcomeBack= "Selamat Datang Kembali,Selamat Datang Kembali,";
+  static const String enterYourEmailAndPasswordRegisteredInTheSUFISMARTApplication= "Masukan email dan password anda yang terdaftar di aplikasi SUFI SMART";
+  static const String cantBeEmpty= "can't Be Empty";
+  static const String enterAValidEmail= "Masukan email yang valid";
+  static const String phoneNumberAtLeast8Digits= "Nomor telepon minimal 8 digit";
+  static const String maximumPhoneNumber15Digits= "Nomor telepon maximal 15 digit";
+
 
 
 }
