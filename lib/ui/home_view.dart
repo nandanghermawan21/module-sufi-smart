@@ -704,8 +704,8 @@ class _HomeViewState extends State<HomeView> {
                   },
                   icon: Icon(
                     homeViewModel.showPassword
-                        ? FontAwesomeIcons.eyeSlash
-                        : FontAwesomeIcons.eye,
+                        ? FontAwesomeIcons.eye
+                        : FontAwesomeIcons.eyeSlash,
                   ),
                 ),
               ),
