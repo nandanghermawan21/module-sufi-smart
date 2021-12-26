@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sufismart/recource/strings.dart';
+import 'package:sufismart/ui/all_news.dart';
 import 'package:sufismart/ui/home_view.dart';
 
 void main() {
@@ -16,9 +18,22 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        '/': (BuildContext context) => const HomeView(),
+        RouteName.home: (BuildContext context) => HomeView(
+              gotoShowAll: () {
+                Navigator.pushNamed(context, RouteName.allNews);
+              },
+            ),
+        RouteName.allNews: (BuildContext context) => const AllNews(),
       },
-      initialRoute: "/",
+      initialRoute: RouteName.home,
     );
   }
-} 
+}
+
+String initialRouteName = RouteName.splashScreen;
+
+class RouteName {
+  static const String splashScreen = "splashScreen";
+  static const String home = "home";
+  static const String allNews = "allNews";
+}

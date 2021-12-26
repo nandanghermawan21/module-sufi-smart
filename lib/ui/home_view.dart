@@ -18,6 +18,7 @@ class HomeView extends StatefulWidget {
   final VoidCallback? gotoCredit;
   final VoidCallback? gotoInstallment;
   final VoidCallback? gotoPayment;
+  final VoidCallback? gotoShowAll;
 
   const HomeView({
     Key? key,
@@ -29,6 +30,7 @@ class HomeView extends StatefulWidget {
     this.gotoCredit,
     this.gotoInstallment,
     this.gotoPayment,
+    this.gotoShowAll,
   }) : super(key: key);
 
   @override
@@ -240,7 +242,11 @@ class _HomeViewState extends State<HomeView> {
                 Container(
                   margin: const EdgeInsets.only(right: 10),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      if (widget.gotoShowAll != null) {
+                        widget.gotoShowAll!();
+                      }
+                    },
                     child: Container(
                       width: 80,
                       padding: const EdgeInsets.all(5),
