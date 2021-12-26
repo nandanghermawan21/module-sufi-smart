@@ -25,4 +25,11 @@ class Strings {
   static const String message = "pesan";
   static const String send = "kirim";
   static const String canNotBeEmpty = "tidak boleh kosong";
+  static const String login ="login";
+  static const String signUp= "sign up";
+  static const String username= "username";
+  static const String password= "password";
+  static const String enterThe= "Enter the";
+
+
 }

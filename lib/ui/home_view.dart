@@ -334,104 +334,105 @@ class _HomeViewState extends State<HomeView> {
 
   Widget pageAbout() {
     return SingleChildScrollView(
-        child: Container(
-      margin: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 50),
-            child: Image.asset(
-              'assets/logo_suzuki.png',
-              height: 100.0,
-              width: 100.0,
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.only(top: 20),
-            child: Column(children: const <Widget>[
-              Text(
-                Strings.appName,
-                style: TextStyle(
-                  color: ColorUi.colorff0d306b,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
+      child: Container(
+        margin: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 50),
+              child: Image.asset(
+                'assets/logo_suzuki.png',
+                height: 100.0,
+                width: 100.0,
               ),
-              Text(
-                Strings.version,
-                style: TextStyle(
-                  color: ColorUi.colorff0d306b,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              )
-            ]),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 50),
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const <Widget>[
-                      Text(
-                        Strings.callCenter,
-                        style: TextStyle(
-                          color: ColorUi.colorff0d306b,
-                          fontSize: 18,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        Strings.numberCallCenter,
-                        style: TextStyle(
-                          color: ColorUi.colorff0d306b,
-                          fontSize: 18,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-                const Divider(),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const <Widget>[
-                      Text(
-                        Strings.email,
-                        style: TextStyle(
-                          color: ColorUi.colorff0d306b,
-                          fontSize: 18,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        Strings.emailCS,
-                        style: TextStyle(
-                          color: ColorUi.colorff0d306b,
-                          fontSize: 18,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-                const Divider(),
-              ],
             ),
-          )
-        ],
+            Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.only(top: 20),
+              child: Column(children: const <Widget>[
+                Text(
+                  Strings.appName,
+                  style: TextStyle(
+                    color: ColorUi.colorff0d306b,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  Strings.version,
+                  style: TextStyle(
+                    color: ColorUi.colorff0d306b,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                )
+              ]),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 50),
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const <Widget>[
+                        Text(
+                          Strings.callCenter,
+                          style: TextStyle(
+                            color: ColorUi.colorff0d306b,
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          Strings.numberCallCenter,
+                          style: TextStyle(
+                            color: ColorUi.colorff0d306b,
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const <Widget>[
+                        Text(
+                          Strings.email,
+                          style: TextStyle(
+                            color: ColorUi.colorff0d306b,
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          Strings.emailCS,
+                          style: TextStyle(
+                            color: ColorUi.colorff0d306b,
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   Widget pageContact() {
@@ -650,6 +651,106 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget pageLogin() {
-    return SingleChildScrollView(child: Column());
+    return SingleChildScrollView(
+      child: Container(
+        margin: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 5),
+              width: MediaQuery.of(context).size.width,
+              child: const Text(
+                "Selamat Datang Kembali,",
+                style: TextStyle(
+                    color: ColorUi.colorff0d306b,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              width: MediaQuery.of(context).size.width,
+              child: const Text(
+                "Masukan email dan password anda yang terdaftar di aplikasi SUFI SMART",
+                style: TextStyle(
+                  color: ColorUi.colorff0d306b,
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+            TextField(
+              controller: homeViewModel.emailTextEditingController,
+              decoration: InputDecoration(
+                labelText: '${Strings.enterThe} ${Strings.email}',
+                errorText: homeViewModel.emailValidation
+                    ? '${Strings.email} Can\'t Be Empty'
+                    : null,
+              ),
+            ),
+            TextField(
+              controller: homeViewModel.passwordTextEditingController,
+              obscureText: homeViewModel.showPassword,
+              decoration: InputDecoration(
+                  labelText: '${Strings.enterThe} ${Strings.password}',
+                  errorText: homeViewModel.passwordValidation
+                      ? '${Strings.password} Can\'t Be Empty'
+                      : null,
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        homeViewModel.setShowPassword =
+                            !homeViewModel.showPassword;
+                      },
+                      icon: Icon(homeViewModel.showPassword
+                          ? Icons.visibility
+                          : Icons.visibility_off))),
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                height: 50,
+                width: double.infinity,
+                margin: const EdgeInsets.only(bottom: 10),
+                decoration: const BoxDecoration(
+                    color: ColorUi.colorff0d306b,
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                child: const Center(
+                  child: Text(
+                    Strings.login,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 5),
+                height: 50,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                child: const Center(
+                  child: Text(
+                    Strings.signUp,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
