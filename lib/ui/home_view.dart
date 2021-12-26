@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/model/image_news_model.dart';
 import 'package:sufismart/recource/color_ui.dart';
@@ -693,25 +694,28 @@ class _HomeViewState extends State<HomeView> {
               controller: homeViewModel.passwordTextEditingController,
               obscureText: homeViewModel.showPassword,
               decoration: InputDecoration(
-                  labelText: '${Strings.enterThe} ${Strings.password}',
-                  errorText: homeViewModel.passwordValidation
-                      ? '${Strings.password} Can\'t Be Empty'
-                      : null,
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        homeViewModel.setShowPassword =
-                            !homeViewModel.showPassword;
-                      },
-                      icon: Icon(homeViewModel.showPassword
-                          ? Icons.visibility
-                          : Icons.visibility_off))),
+                labelText: '${Strings.enterThe} ${Strings.password}',
+                errorText: homeViewModel.passwordValidation
+                    ? '${Strings.password} Can\'t Be Empty'
+                    : null,
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    homeViewModel.setShowPassword = !homeViewModel.showPassword;
+                  },
+                  icon: Icon(
+                    homeViewModel.showPassword
+                        ? FontAwesomeIcons.eyeSlash
+                        : FontAwesomeIcons.eye,
+                  ),
+                ),
+              ),
             ),
             GestureDetector(
               onTap: () {},
               child: Container(
                 height: 50,
                 width: double.infinity,
-                margin: const EdgeInsets.only(bottom: 10),
+                margin: const EdgeInsets.only(bottom: 10, top: 30),
                 decoration: const BoxDecoration(
                     color: ColorUi.colorff0d306b,
                     borderRadius: BorderRadius.all(Radius.circular(5))),
