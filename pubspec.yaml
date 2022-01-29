@@ -18,7 +18,7 @@ dependencies:
   http: ^0.13.4
   card_swiper: ^1.0.4
   fancy_bottom_navigation: ^0.3.3
-  onesignal_flutter: ^3.1.0
+  onesignal_flutter: ^3.2.8
 
 dev_dependencies:
   flutter_test:

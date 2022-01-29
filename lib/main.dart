@@ -11,9 +11,9 @@ Data data = Data();
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   setting();
-  getOneSignalToken()?.then((value) {
-    runApp(const MyApp());
-  });
+  // getOneSignalToken()?.then((value) {
+  runApp(const MyApp());
+  // });
 }
 
 Future<void>? getOneSignalToken({int trial = 0}) {
