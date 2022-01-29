@@ -8,6 +8,7 @@ import 'package:sqflite/sqflite.dart';
 class Databases {
   final String dbName = "DataBase";
   Database? db;
+  int? version;
 
   // return the path
   Future<String> checkDb(String dbName, {bool deleteOldDb = false}) async {
@@ -38,6 +39,7 @@ class Databases {
     String path = await checkDb(dbName, deleteOldDb: deleteOldDb);
     db = await openDatabase(path);
     db?.getVersion().then((version) {
+      version = version;
       if (onCreate != null) {
         onCreate(db, version);
       }

@@ -14,7 +14,7 @@ class Data extends ChangeNotifier {
   List<Permission> permission = [];
   ValueChanged<Uri?>? deepLinkingHandler;
   SharedPreferences? sharedPreferences;
-  Database? database;
+  Databases? database;
   Function(Database?, int)? onCreateDb;
 
   Data() {
@@ -32,9 +32,8 @@ class Data extends ChangeNotifier {
   }
 
   Future<bool> _initDatabse() async {
-    await Databases().initializeDb(
+    database = await Databases().initializeDb(
       onCreate: (db, version) {
-        database = db;
         ModeUtil.debugPrint("Database information :");
         ModeUtil.debugPrint("path                 : ${db?.path}");
         ModeUtil.debugPrint("version              : $version");
