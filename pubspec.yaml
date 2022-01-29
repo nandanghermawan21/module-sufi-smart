@@ -23,6 +23,8 @@ dependencies:
   uni_links: ^0.5.1
   url_launcher: ^6.0.18
   flutter_launcher_icons: ^0.9.0
+  shared_preferences: ^2.0.12
+  sqflite: ^2.0.2
 
 dev_dependencies:
   flutter_test:
