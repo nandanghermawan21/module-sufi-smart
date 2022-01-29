@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -16,51 +17,39 @@ class BackgroundService extends StatefulWidget {
 }
 
 class BackgroundServiceState extends State<BackgroundService> {
-  @override
-  void initState() {
-    super.initState();
+  static const platform = MethodChannel('samples.flutter.dev/battery');
 
-    if (Platform.isAndroid) {
-      androidAppRetain.invokeMethod("wasActivityKilled").then((result) {
-        if (result) {
-          showDialog(
-              context: context,
-              builder: (context) {
-                // return ActivityGotKilledDialog();
-                return Container();
-              });
-        }
-      });
+  // Get battery level.
+  String _batteryLevel = 'Unknown battery level.';
+
+  Future<void> _getBatteryLevel() async {
+    String batteryLevel;
+    try {
+      final int result = await platform.invokeMethod('getBatteryLevel');
+      batteryLevel = 'Battery level at $result % .';
+    } on PlatformException catch (e) {
+      batteryLevel = "Failed to get battery level: '${e.message}'.";
     }
+
+    setState(() {
+      _batteryLevel = batteryLevel;
+    });
   }
-
-  BackgroundServiceViewModel model = BackgroundServiceViewModel();
-
-  var androidAppRetain = const MethodChannel("android_app_retain");
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: model,
-      child: Consumer<BackgroundServiceViewModel>(
-        builder: (BuildContext context, vm, Widget? child) {
-          return Scaffold(
-            appBar: appBar(vm),
-            backgroundColor: ColorUi.background,
-            body: Container(),
-          );
-        },
-      ),
-    );
-  }
-
-  AppBar appBar(BackgroundServiceViewModel vm) {
-    return AppBar(
-      backgroundColor: ColorUi.mainColor,
-      title: Image.asset(
-        "assets/logo_sfi_white.png",
-        fit: BoxFit.cover,
-        height: 30,
+    return Material(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              child: const Text('Get Battery Level'),
+              onPressed: _getBatteryLevel,
+            ),
+            Text(_batteryLevel),
+          ],
+        ),
       ),
     );
   }
