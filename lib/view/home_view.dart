@@ -95,6 +95,11 @@ class _HomeViewState extends State<HomeView> {
         TabData(
           iconData: Icons.phone_iphone,
           title: Strings.about,
+          onclick: () {
+            if (widget.gotoBranch != null) {
+              widget.gotoBranch!();
+            }
+          },
         ),
         TabData(
           iconData: Icons.email,
