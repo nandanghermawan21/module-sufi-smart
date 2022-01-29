@@ -10,9 +10,9 @@ import 'package:sufismart/route.dart';
 Data data = Data();
 void main() {
   setting();
-  getOneSignalToken()?.then((value) {
-    runApp(const MyApp());
-  });
+  // getOneSignalToken()?.then((value) {
+  runApp(const MyApp());
+  // });
 }
 
 Future<void>? getOneSignalToken({int trial = 0}) {
