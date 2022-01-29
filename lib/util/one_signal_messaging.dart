@@ -13,6 +13,13 @@ class OneSignalMessaging {
 
   ValueChanged<OSInAppMessageAction>? notificationClickedHandler;
 
+  ValueChanged<OSNotificationReceivedEvent>?
+      notificationWillShowInForegroundHandler;
+
+  ValueChanged<OSSubscriptionStateChanges>? subscriptionChangeHandler;
+
+  ValueChanged<OSPermissionStateChanges>? permissionStateChangeHandler;
+
   OneSignalMessaging({
     this.appId,
     this.notificationClickedHandler,
@@ -22,43 +29,60 @@ class OneSignalMessaging {
 
   Future<void> initOneSignal() async {
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-    OneSignal.shared.setRequiresUserPrivacyConsent(false);
-    // OneSignal.shared
-    //     .setInFocusDisplayType(OSNotificationDisplayType.notification);
 
-    // if (notificationHandler != null) {
-    //   OneSignal.shared.setNotificationReceivedHandler(
-    //     (OSNotification notification) {
-    //       notificationHandler(notification);
-    //     },
-    //   );
-    // }
-
-    if (notificationHandler != null) {
-      OneSignal.shared.setNotificationWillShowInForegroundHandler((event) {
-        notificationHandler!((event.notification));
-      });
-    }
-
-    if (notificationOpenedHandler != null) {
-      OneSignal.shared
-          .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-        notificationOpenedHandler!(result);
-      });
-    }
+    OneSignal.shared.setRequiresUserPrivacyConsent(true);
 
     OneSignal.shared
-        .setInAppMessageClickedHandler((OSInAppMessageAction action) {});
+        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+      if (notificationClickedHandler != null) {
+        notificationOpenedHandler!(result);
+      }
+    });
+
+    OneSignal.shared.setNotificationWillShowInForegroundHandler(
+        (OSNotificationReceivedEvent event) {
+      /// Display Notification, send null to not display
+      if (notificationWillShowInForegroundHandler != null) {
+        notificationWillShowInForegroundHandler!(event);
+      }
+      event.complete(null);
+    });
+
+    OneSignal.shared
+        .setInAppMessageClickedHandler((OSInAppMessageAction action) {
+      if (notificationClickedHandler != null) {
+        notificationClickedHandler!(action);
+      }
+    });
+
+    OneSignal.shared
+        .setSubscriptionObserver((OSSubscriptionStateChanges changes) {
+      if (subscriptionChangeHandler != null) {
+        return subscriptionChangeHandler!(changes);
+      }
+    });
+
+    OneSignal.shared.setPermissionObserver((OSPermissionStateChanges changes) {
+      if (permissionStateChangeHandler != null) {
+        permissionStateChangeHandler!(changes);
+      }
+    });
+
+    // NOTE: Replace with your own app ID from https://www.onesignal.com
     await OneSignal.shared.setAppId(appId ?? "");
-    // await OneSignal.shared.init("${this.appId}", iOSSettings: settings);
-    // OneSignal.shared
-    //     .setInFocusDisplayType(OSNotificationDisplayType.notification);
-    OneSignal.shared.consentGranted(true);
+
+    await OneSignal().consentGranted(true);
+
+    await OneSignal.shared.requiresUserPrivacyConsent();
+
+    OneSignal.shared.disablePush(false);
+
+    await OneSignal.shared.userProvidedPrivacyConsent();
   }
 
-  Future<String> getTokenId() async {
-    var status = await OneSignal.shared.getDeviceState();
-    var playerId = status!.userId;
-    return playerId!;
+  Future<String?> getTokenId() async {
+    final status = await OneSignal.shared.getDeviceState();
+    final String? osUserId = status?.userId;
+    return osUserId;
   }
 }
