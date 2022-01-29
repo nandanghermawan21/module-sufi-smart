@@ -43,5 +43,38 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>customer</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>Sufismart</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>http</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>dufismart</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>https</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>dufismart</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
