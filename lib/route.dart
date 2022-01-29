@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sufismart/ui/all_news.dart';
-import 'package:sufismart/ui/home_view.dart';
+import 'package:sufismart/view/all_news.dart';
+import 'package:sufismart/view/home_view.dart';
 
 String initialRouteName = RouteName.splashScreen;
 
