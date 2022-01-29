@@ -21,7 +21,7 @@ class OneSignalMessaging {
   });
 
   Future<void> initOneSignal() async {
-    // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
     OneSignal.shared.setRequiresUserPrivacyConsent(false);
     // OneSignal.shared
     //     .setInFocusDisplayType(OSNotificationDisplayType.notification);
