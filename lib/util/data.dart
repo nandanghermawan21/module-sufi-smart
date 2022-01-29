@@ -8,6 +8,7 @@ class Data extends ChangeNotifier {
   Global global = Global();
   OneSignalMessaging? oneSignalMessaging;
   List<Permission> permission = [];
+  ValueChanged<Uri?>? deepLinkingHandler;
 
   void commit() {
     notifyListeners();
