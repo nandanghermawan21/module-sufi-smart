@@ -77,7 +77,7 @@ class OneSignalMessaging {
 
     OneSignal.shared.disablePush(false);
 
-    await OneSignal.shared.userProvidedPrivacyConsent();
+    // await OneSignal.shared.userProvidedPrivacyConsent();
   }
 
   Future<String?> getTokenId() async {
