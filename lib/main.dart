@@ -9,6 +9,7 @@ import 'package:sufismart/route.dart';
 
 Data data = Data();
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   setting();
   getOneSignalToken()?.then((value) {
     runApp(const MyApp());
