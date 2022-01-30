@@ -29,7 +29,16 @@ class MainActivity: FlutterActivity() {
                 } else {
                     result.error("UNAVAILABLE", "Battery level not available.", null)
                 }
-            } else {
+            }
+            else if (call.method == "runService") {
+//                startService(Intent(applicationContext, BackNotife::class.java))
+                BackNotife.startService(this, "Foreground Service is running...")
+            }
+            else if (call.method == "stopService") {
+//                startService(Intent(, BackNotife::class.java))
+                BackNotife.stopService(this,)
+            }
+            else {
                 result.notImplemented()
             }
         }
