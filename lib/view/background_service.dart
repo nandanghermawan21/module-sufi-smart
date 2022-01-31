@@ -14,9 +14,9 @@ class BackgroundServiceState extends State<BackgroundService> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
 
   // Get battery level.
-  String _batteryLevel = 'Unknown battery level.';
+  String batteryLevel = 'Unknown battery level.';
 
-  Future<void> _getBatteryLevel() async {
+  Future<void> getBatteryLevel() async {
     String batteryLevel;
     try {
       final int result = await platform.invokeMethod('getBatteryLevel');
@@ -26,8 +26,31 @@ class BackgroundServiceState extends State<BackgroundService> {
     }
 
     setState(() {
-      _batteryLevel = batteryLevel;
+      batteryLevel = batteryLevel;
     });
+  }
+
+  Future<void> runService() async {
+    // String batteryLevel;
+    try {
+      // final int result =
+      await platform.invokeMethod('runService');
+      // batteryLevel = 'Battery level at $result % .';
+    } on PlatformException catch (e) {
+      throw e.toString();
+      // batteryLevel = "Failed to get battery level: '${e.message}'.";
+    }
+  }
+  Future<void> stopService() async {
+    // String batteryLevel;
+    try {
+      // final int result =
+      await platform.invokeMethod('stopService');
+      // batteryLevel = 'Battery level at $result % .';
+    } on PlatformException catch (e) {
+      throw e.toString();
+      // batteryLevel = "Failed to get battery level: '${e.message}'.";
+    }
   }
 
   @override
@@ -39,9 +62,17 @@ class BackgroundServiceState extends State<BackgroundService> {
           children: [
             ElevatedButton(
               child: const Text('Get Battery Level'),
-              onPressed: _getBatteryLevel,
+              onPressed: getBatteryLevel,
             ),
-            Text(_batteryLevel),
+            Text(batteryLevel),
+            ElevatedButton(
+              child: const Text('start service'),
+              onPressed: runService,
+            ),
+            ElevatedButton(
+              child: const Text('stop service'),
+              onPressed: runService,
+            ),
           ],
         ),
       ),
