@@ -5,7 +5,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/setting.dart';
 import 'package:sufismart/util/data.dart';
-import 'package:sufismart/recource/strings.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/route.dart';
@@ -79,7 +78,7 @@ class MyAppState extends State<MyApp> {
       child: Consumer<Data>(
         builder: (c, d, w) {
           return MaterialApp(
-            title: Strings.appName,
+            title: System.data.strings!.appName,
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
