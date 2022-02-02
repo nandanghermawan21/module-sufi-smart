@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sufismart/model/image_news_model.dart';
+import 'package:sufismart/component/basic_component.dart';
+import 'package:sufismart/model/news_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/all_news_view_model.dart';
-import 'package:sufismart/view_model/main_menu_view_model.dart';
 
 class AllNewsView extends StatefulWidget {
-  final ValueChanged<ImgNewsModel>? gotoDetailNews;
+  final ValueChanged<NewsModel>? gotoDetailNews;
 
   const AllNewsView({
     Key? key,
@@ -28,10 +28,10 @@ class _AllNewsViewState extends State<AllNewsView> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: homeViewModel,
-      child: Consumer<MainMenuViewModel>(
+      child: Consumer<AllNewsViewModel>(
         builder: (BuildContext context, vm, Widget? child) {
           return Scaffold(
-            appBar: appBar(vm),
+            appBar: appBar(),
             backgroundColor: System.data.color!.mainColor,
             body: homePage(),
           );
@@ -40,7 +40,7 @@ class _AllNewsViewState extends State<AllNewsView> {
     );
   }
 
-  AppBar appBar(MainMenuViewModel vm) {
+  AppBar appBar() {
     return AppBar(
       backgroundColor: System.data.color!.mainColor,
       title: Image.asset(
@@ -75,7 +75,7 @@ class _AllNewsViewState extends State<AllNewsView> {
     );
   }
 
-  Widget photos(ImgNewsModel pm) {
+  Widget photos(NewsModel pm) {
     double width = (MediaQuery.of(context).size.width - 10) >= 400
         ? 400
         : MediaQuery.of(context).size.width - 10;
@@ -84,14 +84,7 @@ class _AllNewsViewState extends State<AllNewsView> {
         width: width,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Image.network(
-            "${pm.imagepath}",
-            width: width,
-            errorBuilder: (c, w, _) {
-              return Image.asset("assets/logo_suzuki.png");
-            },
-            fit: BoxFit.cover,
-          ),
+          child: BasicComponent.newsImageContainer(pm),
         ));
   }
 }

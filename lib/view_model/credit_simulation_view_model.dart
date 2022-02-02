@@ -41,8 +41,11 @@ class CreditSimulationViewModel extends ChangeNotifier {
   set dpPercent(double? dpPercent) {
     _dpPercent = dpPercent;
     _dpAmount = (_price ?? 8) * (_dpPercent ?? 0) / 100;
-    downPaymentAmountController.text = "Rp. " +
-        NumberFormat("#,###", System.data.strings!.locale).format(_dpAmount);
+    downPaymentAmountController.text = (_dpPercent ?? 0) == 0
+        ? ""
+        : "Rp. " +
+            NumberFormat("#,###", System.data.strings!.locale)
+                .format(_dpAmount);
     commit();
   }
 
@@ -140,7 +143,7 @@ class CreditSimulationViewModel extends ChangeNotifier {
       TextEditingValue oldValue, TextEditingValue newValue) {
     String _val =
         newValue.text.replaceAllMapped(RegExp("[^0-9]"), (match) => "");
-    String _num = _val.isNotEmpty
+    String _num = (_val.isNotEmpty && (_price ?? 0) != 0)
         ? double.parse(_val) > 100
             ? oldValue.text.replaceFirst(" %", "")
             : _val
@@ -148,7 +151,7 @@ class CreditSimulationViewModel extends ChangeNotifier {
     return TextEditingValue(
       composing: newValue.composing,
       selection: TextSelection.fromPosition(TextPosition(offset: _num.length)),
-      text: _num.isNotEmpty ? _num + " %" : "",
+      text: (_num.isNotEmpty && (_price ?? 0) != 0) ? _num + " %" : "",
     );
   }
 

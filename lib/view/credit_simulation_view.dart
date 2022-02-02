@@ -157,7 +157,17 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
                       activeColor: System.data.color!.primaryColor,
                       groupValue: creditSimulationViewModel.loanType,
                     ),
-                    Text(creditSimulationViewModel.loanTypes[index].name ?? ""),
+                    Expanded(
+                      child: Container(
+                          width: double.infinity,
+                          height: 15,
+                          color: Colors.transparent,
+                          child: FittedBox(
+                            child: Text(creditSimulationViewModel
+                                    .loanTypes[index].name ??
+                                ""),
+                          )),
+                    ),
                   ],
                 ),
               );
@@ -292,8 +302,18 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
                         }
                       },
                     ),
-                    Text(creditSimulationViewModel.insuranceTypes[index].name ??
-                        "")
+                    Expanded(
+                      child: Container(
+                        height: 15,
+                        alignment: Alignment.centerLeft,
+                        color: Colors.transparent,
+                        child: FittedBox(
+                          child: Text(creditSimulationViewModel
+                                  .insuranceTypes[index].name ??
+                              ""),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               );

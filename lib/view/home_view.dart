@@ -1,7 +1,8 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sufismart/model/image_news_model.dart';
+import 'package:sufismart/component/basic_component.dart';
+import 'package:sufismart/model/news_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/home_view_model.dart';
 
@@ -14,7 +15,7 @@ class HomeView extends StatefulWidget {
   final VoidCallback? gotoInstallment;
   final VoidCallback? gotoPayment;
   final VoidCallback? gotoShowAll;
-  final ValueChanged<ImgNewsModel>? gotoDetailNews;
+  final ValueChanged<NewsModel>? gotoDetailNews;
 
   const HomeView(
       {Key? key,
@@ -276,21 +277,17 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget photos(ImgNewsModel pm) {
+  Widget photos(NewsModel pm) {
     double width = (MediaQuery.of(context).size.width - 50) > 370
         ? 370
         : MediaQuery.of(context).size.width - 50;
     return Container(
         margin: const EdgeInsets.all(5),
+        width: width,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Image.network(
-            "${pm.imagepath}",
-            width: width,
-            errorBuilder: (c, w, _) {
-              return Image.asset("assets/logo_suzuki.png");
-            },
-            fit: BoxFit.cover,
+          child: BasicComponent.newsImageContainer(
+            pm,
           ),
         ));
   }
