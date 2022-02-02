@@ -1,4 +1,5 @@
 abstract class Strings {
+  String get locale => "ID-id";
   String get appName => "Sufi Smart";
   String get version => "Versi : 1.4";
   String get home => "Dashboard";
@@ -42,6 +43,17 @@ abstract class Strings {
   String get totalPaySimulation => "Simulasi Total Bayar";
   String get installmentSimulation => "Simulasi Angsuran";
   String get underConstruction => "Sedang Dalam Pengembangan";
-
-  Strings();
+  String get pleaseDoACreditSimulationUsingTheFormBelow =>
+      "Silahkan lakukan simulasi krdit dengan menggunakan form di bawah ini";
+  String get loanType => "Jenis Pembiayaan";
+  String get motorCyclingFinancing => "Pembiyaan Motor";
+  String get carFinancing => "Pembiayaan Mobil";
+  String get chooseFinancing => "Pilih Pembiayaan";
+  String get chooseArea => "Pilih Area";
+  String get area => "Area";
+  String get price => "Harga";
+  String get dpAmount => "DP Amount";
+  String get min10percent => "Min 10 %";
+  String get insuranceType => "Tipe Asuransi";
+  String get calculate => "Hitung";
 }

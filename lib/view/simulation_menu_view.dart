@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/util/system.dart';
-import 'package:sufismart/view_model/simulasi_menu_view_model.dart';
+import 'package:sufismart/view_model/simulation_menu_view_model.dart';
 import 'package:sufismart/component/basic_component.dart';
 
 class SimulationMenuView extends StatefulWidget {
@@ -61,7 +61,7 @@ class _SimulationMenuViewState extends State<SimulationMenuView> {
           menu(
             image: "assets/ic_icon_credit_simulation.png",
             title: System.data.strings!.creditSimulation,
-            onTap: () {},
+            onTap: widget.onTapSimulationCredit ?? () {},
           ),
           const SizedBox(
             width: 30,

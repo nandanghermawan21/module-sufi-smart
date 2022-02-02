@@ -3,11 +3,12 @@ import 'package:sufismart/model/menu_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view/all_news_view.dart';
 import 'package:sufismart/view/contact_view.dart';
+import 'package:sufismart/view/credit_simulation_view.dart';
 import 'package:sufismart/view/empty_page_view.dart';
 import 'package:sufismart/view/login_view.dart';
 import 'package:sufismart/view/main_menu_view.dart';
 import 'package:sufismart/view/background_service.dart';
-import 'package:sufismart/view/simulasi_menu_view.dart';
+import 'package:sufismart/view/simulation_menu_view.dart';
 import 'package:sufismart/view/about_view.dart';
 import 'package:sufismart/view/home_view.dart';
 
@@ -19,6 +20,7 @@ class RouteName {
   static const String allNews = "allNews";
   static const String backgroundService = "backgroundService";
   static const String simulationMenu = "simulationMenu";
+  static const String creditSimulation = "creditSimulation";
 }
 
 Map<String, WidgetBuilder> route = {
@@ -64,7 +66,14 @@ Map<String, WidgetBuilder> route = {
         gotoDetailNews: (e) {},
       ),
   RouteName.simulationMenu: (BuildContext context) {
-    return const SimulationMenuView();
+    return SimulationMenuView(
+      onTapSimulationCredit: () {
+        Navigator.of(context).pushNamed(RouteName.creditSimulation);
+      },
+    );
+  },
+  RouteName.creditSimulation: (BuildContext context) {
+    return const CreditSimulationView();
   },
   RouteName.backgroundService: (BuildContext context) =>
       const BackgroundService(),
