@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sufismart/model/image_news_model.dart';
-import 'package:sufismart/recource/color_ui.dart';
-import 'package:sufismart/view_model/home_view_model.dart';
+import 'package:sufismart/component/basic_component.dart';
+import 'package:sufismart/model/news_model.dart';
+import 'package:sufismart/util/system.dart';
+import 'package:sufismart/view_model/all_news_view_model.dart';
 
-class AllNews extends StatefulWidget {
-  final ValueChanged<ImgNewsModel>? gotoDetailNews;
+class AllNewsView extends StatefulWidget {
+  final ValueChanged<NewsModel>? gotoDetailNews;
 
-  const AllNews({
+  const AllNewsView({
     Key? key,
     this.gotoDetailNews,
   }) : super(key: key);
 
   @override
-  _AllNewsState createState() => _AllNewsState();
+  _AllNewsViewState createState() => _AllNewsViewState();
 }
 
-class _AllNewsState extends State<AllNews> {
-  HomeViewModel homeViewModel = HomeViewModel();
+class _AllNewsViewState extends State<AllNewsView> {
+  AllNewsViewModel homeViewModel = AllNewsViewModel();
   @override
   void initState() {
     super.initState();
@@ -27,11 +28,11 @@ class _AllNewsState extends State<AllNews> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: homeViewModel,
-      child: Consumer<HomeViewModel>(
+      child: Consumer<AllNewsViewModel>(
         builder: (BuildContext context, vm, Widget? child) {
           return Scaffold(
-            appBar: appBar(vm),
-            backgroundColor: ColorUi.background,
+            appBar: appBar(),
+            backgroundColor: System.data.color!.mainColor,
             body: homePage(),
           );
         },
@@ -39,9 +40,9 @@ class _AllNewsState extends State<AllNews> {
     );
   }
 
-  AppBar appBar(HomeViewModel vm) {
+  AppBar appBar() {
     return AppBar(
-      backgroundColor: ColorUi.mainColor,
+      backgroundColor: System.data.color!.mainColor,
       title: Image.asset(
         "assets/logo_sfi_white.png",
         fit: BoxFit.cover,
@@ -74,7 +75,7 @@ class _AllNewsState extends State<AllNews> {
     );
   }
 
-  Widget photos(ImgNewsModel pm) {
+  Widget photos(NewsModel pm) {
     double width = (MediaQuery.of(context).size.width - 10) >= 400
         ? 400
         : MediaQuery.of(context).size.width - 10;
@@ -83,14 +84,7 @@ class _AllNewsState extends State<AllNews> {
         width: width,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Image.network(
-            "${pm.imagepath}",
-            width: width,
-            errorBuilder: (c, w, _) {
-              return Image.asset("assets/logo_suzuki.png");
-            },
-            fit: BoxFit.cover,
-          ),
+          child: BasicComponent.newsImageContainer(pm),
         ));
   }
 }

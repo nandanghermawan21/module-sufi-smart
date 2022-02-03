@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:sufismart/util/colour.dart';
 import 'package:sufismart/util/databases.dart';
+import 'package:sufismart/util/strings.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/one_signal_messaging.dart';
 
@@ -10,6 +14,8 @@ import 'global.dart';
 
 class Data extends ChangeNotifier {
   Global global = Global();
+  Strings? strings;
+  Colour? color;
   OneSignalMessaging? oneSignalMessaging;
   List<Permission> permission = [];
   ValueChanged<Uri?>? deepLinkingHandler;
@@ -17,9 +23,11 @@ class Data extends ChangeNotifier {
   Databases? database;
   Function(Database?, int)? onCreateDb;
 
-  Data() {
-    _initSharedPreference();
-    _initDatabse();
+  Data();
+
+  Future<void> initialize() async {
+    await _initSharedPreference();
+    await _initDatabse();
   }
 
   void commit() {
