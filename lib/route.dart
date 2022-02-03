@@ -6,7 +6,6 @@ import 'package:sufismart/view/credit_simulation_view.dart';
 import 'package:sufismart/view/empty_page_view.dart';
 import 'package:sufismart/view/main_menu_view.dart';
 import 'package:sufismart/view/background_service.dart';
-import 'package:sufismart/view/simulation_menu_view.dart';
 import 'package:sufismart/view/about_view.dart';
 import 'package:sufismart/view/home_view.dart';
 import 'package:sufismart/view/all_news_view.dart';
@@ -60,6 +59,9 @@ Map<String, WidgetBuilder> route = {
                     ParamName.newsModel: news,
                   });
                 },
+                gotoSimulation: () {
+                  Navigator.of(context).pushNamed(RouteName.creditSimulation);
+                },
               );
             case 1:
               return const AboutView();
@@ -84,13 +86,6 @@ Map<String, WidgetBuilder> route = {
         {}) as Map<dynamic, dynamic>;
     return NewsDetailView(
       newsModel: arg[ParamName.newsModel],
-    );
-  },
-  RouteName.simulationMenu: (BuildContext context) {
-    return SimulationMenuView(
-      onTapSimulationCredit: () {
-        Navigator.of(context).pushNamed(RouteName.creditSimulation);
-      },
     );
   },
   RouteName.creditSimulation: (BuildContext context) {

@@ -28,6 +28,8 @@ void setting() {
       ModeUtil.debugPrint("notification handler fire");
     },
   );
+  //subscribe chanel
+  System.data.oneSignalMessaging!.sendTag("specialUser", true);
   System.data.deepLinkingHandler = (uri) {
     ModeUtil.debugPrint(uri?.path ?? "");
     if (ModalRoute.of(System.data.context)?.settings.name == initialRouteName) {
