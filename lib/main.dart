@@ -9,6 +9,7 @@ import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/route.dart';
 import 'package:uni_links/uni_links.dart';
+import 'route.dart';
 
 Data data = Data();
 void main() {
@@ -85,7 +86,8 @@ class MyAppState extends State<MyApp> {
               primarySwatch: Colors.blue,
             ),
             routes: route,
-            initialRoute: RouteName.home,
+            initialRoute: initialRouteName,
+            navigatorKey: System.data.navigatorKey,
           );
         },
       ),
@@ -123,6 +125,7 @@ class MyAppState extends State<MyApp> {
       uriLinkStream.listen(
         (uri) {
           if (!mounted) return;
+          ModeUtil.debugPrint(uri?.path ?? "");
           System.data.global.currentDeepLinkUri = uri;
           if (System.data.deepLinkingHandler != null) {
             System.data.deepLinkingHandler!(uri);

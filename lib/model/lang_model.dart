@@ -33,8 +33,7 @@ class LangModel {
   }
 
   static LangModel getSettedOrDefaultLang() {
-    String? _langJson =
-        System.data.sharedPreferences?.getString(PreferenceKey.lang);
+    String? _langJson = System.data.session?.getString(SessionKey.lang);
 
     if ((_langJson ?? "").isNotEmpty) {
       try {
@@ -78,8 +77,8 @@ class LangModel {
         System.data.strings = StringsEnUs();
         break;
     }
-    System.data.sharedPreferences
-        ?.setString(PreferenceKey.lang, json.encode(langModel.toJson()));
+    System.data.session
+        ?.setString(SessionKey.lang, json.encode(langModel.toJson()));
     System.data.commit();
   }
 }

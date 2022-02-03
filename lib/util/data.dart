@@ -13,13 +13,15 @@ import 'package:sufismart/util/one_signal_messaging.dart';
 import 'global.dart';
 
 class Data extends ChangeNotifier {
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  BuildContext get context => navigatorKey.currentContext!;
   Global global = Global();
   Strings? strings;
   Colour? color;
   OneSignalMessaging? oneSignalMessaging;
   List<Permission> permission = [];
   ValueChanged<Uri?>? deepLinkingHandler;
-  SharedPreferences? sharedPreferences;
+  SharedPreferences? session;
   Databases? database;
   Function(Database?, int)? onCreateDb;
 
@@ -35,7 +37,7 @@ class Data extends ChangeNotifier {
   }
 
   Future<bool> _initSharedPreference() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+    session = await SharedPreferences.getInstance();
     return true;
   }
 

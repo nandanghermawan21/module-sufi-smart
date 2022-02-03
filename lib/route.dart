@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:sufismart/model/menu_model.dart';
 import 'package:sufismart/util/system.dart';
-import 'package:sufismart/view/all_news_view.dart';
 import 'package:sufismart/view/contact_view.dart';
 import 'package:sufismart/view/credit_simulation_view.dart';
 import 'package:sufismart/view/empty_page_view.dart';
-import 'package:sufismart/view/login_view.dart';
 import 'package:sufismart/view/main_menu_view.dart';
 import 'package:sufismart/view/background_service.dart';
-import 'package:sufismart/view/news_detail_view.dart';
-import 'package:sufismart/view/simulation_menu_view.dart';
 import 'package:sufismart/view/about_view.dart';
 import 'package:sufismart/view/home_view.dart';
+import 'package:sufismart/view/all_news_view.dart';
+import 'package:sufismart/view/news_detail_view.dart';
 
-String initialRouteName = RouteName.splashScreen;
+String initialRouteName = RouteName.mainMenu;
 
 class RouteName {
-  static const String splashScreen = "splashScreen";
-  static const String home = "home";
+  static const String mainMenu = "mainMenu";
   static const String allNews = "allNews";
   static const String detailNews = "detailNews";
   static const String backgroundService = "backgroundService";
@@ -30,7 +27,7 @@ enum ParamName {
 }
 
 Map<String, WidgetBuilder> route = {
-  RouteName.home: (BuildContext context) => MainMenuView(
+  RouteName.mainMenu: (BuildContext context) => MainMenuView(
         menus: [
           MenuModel(
             iconData: Icons.home,
@@ -53,9 +50,6 @@ Map<String, WidgetBuilder> route = {
           switch (index) {
             case 0:
               return HomeView(
-                gotoSimulation: () {
-                  Navigator.of(context).pushNamed(RouteName.simulationMenu);
-                },
                 gotoShowAll: () {
                   Navigator.of(context).pushNamed(RouteName.allNews);
                 },
@@ -65,13 +59,16 @@ Map<String, WidgetBuilder> route = {
                     ParamName.newsModel: news,
                   });
                 },
+                gotoSimulation: () {
+                  Navigator.of(context).pushNamed(RouteName.creditSimulation);
+                },
               );
             case 1:
               return const AboutView();
             case 2:
               return const ContactView();
             case 3:
-              return const LoginView();
+              return const EmptyPageView();
             default:
               return const EmptyPageView();
           }
@@ -89,13 +86,6 @@ Map<String, WidgetBuilder> route = {
         {}) as Map<dynamic, dynamic>;
     return NewsDetailView(
       newsModel: arg[ParamName.newsModel],
-    );
-  },
-  RouteName.simulationMenu: (BuildContext context) {
-    return SimulationMenuView(
-      onTapSimulationCredit: () {
-        Navigator.of(context).pushNamed(RouteName.creditSimulation);
-      },
     );
   },
   RouteName.creditSimulation: (BuildContext context) {

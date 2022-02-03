@@ -80,6 +80,18 @@ class OneSignalMessaging {
     // await OneSignal.shared.userProvidedPrivacyConsent();
   }
 
+  Future<Map<String, dynamic>> getAllTag() {
+    return OneSignal.shared.getTags();
+  }
+
+  Future<Map<String, dynamic>> sendTag(String key, dynamic value) {
+    return OneSignal.shared.sendTag(key, value);
+  }
+
+  Future<Map<String, dynamic>> deleteTag(String key) {
+    return OneSignal.shared.deleteTag(key);
+  }
+
   Future<String?> getTokenId() async {
     final status = await OneSignal.shared.getDeviceState();
     final String? osUserId = status?.userId;
