@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,9 +23,11 @@ class Data extends ChangeNotifier {
   Databases? database;
   Function(Database?, int)? onCreateDb;
 
-  Data() {
-    _initSharedPreference();
-    _initDatabse();
+  Data();
+
+  Future<void> initialize() async {
+    await _initSharedPreference();
+    await _initDatabse();
   }
 
   void commit() {

@@ -35,7 +35,9 @@ class _MainMenuViewState extends State<MainMenuView> {
       child: Consumer<MainMenuViewModel>(
         builder: (BuildContext context, vm, Widget? child) {
           return Scaffold(
-            appBar: BasicComponent.appBar(),
+            appBar: BasicComponent.appBar(actions: [
+              dropDownLang(),
+            ]),
             backgroundColor: System.data.color!.background,
             body: widget.onCreateBody != null
                 ? widget.onCreateBody!(MenuModel(), vm.selectedIndex)
@@ -45,6 +47,27 @@ class _MainMenuViewState extends State<MainMenuView> {
         },
       ),
     );
+  }
+
+  Widget dropDownLang() {
+    return DropdownButton<String>(
+        value: mainMenuViewModel.lang?.lang,
+        items: List.generate(mainMenuViewModel.langs.length, (index) {
+          return DropdownMenuItem<String>(
+            value: mainMenuViewModel.langs[index].lang,
+            child: Container(
+              height: 35,
+              color: Colors.transparent,
+              child: Image.asset(
+                mainMenuViewModel.langs[index].flag ?? "",
+              ),
+            ),
+          );
+        }),
+        onChanged: (lang) {
+          mainMenuViewModel.lang =
+              mainMenuViewModel.langs.where((e) => e.lang == lang).first;
+        });
   }
 
   Widget bottomNavigationBar(MainMenuViewModel vm) {

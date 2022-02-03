@@ -14,7 +14,9 @@ Data data = Data();
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   setting();
-  runApp(const MyApp());
+  data.initialize().then((val) {
+    runApp(const MyApp());
+  });
 }
 
 Future<void> getPermission() async {

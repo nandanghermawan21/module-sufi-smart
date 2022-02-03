@@ -5,7 +5,9 @@ import 'package:sufismart/model/news_model.dart';
 import 'package:sufismart/util/system.dart';
 
 class BasicComponent {
-  static AppBar appBar() {
+  static AppBar appBar({
+    List<Widget>? actions,
+  }) {
     return AppBar(
       backgroundColor: System.data.color!.mainColor,
       title: Image.asset(
@@ -13,6 +15,7 @@ class BasicComponent {
         fit: BoxFit.cover,
         height: 30,
       ),
+      actions: actions,
     );
   }
 
