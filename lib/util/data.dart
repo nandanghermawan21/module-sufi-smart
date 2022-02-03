@@ -19,7 +19,7 @@ class Data extends ChangeNotifier {
   OneSignalMessaging? oneSignalMessaging;
   List<Permission> permission = [];
   ValueChanged<Uri?>? deepLinkingHandler;
-  SharedPreferences? sharedPreferences;
+  SharedPreferences? session;
   Databases? database;
   Function(Database?, int)? onCreateDb;
 
@@ -35,7 +35,7 @@ class Data extends ChangeNotifier {
   }
 
   Future<bool> _initSharedPreference() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+    session = await SharedPreferences.getInstance();
     return true;
   }
 

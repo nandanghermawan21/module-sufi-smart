@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:sufismart/model/menu_model.dart';
 import 'package:sufismart/util/system.dart';
-import 'package:sufismart/view/all_news_view.dart';
 import 'package:sufismart/view/contact_view.dart';
 import 'package:sufismart/view/credit_simulation_view.dart';
 import 'package:sufismart/view/empty_page_view.dart';
 import 'package:sufismart/view/login_view.dart';
 import 'package:sufismart/view/main_menu_view.dart';
 import 'package:sufismart/view/background_service.dart';
-import 'package:sufismart/view/news_detail_view.dart';
 import 'package:sufismart/view/simulation_menu_view.dart';
 import 'package:sufismart/view/about_view.dart';
 import 'package:sufismart/view/home_view.dart';
+import 'package:sufismart/view/all_news_view.dart';
+import 'package:sufismart/view/news_detail_view.dart';
 
 String initialRouteName = RouteName.splashScreen;
 
