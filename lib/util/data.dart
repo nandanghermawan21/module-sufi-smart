@@ -13,6 +13,8 @@ import 'package:sufismart/util/one_signal_messaging.dart';
 import 'global.dart';
 
 class Data extends ChangeNotifier {
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  BuildContext get context => navigatorKey.currentContext!;
   Global global = Global();
   Strings? strings;
   Colour? color;

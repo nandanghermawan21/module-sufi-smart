@@ -7,8 +7,8 @@ import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/main_menu_view_model.dart';
 
 class MainMenuView extends StatefulWidget {
-  final Widget? Function(MenuModel, int)? onCreateBody;
   final List<MenuModel?>? menus;
+  final Widget? Function(MenuModel, int)? onCreateBody;
 
   const MainMenuView({
     Key? key,
@@ -40,7 +40,8 @@ class _MainMenuViewState extends State<MainMenuView> {
             ]),
             backgroundColor: System.data.color!.background,
             body: widget.onCreateBody != null
-                ? widget.onCreateBody!(MenuModel(), vm.selectedIndex)
+                ? widget.onCreateBody!(
+                    widget.menus![vm.selectedIndex]!, vm.selectedIndex)
                 : null,
             bottomNavigationBar: bottomNavigationBar(vm),
           );

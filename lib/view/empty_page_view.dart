@@ -19,7 +19,11 @@ class _EmptyPageViewState extends State<EmptyPageView> {
       body: Center(
         child: Text(
           System.data.strings!.underConstruction,
-          style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
