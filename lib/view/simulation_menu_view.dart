@@ -132,10 +132,17 @@ class _SimulationMenuViewState extends State<SimulationMenuView> {
                 image,
               ),
             ),
-            Text(
-              title.replaceAll("\n", " "),
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: FittedBox(
+                child: Text(
+                  title.replaceAll("\n", " "),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             )
           ],
         ),
