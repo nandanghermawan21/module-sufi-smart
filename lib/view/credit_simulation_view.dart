@@ -4,6 +4,7 @@ import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/view_model/credit_simulation_view_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/model/loan_type_model.dart';
+import 'package:sufismart/model/area_model.dart';
 
 class CreditSimulationView extends StatefulWidget {
   const CreditSimulationView({
@@ -166,8 +167,48 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
   Widget area() {
     return Container(
       width: double.infinity,
-      height: 60,
-      color: Colors.amber,
+      color: Colors.transparent,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            System.data.strings!.area,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          DropdownButton<AreaModel>(
+            underline: Container(
+              height: 1,
+              color: System.data.color!.primaryColor,
+            ),
+            isExpanded: true,
+            hint: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  System.data.strings!.chooseArea,
+                ),
+              ],
+            ),
+            value: creditSimulationViewModel.area,
+            items:
+                List.generate(creditSimulationViewModel.areas.length, (index) {
+              return DropdownMenuItem<AreaModel>(
+                  value: creditSimulationViewModel.areas[index],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(creditSimulationViewModel.areas[index].name ?? ""),
+                    ],
+                  ));
+            }),
+            onChanged: (area) {
+              creditSimulationViewModel.area = area;
+            },
+          )
+        ],
+      ),
     );
   }
 
