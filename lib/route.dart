@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sufismart/model/menu_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view/contact_view.dart';
-import 'package:sufismart/view/credit_simulation_view.dart';
 import 'package:sufismart/view/empty_page_view.dart';
 import 'package:sufismart/view/main_menu_view.dart';
 import 'package:sufismart/view/background_service.dart';
@@ -18,8 +17,6 @@ class RouteName {
   static const String allNews = "allNews";
   static const String detailNews = "detailNews";
   static const String backgroundService = "backgroundService";
-  static const String simulationMenu = "simulationMenu";
-  static const String creditSimulation = "creditSimulation";
 }
 
 enum ParamName {
@@ -59,9 +56,6 @@ Map<String, WidgetBuilder> route = {
                     ParamName.newsModel: news,
                   });
                 },
-                gotoSimulation: () {
-                  Navigator.of(context).pushNamed(RouteName.creditSimulation);
-                },
               );
             case 1:
               return const AboutView();
@@ -87,9 +81,6 @@ Map<String, WidgetBuilder> route = {
     return NewsDetailView(
       newsModel: arg[ParamName.newsModel],
     );
-  },
-  RouteName.creditSimulation: (BuildContext context) {
-    return const CreditSimulationView();
   },
   RouteName.backgroundService: (BuildContext context) =>
       const BackgroundService(),
