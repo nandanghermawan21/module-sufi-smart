@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/component/basic_component.dart';
-import 'package:sufismart/model/area_model.dart';
-import 'package:sufismart/model/loan_type_model.dart';
-import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/credit_simulation_view_model.dart';
+import 'package:sufismart/util/system.dart';
+import 'package:sufismart/model/loan_type_model.dart';
+import 'package:sufismart/model/area_model.dart';
+import 'package:flutter/services.dart';
 
 class CreditSimulationView extends StatefulWidget {
   const CreditSimulationView({
@@ -92,7 +92,7 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
                                 children: [
                                   Expanded(
                                       child: Container(
-                                    child: downPaymentAmount(),
+                                    child: dpAmount(),
                                   )),
                                   const SizedBox(
                                     width: 30,
@@ -100,7 +100,7 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
                                   Container(
                                     width: 100,
                                     color: Colors.transparent,
-                                    child: downPaymentPercentage(),
+                                    child: dpPercentage(),
                                   )
                                 ],
                               )
@@ -324,7 +324,7 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
     );
   }
 
-  Widget downPaymentAmount() {
+  Widget dpAmount() {
     return Container(
       width: double.infinity,
       color: Colors.transparent,
@@ -338,7 +338,7 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
             height: 0,
           ),
           TextField(
-            controller: creditSimulationViewModel.downPaymentAmountController,
+            controller: creditSimulationViewModel.dpAmountController,
             keyboardType: TextInputType.number,
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp("[0-9]")),
@@ -367,7 +367,7 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
     );
   }
 
-  Widget downPaymentPercentage() {
+  Widget dpPercentage() {
     return Container(
       width: double.infinity,
       color: Colors.transparent,

@@ -25,7 +25,10 @@ class LoanTypeModel {
 
   static List<LoanTypeModel> getForCreditSimulation() {
     return [
-      LoanTypeModel(id: 1, name: System.data.strings!.motorCyclingFinancing),
+      LoanTypeModel(
+        id: 1,
+        name: System.data.strings!.motorCyclingFinancing,
+      ),
       LoanTypeModel(
         id: 2,
         name: System.data.strings!.carFinancing,

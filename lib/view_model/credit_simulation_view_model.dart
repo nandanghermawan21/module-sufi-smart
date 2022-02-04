@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:sufismart/model/loan_type_model.dart';
 import 'package:sufismart/model/area_model.dart';
 import 'package:sufismart/model/insurance_type_model.dart';
-import 'package:sufismart/model/loan_type_model.dart';
+import 'package:intl/intl.dart';
 import 'package:sufismart/util/system.dart';
 
 class CreditSimulationViewModel extends ChangeNotifier {
@@ -13,6 +13,8 @@ class CreditSimulationViewModel extends ChangeNotifier {
     commit();
   }
 
+  List<LoanTypeModel> loanTypes = LoanTypeModel.getForCreditSimulation();
+
   AreaModel? _area;
   AreaModel? get area => _area;
   set area(AreaModel? area) {
@@ -20,42 +22,7 @@ class CreditSimulationViewModel extends ChangeNotifier {
     commit();
   }
 
-  double? _price = 0;
-  double? get price => _price;
-  set price(double? price) {
-    _price = price;
-    calcPercentage();
-    commit();
-  }
-
-  double? _dpAmount = 0;
-  double? get dpAmount => _dpAmount;
-  set dpAmount(double? amount) {
-    _dpAmount = amount;
-    calcPercentage();
-    commit();
-  }
-
-  double? _dpPercent = 0;
-  double? get dpPercent => _dpPercent;
-  set dpPercent(double? dpPercent) {
-    _dpPercent = dpPercent;
-    _dpAmount = (_price ?? 8) * (_dpPercent ?? 0) / 100;
-    downPaymentAmountController.text = (_dpPercent ?? 0) == 0
-        ? ""
-        : "Rp. " +
-            NumberFormat("#,###", System.data.strings!.locale)
-                .format(_dpAmount);
-    commit();
-  }
-
-  void calcPercentage() {
-    _dpPercent = ((price ?? 0) == 0) || ((_dpAmount ?? 0) == 0)
-        ? null
-        : (_dpAmount! / _price!) * 100;
-    downPaymentPercentageController.text =
-        _dpPercent == null ? "" : _dpPercent!.toStringAsFixed(2) + " %";
-  }
+  List<AreaModel> areas = AreaModel.getAllArea();
 
   final List<InsuraceTypeModel> _insuranceType = [];
   List<InsuraceTypeModel> get insuranceType => _insuranceType;
@@ -73,21 +40,42 @@ class CreditSimulationViewModel extends ChangeNotifier {
     return _insuranceType.contains(insuraceTypeModel);
   }
 
-  double? parseDoubleFromString(String priceString) {
-    return priceString.isNotEmpty
-        ? double.parse(
-            priceString.replaceAllMapped(RegExp("[^0-9]"), (match) => ""))
-        : null;
-  }
-
-  void calculate() {}
-
-  List<LoanTypeModel> loanTypes = LoanTypeModel.getForCreditSimulation();
-  List<AreaModel> areas = AreaModel.getAllArea();
   List<InsuraceTypeModel> insuranceTypes =
       InsuraceTypeModel.getAllInsuranceType();
 
   TextEditingController priceController = TextEditingController();
+  double? _price = 0;
+  double? get price => _price;
+  set price(double? price) {
+    _price = price;
+    calcPercentage();
+    commit();
+  }
+
+  TextEditingController dpAmountController = TextEditingController();
+  double? _dpAmount = 0;
+  double? get dpAmount => _dpAmount;
+  set dpAmount(double? amount) {
+    _dpAmount = amount;
+    calcPercentage();
+    commit();
+  }
+
+  TextEditingController downPaymentPercentageController =
+      TextEditingController();
+  double? _dpPercent = 0;
+  double? get dpPercent => _dpPercent;
+  set dpPercent(double? dpPercent) {
+    _dpPercent = dpPercent;
+    _dpAmount = (_price ?? 8) * (_dpPercent ?? 0) / 100;
+    dpAmountController.text = (_dpPercent ?? 0) == 0
+        ? ""
+        : "Rp. " +
+            NumberFormat("#,###", System.data.strings!.locale)
+                .format(_dpAmount);
+    commit();
+  }
+
   TextEditingValue priceFormater(
       TextEditingValue oldValue, TextEditingValue newValue) {
     String _val =
@@ -100,7 +88,7 @@ class CreditSimulationViewModel extends ChangeNotifier {
 
     if ((parseDoubleFromString(_num) ?? 0) < (_dpAmount ?? 0)) {
       dpAmount = null;
-      downPaymentAmountController.clear();
+      dpAmountController.clear();
     }
     return TextEditingValue(
       composing: newValue.composing,
@@ -109,7 +97,6 @@ class CreditSimulationViewModel extends ChangeNotifier {
     );
   }
 
-  TextEditingController downPaymentAmountController = TextEditingController();
   TextEditingValue downPaymentAmountFormater(
       TextEditingValue oldValue, TextEditingValue newValue) {
     String _val =
@@ -137,8 +124,6 @@ class CreditSimulationViewModel extends ChangeNotifier {
     }
   }
 
-  TextEditingController downPaymentPercentageController =
-      TextEditingController();
   TextEditingValue downPaymentPercentageFormater(
       TextEditingValue oldValue, TextEditingValue newValue) {
     String _val =
@@ -154,6 +139,23 @@ class CreditSimulationViewModel extends ChangeNotifier {
       text: (_num.isNotEmpty && (_price ?? 0) != 0) ? _num + " %" : "",
     );
   }
+
+  void calcPercentage() {
+    _dpPercent = ((price ?? 0) == 0) || ((_dpAmount ?? 0) == 0)
+        ? null
+        : (_dpAmount! / _price!) * 100;
+    downPaymentPercentageController.text =
+        _dpPercent == null ? "" : _dpPercent!.toStringAsFixed(2) + " %";
+  }
+
+  double? parseDoubleFromString(String priceString) {
+    return priceString.isNotEmpty
+        ? double.parse(
+            priceString.replaceAllMapped(RegExp("[^0-9]"), (match) => ""))
+        : null;
+  }
+
+  void calculate() {}
 
   void commit() {
     notifyListeners();
