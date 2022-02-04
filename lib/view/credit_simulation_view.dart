@@ -96,6 +96,18 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
             },
           ),
         ),
+        bottomNavigationBar: Container(
+          margin: const EdgeInsets.all(15),
+          color: Colors.transparent,
+          height: 50,
+          child: ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(System.data.color!.primaryColor)),
+            onPressed: () {},
+            child: Text(System.data.strings!.calculate),
+          ),
+        ),
       ),
     );
   }
@@ -103,7 +115,7 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
   Widget loanType() {
     return Container(
       width: double.infinity,
-      height: 100,
+      height: 60,
       color: Colors.amber,
     );
   }
@@ -111,7 +123,7 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
   Widget area() {
     return Container(
       width: double.infinity,
-      height: 100,
+      height: 60,
       color: Colors.amber,
     );
   }
@@ -119,7 +131,7 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
   Widget price() {
     return Container(
       width: double.infinity,
-      height: 100,
+      height: 60,
       color: Colors.amber,
     );
   }
@@ -127,7 +139,7 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
   Widget insuranceType() {
     return Container(
       width: double.infinity,
-      height: 100,
+      height: 60,
       color: Colors.amber,
     );
   }
@@ -135,7 +147,7 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
   Widget dpAmount() {
     return Container(
       width: double.infinity,
-      height: 100,
+      height: 60,
       color: Colors.amber,
     );
   }
@@ -143,7 +155,7 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
   Widget dpPercentage() {
     return Container(
       width: double.infinity,
-      height: 100,
+      height: 60,
       color: Colors.amber,
     );
   }
