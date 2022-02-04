@@ -5,6 +5,7 @@ import 'package:sufismart/view_model/credit_simulation_view_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/model/loan_type_model.dart';
 import 'package:sufismart/model/area_model.dart';
+import 'package:flutter/services.dart';
 
 class CreditSimulationView extends StatefulWidget {
   const CreditSimulationView({
@@ -215,8 +216,44 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
   Widget price() {
     return Container(
       width: double.infinity,
-      height: 60,
-      color: Colors.amber,
+      color: Colors.transparent,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            System.data.strings!.price,
+          ),
+          const SizedBox(
+            height: 0,
+          ),
+          TextField(
+            controller: creditSimulationViewModel.priceController,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+              TextInputFormatter.withFunction(
+                (oldValue, newValue) =>
+                    creditSimulationViewModel.priceFormater(oldValue, newValue),
+              ),
+            ],
+            onChanged: (val) {
+              creditSimulationViewModel.price =
+                  creditSimulationViewModel.parseDoubleFromString(val);
+            },
+            decoration: InputDecoration(
+              hintText: "Rp.",
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: System.data.color!.primaryColor, width: 1.0),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: System.data.color!.primaryColor, width: 1.0),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -277,16 +314,88 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
   Widget dpAmount() {
     return Container(
       width: double.infinity,
-      height: 60,
-      color: Colors.amber,
+      color: Colors.transparent,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            System.data.strings!.dpAmount,
+          ),
+          const SizedBox(
+            height: 0,
+          ),
+          TextField(
+            controller: creditSimulationViewModel.dpAmountController,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+              TextInputFormatter.withFunction((oldValue, newValue) =>
+                  creditSimulationViewModel.downPaymentAmountFormater(
+                      oldValue, newValue))
+            ],
+            onChanged: (val) {
+              creditSimulationViewModel.dpAmount =
+                  creditSimulationViewModel.parseDoubleFromString(val);
+            },
+            decoration: InputDecoration(
+              hintText: "Rp.",
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: System.data.color!.primaryColor, width: 1.0),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: System.data.color!.primaryColor, width: 1.0),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 
   Widget dpPercentage() {
     return Container(
       width: double.infinity,
-      height: 60,
-      color: Colors.amber,
+      color: Colors.transparent,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            System.data.strings!.min10percent,
+          ),
+          const SizedBox(
+            height: 0,
+          ),
+          TextField(
+            controller:
+                creditSimulationViewModel.downPaymentPercentageController,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+              TextInputFormatter.withFunction(
+                (oldValue, newValue) => creditSimulationViewModel
+                    .downPaymentPercentageFormater(oldValue, newValue),
+              ),
+            ],
+            onChanged: (val) {
+              creditSimulationViewModel.dpPercent =
+                  creditSimulationViewModel.parseDoubleFromString(val);
+            },
+            decoration: InputDecoration(
+              hintText: "DP %",
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: System.data.color!.primaryColor, width: 1.0),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: System.data.color!.primaryColor, width: 1.0),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
