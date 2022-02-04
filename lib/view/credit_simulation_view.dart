@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/view_model/credit_simulation_view_model.dart';
 import 'package:sufismart/util/system.dart';
+import 'package:sufismart/model/loan_type_model.dart';
 
 class CreditSimulationView extends StatefulWidget {
   const CreditSimulationView({
@@ -115,8 +116,50 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
   Widget loanType() {
     return Container(
       width: double.infinity,
-      height: 60,
-      color: Colors.amber,
+      color: Colors.transparent,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            System.data.strings!.loanType,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(creditSimulationViewModel.loanTypes.length,
+                (index) {
+              return Expanded(
+                child: Row(
+                  children: [
+                    Radio<LoanTypeModel>(
+                      value: creditSimulationViewModel.loanTypes[index],
+                      onChanged: (val) {
+                        creditSimulationViewModel.loanType =
+                            creditSimulationViewModel.loanTypes[index];
+                      },
+                      activeColor: System.data.color!.primaryColor,
+                      groupValue: creditSimulationViewModel.loanType,
+                    ),
+                    Expanded(
+                      child: Container(
+                          width: double.infinity,
+                          height: 15,
+                          color: Colors.transparent,
+                          child: FittedBox(
+                            child: Text(creditSimulationViewModel
+                                    .loanTypes[index].name ??
+                                ""),
+                          )),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ),
+        ],
+      ),
     );
   }
 
