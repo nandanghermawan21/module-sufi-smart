@@ -21,6 +21,10 @@ class MainMenuViewModel extends ChangeNotifier {
     commit();
   }
 
+  void initializeLang() {
+    LangModel.applyLang(_lang!);
+  }
+
   Widget? body;
 
   void commit() {
