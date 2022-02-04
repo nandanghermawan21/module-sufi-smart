@@ -223,8 +223,54 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
   Widget insuranceType() {
     return Container(
       width: double.infinity,
-      height: 60,
-      color: Colors.amber,
+      color: Colors.transparent,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            System.data.strings!.insuranceType,
+          ),
+          const SizedBox(
+            height: 0,
+          ),
+          Row(
+            children: List.generate(
+                creditSimulationViewModel.insuranceTypes.length, (index) {
+              return Expanded(
+                child: Row(
+                  children: [
+                    Checkbox(
+                      value: creditSimulationViewModel.insuranceTypeIsCheked(
+                          creditSimulationViewModel.insuranceTypes[index]),
+                      onChanged: (val) {
+                        if (val == true) {
+                          creditSimulationViewModel.addInsuranceType(
+                              creditSimulationViewModel.insuranceTypes[index]);
+                        } else {
+                          creditSimulationViewModel.removeInsuranceType(
+                              creditSimulationViewModel.insuranceTypes[index]);
+                        }
+                      },
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: 15,
+                        alignment: Alignment.centerLeft,
+                        color: Colors.transparent,
+                        child: FittedBox(
+                          child: Text(creditSimulationViewModel
+                                  .insuranceTypes[index].name ??
+                              ""),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }),
+          )
+        ],
+      ),
     );
   }
 
