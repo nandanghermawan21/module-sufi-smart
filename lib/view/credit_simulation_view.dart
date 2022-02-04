@@ -29,70 +29,9 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
           child: Consumer<CreditSimulationViewModel>(
             builder: (c, d, w) {
               return Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        System.data.strings!.creditSimulation
-                            .replaceAll("\n", " "),
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: System.data.color!.primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        System.data.strings!
-                            .pleaseDoACreditSimulationUsingTheFormBelow
-                            .replaceAll("\n", " "),
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: System.data.color!.primaryColor,
-                            fontWeight: FontWeight.normal,
-                            wordSpacing: 2),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      loanType(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      area(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      price(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      insuranceType(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Container(
-                            child: dpAmount(),
-                          )),
-                          const SizedBox(
-                            width: 30,
-                          ),
-                          Container(
-                            width: 100,
-                            color: Colors.transparent,
-                            child: dpPercentage(),
-                          )
-                        ],
-                      )
-                    ],
-                  ));
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+              );
             },
           ),
         ),

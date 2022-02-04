@@ -43,8 +43,6 @@ abstract class Strings {
   String get totalPaySimulation => "Simulasi Total Bayar";
   String get installmentSimulation => "Simulasi Angsuran";
   String get underConstruction => "Sedang Dalam Pengembangan";
-  String get pleaseDoACreditSimulationUsingTheFormBelow =>
-      "Silahkan lakukan simulasi krdit dengan menggunakan form di bawah ini";
   String get loanType => "Jenis Pembiayaan";
   String get motorCyclingFinancing => "Pembiyaan Motor";
   String get carFinancing => "Pembiayaan Mobil";
