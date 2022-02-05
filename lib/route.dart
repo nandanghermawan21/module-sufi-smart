@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sufismart/model/menu_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view/contact_view.dart';
@@ -9,6 +10,7 @@ import 'package:sufismart/view/about_view.dart';
 import 'package:sufismart/view/home_view.dart';
 import 'package:sufismart/view/all_news_view.dart';
 import 'package:sufismart/view/news_detail_view.dart';
+import 'package:sufismart/view/credit_simulation_view.dart';
 
 String initialRouteName = RouteName.mainMenu;
 
@@ -57,6 +59,9 @@ Map<String, WidgetBuilder> route = {
                     ParamName.newsModel: news,
                   });
                 },
+                gotoSimulation: () {
+                  Navigator.of(context).pushNamed(RouteName.creditSimulation);
+                },
               );
             case 1:
               return AboutView(
@@ -93,4 +98,7 @@ Map<String, WidgetBuilder> route = {
   },
   RouteName.backgroundService: (BuildContext context) =>
       const BackgroundService(),
+  RouteName.creditSimulation: (BuildContext context) {
+    return const CreditSimulationView();
+  }
 };
