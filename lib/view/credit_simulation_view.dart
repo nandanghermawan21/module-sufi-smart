@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/view_model/credit_simulation_view_model.dart';
 import 'package:sufismart/util/system.dart';
+import 'package:sufismart/model/loan_type_model.dart';
+import'package:sufismart/model/area_model.dart';
 
 class CreditSimulationView extends StatefulWidget {
   const CreditSimulationView({
@@ -114,10 +116,54 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
 
   Widget loanType() {
     return Container(
-      width: double.infinity,
-      height: 60,
-      color: Colors.amber,
+width: double.infinity,
+color: Colors.transparent,
+child: Column(
+crossAxisAlignment: CrossAxisAlignment.start,
+children: [
+Text(
+System.data.strings!.loanType,
+          ),
+constSizedBox(
+height: 10,
+          ),
+Row(
+mainAxisAlignment: MainAxisAlignment.spaceBetween,
+children: List.generate(creditSimulationViewModel.loanTypes.length,
+                (index) {
+returnExpanded(
+child: Row(
+children: [
+Radio<LoanTypeModel>(
+value: creditSimulationViewModel.loanTypes[index],
+onChanged: (val) {
+creditSimulationViewModel.loanType =
+creditSimulationViewModel.loanTypes[index];
+                      },
+activeColor: System.data.color!.primaryColor,
+groupValue: creditSimulationViewModel.loanType,
+                    ),
+Expanded(
+child: Container(
+width: double.infinity,
+height: 15,
+color: Colors.transparent,
+child: FittedBox(
+child: Text(creditSimulationViewModel
+                                    .loanTypes[index].name ??
+""),
+                          )),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ),
+        ],
+      ),
     );
+  }
+
   }
 
   Widget area() {
@@ -137,11 +183,59 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
   }
 
   Widget insuranceType() {
-    return Container(
-      width: double.infinity,
-      height: 60,
-      color: Colors.amber,
+  
+returnContainer(
+width: double.infinity,
+color: Colors.transparent,
+child: Column(
+crossAxisAlignment: CrossAxisAlignment.start,
+children: [
+Text(
+System.data.strings!.insuranceType,
+          ),
+constSizedBox(
+height: 0,
+          ),
+Row(
+children: List.generate(
+creditSimulationViewModel.insuranceTypes.length, (index) {
+returnExpanded(
+child: Row(
+children: [
+Checkbox(
+value: creditSimulationViewModel.insuranceTypeIsCheked(
+creditSimulationViewModel.insuranceTypes[index]),
+onChanged: (val) {
+if (val == true) {
+creditSimulationViewModel.addInsuranceType(
+creditSimulationViewModel.insuranceTypes[index]);
+                        } else {
+creditSimulationViewModel.removeInsuranceType(
+creditSimulationViewModel.insuranceTypes[index]);
+                        }
+                      },
+                    ),
+Expanded(
+child: Container(
+height: 15,
+alignment: Alignment.centerLeft,
+color: Colors.transparent,
+child: FittedBox(
+child: Text(creditSimulationViewModel
+                                  .insuranceTypes[index].name ??
+""),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }),
+          )
+        ],
+      ),
     );
+
   }
 
   Widget dpAmount() {
