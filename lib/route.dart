@@ -58,6 +58,9 @@ Map<String, WidgetBuilder> route = {
                     ParamName.newsModel: news,
                   });
                 },
+                gotoSimulation: () {
+                  Navigator.of(context).pushNamed(RouteName.creditSimulation);
+                },
               );
             case 1:
               return AboutView(
