@@ -102,7 +102,7 @@ class _CreditSimulationViewState extends State<CreditSimulationView> {
       ),
     );
   }
-
+//test
   Widget loanType() {
     return Container(
       width: double.infinity,
