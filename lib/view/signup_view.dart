@@ -139,7 +139,7 @@ class _SignupViewState extends State<SignupView> {
             height: 5,
           ),
           Expanded(
-            child: gender(),
+            child: genderFuture(),
           ),
         ],
       ),
@@ -175,21 +175,46 @@ class _SignupViewState extends State<SignupView> {
     );
   }
 
-  Widget gender() {
+  Widget genderFuture() {
+    return FutureBuilder<List<GenderModel>>(
+      future: signupViewModel.genders,
+      initialData: const [],
+      builder: (ctx, snap) {
+        if (snap.hasData) {
+          return gender(snap.data ?? []);
+        } else {
+          return SkeletonAnimation(
+            child: Container(
+              margin: const EdgeInsets.only(left: 15),
+              height: 100,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(5),
+                ),
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Widget gender(List<GenderModel> genders) {
     return Container(
       height: 50,
       color: Colors.transparent,
       padding: const EdgeInsets.all(0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: List.generate(signupViewModel.genders.length, (index) {
+        children: List.generate(genders.length, (index) {
           return Expanded(
             child: Row(
               children: [
                 Radio<GenderModel>(
-                  value: signupViewModel.genders[index],
+                  value: genders[index],
                   onChanged: (val) {
-                    signupViewModel.gender = signupViewModel.genders[index];
+                    signupViewModel.gender = genders[index];
                   },
                   activeColor: System.data.color!.primaryColor,
                   groupValue: signupViewModel.gender,
@@ -201,7 +226,7 @@ class _SignupViewState extends State<SignupView> {
                       height: 15,
                       color: Colors.transparent,
                       child: FittedBox(
-                        child: Text(signupViewModel.genders[index].name ?? ""),
+                        child: Text(genders[index].name ?? ""),
                       )),
                 ),
               ],

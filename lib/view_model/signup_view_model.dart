@@ -24,7 +24,7 @@ class SignupViewModel extends ChangeNotifier {
     commit();
   }
 
-  List<GenderModel> genders = GenderModel.getAll();
+  Future<List<GenderModel>> genders = GenderModel.getAll();
 
   CityModel? _city;
   CityModel? get city => _city;
