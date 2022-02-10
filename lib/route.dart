@@ -3,6 +3,7 @@ import 'package:sufismart/model/menu_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view/contact_view.dart';
 import 'package:sufismart/view/empty_page_view.dart';
+import 'package:sufismart/view/login_view.dart';
 import 'package:sufismart/view/main_menu_view.dart';
 import 'package:sufismart/view/background_service.dart';
 import 'package:sufismart/view/about_view.dart';
@@ -71,7 +72,7 @@ Map<String, WidgetBuilder> route = {
                 key: System.data.navigatorKey,
               );
             case 3:
-              return EmptyPageView(
+              return LoginView(
                 key: System.data.navigatorKey,
               );
             default:
