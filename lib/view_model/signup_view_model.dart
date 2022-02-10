@@ -61,6 +61,12 @@ class SignupViewModel extends ChangeNotifier {
     commit();
   }
 
+  void register({VoidCallback? onRegisterSuccess}) {
+    if (onRegisterSuccess != null) {
+      onRegisterSuccess();
+    }
+  }
+
   void commit() {
     notifyListeners();
   }

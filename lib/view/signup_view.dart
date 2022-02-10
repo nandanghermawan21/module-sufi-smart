@@ -8,7 +8,9 @@ import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/signup_view_model.dart';
 
 class SignupView extends StatefulWidget {
-  const SignupView({Key? key}) : super(key: key);
+  final VoidCallback? onRegisterSucces;
+
+  const SignupView({Key? key, this.onRegisterSucces}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -252,7 +254,7 @@ class _SignupViewState extends State<SignupView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              System.data.strings!.chooseArea,
+              System.data.strings!.city,
             ),
           ],
         ),
@@ -368,7 +370,11 @@ class _SignupViewState extends State<SignupView> {
         style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all(System.data.color!.primaryColor)),
-        onPressed: () {},
+        onPressed: () {
+          signupViewModel.register(
+            onRegisterSuccess: widget.onRegisterSucces,
+          );
+        },
         child: Text(System.data.strings!.signUp),
       ),
     );

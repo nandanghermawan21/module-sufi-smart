@@ -60,4 +60,6 @@ abstract class Strings {
   String get pleaseCompleteYourAccountInformation =>
       "Silahkan lengkapi informasi akun anda";
   String get nIK => "NIK";
+  String get city => "Kota";
+  String get logOut => "Keluar";
 }

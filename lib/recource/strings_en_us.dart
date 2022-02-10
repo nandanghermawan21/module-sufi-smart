@@ -174,4 +174,10 @@ class StringsEnUs implements Strings {
 
   @override
   String get nIK => "NIK";
+
+  @override
+  String get city => "City";
+
+  @override
+  String get logOut => "Logout";
 }
