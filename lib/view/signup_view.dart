@@ -125,7 +125,20 @@ class _SignupViewState extends State<SignupView> {
     return Container(
       height: 120,
       width: 120,
-      color: Colors.orange,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(15),
+        ),
+        border: Border.all(color: Colors.grey),
+        image: const DecorationImage(
+            image: AssetImage(
+              "assets/icon_camera.png",
+            ),
+            scale: 3,
+            repeat: ImageRepeat.noRepeat,
+            alignment: Alignment.center,
+            fit: BoxFit.none),
+      ),
     );
   }
 
