@@ -33,7 +33,7 @@ class SignupViewModel extends ChangeNotifier {
     commit();
   }
 
-  List<CityModel> citys = CityModel.getAll();
+  Future<List<CityModel>> cities = CityModel.getAll();
 
   TextEditingController fullnameController = TextEditingController();
   String? _fullname;
@@ -80,7 +80,6 @@ class SignupViewModel extends ChangeNotifier {
     ).then((value) {
       imagePickerController.value.uploadedUrl =
           json.decode(value)["url"] as String;
-      print(imagePickerController.value.uploadedUrl);
       imagePickerController.commit();
     }).catchError(
       (onError) {

@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:path/path.dart' as file_util;
 
 typedef OnUploadProgressCallback = void Function(int sentBytes, int totalBytes);
 
@@ -80,11 +79,9 @@ class FileServiceUtil {
     var statusCode = httpResponse.statusCode;
 
     if (statusCode ~/ 100 != 2) {
-      print("masuk sini bro");
       throw Exception(
           'Error uploading file, Status code: ${httpResponse.statusCode}');
     } else {
-      print("masuk sini");
       return await readResponseAsString(httpResponse);
     }
   }
