@@ -11,6 +11,7 @@ import 'package:sufismart/view/home_view.dart';
 import 'package:sufismart/view/all_news_view.dart';
 import 'package:sufismart/view/news_detail_view.dart';
 import 'package:sufismart/view/credit_simulation_view.dart';
+import 'package:sufismart/view/signup_view.dart';
 
 String initialRouteName = RouteName.mainMenu;
 
@@ -20,6 +21,7 @@ class RouteName {
   static const String detailNews = "detailNews";
   static const String backgroundService = "backgroundService";
   static const String creditSimulation = "creditSimulation";
+  static const String signUp = "signUp";
 }
 
 enum ParamName {
@@ -50,6 +52,7 @@ Map<String, WidgetBuilder> route = {
           switch (index) {
             case 0:
               return HomeView(
+                key: System.data.navigatorKey,
                 gotoShowAll: () {
                   Navigator.of(context).pushNamed(RouteName.allNews);
                 },
@@ -74,6 +77,9 @@ Map<String, WidgetBuilder> route = {
             case 3:
               return LoginView(
                 key: System.data.navigatorKey,
+                gotoSignup: () {
+                  Navigator.of(context).pushNamed(RouteName.signUp);
+                },
               );
             default:
               return EmptyPageView(
@@ -100,6 +106,11 @@ Map<String, WidgetBuilder> route = {
       const BackgroundService(),
   RouteName.creditSimulation: (BuildContext context) {
     return CreditSimulationView(
+      key: System.data.navigatorKey,
+    );
+  },
+  RouteName.signUp: (BuildContext context) {
+    return SignupView(
       key: System.data.navigatorKey,
     );
   }

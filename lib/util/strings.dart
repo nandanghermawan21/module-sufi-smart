@@ -28,7 +28,7 @@ abstract class Strings {
   String get send => "kirim";
   String get canNotBeEmpty => "tidak boleh kosong";
   String get login => "masuk";
-  String get signUp => "daftar";
+  String get signUp => "Daftar";
   String get username => "nama pengguna";
   String get password => "kata sandi";
   String get enterThe => "masukan";
@@ -56,4 +56,8 @@ abstract class Strings {
   String get min10percent => "Min 10 %";
   String get insuranceType => "Tipe Asuransi";
   String get calculate => "Hitung";
+  String get registration => "Registrasi";
+  String get pleaseCompleteYourAccountInformation =>
+      "Silahkan lengkapi informasi akun anda";
+  String get nIK => "NIK";
 }

@@ -120,9 +120,10 @@ class _LoginState extends State<LoginView> {
                         margin: const EdgeInsets.only(bottom: 5),
                         height: 50,
                         width: double.infinity,
-                        decoration: const BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        decoration: BoxDecoration(
+                            color: System.data.color!.primaryColor,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5))),
                         child: Center(
                           child: Text(
                             System.data.strings!.signUp,

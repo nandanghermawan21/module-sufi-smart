@@ -164,4 +164,14 @@ class StringsEnUs implements Strings {
 
   @override
   String get welcomeBack => "Welcome Back";
+
+  @override
+  String get registration => "Registration";
+
+  @override
+  String get pleaseCompleteYourAccountInformation =>
+      "Please complete your account information";
+
+  @override
+  String get nIK => "NIK";
 }
