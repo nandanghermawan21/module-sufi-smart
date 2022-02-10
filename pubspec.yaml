@@ -28,6 +28,8 @@ dependencies:
   shared_preferences: ^2.0.12
   sqflite: ^2.0.2
   intl: ^0.17.0
+  image_picker: ^0.8.2
+  flutter_image_compress: ^1.1.0
 
 dev_dependencies:
   flutter_test:
