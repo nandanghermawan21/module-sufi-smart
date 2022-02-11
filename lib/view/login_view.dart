@@ -63,6 +63,9 @@ class _LoginState extends State<LoginView> {
                       decoration: InputDecoration(
                         labelText:
                             '${System.data.strings!.enterThe} ${System.data.strings!.email}',
+                        errorText: loginViewModel.emailValidation
+                            ? '${System.data.strings!.email} ${System.data.strings!.cantBeEmpty}'
+                            : null,
                       ),
                     ),
                     TextField(
@@ -71,6 +74,9 @@ class _LoginState extends State<LoginView> {
                       decoration: InputDecoration(
                         labelText:
                             '${System.data.strings!.enterThe} ${System.data.strings!.password}',
+                        errorText: loginViewModel.passwordValidation
+                            ? '${System.data.strings!.password} ${System.data.strings!.cantBeEmpty}'
+                            : null,
                         suffixIcon: IconButton(
                           onPressed: () {
                             loginViewModel.setShowPassword =
@@ -114,10 +120,9 @@ class _LoginState extends State<LoginView> {
                         margin: const EdgeInsets.only(bottom: 5),
                         height: 50,
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: System.data.color!.primaryColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(5))),
+                        decoration: const BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Center(
                           child: Text(
                             System.data.strings!.signUp,
