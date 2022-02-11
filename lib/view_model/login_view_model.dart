@@ -29,28 +29,7 @@ class LoginViewModel extends ChangeNotifier {
     commit();
   }
 
-  String? validateText(String value) {
-    if (!(value.length > 5) && value.isNotEmpty) {
-      return "should contain more than 5 characters";
-    }
-    return null;
-  }
-
-  bool validLogin() {
-    bool valid = false;
-    valid = showPassword ? true : false;
-    valid = passwordValidation ? true : false;
-    return valid;
-  }
-
-  void login() {
-    emailTextEditingController.text.isEmpty
-        ? setEmailValidation = true
-        : setEmailValidation = false;
-    passwordTextEditingController.text.isEmpty
-        ? setPasswordValidation = true
-        : setPasswordValidation = false;
-  }
+  void login() {}
 
   void commit() {
     notifyListeners();
