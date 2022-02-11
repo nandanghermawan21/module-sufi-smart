@@ -29,13 +29,6 @@ class LoginViewModel extends ChangeNotifier {
     commit();
   }
 
-  bool validLogin() {
-    bool valid = false;
-    valid = showPassword ? true : false;
-    valid = passwordValidation ? true : false;
-    return valid;
-  }
-
   void login() {}
 
   void commit() {
