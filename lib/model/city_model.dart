@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:sufismart/util/system.dart';
 
 class CityModel {
   String? id;
@@ -30,9 +31,7 @@ class CityModel {
   }
 
   static Future<List<CityModel>> getAll() {
-    return http
-        .get(Uri.parse("http://api-suzuki.lemburkuring.id/api/city/getAll"))
-        .then(
+    return http.get(Uri.parse(System.data.apiEndPoint.getAllCity())).then(
       (value) {
         if (value.statusCode == 200) {
           return (json.decode(value.body) as List)

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:sufismart/util/system.dart';
 
 class GenderModel {
   String? id;
@@ -26,9 +27,7 @@ class GenderModel {
   }
 
   static Future<List<GenderModel>> getAll() {
-    return http
-        .get(Uri.parse("http://api-suzuki.lemburkuring.id/api/gender/getAll"))
-        .then(
+    return http.get(Uri.parse(System.data.apiEndPoint.getAllGender())).then(
       (value) {
         if (value.statusCode == 200) {
           return (json.decode(value.body) as List)
