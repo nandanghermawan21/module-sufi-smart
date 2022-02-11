@@ -63,9 +63,6 @@ class _LoginState extends State<LoginView> {
                       decoration: InputDecoration(
                         labelText:
                             '${System.data.strings!.enterThe} ${System.data.strings!.email}',
-                        errorText: loginViewModel.emailValidation
-                            ? '${System.data.strings!.email} ${System.data.strings!.cantBeEmpty}'
-                            : null,
                       ),
                     ),
                     TextField(
@@ -74,9 +71,6 @@ class _LoginState extends State<LoginView> {
                       decoration: InputDecoration(
                         labelText:
                             '${System.data.strings!.enterThe} ${System.data.strings!.password}',
-                        errorText: loginViewModel.passwordValidation
-                            ? '${System.data.strings!.password} ${System.data.strings!.cantBeEmpty}'
-                            : null,
                         suffixIcon: IconButton(
                           onPressed: () {
                             loginViewModel.setShowPassword =
