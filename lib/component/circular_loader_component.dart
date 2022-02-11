@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -201,11 +203,25 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
   void stopLoading({
     String? message,
     bool isError = false,
+    Duration? duration,
+    VoidCallback? onCloseCallBack,
   }) {
     value.state = isError == true
         ? CircularLoaderState.showError
         : CircularLoaderState.showMessage;
     value.message = message;
+
+    if (duration != null) {
+      Timer.periodic(duration, (timer) {
+        timer.cancel();
+        close();
+      });
+    }
+
+    if (onCloseCallBack != null) {
+      onCloseCallBack();
+    }
+
     commit();
   }
 
