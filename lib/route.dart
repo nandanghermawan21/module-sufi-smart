@@ -10,10 +10,15 @@ import 'package:sufismart/view/home_view.dart';
 import 'package:sufismart/view/all_news_view.dart';
 import 'package:sufismart/view/news_detail_view.dart';
 import 'package:sufismart/view/credit_simulation_view.dart';
+import 'package:sufismart/view/login_view.dart';
+import 'package:sufismart/view/signup_view.dart';
+import 'package:sufismart/view/akun_view.dart';
 
-String initialRouteName = RouteName.mainMenu;
+String initialRouteName = RouteName.loginMenu;
 
 class RouteName {
+  static const String loginMenu = "loginMenu";
+  static const String signupMenu = "signupMenu";
   static const String mainMenu = "mainMenu";
   static const String allNews = "allNews";
   static const String detailNews = "detailNews";
@@ -71,8 +76,11 @@ Map<String, WidgetBuilder> route = {
                 key: System.data.navigatorKey,
               );
             case 3:
-              return EmptyPageView(
+              return AkunView(
                 key: System.data.navigatorKey,
+                logout: () {
+                  Navigator.of(context).pushNamed(RouteName.loginMenu);
+                },
               );
             default:
               return EmptyPageView(
@@ -101,5 +109,20 @@ Map<String, WidgetBuilder> route = {
     return CreditSimulationView(
       key: System.data.navigatorKey,
     );
-  }
+  },
+  RouteName.loginMenu: (BuildContext context) {
+    return LoginView(
+      gotoSignup: () {
+        Navigator.of(context).pushNamed(RouteName.signupMenu, arguments: {});
+      },
+      gotoMain: () {
+        Navigator.of(context).pushNamed(RouteName.mainMenu, arguments: {});
+      },
+    );
+  },
+  RouteName.signupMenu: (BuildContext context) {
+    return SignupView(
+      key: System.data.navigatorKey,
+    );
+  },
 };

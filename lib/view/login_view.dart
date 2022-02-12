@@ -3,13 +3,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/login_view_model.dart';
+import 'package:sufismart/component/basic_component.dart';
+import 'package:sufismart/view_model/main_menu_view_model.dart';
 
 class LoginView extends StatefulWidget {
   final VoidCallback? gotoSignup;
+  final VoidCallback? gotoMain;
 
   const LoginView({
     Key? key,
     this.gotoSignup,
+    this.gotoMain,
   }) : super(key: key);
 
   @override
@@ -20,12 +24,14 @@ class LoginView extends StatefulWidget {
 
 class _LoginState extends State<LoginView> {
   LoginViewModel loginViewModel = LoginViewModel();
+  MainMenuViewModel mainMenuViewModel = MainMenuViewModel();
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: loginViewModel,
       child: Scaffold(
+        appBar: BasicComponent.appBar(actions: [BasicComponent.dropDownLang()]),
         body: SingleChildScrollView(
           child: Consumer<LoginViewModel>(
             builder: (c, d, w) {
@@ -91,7 +97,13 @@ class _LoginState extends State<LoginView> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: loginViewModel.login,
+                      onTap: () {
+                        loginViewModel.login();
+                        if (loginViewModel.emailValidation == false &&
+                            loginViewModel.passwordValidation == false) {
+                          widget.gotoMain!();
+                        }
+                      },
                       child: Container(
                         height: 50,
                         width: double.infinity,
@@ -120,8 +132,8 @@ class _LoginState extends State<LoginView> {
                         margin: const EdgeInsets.only(bottom: 5),
                         height: 50,
                         width: double.infinity,
-                        decoration: const BoxDecoration(
-                            color: Colors.grey,
+                        decoration: BoxDecoration(
+                            color: System.data.color!.primaryColor,
                             borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Center(
                           child: Text(

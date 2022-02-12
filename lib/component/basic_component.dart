@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/model/news_model.dart';
 import 'package:sufismart/util/system.dart';
+import '../view_model/main_menu_view_model.dart';
 
 class BasicComponent {
   static AppBar appBar({
@@ -17,6 +18,28 @@ class BasicComponent {
       ),
       actions: actions,
     );
+  }
+
+  static Widget dropDownLang() {
+    var mainMenuViewModel = MainMenuViewModel();
+    return DropdownButton<String>(
+        value: mainMenuViewModel.lang?.lang,
+        items: List.generate(mainMenuViewModel.langs.length, (index) {
+          return DropdownMenuItem<String>(
+            value: mainMenuViewModel.langs[index].lang,
+            child: Container(
+              height: 35,
+              color: Colors.transparent,
+              child: Image.asset(
+                mainMenuViewModel.langs[index].flag ?? "",
+              ),
+            ),
+          );
+        }),
+        onChanged: (lang) {
+          mainMenuViewModel.lang =
+              mainMenuViewModel.langs.where((e) => e.lang == lang).first;
+        });
   }
 
   static Widget newsImageContainer(NewsModel news) {

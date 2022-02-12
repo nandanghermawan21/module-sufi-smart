@@ -164,4 +164,31 @@ class StringsEnUs implements Strings {
 
   @override
   String get welcomeBack => "Welcome Back";
+
+  @override
+  String get judulSignup => "REGISTER";
+
+  @override
+  String get subJudulSignup => "Please fill up your account data";
+
+  @override
+  String get namalengkap => "Fullname";
+
+  @override
+  String get nomorponsel => "Phone Number";
+
+  @override
+  String get namapengguna => "Username";
+
+  @override
+  String get katasandi => "Password";
+
+  @override
+  String get kota => "Choose City";
+
+  @override
+  String get ktp => "Identity Number";
+
+  @override
+  String get keluar => "Logout";
 }
