@@ -65,21 +65,13 @@ Map<String, WidgetBuilder> route = {
                 },
               );
             case 1:
-              return AboutView(
-                key: System.data.navigatorKey,
-              );
+              return const AboutView();
             case 2:
-              return ContactView(
-                key: System.data.navigatorKey,
-              );
+              return const ContactView();
             case 3:
-              return LoginView(
-                key: System.data.navigatorKey,
-              );
+              return const LoginView();
             default:
-              return EmptyPageView(
-                key: System.data.navigatorKey,
-              );
+              return const EmptyPageView();
           }
         },
       ),

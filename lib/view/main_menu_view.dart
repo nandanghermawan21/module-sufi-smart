@@ -20,13 +20,23 @@ class MainMenuView extends StatefulWidget {
   _MainMenuViewState createState() => _MainMenuViewState();
 }
 
-class _MainMenuViewState extends State<MainMenuView> {
+class _MainMenuViewState extends State<MainMenuView>
+    with TickerProviderStateMixin {
   MainMenuViewModel mainMenuViewModel = MainMenuViewModel();
 
   @override
   void initState() {
     super.initState();
     mainMenuViewModel.initializeLang();
+    mainMenuViewModel.tabController =
+        TabController(length: widget.menus?.length ?? 0, vsync: this);
+    mainMenuViewModel.tabController?.addListener(() {
+      mainMenuViewModel.selectedIndex =
+          mainMenuViewModel.tabController?.index ?? 0;
+      final FancyBottomNavigationState fState = mainMenuViewModel
+          .bottomNavigationKey.currentState as FancyBottomNavigationState;
+      fState.setPage(mainMenuViewModel.selectedIndex);
+    });
   }
 
   @override
@@ -40,10 +50,17 @@ class _MainMenuViewState extends State<MainMenuView> {
               dropDownLang(),
             ]),
             backgroundColor: System.data.color!.background,
-            body: widget.onCreateBody != null
-                ? widget.onCreateBody!(
-                    widget.menus![vm.selectedIndex]!, vm.selectedIndex)
-                : null,
+            body: TabBarView(
+              controller: mainMenuViewModel.tabController,
+              children: List.generate(
+                widget.menus?.length ?? 0,
+                (index) {
+                  return Container(
+                    child: widget.onCreateBody!(widget.menus![index]!, index),
+                  );
+                },
+              ),
+            ),
             bottomNavigationBar: bottomNavigationBar(vm),
           );
         },
@@ -74,6 +91,7 @@ class _MainMenuViewState extends State<MainMenuView> {
 
   Widget bottomNavigationBar(MainMenuViewModel vm) {
     return FancyBottomNavigation(
+      key: vm.bottomNavigationKey,
       barBackgroundColor: System.data.color!.mainColor,
       activeIconColor: System.data.color!.mainColor,
       circleColor: System.data.color!.background,
