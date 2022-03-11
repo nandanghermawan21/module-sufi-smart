@@ -72,7 +72,7 @@ class ImagePickerComponent extends StatelessWidget {
           percentage: controller.value.percentageUpload,
         );
       case ImagePickerState.uploaded:
-        return loadedImage();
+        return uploadedImage();
       case ImagePickerState.uploadFiled:
         return const SizedBox();
       case ImagePickerState.loaded:
