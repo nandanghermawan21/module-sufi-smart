@@ -86,9 +86,6 @@ class SignupViewModel extends ChangeNotifier {
         ModeUtil.debugPrint("error dari upload adalah $onError");
       },
     );
-    // if (onRegisterSuccess != null) {
-    //   onRegisterSuccess();
-    // }
   }
 
   void commit() {
