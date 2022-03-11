@@ -56,16 +56,10 @@ class LoginViewModel extends ChangeNotifier {
         timer.cancel();
         circularLoaderController.stopLoading(
             message: "Login Berhasil",
-            isError: true,
+            isError: false,
             duration: const Duration(seconds: 10));
       },
     );
-    // emailTextEditingController.text.isEmpty
-    //     ? setEmailValidation = true
-    //     : setEmailValidation = false;
-    // passwordTextEditingController.text.isEmpty
-    //     ? setPasswordValidation = true
-    //     : setPasswordValidation = false;
   }
 
   void commit() {
