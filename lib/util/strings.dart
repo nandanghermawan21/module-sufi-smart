@@ -56,4 +56,18 @@ abstract class Strings {
   String get min10percent => "Min 10 %";
   String get insuranceType => "Tipe Asuransi";
   String get calculate => "Hitung";
+
+  String get daftar => "Daftar";
+
+  String get noKtp => "No Ktp";
+
+  String get isiKtp => "3576014403910003";
+
+  String get city => "Kota";
+
+  String get pleaseCompleteYourAccount => "Silahkan Lengkapi Akun Mu";
+
+  String get registration => "Registrasi";
+
+  String get logout => "logout";
 }

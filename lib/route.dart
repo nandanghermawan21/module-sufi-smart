@@ -3,6 +3,7 @@ import 'package:sufismart/model/menu_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view/contact_view.dart';
 import 'package:sufismart/view/empty_page_view.dart';
+import 'package:sufismart/view/login_view.dart';
 import 'package:sufismart/view/main_menu_view.dart';
 import 'package:sufismart/view/background_service.dart';
 import 'package:sufismart/view/about_view.dart';
@@ -10,8 +11,10 @@ import 'package:sufismart/view/home_view.dart';
 import 'package:sufismart/view/all_news_view.dart';
 import 'package:sufismart/view/news_detail_view.dart';
 import 'package:sufismart/view/credit_simulation_view.dart';
+import 'package:sufismart/view/profile_view.dart';
+import 'package:sufismart/view/sign_up_view.dart';
 
-String initialRouteName = RouteName.mainMenu;
+String initialRouteName = RouteName.login;
 
 class RouteName {
   static const String mainMenu = "mainMenu";
@@ -19,6 +22,9 @@ class RouteName {
   static const String detailNews = "detailNews";
   static const String backgroundService = "backgroundService";
   static const String creditSimulation = "creditSimulation";
+  static const String signUp = "signUp";
+  static const String profile = "profile";
+  static const String login = "login";
 }
 
 enum ParamName {
@@ -71,8 +77,13 @@ Map<String, WidgetBuilder> route = {
                 key: System.data.navigatorKey,
               );
             case 3:
-              return EmptyPageView(
-                key: System.data.navigatorKey,
+              return LoginView(
+                gotoSignup: () {
+                  Navigator.of(context).pushNamed(RouteName.signUp);
+                },
+                gotoProfile: () {
+                  Navigator.of(context).pushNamed(RouteName.profile);
+                },
               );
             default:
               return EmptyPageView(
@@ -98,8 +109,26 @@ Map<String, WidgetBuilder> route = {
   RouteName.backgroundService: (BuildContext context) =>
       const BackgroundService(),
   RouteName.creditSimulation: (BuildContext context) {
-    return CreditSimulationView(
-      key: System.data.navigatorKey,
-    );
-  }
+    return const CreditSimulationView();
+  },
+  RouteName.signUp: (BuildContext context) => SignUpView(
+        gotoProfile: () {
+          Navigator.of(context).pushNamed(RouteName.profile);
+        },
+      ),
+  RouteName.profile: (BuildContext context) {
+    return const ProfileView();
+  },
+  // RouteName.login: (BuildContext context) {
+  //   return const LoginView();
+  // }
+
+  RouteName.login: (BuildContext context) => LoginView(
+        gotoProfile: () {
+          Navigator.of(context).pushNamed(RouteName.profile);
+        },
+        gotoSignup: () {
+          Navigator.of(context).pushNamed(RouteName.signUp);
+        },
+      ),
 };

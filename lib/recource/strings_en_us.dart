@@ -164,4 +164,25 @@ class StringsEnUs implements Strings {
 
   @override
   String get welcomeBack => "Welcome Back";
+
+  @override
+  String get registration => "Registration";
+
+  @override
+  String get daftar => "Daftar";
+
+  @override
+  String get noKtp => "No Ktp";
+
+  @override
+  String get isiKtp => "3576014403910003";
+
+  @override
+  String get city => "Kota";
+
+  @override
+  String get pleaseCompleteYourAccount => "Silahkan Lengkapi Akun Mu";
+
+  @override
+  String get logout => "logout";
 }

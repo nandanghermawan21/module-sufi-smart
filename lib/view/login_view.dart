@@ -4,12 +4,16 @@ import 'package:provider/provider.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/login_view_model.dart';
 
+import 'package:sufismart/component/basic_component.dart';
+
 class LoginView extends StatefulWidget {
   final VoidCallback? gotoSignup;
+  final VoidCallback? gotoProfile;
 
   const LoginView({
     Key? key,
     this.gotoSignup,
+    this.gotoProfile,
   }) : super(key: key);
 
   @override
@@ -26,6 +30,7 @@ class _LoginState extends State<LoginView> {
     return ChangeNotifierProvider.value(
       value: loginViewModel,
       child: Scaffold(
+        appBar: BasicComponent.appBar(),
         body: SingleChildScrollView(
           child: Consumer<LoginViewModel>(
             builder: (c, d, w) {
@@ -91,7 +96,10 @@ class _LoginState extends State<LoginView> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: loginViewModel.login,
+                      //onTap: loginViewModel.login,
+                      onTap: () {
+                        widget.gotoProfile!();
+                      },
                       child: Container(
                         height: 50,
                         width: double.infinity,
@@ -120,9 +128,10 @@ class _LoginState extends State<LoginView> {
                         margin: const EdgeInsets.only(bottom: 5),
                         height: 50,
                         width: double.infinity,
-                        decoration: const BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        decoration: BoxDecoration(
+                            color: System.data.color!.primaryColor,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5))),
                         child: Center(
                           child: Text(
                             System.data.strings!.signUp,
