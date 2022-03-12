@@ -22,14 +22,14 @@ abstract class Strings {
   String get contactUs => "Hubungi Kami";
   String get pleaseFillInTheInformationBelowForComplaintsAndOtherServices =>
       "silakan isi informasi di bawah ini untuk keluhan dan layanan lainnya";
-  String get fullname => "nama lengkap";
+  String get fullname => "Nama Lengkap";
   String get phoneNumber => "nomor telepon";
   String get message => "pesan";
   String get send => "kirim";
   String get canNotBeEmpty => "tidak boleh kosong";
   String get login => "masuk";
   String get signUp => "daftar";
-  String get username => "nama pengguna";
+  String get username => "Nama Pengguna";
   String get password => "kata sandi";
   String get enterThe => "masukan";
   String get welcomeBack => "selamat datang kembali,";
@@ -56,4 +56,13 @@ abstract class Strings {
   String get min10percent => "Min 10 %";
   String get insuranceType => "Tipe Asuransi";
   String get calculate => "Hitung";
+  String get registration => "Registrasi";
+  String get pleaseCompleteYourAccount => "Silahkan lengkapi informasi akun anda";
+  String get daftar => "Daftar"; 
+  String get city => "Kota"; 
+  String get noKtp => "No Ktp"; 
+  String get male => "Laki-Laki";
+  String get female => "Perempuan";
+  String get logout => "Keluar";
+
 }

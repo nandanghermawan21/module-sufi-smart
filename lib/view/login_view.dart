@@ -6,10 +6,12 @@ import 'package:sufismart/view_model/login_view_model.dart';
 
 class LoginView extends StatefulWidget {
   final VoidCallback? gotoSignup;
+  final VoidCallback? gotoProfile;
 
   const LoginView({
     Key? key,
     this.gotoSignup,
+    this.gotoProfile,
   }) : super(key: key);
 
   @override
@@ -91,7 +93,10 @@ class _LoginState extends State<LoginView> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: loginViewModel.login,
+                      //onTap: loginViewModel.login,
+                      onTap: () {
+                        widget.gotoProfile!();
+                      },
                       child: Container(
                         height: 50,
                         width: double.infinity,
