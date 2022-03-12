@@ -1,9 +1,19 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
+import 'package:sufismart/component/image_picker_component.dart';
+import 'package:sufismart/util/mode_util.dart';
+import 'package:sufismart/util/system.dart';
 
 class SignupViewModel extends ChangeNotifier {
   TextEditingController nikController = TextEditingController();
+  ImagePickerController controller = ImagePickerController();
+  String? fileName;
+
   String? _nik;
   String? get nik => _nik;
   set nik(String? value) {
@@ -62,9 +72,22 @@ class SignupViewModel extends ChangeNotifier {
   }
 
   void register({VoidCallback? onRegisterSuccess}) {
-    if (onRegisterSuccess != null) {
-      onRegisterSuccess();
-    }
+    fileName = "fasdfasdfasdfafsdfasdf";
+    String url =
+        "http://api-suzuki.lemburkuring.id/api/Fileservice/upload?path=testupload&name=$fileName";
+    controller.uploadFile(
+      url: url,
+      header: {
+        HttpHeaders.authorizationHeader: "bearer ${System.data.global.token}"
+      },
+    ).then((value) {
+      controller.value.uploadedUrl = json.decode(value)["url"] as String;
+      controller.commit();
+    }).catchError(
+      (onError) {
+        ModeUtil.debugPrint("error dari upload adalah $onError");
+      },
+    );
   }
 
   void commit() {
