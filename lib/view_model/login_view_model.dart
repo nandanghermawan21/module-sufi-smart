@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:sufismart/component/circular_loader_component.dart';
+import 'package:sufismart/util/system.dart';
 
 class LoginViewModel extends ChangeNotifier {
   Future<void> onRefreshHomePage() async {
@@ -7,6 +11,8 @@ class LoginViewModel extends ChangeNotifier {
 
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
+  CircularLoaderController circularLoaderController =
+      CircularLoaderController();
 
   bool _emailValidation = false;
   bool get emailValidation => _emailValidation;
@@ -44,12 +50,24 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void login() {
-    emailTextEditingController.text.isEmpty
-        ? setEmailValidation = true
-        : setEmailValidation = false;
-    passwordTextEditingController.text.isEmpty
-        ? setPasswordValidation = true
-        : setPasswordValidation = false;
+    System.data.loadingController.startLoading();
+    //circularLoaderController.startLoading();
+    Timer.periodic(
+      const Duration(seconds: 10),
+      (timer) {
+        timer.cancel();
+        System.data.loadingController.stopLoading(
+          message: "Login error",
+          isError: true,
+        );
+      },
+    );
+    // emailTextEditingController.text.isEmpty
+    //     ? setEmailValidation = true
+    //     : setEmailValidation = false;
+    // passwordTextEditingController.text.isEmpty
+    //     ? setPasswordValidation = true
+    //     : setPasswordValidation = false;
   }
 
   void commit() {
