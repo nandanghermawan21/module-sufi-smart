@@ -3,15 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:sufismart/component/circular_loader_component.dart';
+import 'package:sufismart/route.dart';
 import 'package:sufismart/setting.dart';
 import 'package:sufismart/util/data.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
-import 'package:sufismart/route.dart';
 import 'package:uni_links/uni_links.dart';
+
 import 'route.dart';
 
 Data data = Data();
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   setting();
@@ -81,14 +84,21 @@ class MyAppState extends State<MyApp> {
       child: Consumer<Data>(
         builder: (c, d, w) {
           return MaterialApp(
-            title: System.data.strings!.appName,
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
+              home: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: CircularLoaderComponent(
+              controller: data.loaderController,
+              child: MaterialApp(
+                title: System.data.strings!.appName,
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                ),
+                routes: route,
+                initialRoute: initialRouteName,
+                navigatorKey: System.data.navigatorKey,
+              ),
             ),
-            routes: route,
-            initialRoute: initialRouteName,
-            navigatorKey: System.data.navigatorKey,
-          );
+          ));
         },
       ),
     );

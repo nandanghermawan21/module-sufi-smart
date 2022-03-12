@@ -4,16 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:sufismart/util/colour.dart';
 import 'package:sufismart/util/databases.dart';
-import 'package:sufismart/util/strings.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/one_signal_messaging.dart';
+import 'package:sufismart/util/strings.dart';
 
 import 'global.dart';
 
 class Data extends ChangeNotifier {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  CircularLoaderController loaderController = CircularLoaderController();
+
   BuildContext get context => navigatorKey.currentContext!;
   Global global = Global();
   Strings? strings;
