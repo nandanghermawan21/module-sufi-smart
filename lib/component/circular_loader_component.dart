@@ -7,12 +7,14 @@ class CircularLoaderComponent extends StatelessWidget {
   final CircularLoaderController controller;
   final Widget? child;
   final bool cover;
+  final Widget? loadingBuilder;
 
   const CircularLoaderComponent({
     Key? key,
     required this.controller,
     this.child,
     this.cover = true,
+    this.loadingBuilder,
   }) : super(key: key);
 
   @override
@@ -51,7 +53,7 @@ class CircularLoaderComponent extends StatelessWidget {
       case CircularLoaderState.idle:
         return const SizedBox();
       case CircularLoaderState.onLoading:
-        return onLoading();
+        return loadingBuilder == null ? onLoading() : loadingBuilder!;
       case CircularLoaderState.showError:
         return messageError();
       case CircularLoaderState.showMessage:

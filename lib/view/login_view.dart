@@ -29,7 +29,23 @@ class _LoginState extends State<LoginView> {
       child: Scaffold(
         body: CircularLoaderComponent(
           controller: loginViewModel.circularLoaderController,
+          loadingBuilder: null,
           child: body(),
+        ),
+      ),
+    );
+  }
+
+  Widget loadingIndicator() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        height: 50,
+        width: 50,
+        margin: const EdgeInsets.all(100),
+        child: const CircularProgressIndicator(
+          color: Colors.blue,
+          strokeWidth: 2,
         ),
       ),
     );

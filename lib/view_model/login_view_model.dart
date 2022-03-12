@@ -50,12 +50,12 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void login() {
-    System.data.loadingController.startLoading();
+    circularLoaderController.startLoading();
     Timer.periodic(
       const Duration(seconds: 3),
       (timer) {
         timer.cancel();
-        System.data.loadingController.forceStop(
+        circularLoaderController.forceStop(
             // message: "Login Berhasil",
             // isError: true,
             );
