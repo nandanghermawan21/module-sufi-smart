@@ -1,9 +1,15 @@
+import 'dart:io';
+import 'dart:convert';
+import 'package:sufismart/util/mode_util.dart';
 import 'package:flutter/material.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
+import '../component/image_picker_component.dart';
+import '../util/system.dart';
 
 class SignupViewModel extends ChangeNotifier {
   TextEditingController nikController = TextEditingController();
+  ImagePickerController imagePickerController = ImagePickerController();
   String? _nik;
   String? get nik => _nik;
   set nik(String? value) {
@@ -61,10 +67,29 @@ class SignupViewModel extends ChangeNotifier {
     commit();
   }
 
+  // void register({VoidCallback? onRegisterSuccess}) {
+  //   if (onRegisterSuccess != null) {
+  //     onRegisterSuccess();
+  //   }
+  // }
+
   void register({VoidCallback? onRegisterSuccess}) {
-    if (onRegisterSuccess != null) {
-      onRegisterSuccess();
-    }
+    String url =
+        "http://api-suzuki.lemburkuring.id/api/Fileservice/upload?path=testupload&name=filesaya";
+    imagePickerController.uploadFile(
+      url: url,
+      header: {
+        HttpHeaders.authorizationHeader: "bearer ${System.data.global.token}"
+      },
+    ).then((value) {
+      imagePickerController.value.uploadedUrl =
+          json.decode(value)["url"] as String;
+      imagePickerController.commit();
+    }).catchError(
+      (onError) {
+        ModeUtil.debugPrint("error dari upload adalah $onError");
+      },
+    );
   }
 
   void commit() {
