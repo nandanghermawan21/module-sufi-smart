@@ -2,9 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.sufismart">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application android:name="${applicationName}" android:icon="@mipmap/launcher_icon" android:label="Sufi Smart">
-        <service android:name=".BackNotife" android:enabled="true" android:exported="true"></service>
+        <service
+            android:name=".BackNotife"
+            android:enabled="true"
+            android:exported="true" />
         <service android:name=".MyIntentService" android:exported="false" />
 
         <activity android:name=".MainActivity" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:exported="true" android:hardwareAccelerated="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:windowSoftInputMode="adjustResize">
