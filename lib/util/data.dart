@@ -9,11 +9,13 @@ import 'package:sufismart/util/databases.dart';
 import 'package:sufismart/util/strings.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/one_signal_messaging.dart';
+import 'package:sufismart/component/circular_loader_component.dart';
 
 import 'global.dart';
 
 class Data extends ChangeNotifier {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  CircularLoaderController loadingcontroller = CircularLoaderController();
   BuildContext get context => navigatorKey.currentContext!;
   Global global = Global();
   Strings? strings;
