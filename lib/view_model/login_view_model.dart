@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
+import 'package:sufismart/util/system.dart';
 
 class LoginViewModel extends ChangeNotifier {
   Future<void> onRefreshHomePage() async {
@@ -49,15 +50,15 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void login() {
-    circularLoaderController.startLoading();
+    System.data.loadingController.startLoading();
     Timer.periodic(
       const Duration(seconds: 3),
       (timer) {
         timer.cancel();
-        circularLoaderController.stopLoading(
-          message: "Login Gagal",
-          isError: true,
-        );
+        System.data.loadingController.forceStop(
+            // message: "Login Berhasil",
+            // isError: true,
+            );
       },
     );
 
