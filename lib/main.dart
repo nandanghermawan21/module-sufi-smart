@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/setting.dart';
 import 'package:sufismart/util/data.dart';
 import 'package:sufismart/util/mode_util.dart';
@@ -81,16 +82,28 @@ class MyAppState extends State<MyApp> {
       child: Consumer<Data>(
         builder: (c, d, w) {
           return MaterialApp(
-            title: System.data.strings!.appName,
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
+            home: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: CircularLoaderComponent(
+                controller: data.loadingController,
+                child: home(),
+              ),
             ),
-            routes: route,
-            initialRoute: initialRouteName,
-            navigatorKey: System.data.navigatorKey,
           );
         },
       ),
+    );
+  }
+
+  Widget home() {
+    return MaterialApp(
+      title: System.data.strings!.appName,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      routes: route,
+      initialRoute: initialRouteName,
+      navigatorKey: System.data.navigatorKey,
     );
   }
 
