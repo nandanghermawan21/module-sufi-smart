@@ -6,6 +6,7 @@ import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/signup_view_model.dart';
+import 'package:sufismart/component/image_picker_component.dart';
 
 class SignupView extends StatefulWidget {
   final VoidCallback? onRegisterSucces;
@@ -122,29 +123,15 @@ class _SignupViewState extends State<SignupView> {
   }
 
   Widget imagePicker() {
-    return Container(
-      height: 120,
-      width: 120,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(15),
-        ),
-        border: Border.all(color: Colors.grey),
-        image: const DecorationImage(
-            image: AssetImage(
-              "assets/icon_camera.png",
-            ),
-            scale: 3,
-            repeat: ImageRepeat.noRepeat,
-            alignment: Alignment.center,
-            fit: BoxFit.none),
-      ),
+    return ImagePickerComponent(
+      controller: signupViewModel.controller,
+      camera: true,
     );
   }
 
   Widget group2() {
     return Container(
-      height: 120,
+      height: 125,
       color: Colors.transparent,
       child: Column(
         children: [
