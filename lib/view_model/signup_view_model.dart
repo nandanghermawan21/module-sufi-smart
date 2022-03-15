@@ -27,7 +27,7 @@ class SignupViewModel extends ChangeNotifier {
     commit();
   }
 
-  Future<List<GenderModel>> genders = GenderModel.getAll();
+  List<GenderModel> genders = GenderModel.getAll();
 
   CityModel? _city;
   CityModel? get city => _city;
@@ -36,7 +36,7 @@ class SignupViewModel extends ChangeNotifier {
     commit();
   }
 
-  Future<List<CityModel>> cities = CityModel.getAll();
+  List<CityModel> citys = CityModel.getAll();
 
   TextEditingController fullnameController = TextEditingController();
   String? _fullname;
