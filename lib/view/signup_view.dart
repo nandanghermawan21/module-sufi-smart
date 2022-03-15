@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
-import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/signup_view_model.dart';
+import 'package:sufismart/component/image_picker_component.dart';
 
 class SignupView extends StatefulWidget {
   final VoidCallback? onRegisterSucces;
@@ -125,7 +125,9 @@ class _SignupViewState extends State<SignupView> {
 
   Widget imagePicker() {
     return ImagePickerComponent(
-        controller: signupViewModel.imagePickerController);
+      controller: signupViewModel.controller,
+      camera: true,
+    );
   }
 
   Widget group2() {
