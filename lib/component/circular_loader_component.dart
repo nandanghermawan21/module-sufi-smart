@@ -5,14 +5,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CircularLoaderComponent extends StatelessWidget {
   final CircularLoaderController controller;
-  final bool cover;
   final Widget? child;
+  final bool cover;
+  final Widget? loadingBuilder;
 
   const CircularLoaderComponent({
     Key? key,
     required this.controller,
-    this.cover = true,
     this.child,
+    this.cover = true,
+    this.loadingBuilder,
   }) : super(key: key);
 
   @override
@@ -20,26 +22,26 @@ class CircularLoaderComponent extends StatelessWidget {
     return ValueListenableBuilder<CircularLoaderValue>(
       valueListenable: controller,
       builder: (ctx, value, widget) {
-        return Container(
-          width: double.infinity,
-          height: double.infinity,
-          color: null,
-          child: Stack(
-            children: [
-              child ?? const SizedBox(),
-              GestureDetector(
-                onTap: controller.close,
-                child: Container(
+        return GestureDetector(
+          onTap: () {
+            controller.close();
+          },
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.transparent,
+            child: Stack(
+              children: [
+                child ?? const SizedBox(),
+                Container(
                   color: (cover && value.state != CircularLoaderState.idle) ==
                           false
                       ? null
-                      : Colors.grey.shade400.withOpacity(0.4),
-                  child: childBuilder(
-                    value.state,
-                  ),
-                ),
-              ),
-            ],
+                      : Colors.grey.shade400.withOpacity(0.6),
+                  child: childBuilder(value.state),
+                )
+              ],
+            ),
           ),
         );
       },
@@ -51,7 +53,7 @@ class CircularLoaderComponent extends StatelessWidget {
       case CircularLoaderState.idle:
         return const SizedBox();
       case CircularLoaderState.onLoading:
-        return onLoading();
+        return loadingBuilder == null ? onLoading() : loadingBuilder!;
       case CircularLoaderState.showError:
         return messageError();
       case CircularLoaderState.showMessage:
@@ -81,11 +83,11 @@ class CircularLoaderComponent extends StatelessWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              width: 50,
               height: 50,
+              width: 50,
               padding: const EdgeInsets.all(10),
               color: Colors.transparent,
               child: const CircularProgressIndicator(
@@ -96,12 +98,10 @@ class CircularLoaderComponent extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Text(controller.value.loadingMessage ?? "Loading..."),
-              ),
-            ),
+            const Expanded(
+                child: Text(
+              "Loading",
+            ))
           ],
         ),
       ),
@@ -110,84 +110,90 @@ class CircularLoaderComponent extends StatelessWidget {
 
   Widget message() {
     return Align(
-        alignment: Alignment.center,
-        child: Container(
-          margin: const EdgeInsets.only(left: 40, right: 40),
-          padding: const EdgeInsets.all(15),
-          height: 150,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            border: Border.all(
-              color: Colors.grey,
+      alignment: Alignment.center,
+      child: Container(
+        margin: const EdgeInsets.only(left: 40, right: 40),
+        padding: const EdgeInsets.all(15),
+        height: 150,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          border: Border.all(
+            color: Colors.grey,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade400,
+              blurRadius: 5,
+              offset: const Offset(2, 2),
+            )
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Icon(
+              FontAwesomeIcons.checkCircle,
+              color: Colors.green,
+              size: 50,
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade400,
-                blurRadius: 5,
-                offset: const Offset(2, 2),
-              )
-            ],
-          ),
-          child: Column(
-            children: [
-              const Icon(
-                FontAwesomeIcons.checkCircle,
-                color: Colors.green,
-                size: 50,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                controller.value.message ?? "",
-                textAlign: TextAlign.center,
-              )
-            ],
-          ),
-        ));
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              controller.value.message ?? "Success",
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget messageError() {
     return Align(
-        alignment: Alignment.center,
-        child: Container(
-          margin: const EdgeInsets.only(left: 40, right: 40),
-          padding: const EdgeInsets.all(15),
-          height: 150,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            border: Border.all(
-              color: Colors.grey,
+      alignment: Alignment.center,
+      child: Container(
+        margin: const EdgeInsets.only(left: 40, right: 40),
+        padding: const EdgeInsets.all(15),
+        height: 150,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          border: Border.all(
+            color: Colors.grey,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade400,
+              blurRadius: 5,
+              offset: const Offset(2, 2),
+            )
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Icon(
+              FontAwesomeIcons.timesCircle,
+              color: Colors.red,
+              size: 50,
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade400,
-                blurRadius: 5,
-                offset: const Offset(2, 2),
-              )
-            ],
-          ),
-          child: Column(
-            children: [
-              const Icon(
-                FontAwesomeIcons.timesCircle,
-                color: Colors.red,
-                size: 50,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                controller.value.message ?? "",
-                textAlign: TextAlign.center,
-              )
-            ],
-          ),
-        ));
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              controller.value.message ?? "Error",
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -209,7 +215,6 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
     value.state = isError == true
         ? CircularLoaderState.showError
         : CircularLoaderState.showMessage;
-    value.message = message;
 
     if (duration != null) {
       Timer.periodic(duration, (timer) {
@@ -218,10 +223,19 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
       });
     }
 
+    if (message != null) {
+      value.message = message;
+    }
+
     if (onCloseCallBack != null) {
       onCloseCallBack();
     }
 
+    commit();
+  }
+
+  void forceStop() {
+    value.state = CircularLoaderState.idle;
     commit();
   }
 
@@ -238,7 +252,6 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
 
 class CircularLoaderValue {
   CircularLoaderState state = CircularLoaderState.idle;
-  String? loadingMessage;
   String? message;
 }
 

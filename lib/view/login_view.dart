@@ -29,123 +29,143 @@ class _LoginState extends State<LoginView> {
       child: Scaffold(
         body: CircularLoaderComponent(
           controller: loginViewModel.circularLoaderController,
-          child: SingleChildScrollView(
-            child: Consumer<LoginViewModel>(
-              builder: (c, d, w) {
-                return Container(
-                  margin: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 5),
-                        width: MediaQuery.of(context).size.width,
-                        child: Text(
-                          System.data.strings!.welcomeBack,
-                          style: TextStyle(
-                              color: System.data.color!.primaryColor,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 10),
-                        width: MediaQuery.of(context).size.width,
-                        child: Text(
-                          System.data.strings!
-                              .enterYourEmailAndPasswordRegisteredInTheSUFISMARTApplication,
-                          style: TextStyle(
-                            color: System.data.color!.primaryColor,
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                      TextField(
-                        controller: loginViewModel.emailTextEditingController,
-                        decoration: InputDecoration(
-                          labelText:
-                              '${System.data.strings!.enterThe} ${System.data.strings!.email}',
-                          errorText: loginViewModel.emailValidation
-                              ? '${System.data.strings!.email} ${System.data.strings!.cantBeEmpty}'
-                              : null,
-                        ),
-                      ),
-                      TextField(
-                        controller:
-                            loginViewModel.passwordTextEditingController,
-                        obscureText: loginViewModel.showPassword,
-                        decoration: InputDecoration(
-                          labelText:
-                              '${System.data.strings!.enterThe} ${System.data.strings!.password}',
-                          errorText: loginViewModel.passwordValidation
-                              ? '${System.data.strings!.password} ${System.data.strings!.cantBeEmpty}'
-                              : null,
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              loginViewModel.setShowPassword =
-                                  !loginViewModel.showPassword;
-                            },
-                            icon: Icon(
-                              loginViewModel.showPassword
-                                  ? FontAwesomeIcons.eye
-                                  : FontAwesomeIcons.eyeSlash,
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: loginViewModel.login,
-                        child: Container(
-                          height: 50,
-                          width: double.infinity,
-                          margin: const EdgeInsets.only(bottom: 10, top: 30),
-                          decoration: BoxDecoration(
-                              color: System.data.color!.primaryColor,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(5))),
-                          child: Center(
-                            child: Text(
-                              System.data.strings!.login,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          widget.gotoSignup!();
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          height: 50,
-                          width: double.infinity,
-                          decoration: const BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
-                          child: Center(
-                            child: Text(
-                              System.data.strings!.signUp,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+          loadingBuilder: null,
+          child: body(),
+        ),
+      ),
+    );
+  }
+
+  Widget loadingIndicator() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        height: 50,
+        width: 50,
+        margin: const EdgeInsets.all(100),
+        child: const CircularProgressIndicator(
+          color: Colors.blue,
+          strokeWidth: 2,
+        ),
+      ),
+    );
+  }
+
+  Widget body() {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Consumer<LoginViewModel>(
+          builder: (c, d, w) {
+            return Container(
+              margin: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 5),
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      System.data.strings!.welcomeBack,
+                      style: TextStyle(
+                          color: System.data.color!.primaryColor,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
                   ),
-                );
-              },
-            ),
-          ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      System.data.strings!
+                          .enterYourEmailAndPasswordRegisteredInTheSUFISMARTApplication,
+                      style: TextStyle(
+                        color: System.data.color!.primaryColor,
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  TextField(
+                    controller: loginViewModel.emailTextEditingController,
+                    decoration: InputDecoration(
+                      labelText:
+                          '${System.data.strings!.enterThe} ${System.data.strings!.email}',
+                      errorText: loginViewModel.emailValidation
+                          ? '${System.data.strings!.email} ${System.data.strings!.cantBeEmpty}'
+                          : null,
+                    ),
+                  ),
+                  TextField(
+                    controller: loginViewModel.passwordTextEditingController,
+                    obscureText: loginViewModel.showPassword,
+                    decoration: InputDecoration(
+                      labelText:
+                          '${System.data.strings!.enterThe} ${System.data.strings!.password}',
+                      errorText: loginViewModel.passwordValidation
+                          ? '${System.data.strings!.password} ${System.data.strings!.cantBeEmpty}'
+                          : null,
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          loginViewModel.setShowPassword =
+                              !loginViewModel.showPassword;
+                        },
+                        icon: Icon(
+                          loginViewModel.showPassword
+                              ? FontAwesomeIcons.eye
+                              : FontAwesomeIcons.eyeSlash,
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: loginViewModel.login,
+                    child: Container(
+                      height: 50,
+                      width: double.infinity,
+                      margin: const EdgeInsets.only(bottom: 10, top: 30),
+                      decoration: BoxDecoration(
+                          color: System.data.color!.primaryColor,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5))),
+                      child: Center(
+                        child: Text(
+                          System.data.strings!.login,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      widget.gotoSignup!();
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 5),
+                      height: 50,
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                      child: Center(
+                        child: Text(
+                          System.data.strings!.signUp,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
