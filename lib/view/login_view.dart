@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:sufismart/component/circular_loader_component.dart';
+import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/login_view_model.dart';
 
@@ -26,10 +26,10 @@ class _LoginState extends State<LoginView> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: loginViewModel,
-      child: Scaffold(
-        body: CircularLoaderComponent(
-          controller: loginViewModel.circularLoaderController,
-          child: SingleChildScrollView(
+      child: CircularLoaderComponent(
+        controller: loginViewModel.circularLoaderController,
+        child: Scaffold(
+          body: SingleChildScrollView(
             child: Consumer<LoginViewModel>(
               builder: (c, d, w) {
                 return Container(
@@ -124,10 +124,10 @@ class _LoginState extends State<LoginView> {
                           margin: const EdgeInsets.only(bottom: 5),
                           height: 50,
                           width: double.infinity,
-                          decoration: const BoxDecoration(
-                              color: Colors.grey,
+                          decoration: BoxDecoration(
+                              color: System.data.color!.primaryColor,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
+                                  const BorderRadius.all(Radius.circular(5))),
                           child: Center(
                             child: Text(
                               System.data.strings!.signUp,
