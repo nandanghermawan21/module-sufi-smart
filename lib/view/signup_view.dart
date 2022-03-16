@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
@@ -49,7 +50,7 @@ class _SignupViewState extends State<SignupView> {
                       const SizedBox(
                         height: 10,
                       ),
-                      city(),
+                      cityFuture(),
                       const SizedBox(
                         height: 10,
                       ),
@@ -124,7 +125,7 @@ class _SignupViewState extends State<SignupView> {
 
   Widget imagePicker() {
     return ImagePickerComponent(
-      controller: signupViewModel.controller,
+      controller: signupViewModel.imagePickerController,
       camera: true,
     );
   }
@@ -140,7 +141,7 @@ class _SignupViewState extends State<SignupView> {
             height: 5,
           ),
           Expanded(
-            child: gender(),
+            child: genderFuture(),
           ),
         ],
       ),
@@ -176,21 +177,46 @@ class _SignupViewState extends State<SignupView> {
     );
   }
 
-  Widget gender() {
+  Widget genderFuture() {
+    return FutureBuilder<List<GenderModel>>(
+      future: signupViewModel.genders,
+      initialData: const [],
+      builder: (ctx, snap) {
+        if (snap.hasData) {
+          return gender(snap.data ?? []);
+        } else {
+          return SkeletonAnimation(
+            child: Container(
+              margin: const EdgeInsets.only(left: 15),
+              height: 100,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(5),
+                ),
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Widget gender(List<GenderModel> genders) {
     return Container(
       height: 50,
       color: Colors.transparent,
       padding: const EdgeInsets.all(0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: List.generate(signupViewModel.genders.length, (index) {
+        children: List.generate(genders.length, (index) {
           return Expanded(
             child: Row(
               children: [
                 Radio<GenderModel>(
-                  value: signupViewModel.genders[index],
+                  value: genders[index],
                   onChanged: (val) {
-                    signupViewModel.gender = signupViewModel.genders[index];
+                    signupViewModel.gender = genders[index];
                   },
                   activeColor: System.data.color!.primaryColor,
                   groupValue: signupViewModel.gender,
@@ -202,7 +228,7 @@ class _SignupViewState extends State<SignupView> {
                       height: 15,
                       color: Colors.transparent,
                       child: FittedBox(
-                        child: Text(signupViewModel.genders[index].name ?? ""),
+                        child: Text(genders[index].name ?? ""),
                       )),
                 ),
               ],
@@ -239,7 +265,30 @@ class _SignupViewState extends State<SignupView> {
     );
   }
 
-  Widget city() {
+  Widget cityFuture() {
+    return FutureBuilder<List<CityModel>>(
+      future: signupViewModel.cities,
+      initialData: const [],
+      builder: (ctx, snap) {
+        if (snap.hasData) {
+          return city(snap.data ?? []);
+        } else {
+          return SkeletonAnimation(
+              child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: const BorderRadius.all(
+                Radius.circular(5),
+              ),
+            ),
+          ));
+        }
+      },
+    );
+  }
+
+  Widget city(List<CityModel> cities) {
     return Container(
       width: double.infinity,
       height: 50,
@@ -259,13 +308,13 @@ class _SignupViewState extends State<SignupView> {
           ],
         ),
         value: signupViewModel.city,
-        items: List.generate(signupViewModel.citys.length, (index) {
+        items: List.generate(cities.length, (index) {
           return DropdownMenuItem<CityModel>(
-              value: signupViewModel.citys[index],
+              value: cities[index],
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(signupViewModel.citys[index].name ?? ""),
+                  Text(cities[index].name ?? ""),
                 ],
               ));
         }),
