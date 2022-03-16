@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
+import 'package:sufismart/component/pin_component.dart';
 
 class LoginViewModel extends ChangeNotifier {
   Future<void> onRefreshHomePage() async {
@@ -12,6 +13,7 @@ class LoginViewModel extends ChangeNotifier {
   TextEditingController passwordTextEditingController = TextEditingController();
   CircularLoaderController circularLoaderController =
       CircularLoaderController();
+  PinComponentController pinComponentController = PinComponentController();
 
   bool _emailValidation = false;
   bool get emailValidation => _emailValidation;
