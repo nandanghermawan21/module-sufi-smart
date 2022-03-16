@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
+import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/signup_view_model.dart';
-import 'package:sufismart/component/image_picker_component.dart';
 
 class SignupView extends StatefulWidget {
   final VoidCallback? onRegisterSucces;
@@ -49,7 +50,7 @@ class _SignupViewState extends State<SignupView> {
                       const SizedBox(
                         height: 10,
                       ),
-                      city(),
+                      cityFuture(),
                       const SizedBox(
                         height: 10,
                       ),
@@ -124,9 +125,7 @@ class _SignupViewState extends State<SignupView> {
 
   Widget imagePicker() {
     return ImagePickerComponent(
-      controller: signupViewModel.controller,
-      camera: true,
-    );
+        controller: signupViewModel.imagePickerController);
   }
 
   Widget group2() {
@@ -239,7 +238,30 @@ class _SignupViewState extends State<SignupView> {
     );
   }
 
-  Widget city() {
+  Widget cityFuture() {
+    return FutureBuilder<List<CityModel>>(
+      future: signupViewModel.cities,
+      initialData: const [],
+      builder: (ctx, snap) {
+        if (snap.hasData) {
+          return city(snap.data ?? []);
+        } else {
+          return SkeletonAnimation(
+              child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: const BorderRadius.all(
+                Radius.circular(5),
+              ),
+            ),
+          ));
+        }
+      },
+    );
+  }
+
+  Widget city(List<CityModel> cities) {
     return Container(
       width: double.infinity,
       height: 50,
@@ -259,13 +281,13 @@ class _SignupViewState extends State<SignupView> {
           ],
         ),
         value: signupViewModel.city,
-        items: List.generate(signupViewModel.citys.length, (index) {
+        items: List.generate(cities.length, (index) {
           return DropdownMenuItem<CityModel>(
-              value: signupViewModel.citys[index],
+              value: cities[index],
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(signupViewModel.citys[index].name ?? ""),
+                  Text(cities[index].name ?? ""),
                 ],
               ));
         }),
