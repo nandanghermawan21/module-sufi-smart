@@ -62,4 +62,5 @@ abstract class Strings {
   String get nIK => "NIK";
   String get city => "Kota";
   String get logOut => "Keluar";
+  String get otp => "OTP";
 }

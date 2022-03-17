@@ -17,7 +17,7 @@ class ImagePickerComponent extends StatelessWidget {
     required this.controller,
     this.height = 120,
     this.width = 120,
-    this.placeHolderImageAsset = "ssets/icon_camera.png",
+    this.placeHolderImageAsset = "assets/icon_camera.png",
   }) : super(key: key);
 
   @override

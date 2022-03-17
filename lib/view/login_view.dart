@@ -140,6 +140,30 @@ class _LoginState extends State<LoginView> {
                           ),
                         ),
                       ),
+                      GestureDetector(
+                        onTap: () {
+                          loginViewModel.otp();
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 5),
+                          height: 50,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: System.data.color!.primaryColor,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(5))),
+                          child: Center(
+                            child: Text(
+                              System.data.strings!.otp,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 );
