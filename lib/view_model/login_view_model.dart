@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
+import 'package:sufismart/component/otp_component.dart';
 
 class LoginViewModel extends ChangeNotifier {
   Future<void> onRefreshHomePage() async {
@@ -10,8 +11,11 @@ class LoginViewModel extends ChangeNotifier {
 
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
+
   CircularLoaderController circularLoaderController =
       CircularLoaderController();
+
+  OTPController otpController = OTPController();
 
   bool _emailValidation = false;
   bool get emailValidation => _emailValidation;
@@ -49,17 +53,17 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void login() {
-    circularLoaderController.startLoading();
-    Timer.periodic(
-      const Duration(seconds: 10),
-      (timer) {
-        timer.cancel();
-        circularLoaderController.stopLoading(
-            message: "Login Berhasil",
-            isError: false,
-            duration: const Duration(seconds: 10));
-      },
-    );
+    otpController.startLoading();
+    // Timer.periodic(
+    //   const Duration(seconds: 10),
+    //   (timer) {
+    //     timer.cancel();
+    //     circularLoaderController.stopLoading(
+    //         message: "Login Berhasil",
+    //         isError: false,
+    //         duration: const Duration(seconds: 10));
+    //   },
+    // );
   }
 
   void commit() {

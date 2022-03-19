@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
+import 'package:sufismart/component/otp_component.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/login_view_model.dart';
 
@@ -26,8 +27,8 @@ class _LoginState extends State<LoginView> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: loginViewModel,
-      child: CircularLoaderComponent(
-        controller: loginViewModel.circularLoaderController,
+      child: OtpComponent(
+        controller: loginViewModel.otpController,
         child: Scaffold(
           body: SingleChildScrollView(
             child: Consumer<LoginViewModel>(
