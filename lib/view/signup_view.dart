@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
+import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
 import 'package:sufismart/util/system.dart';
@@ -119,24 +120,8 @@ class _SignupViewState extends State<SignupView> {
   }
 
   Widget imagePicker() {
-    return Container(
-      height: 120,
-      width: 120,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(15),
-        ),
-        border: Border.all(color: Colors.grey),
-        image: const DecorationImage(
-            image: AssetImage(
-              "assets/icon_camera.png",
-            ),
-            scale: 3,
-            repeat: ImageRepeat.noRepeat,
-            alignment: Alignment.center,
-            fit: BoxFit.none),
-      ),
-    );
+    return ImagePickerComponent(
+        controller: signupViewModel.imagePickerController);
   }
 
   Widget group2() {
