@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.sufismart">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
-    <application android:name="${applicationName}" android:icon="@mipmap/launcher_icon" android:label="Sufi Smart">
+    <application android:name="${applicationName}" android:icon="@mipmap/la uncher_icon" android:label="Sufi Smart">
         <service android:name=".BackNotife" android:enabled="true" android:exported="true"></service>
         <service android:name=".MyIntentService" android:exported="false" />
 
