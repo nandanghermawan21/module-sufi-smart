@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:sufismart/util/api_endpoint.dart';
 import 'package:sufismart/util/colour.dart';
 import 'package:sufismart/util/databases.dart';
 import 'package:sufismart/util/strings.dart';
@@ -17,6 +18,7 @@ class Data extends ChangeNotifier {
   BuildContext get context => navigatorKey.currentContext!;
   Global global = Global();
   Strings? strings;
+  ApiEndPoint? apiEndPoint;
   Colour? color;
   OneSignalMessaging? oneSignalMessaging;
   List<Permission> permission = [];
