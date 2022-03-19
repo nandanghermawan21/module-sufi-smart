@@ -1,12 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
-import 'package:sufismart/util/mode_util.dart';
-import 'package:sufismart/util/system.dart';
 
 class SignupViewModel extends ChangeNotifier {
   TextEditingController nikController = TextEditingController();
@@ -18,16 +13,21 @@ class SignupViewModel extends ChangeNotifier {
   }
 
   GenderModel? _gender;
+
   GenderModel? get gender => _gender;
+
   set gender(GenderModel? type) {
     _gender = type;
     commit();
   }
 
-  List<GenderModel> genders = GenderModel.getAll();
+  //List<GenderModel> genders = GenderModel.getAll();
+  Future<List<GenderModel>> genders = GenderModel.getAll();
 
   CityModel? _city;
+
   CityModel? get city => _city;
+
   set city(CityModel? type) {
     _city = type;
     commit();
@@ -70,22 +70,23 @@ class SignupViewModel extends ChangeNotifier {
   ImagePickerController imagePickerController = ImagePickerController();
 
   void register({VoidCallback? onRegisterSuccess}) {
-    String url =
-        "http://api-suzuki.lemburkuring.id/api/Fileservice/upload?path=testupload&name=filesaya";
-    imagePickerController.uploadFile(
-      url: url,
-      header: {
-        HttpHeaders.authorizationHeader: "bearer ${System.data.global.token}"
-      },
-    ).then((value) {
-      imagePickerController.value.uploadedUrl =
-          json.decode(value)["url"] as String;
-      imagePickerController.commit();
-    }).catchError(
-      (onError) {
-        ModeUtil.debugPrint("error dari upload adalah $onError");
-      },
-    );
+    // String url =
+    //     "http://api-suzuki.lemburkuring.id/api/Fileservice/upload?path=testupload&name=filesaya";
+    // imagePickerController.uploadFile(
+    //   url: url,
+    //   header: {
+    //     HttpHeaders.authorizationHeader: "bearer ${System.data.global.token}"
+    //   },
+    // ).then((value) {
+    //   imagePickerController.value.uploadedUrl =
+    //       json.decode(value)["url"] as String;
+    //   imagePickerController.commit();
+    // }).catchError(
+    //   (onError) {
+    //     ModeUtil.debugPrint("error dari upload adalah $onError");
+    //   },
+    // );
+
     // if (onRegisterSuccess != null) {
     //   onRegisterSuccess();
     // }
