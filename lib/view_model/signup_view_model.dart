@@ -1,18 +1,23 @@
 // import 'dart:convert';
 // import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
 // import 'package:sufismart/util/mode_util.dart';
 // import 'package:sufismart/util/system.dart';
-// import 'package:sufismart/model/register_model.dart';
+import 'package:sufismart/model/register_model.dart';
+import 'package:sufismart/util/error_handling_util.dart';
+import 'package:sufismart/util/system.dart';
 
 class SignupViewModel extends ChangeNotifier {
   ImagePickerController imagePickerController = ImagePickerController();
 
   TextEditingController nikController = TextEditingController();
+
+  CircularLoaderController loadingController = CircularLoaderController();
+
   String? _nik;
   String? get nik => _nik;
   set nik(String? value) {
@@ -69,6 +74,33 @@ class SignupViewModel extends ChangeNotifier {
   }
 
   void register({VoidCallback? onRegisterSuccess}) {
+    loadingController.startLoading();
+    RegisterModel.post(
+      registerModel: RegisterModel(
+        avatar: imagePickerController.value.fileBase64Compresed,
+        nik: nikController.text,
+        genderId: gender?.id,
+        fullName: fullnameController.text,
+        cityId: city?.id,
+        phoneNumber: phonenumberController.text.replaceFirst("0", "+62"),
+        username: usernameController.text,
+        password: passwordController.text,
+        deviceId: System.data.global.messagingToken,
+      ),
+    ).then((value) {
+      loadingController.stopLoading(
+        message: "${value?.toJson()}",
+        isError: false,
+      );
+    }).catchError(
+      (onError) {
+        loadingController.stopLoading(
+          message: ErrorHandlingUtil.handleApiError(onError),
+          isError: true,
+        );
+      },
+    );
+
     // String url =
     //     "http://api-suzuki.lemburkuring.id/api/Fileservice/upload?path=testupload&name=filesaya";
     // imagePickerController.uploadFile(

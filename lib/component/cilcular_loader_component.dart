@@ -143,6 +143,7 @@ class CircularLoaderComponent extends StatelessWidget {
               Text(
                 controller.value.message ?? "",
                 textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 8),
               )
             ],
           ),
@@ -184,6 +185,7 @@ class CircularLoaderComponent extends StatelessWidget {
               Text(
                 controller.value.message ?? "",
                 textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 8),
               )
             ],
           ),
