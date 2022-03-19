@@ -11,7 +11,6 @@ import 'package:sufismart/view/home_view.dart';
 import 'package:sufismart/view/all_news_view.dart';
 import 'package:sufismart/view/news_detail_view.dart';
 import 'package:sufismart/view/credit_simulation_view.dart';
-import 'package:sufismart/view/signup_view.dart';
 import 'package:sufismart/view/dashboard_view.dart';
 
 String initialRouteName = RouteName.mainMenu;
@@ -100,13 +99,6 @@ Map<String, WidgetBuilder> route = {
       const BackgroundService(),
   RouteName.creditSimulation: (BuildContext context) {
     return const CreditSimulationView();
-  },
-  RouteName.signUp: (BuildContext context) {
-    return SignupView(
-      onRegisterSucces: () {
-        Navigator.of(context).pushNamed(RouteName.dashboard);
-      },
-    );
   },
   RouteName.dashboard: (BuildContext context) {
     return const DashboardView();
