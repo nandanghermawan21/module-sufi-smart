@@ -153,8 +153,8 @@ class ImagePickerController extends ValueNotifier<ImagePickerValue> {
 
   Future<ImagePickerValue> getImages({
     bool camera = true,
-    int imageQuality = 30,
-    int compresedQuality = 50,
+    int imageQuality = 100,
+    int compresedQuality = 5,
   }) async {
     try {
       File _image;
