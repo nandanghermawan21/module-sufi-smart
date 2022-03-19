@@ -48,8 +48,71 @@ class PinComponent extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Container(
-                color: Colors.green,
-                child: Column(),
+                color: Colors.transparent,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          keyPad(
+                            label: "1",
+                          ),
+                          keyPad(
+                            label: "2",
+                          ),
+                          keyPad(
+                            label: "3",
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          keyPad(
+                            label: "4",
+                          ),
+                          keyPad(
+                            label: "5",
+                          ),
+                          keyPad(
+                            label: "6",
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          keyPad(
+                            label: "7",
+                          ),
+                          keyPad(
+                            label: "8",
+                          ),
+                          keyPad(
+                            label: "9",
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          keyPad(
+                            label: "Clear",
+                          ),
+                          keyPad(
+                            label: "0",
+                          ),
+                          keyPad(
+                            label: "Delete",
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -57,6 +120,33 @@ class PinComponent extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget keyPad({
+  String? label,
+  VoidCallback? onTap,
+}) {
+  return Expanded(
+    child: Container(
+      margin: const EdgeInsets.all(2),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade400,
+            offset: const Offset(1, 1),
+          )
+        ],
+        border: Border.all(color: Colors.grey.shade400, width: 0.5),
+      ),
+      child: Center(
+        child: Text(
+          "$label",
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
+    ),
+  );
 }
 
 class PinComponentController extends ValueNotifier<PinComponentValue> {
