@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:sufismart/model/otp_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 
 class RegisterModel {
@@ -63,14 +64,14 @@ class RegisterModel {
       Uri.parse(
         System.data.apiEndPoint!.customerRegister(),
       ),
-      body: registerModel?.toJson(),
+      body: json.encode(registerModel?.toJson()),
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
       },
     ).then(
       (value) {
         if (value.statusCode == 200) {
-          OtpModel.fromJson(json.decode(value.body));
+          return OtpModel.fromJson(json.decode(value.body));
         } else {
           throw value;
         }
