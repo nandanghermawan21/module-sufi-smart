@@ -13,9 +13,9 @@ class OtpModel {
 
   static OtpModel fromJson(Map<String, dynamic> json) {
     return OtpModel(
-      resendUrl: json["resendUrl"] as String,
-      confirmUrl: json["confirmUrl"] as String,
-      jsonData: json["jsonData"] as String,
+      resendUrl: json["resendUrl"] as String?,
+      confirmUrl: json["confirmUrl"] as String?,
+      jsonData: json["jsonData"] as String?,
       expired: json["expired"] == null
           ? null
           : DateTime.parse(json['expired'] as String),
