@@ -7,6 +7,7 @@ import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
+import '../model/register_model.dart';
 
 class SignupViewModel extends ChangeNotifier {
   TextEditingController nikController = TextEditingController();
@@ -24,7 +25,7 @@ class SignupViewModel extends ChangeNotifier {
     commit();
   }
 
-  List<GenderModel> genders = GenderModel.getAll();
+  Future<List<GenderModel>> genders = GenderModel.getAll();
 
   CityModel? _city;
   CityModel? get city => _city;
