@@ -1,3 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:sufismart/util/system.dart';
+import 'package:http/http.dart' as http;
+
 class GenderModel {
   String? id;
   String? name;
@@ -21,10 +27,23 @@ class GenderModel {
     };
   }
 
-  static List<GenderModel> getAll() {
-    return [
-      {"id": "L", "name": "Laki-Laki"},
-      {"id": "P", "name": "Perempuan"}
-    ].map((e) => GenderModel.fromJson(e)).toList();
+  static Future<List<GenderModel>> getAll() {
+    return http
+        .get(Uri.parse(System.data.apiEndPoint!.getAllGender()))
+        .then((value) {
+      if (value.statusCode == 200) {
+        return (json.decode(value.body) as List)
+            .map((e) => GenderModel.fromJson(e))
+            .toList();
+      } else {
+        throw value;
+      }
+    }).catchError((onError) {
+      throw onError;
+    });
+    // return [
+    //   {"id": "L", "name": "Laki-Laki"},
+    //   {"id": "P", "name": "Perempuan"}
+    // ].map((e) => GenderModel.fromJson(e)).toList();
   }
 }

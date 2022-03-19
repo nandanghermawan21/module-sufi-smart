@@ -4,12 +4,14 @@ import 'package:sufismart/model/news_model.dart';
 import 'package:sufismart/recource/color_default.dart';
 import 'package:sufismart/recource/string_id_id.dart';
 import 'package:sufismart/route.dart';
+import 'package:sufismart/util/api_end_point.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/one_signal_messaging.dart';
 import 'package:sufismart/util/system.dart';
 
 void setting() {
   System.data.strings = StringsIdId();
+  System.data.apiEndPoint = ApiEndPoint();
   System.data.color = ColorDefault();
   //setting permisson [haru didefinisikan juga pada manifest dan info.pls]
   System.data.permission = [

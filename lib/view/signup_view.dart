@@ -30,47 +30,43 @@ class _SignupViewState extends State<SignupView> {
       builder: (c, w) {
         return Scaffold(
           appBar: BasicComponent.appBar(),
-          body: Consumer<SignupViewModel>(
-            builder: (c, d, w) {
-              return Container(
-                padding: const EdgeInsets.all(20),
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      header(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      group1(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      fullName(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      cityFuture(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      phoneNumber(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      username(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      password(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
+          body: Container(
+            padding: const EdgeInsets.all(20),
+            height: double.infinity,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  header(),
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
-              );
-            },
+                  group1(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  fullName(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  cityFuture(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  phoneNumber(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  username(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  password(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
           ),
           bottomNavigationBar: bottomNavigationBar(),
         );
@@ -139,7 +135,7 @@ class _SignupViewState extends State<SignupView> {
             height: 5,
           ),
           Expanded(
-            child: gender(),
+            child: genderFuture(),
           ),
         ],
       ),
@@ -175,40 +171,75 @@ class _SignupViewState extends State<SignupView> {
     );
   }
 
-  Widget gender() {
+  Widget gender(List<GenderModel> genders) {
     return Container(
-      height: 50,
-      color: Colors.transparent,
-      padding: const EdgeInsets.all(0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: List.generate(signupViewModel.genders.length, (index) {
-          return Expanded(
-            child: Row(
-              children: [
-                Radio<GenderModel>(
-                  value: signupViewModel.genders[index],
-                  onChanged: (val) {
-                    signupViewModel.gender = signupViewModel.genders[index];
-                  },
-                  activeColor: System.data.color!.primaryColor,
-                  groupValue: signupViewModel.gender,
+        height: 50,
+        color: Colors.transparent,
+        padding: const EdgeInsets.all(0),
+        child: Consumer<SignupViewModel>(builder: (c, d, w) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: List.generate(genders.length, (index) {
+              return Expanded(
+                child: Row(
+                  children: [
+                    Radio<GenderModel>(
+                      value: genders[index],
+                      onChanged: (val) {
+                        signupViewModel.gender = genders[index];
+                      },
+                      activeColor: System.data.color!.primaryColor,
+                      groupValue: signupViewModel.gender,
+                    ),
+                    Expanded(
+                      child: Container(
+                          width: double.infinity,
+                          alignment: Alignment.centerLeft,
+                          height: 15,
+                          color: Colors.transparent,
+                          child: FittedBox(
+                            child: Text(genders[index].name ?? ""),
+                          )),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Container(
-                      width: double.infinity,
-                      alignment: Alignment.centerLeft,
-                      height: 15,
-                      color: Colors.transparent,
-                      child: FittedBox(
-                        child: Text(signupViewModel.genders[index].name ?? ""),
-                      )),
-                ),
-              ],
+              );
+            }),
+          );
+        }));
+  }
+
+  Widget genderFuture() {
+    return FutureBuilder<List<GenderModel>>(
+      future: signupViewModel.genders,
+      builder: (ctx, snipset) {
+        if (snipset.hasData) {
+          return gender(snipset.data ?? []);
+        } else if (snipset.hasError) {
+          return Container(
+            color: Colors.transparent,
+            padding: const EdgeInsets.all(10),
+            height: 50,
+            child: Text(
+              snipset.error.toString(),
+              style: const TextStyle(color: Colors.red),
             ),
           );
-        }),
-      ),
+        } else {
+          return SkeletonAnimation(
+            child: Container(
+              height: 50,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(5),
+                ),
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 
@@ -262,39 +293,43 @@ class _SignupViewState extends State<SignupView> {
   }
 
   Widget city(List<CityModel> cities) {
-    return Container(
-      width: double.infinity,
-      height: 50,
-      color: Colors.transparent,
-      child: DropdownButton<CityModel>(
-        underline: Container(
-          height: 1,
-          color: System.data.color!.primaryColor,
-        ),
-        isExpanded: true,
-        hint: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              System.data.strings!.city,
+    return Consumer<SignupViewModel>(
+      builder: (c, d, w) {
+        return Container(
+          width: double.infinity,
+          height: 50,
+          color: Colors.transparent,
+          child: DropdownButton<CityModel>(
+            underline: Container(
+              height: 1,
+              color: System.data.color!.primaryColor,
             ),
-          ],
-        ),
-        value: signupViewModel.city,
-        items: List.generate(cities.length, (index) {
-          return DropdownMenuItem<CityModel>(
-              value: cities[index],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(cities[index].name ?? ""),
-                ],
-              ));
-        }),
-        onChanged: (area) {
-          signupViewModel.city = area;
-        },
-      ),
+            isExpanded: true,
+            hint: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  System.data.strings!.city,
+                ),
+              ],
+            ),
+            value: signupViewModel.city,
+            items: List.generate(cities.length, (index) {
+              return DropdownMenuItem<CityModel>(
+                  value: cities[index],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(cities[index].name ?? ""),
+                    ],
+                  ));
+            }),
+            onChanged: (area) {
+              signupViewModel.city = area;
+            },
+          ),
+        );
+      },
     );
   }
 
