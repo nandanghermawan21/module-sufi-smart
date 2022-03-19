@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
+import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
@@ -30,41 +31,44 @@ class _SignupViewState extends State<SignupView> {
       builder: (c, w) {
         return Scaffold(
           appBar: BasicComponent.appBar(),
-          body: Container(
-            padding: const EdgeInsets.all(20),
-            height: double.infinity,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  header(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  group1(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  fullName(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  cityFuture(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  phoneNumber(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  username(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  password(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
+          body: CircularLoaderComponent(
+            controller: signupViewModel.loadingController,
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              height: double.infinity,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    header(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    group1(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    fullName(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    cityFuture(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    phoneNumber(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    username(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    password(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -397,7 +401,7 @@ class _SignupViewState extends State<SignupView> {
       height: 50,
       color: Colors.transparent,
       child: TextField(
-        controller: signupViewModel.nikController,
+        controller: signupViewModel.passwordController,
         obscureText: true,
         keyboardType: TextInputType.text,
         onChanged: (val) {
