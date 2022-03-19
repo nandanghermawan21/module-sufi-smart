@@ -1,8 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
 // import 'package:sufismart/util/mode_util.dart';
@@ -67,8 +63,6 @@ class SignupViewModel extends ChangeNotifier {
     _nik = value;
     commit();
   }
-
-  ImagePickerController imagePickerController = ImagePickerController();
 
   void register({VoidCallback? onRegisterSuccess}) {
     // String url =
