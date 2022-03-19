@@ -6,7 +6,7 @@ import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
 // import 'package:sufismart/util/mode_util.dart';
 // import 'package:sufismart/util/system.dart';
-import 'package:sufismart/model/register_model.dart';
+// import 'package:sufismart/model/register_model.dart';
 
 class SignupViewModel extends ChangeNotifier {
   TextEditingController nikController = TextEditingController();
