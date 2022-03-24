@@ -6,8 +6,10 @@ import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
+import 'package:sufismart/model/ktp_model.dart';
 import 'package:sufismart/model/register_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
+import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 // import 'package:sufismart/util/mode_util.dart';
 // import 'package:sufismart/util/system.dart';
@@ -16,6 +18,7 @@ import 'package:sufismart/util/system.dart';
 class SignupViewModel extends ChangeNotifier {
   CircularLoaderController loadingController = CircularLoaderController();
   ImagePickerController imagePickerController = ImagePickerController();
+  ImagePickerController imageKtpPickerController = ImagePickerController();
 
   TextEditingController nikController = TextEditingController();
   String? _nik;
@@ -45,7 +48,7 @@ class SignupViewModel extends ChangeNotifier {
   String? _fullname;
   String? get fullname => _fullname;
   set fullname(String? value) {
-    _nik = value;
+    fullname = value;
     commit();
   }
 
@@ -53,7 +56,7 @@ class SignupViewModel extends ChangeNotifier {
   String? _phonenumber;
   String? get phonenumber => _phonenumber;
   set phonenumber(String? value) {
-    _nik = value;
+    _phonenumber = value;
     commit();
   }
 
@@ -61,7 +64,7 @@ class SignupViewModel extends ChangeNotifier {
   String? _username;
   String? get username => _username;
   set username(String? value) {
-    _nik = value;
+    _username = value;
     commit();
   }
 
@@ -69,7 +72,7 @@ class SignupViewModel extends ChangeNotifier {
   String? _password;
   String? get password => _password;
   set password(String? value) {
-    _nik = value;
+    _password = value;
     commit();
   }
 
@@ -100,26 +103,51 @@ class SignupViewModel extends ChangeNotifier {
         );
       },
     );
+  }
 
-    // String url =
-    //     "http://api-suzuki.lemburkuring.id/api/Fileservice/upload?path=testupload&name=filesaya";
-    // imagePickerController.uploadFile(
-    //   url: url,
-    //   header: {
-    //     HttpHeaders.authorizationHeader: "bearer ${System.data.global.token}"
-    //   },
-    // ).then((value) {
-    //   imagePickerController.value.uploadedUrl =
-    //       json.decode(value)["url"] as String;
-    //   imagePickerController.commit();
-    // }).catchError(
-    //   (onError) {
-    //     ModeUtil.debugPrint("error dari upload adalah $onError");
-    //   },
-    // );
-    // if (onRegisterSuccess != null) {
-    //   onRegisterSuccess();
-    // }
+  void onTapScanKtp() {
+    imageKtpPickerController
+        .getImages(
+      camera: true,
+    )
+        .then((value) {
+      loadingController.startLoading();
+      KtpModel.readFromImage(
+        key: System.data.global.ocrKey,
+        file: value.fileImage,
+      ).then(
+        (value) {
+          ModeUtil.debugPrint(value.toJson());
+          loadingController.stopLoading(
+            isError: false,
+            message:
+                "${System.data.strings!.readDataKtpSuccess} \n ${value.nik}",
+            onCloseCallBack: () {
+              nikController.text = value.nik ?? "";
+              fullnameController.text = value.nama ?? "";
+              GenderModel.readGender("Laki-Laki").then((value) {
+                gender = value;
+              });
+              CityModel.readCity(value.kotaKabupaten ?? "").then((value) {
+                city = value;
+              });
+            },
+          );
+        },
+      ).catchError((onError) {
+        loadingController.stopLoading(
+          message: ErrorHandlingUtil.handleApiError(onError),
+          isError: true,
+        );
+      });
+    }).catchError(
+      (onError) {
+        loadingController.stopLoading(
+          message: ErrorHandlingUtil.handleApiError(onError),
+          isError: true,
+        );
+      },
+    );
   }
 
   void commit() {

@@ -48,6 +48,20 @@ class GenderModel {
     });
   }
 
+  static Future<GenderModel> readGender(String gender) {
+    return getAll().then(
+      (value) {
+        return value
+            .where((e) => e.name?.toLowerCase() == gender.toLowerCase())
+            .first;
+      },
+    ).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
+  }
+
   // return http
   //       .get(Uri.parse("http://api-suzuki.lemburkuring.id/api/city/getAll"))
   //       .then(

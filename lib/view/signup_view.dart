@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
@@ -31,6 +32,7 @@ class _SignupViewState extends State<SignupView> {
       value: signupViewModel,
       builder: (c, w) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: BasicComponent.appBar(),
           body: CircularLoaderComponent(
             controller: signupViewModel.loadingController,
@@ -171,6 +173,19 @@ class _SignupViewState extends State<SignupView> {
             borderSide:
                 BorderSide(color: System.data.color!.primaryColor, width: 1.0),
           ),
+          suffixIcon: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              signupViewModel.onTapScanKtp();
+            },
+            child: Container(
+              color: Colors.transparent,
+              width: 40,
+              child: const Icon(
+                FontAwesomeIcons.idCard,
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -189,13 +204,13 @@ class _SignupViewState extends State<SignupView> {
               return Expanded(
                 child: Row(
                   children: [
-                    Radio<GenderModel>(
-                      value: genders[index],
+                    Radio<String?>(
+                      value: genders[index].id,
                       onChanged: (val) {
                         signupViewModel.gender = genders[index];
                       },
                       activeColor: System.data.color!.primaryColor,
-                      groupValue: signupViewModel.gender,
+                      groupValue: signupViewModel.gender?.id,
                     ),
                     Expanded(
                       child: Container(
@@ -316,7 +331,7 @@ class _SignupViewState extends State<SignupView> {
         width: double.infinity,
         height: 50,
         color: Colors.transparent,
-        child: DropdownButton<CityModel>(
+        child: DropdownButton<String?>(
           underline: Container(
             height: 1,
             color: System.data.color!.primaryColor,
@@ -330,10 +345,10 @@ class _SignupViewState extends State<SignupView> {
               ),
             ],
           ),
-          value: signupViewModel.city,
+          value: signupViewModel.city?.id,
           items: List.generate(cities.length, (index) {
-            return DropdownMenuItem<CityModel>(
-                value: cities[index],
+            return DropdownMenuItem<String?>(
+                value: cities[index].id,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -342,7 +357,7 @@ class _SignupViewState extends State<SignupView> {
                 ));
           }),
           onChanged: (area) {
-            signupViewModel.city = area;
+            signupViewModel.city = cities.where((e) => e.id == area).first;
           },
         ),
       );

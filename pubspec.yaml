@@ -16,6 +16,7 @@ dependencies:
   provider: ^6.0.1
   font_awesome_flutter: ^9.2.0
   http: ^0.13.4
+  dio: ^4.0.4
   card_swiper: ^1.0.4
   fancy_bottom_navigation: ^0.3.3
   cached_network_image: ^3.2.0
