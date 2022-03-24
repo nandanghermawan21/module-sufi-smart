@@ -40,10 +40,10 @@ void initOnesignal() {
 void getDeviceId({int trial = 0}) {
   System.data.oneSignalMessaging?.getTokenId().then(
     (token) {
-      System.data.global.mmassagingToken = token;
+      System.data.global.messagingToken = token;
       ModeUtil.debugPrint(
-          "OneSignalMessagingToken trial to ${trial + 1} ${System.data.global.mmassagingToken}");
-      if (System.data.global.mmassagingToken == null) {
+          "OneSignalMessagingToken trial to ${trial + 1} ${System.data.global.messagingToken}");
+      if (System.data.global.messagingToken == null) {
         getDeviceId(
           trial: trial + 1,
         );

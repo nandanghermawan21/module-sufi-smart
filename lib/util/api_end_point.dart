@@ -6,6 +6,7 @@ class ApiEndPoint {
   String getAllGenderUrl = "gender/getAll";
   String getAllCityUrl = "city/getAll";
   String loginCustomerUrl = "auth/customerLogin";
+  String postCustomerRegisterUrl = "customer/register";
 
   String get url {
     if (ModeUtil.debugMode == true) {
@@ -25,5 +26,9 @@ class ApiEndPoint {
 
   String loginCustomer() {
     return url + getAllCityUrl;
+  }
+
+  String customerRegister() {
+    return url + postCustomerRegisterUrl;
   }
 }

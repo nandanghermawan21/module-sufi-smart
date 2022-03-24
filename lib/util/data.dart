@@ -22,6 +22,7 @@ class Data extends ChangeNotifier {
   Global global = Global();
   Strings? strings;
   Colour? color;
+  ApiEndPoint? apiEndPoint;
   OneSignalMessaging? oneSignalMessaging;
   List<Permission> permission = [];
   ValueChanged<Uri?>? deepLinkingHandler;

@@ -27,20 +27,43 @@ class GenderModel {
   }
 
   static Future<List<GenderModel>> getAll() {
-    return http.get(Uri.parse(System.data.apiEndPoint.getAllGender())).then(
+    return http
+        .get(
+      Uri.parse(
+        System.data.apiEndPoint.getAllGender(),
+      ),
+    )
+        .then(
       (value) {
         if (value.statusCode == 200) {
           return (json.decode(value.body) as List)
-              .map((e) => GenderModel.fromJson(e))
+              .map((e) => GenderModel.fromJson((e)))
               .toList();
         } else {
           throw value;
         }
       },
-    ).catchError(
-      (onError) {
-        throw onError;
-      },
-    );
+    ).catchError((onError) {
+      throw onError;
+    });
   }
+
+  // return http
+  //       .get(Uri.parse("http://api-suzuki.lemburkuring.id/api/city/getAll"))
+  //       .then(
+  //     (value) {
+  //       if (value.statusCode == 200) {
+  //         return (json.decode(value.body) as List)
+  //             .map((e) => CityModel.fromJson(e))
+  //             .toList();
+  //       } else {
+  //         throw value;
+  //       }
+  //     },
+  //   ).catchError(
+  //     (onError) {
+  //       throw onError;
+  //     },
+  //   );
+  // }
 }

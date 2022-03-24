@@ -3,15 +3,13 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:sufismart/util/file_service.dart';
-import 'package:sufismart/util/mode_util.dart';
+import 'package:sufismart/util/system.dart';
 
 class ImagePickerComponent extends StatelessWidget {
   final ImagePickerController controller;
-  final bool camera;
   final double height;
   final double width;
   final String placeHolderImageAsset;
@@ -21,8 +19,7 @@ class ImagePickerComponent extends StatelessWidget {
     required this.controller,
     this.height = 120,
     this.width = 120,
-    this.placeHolderImageAsset = "assets/icon_camera.png",
-    this.camera = true,
+    this.placeHolderImageAsset = "ssets/icon_camera.png",
   }) : super(key: key);
 
   @override
@@ -32,15 +29,13 @@ class ImagePickerComponent extends StatelessWidget {
       builder: (context, value, child) {
         return GestureDetector(
           onTap: () {
-            Permission.camera.isGranted.then((value) {
-              controller.getImages(
-                camera: camera,
-              );
-            });
+            if (value.imagePickerState == ImagePickerState.onInitUpload) return;
+            if (value.imagePickerState == ImagePickerState.onUpload) return;
+            controller.getImages();
           },
           child: Container(
-            height: height,
-            width: width,
+            height: 120,
+            width: 120,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(
                 Radius.circular(15),
@@ -51,9 +46,9 @@ class ImagePickerComponent extends StatelessWidget {
                         ? Colors.grey
                         : Colors.grey,
               ),
-              image: DecorationImage(
+              image: const DecorationImage(
                 image: AssetImage(
-                  placeHolderImageAsset,
+                  "assets/icon_camera.png",
                 ),
                 scale: 3,
                 repeat: ImageRepeat.noRepeat,
@@ -68,15 +63,34 @@ class ImagePickerComponent extends StatelessWidget {
     );
   }
 
+  Widget childBuilder(ImagePickerState imagePickerState) {
+    switch (imagePickerState) {
+      case ImagePickerState.onUpload:
+        return progressUpload(
+          totalSize: controller.value.fileSize,
+          uploadedSize: controller.value.uploadedSize ?? 0,
+          percentage: controller.value.percentageUpload,
+        );
+      case ImagePickerState.uploaded:
+        return loadedImage();
+      case ImagePickerState.uploadFiled:
+        return const SizedBox();
+      case ImagePickerState.loaded:
+        return loadedImage();
+      case ImagePickerState.empty:
+        return const SizedBox();
+      default:
+        return const SizedBox();
+    }
+  }
+
   Widget loadedImage() {
-    return controller.value.fileUri == null
-        ? const SizedBox()
-        : Padding(
-            padding: const EdgeInsets.all(3),
-            child: Image.memory(
-              controller.value.fileUri!.contentAsBytes(),
-            ),
-          );
+    return Padding(
+      padding: const EdgeInsets.all(3),
+      child: Image.memory(
+        controller.value.fileUri!.contentAsBytes(),
+      ),
+    );
   }
 
   Widget uploadedImage() {
@@ -107,7 +121,7 @@ class ImagePickerComponent extends StatelessWidget {
                     Radius.circular(5),
                   ),
                   border: Border.all(
-                    color: Colors.green,
+                    color: System.data.color!.primaryColor,
                     width: 1,
                   )),
               child: Align(
@@ -131,27 +145,6 @@ class ImagePickerComponent extends StatelessWidget {
       ),
     );
   }
-
-  Widget childBuilder(ImagePickerState imagePickerState) {
-    switch (imagePickerState) {
-      case ImagePickerState.onUpload:
-        return progressUpload(
-          totalSize: controller.value.fileSize,
-          uploadedSize: controller.value.uploadedSize ?? 0,
-          percentage: controller.value.percentageUpload,
-        );
-      case ImagePickerState.uploaded:
-        return uploadedImage();
-      case ImagePickerState.uploadFiled:
-        return const SizedBox();
-      case ImagePickerState.loaded:
-        return loadedImage();
-      case ImagePickerState.empty:
-        return const SizedBox();
-      default:
-        return const SizedBox();
-    }
-  }
 }
 
 class ImagePickerController extends ValueNotifier<ImagePickerValue> {
@@ -160,8 +153,8 @@ class ImagePickerController extends ValueNotifier<ImagePickerValue> {
 
   Future<ImagePickerValue> getImages({
     bool camera = true,
-    int imageQuality = 30,
-    int compresedQuality = 10,
+    int imageQuality = 100,
+    int compresedQuality = 5,
   }) async {
     try {
       File _image;
@@ -218,7 +211,6 @@ class ImagePickerController extends ValueNotifier<ImagePickerValue> {
     value.fileSize = 0;
     value.imagePickerState = ImagePickerState.onInitUpload;
     commit();
-    ModeUtil.debugPrint("mulai upload");
     return FileServiceUtil.fileUploadMultipart(
       file: value.fileImage,
       field: field,
@@ -228,15 +220,12 @@ class ImagePickerController extends ValueNotifier<ImagePickerValue> {
         uploaded,
         fileSize,
       ) {
-        ModeUtil.debugPrint("uploaded total $fileSize uploaded $uploaded");
         value.imagePickerState = ImagePickerState.onUpload;
         value.uploadedSize = uploaded;
         value.fileSize = fileSize;
         commit();
       },
     ).then((result) {
-      ModeUtil.debugPrint("result");
-      ModeUtil.debugPrint(json.decode(result));
       value.uploadedSize = 0;
       value.fileSize = 0;
       value.imagePickerState = ImagePickerState.uploaded;
