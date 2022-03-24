@@ -152,7 +152,7 @@ class _LoginState extends State<LoginView> {
                 ),
               ),
             ),
-            pin(),
+            // pin(),
           ],
         ),
       ),

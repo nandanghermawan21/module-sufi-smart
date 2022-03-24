@@ -15,10 +15,19 @@ class PinComponent extends StatelessWidget {
       builder: (ctxx, value, widget) {
         return Scaffold(
           backgroundColor: Colors.grey.withOpacity(0.5),
-          body: Stack(
-            children: [
-              pinPad(context),
-            ],
+          body: GestureDetector(
+            onTap: () {
+              // controller.hashCode
+            },
+            child: Center(
+              child: Stack(
+                children: [
+                  pinPad(
+                    context,
+                  ),
+                ],
+              ),
+            ),
           ),
         );
       },
@@ -152,6 +161,20 @@ Widget keyPad({
 class PinComponentController extends ValueNotifier<PinComponentValue> {
   PinComponentController({PinComponentValue? value})
       : super(value ?? PinComponentValue());
+
+  void close() {
+    value.state = PinComponentState.close;
+    commit();
+  }
+
+  void open() {
+    value.state = PinComponentState.opem;
+    commit();
+  }
+
+  void commit() {
+    notifyListeners();
+  }
 }
 
 class PinComponentValue {
