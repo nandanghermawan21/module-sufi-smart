@@ -362,7 +362,7 @@ class _SignupViewState extends State<SignupView> {
       height: 50,
       color: Colors.transparent,
       child: TextField(
-        controller: signupViewModel.nikController,
+        controller: signupViewModel.passwordController,
         obscureText: true,
         keyboardType: TextInputType.text,
         onChanged: (val) {
