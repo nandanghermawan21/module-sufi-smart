@@ -21,23 +21,33 @@ class _DashboardViewState extends State<DashboardView> {
       value: dashboardViewModel,
       builder: (c, w) {
         return Scaffold(
-          body: Container(
-            padding: const EdgeInsets.all(15),
-            color: Colors.transparent,
-            height: double.infinity,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  header(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  item(title: System.data.strings!.nIK),
-                  item(title: System.data.strings!.phoneNumber),
-                  item(
-                    title: System.data.strings!.city,
-                  ),
-                ],
+          body: SafeArea(
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              color: Colors.transparent,
+              height: double.infinity,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    header(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    item(
+                      title: System.data.strings!.nIK,
+                      value: System.data.global.customerModel!.nik ?? "",
+                    ),
+                    item(
+                      title: System.data.strings!.phoneNumber,
+                      value:
+                          System.data.global.customerModel!.phoneNumber ?? "",
+                    ),
+                    item(
+                      title: System.data.strings!.city,
+                      value: System.data.global.customerModel!.cityName ?? "",
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -53,18 +63,21 @@ class _DashboardViewState extends State<DashboardView> {
       color: Colors.transparent,
       child: Column(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             maxRadius: 50,
             minRadius: 30,
-            backgroundImage: NetworkImage(
+            backgroundImage: const NetworkImage(
               "https://www.w3schools.com/howto/img_avatar.png",
+            ),
+            foregroundImage: NetworkImage(
+              System.data.global.customerModel?.imageUrl ?? "",
             ),
           ),
           const SizedBox(
             height: 10,
           ),
           Text(
-            System.data.strings!.fullname,
+            System.data.global.customerModel!.fullName ?? "",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
@@ -74,7 +87,7 @@ class _DashboardViewState extends State<DashboardView> {
             height: 10,
           ),
           Text(
-            System.data.strings!.username,
+            System.data.global.customerModel!.username ?? "",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
@@ -101,7 +114,7 @@ class _DashboardViewState extends State<DashboardView> {
             title ?? "title",
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          Text(title ?? "value"),
+          Text(value ?? "value"),
         ],
       ),
     );

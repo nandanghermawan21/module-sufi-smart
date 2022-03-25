@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:sufismart/model/menu_model.dart';
+import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view/contact_view.dart';
 import 'package:sufismart/view/empty_page_view.dart';
@@ -72,9 +75,20 @@ Map<String, WidgetBuilder> route = {
             case 2:
               return const ContactView();
             case 3:
+              if (System.data.global.customerModel != null) {
+                return const DashboardView();
+              }
               return LoginView(
                 gotoSignup: () {
                   Navigator.of(context).pushNamed(RouteName.signUp);
+                },
+                onLoginSuccess: (customer) {
+                  System.data.session!.setString(
+                      SessionKey.user, json.encode(customer.toJson()));
+                  System.data.global.token = customer.token;
+                  System.data.global.customerModel = customer;
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      RouteName.mainMenu, (x) => x.settings.name == "");
                 },
               );
             default:
@@ -103,8 +117,13 @@ Map<String, WidgetBuilder> route = {
   },
   RouteName.signUp: (BuildContext context) {
     return SignupView(
-      onRegisterSucces: () {
-        Navigator.of(context).pushNamed(RouteName.dashboard);
+      onRegisterSucces: (customer) {
+        System.data.session!
+            .setString(SessionKey.user, json.encode(customer.toJson()));
+        System.data.global.token = customer.token;
+        System.data.global.customerModel = customer;
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            RouteName.mainMenu, (x) => x.settings.name == "");
       },
     );
   },

@@ -3,6 +3,7 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application android:name="${applicationName}" android:icon="@mipmap/launcher_icon" android:label="Sufi Smart">
         <service android:name=".BackNotife" android:enabled="true" android:exported="true"></service>

@@ -7,13 +7,14 @@ import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
+import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/gender_model.dart';
+import 'package:sufismart/util/error_handling_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/signup_view_model.dart';
-import 'package:http/http.dart' as http;
 
 class SignupView extends StatefulWidget {
-  final VoidCallback? onRegisterSucces;
+  final ValueChanged<CustomerModel>? onRegisterSucces;
 
   const SignupView({Key? key, this.onRegisterSucces}) : super(key: key);
 
@@ -304,7 +305,7 @@ class _SignupViewState extends State<SignupView> {
             width: double.infinity,
             height: 50,
             child: Text(
-              "can't load city : ${(snap.error as http.Response).body}",
+              "can't load city : ${ErrorHandlingUtil.handleApiError(snap.error)}",
               style: const TextStyle(color: Colors.red),
             ),
           );

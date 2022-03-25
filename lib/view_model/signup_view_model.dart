@@ -4,10 +4,13 @@
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/image_picker_component.dart';
+import 'package:sufismart/component/pin_component.dart';
 import 'package:sufismart/model/city_model.dart';
+import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/gender_model.dart';
 import 'package:sufismart/model/ktp_model.dart';
-import 'package:sufismart/model/register_model.dart';
+import 'package:sufismart/model/customer_register_model.dart';
+import 'package:sufismart/model/otp_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
@@ -19,6 +22,7 @@ class SignupViewModel extends ChangeNotifier {
   CircularLoaderController loadingController = CircularLoaderController();
   ImagePickerController imagePickerController = ImagePickerController();
   ImagePickerController imageKtpPickerController = ImagePickerController();
+  PinComponentController pinComponentController = PinComponentController();
 
   TextEditingController nikController = TextEditingController();
   String? _nik;
@@ -76,10 +80,10 @@ class SignupViewModel extends ChangeNotifier {
     commit();
   }
 
-  void register({VoidCallback? onRegisterSuccess}) {
+  void register({ValueChanged<CustomerModel>? onRegisterSuccess}) {
     loadingController.startLoading();
-    RegisterModel.post(
-      registerModel: RegisterModel(
+    CustomerModel.post(
+      registerModel: CustomerRegisterModel(
         avatar: imagePickerController.value.fileBase64Compresed,
         nik: nikController.text,
         genderId: gender?.id,
@@ -90,11 +94,58 @@ class SignupViewModel extends ChangeNotifier {
         password: passwordController.text,
         deviceId: System.data.global.messagingToken,
       ),
-    ).then((value) {
-      loadingController.stopLoading(
-        message: "${value?.toJson()}",
-        isError: false,
-      );
+    ).then((otp) {
+      loadingController.forceClose();
+      PinComponent.open(
+          context: System.data.context,
+          controller: pinComponentController,
+          title: "Input OTP",
+          timer: DateTime.now().toUtc().difference(otp!.expired!),
+          onTapResend: (val) {
+            pinComponentController.value.loadingController.startLoading();
+            OtpModel.resend(url: System.data.apiEndPoint.url + otp.resendUrl!)
+                .then(
+              (value) {
+                pinComponentController.value.loadingController.forceClose();
+                pinComponentController.value.timerController.start(
+                  duration: DateTime.now().toUtc().difference(value!.expired!),
+                );
+              },
+            ).catchError(
+              (onError) {
+                pinComponentController.value.loadingController.stopLoading(
+                    isError: true,
+                    message: ErrorHandlingUtil.handleApiError(onError));
+              },
+            );
+          },
+          onTapSend: (val) {
+            pinComponentController.value.loadingController.startLoading();
+            OtpModel.confirm<CustomerModel>(
+              url: System.data.apiEndPoint.url + (otp.confirmUrl ?? ""),
+              otp: val,
+              jsonReader: (json) {
+                return CustomerModel.fromJson(json);
+              },
+            ).then(
+              (value) {
+                loadingController.stopLoading(
+                  isError: false,
+                  message: "Login success",
+                  duration: const Duration(seconds: 2),
+                  onCloseCallBack: () {
+                    if (onRegisterSuccess != null) {
+                      onRegisterSuccess(value);
+                    }
+                  },
+                );
+              },
+            ).catchError((onError) {
+              pinComponentController.value.loadingController.stopLoading(
+                  isError: true,
+                  message: ErrorHandlingUtil.handleApiError(onError));
+            });
+          });
     }).catchError(
       (onError) {
         loadingController.stopLoading(
