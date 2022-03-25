@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sufismart/component/cilcular_loader_component.dart';
 
 class LoginViewModel extends ChangeNotifier {
+  CircularLoaderController circularLoaderController =
+      CircularLoaderController();
+
   Future<void> onRefreshHomePage() async {
     return Future.delayed(const Duration(seconds: 5));
   }
