@@ -3,6 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 
+import '../model/login_model.dart';
+import '../util/error_handling.dart';
+import '../util/system.dart';
+
 class LoginViewModel extends ChangeNotifier {
   Future<void> onRefreshHomePage() async {
     return Future.delayed(const Duration(seconds: 5));
@@ -48,18 +52,46 @@ class LoginViewModel extends ChangeNotifier {
     return valid;
   }
 
+  // void login() {
+  //   circularLoaderController.startLoading();
+  //   Timer.periodic(
+  //     const Duration(seconds: 10),
+  //     (timer) {
+  //       timer.cancel();
+  //       circularLoaderController.stopLoading(
+  //           message: "Login Berhasil",
+  //           isError: false,
+  //           duration: const Duration(seconds: 10));
+  //     },
+  //   );
+  // }
+
   void login() {
     circularLoaderController.startLoading();
-    Timer.periodic(
-      const Duration(seconds: 10),
-      (timer) {
-        timer.cancel();
-        circularLoaderController.stopLoading(
-            message: "Login Berhasil",
-            isError: false,
-            duration: const Duration(seconds: 10));
-      },
-    );
+    LoginModel.post(
+      loginModel: LoginModel(
+          username: emailTextEditingController.text,
+          password: passwordTextEditingController.text,
+          deviceId: System.data.global.mmassagingToken),
+    ).then((value) {
+      circularLoaderController.stopLoading(
+          message: "${value?.toJson()}", isError: false);
+    }).catchError((onError) {
+      circularLoaderController.stopLoading(
+        message: ErrorHandlingUtil.handleApiError(onError),
+        isError: true,
+      );
+    });
+    // Timer.periodic(
+    //   const Duration(seconds: 10),
+    //   (timer) {
+    //     timer.cancel();
+    //     circularLoaderController.stopLoading(
+    //         message: "Login Berhasil",
+    //         isError: false,
+    //         duration: const Duration(seconds: 10));
+    //   },
+    // );
   }
 
   void commit() {
