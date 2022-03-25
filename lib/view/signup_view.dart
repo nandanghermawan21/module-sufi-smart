@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
+import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
@@ -30,47 +31,46 @@ class _SignupViewState extends State<SignupView> {
       builder: (c, w) {
         return Scaffold(
           appBar: BasicComponent.appBar(),
-          body: Consumer<SignupViewModel>(
-            builder: (c, d, w) {
-              return Container(
-                padding: const EdgeInsets.all(20),
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      header(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      group1(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      fullName(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      cityFuture(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      phoneNumber(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      username(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      password(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
+          body: CircularLoaderComponent(
+            controller: signupViewModel.loadingController,
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              height: double.infinity,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    header(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    group1(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    fullName(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    cityFuture(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    phoneNumber(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    username(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    password(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
                 ),
-              );
-            },
+              ),
+            ),
           ),
           bottomNavigationBar: bottomNavigationBar(),
         );
@@ -139,7 +139,7 @@ class _SignupViewState extends State<SignupView> {
             height: 5,
           ),
           Expanded(
-            child: gender(),
+            child: genderFuture(),
           ),
         ],
       ),
@@ -175,40 +175,77 @@ class _SignupViewState extends State<SignupView> {
     );
   }
 
-  Widget gender() {
+  Widget gender(List<GenderModel> genders) {
     return Container(
       height: 50,
       color: Colors.transparent,
       padding: const EdgeInsets.all(0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: List.generate(signupViewModel.genders.length, (index) {
-          return Expanded(
-            child: Row(
-              children: [
-                Radio<GenderModel>(
-                  value: signupViewModel.genders[index],
-                  onChanged: (val) {
-                    signupViewModel.gender = signupViewModel.genders[index];
-                  },
-                  activeColor: System.data.color!.primaryColor,
-                  groupValue: signupViewModel.gender,
+      child: Consumer<SignupViewModel>(
+        builder: (c, d, w) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: List.generate(genders.length, (index) {
+              return Expanded(
+                child: Row(
+                  children: [
+                    Radio<GenderModel>(
+                      value: genders[index],
+                      onChanged: (val) {
+                        signupViewModel.gender = genders[index];
+                      },
+                      activeColor: System.data.color!.primaryColor,
+                      groupValue: signupViewModel.gender,
+                    ),
+                    Expanded(
+                      child: Container(
+                          width: double.infinity,
+                          alignment: Alignment.centerLeft,
+                          height: 15,
+                          color: Colors.transparent,
+                          child: FittedBox(
+                            child: Text(genders[index].name ?? ""),
+                          )),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Container(
-                      width: double.infinity,
-                      alignment: Alignment.centerLeft,
-                      height: 15,
-                      color: Colors.transparent,
-                      child: FittedBox(
-                        child: Text(signupViewModel.genders[index].name ?? ""),
-                      )),
-                ),
-              ],
+              );
+            }),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget genderFuture() {
+    return FutureBuilder<List<GenderModel>>(
+      future: GenderModel.getAll(),
+      initialData: const [],
+      builder: (ctx, snipset) {
+        if (snipset.hasData) {
+          return gender(snipset.data ?? []);
+        } else if (snipset.hasError) {
+          return Container(
+            color: Colors.transparent,
+            padding: const EdgeInsets.all(20),
+            height: 50,
+            child: Text(
+              snipset.error.toString(),
+              style: const TextStyle(color: Colors.red),
             ),
           );
-        }),
-      ),
+        } else {
+          return SkeletonAnimation(
+              child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: const BorderRadius.all(
+                Radius.circular(5),
+              ),
+            ),
+          ));
+        }
+      },
     );
   }
 
@@ -262,40 +299,42 @@ class _SignupViewState extends State<SignupView> {
   }
 
   Widget city(List<CityModel> cities) {
-    return Container(
-      width: double.infinity,
-      height: 50,
-      color: Colors.transparent,
-      child: DropdownButton<CityModel>(
-        underline: Container(
-          height: 1,
-          color: System.data.color!.primaryColor,
+    return Consumer<SignupViewModel>(builder: (c, d, w) {
+      return Container(
+        width: double.infinity,
+        height: 50,
+        color: Colors.transparent,
+        child: DropdownButton<CityModel>(
+          underline: Container(
+            height: 1,
+            color: System.data.color!.primaryColor,
+          ),
+          isExpanded: true,
+          hint: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                System.data.strings!.city,
+              ),
+            ],
+          ),
+          value: signupViewModel.city,
+          items: List.generate(cities.length, (index) {
+            return DropdownMenuItem<CityModel>(
+                value: cities[index],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(cities[index].name ?? ""),
+                  ],
+                ));
+          }),
+          onChanged: (area) {
+            signupViewModel.city = area;
+          },
         ),
-        isExpanded: true,
-        hint: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              System.data.strings!.city,
-            ),
-          ],
-        ),
-        value: signupViewModel.city,
-        items: List.generate(cities.length, (index) {
-          return DropdownMenuItem<CityModel>(
-              value: cities[index],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(cities[index].name ?? ""),
-                ],
-              ));
-        }),
-        onChanged: (area) {
-          signupViewModel.city = area;
-        },
-      ),
-    );
+      );
+    });
   }
 
   Widget phoneNumber() {
@@ -362,7 +401,7 @@ class _SignupViewState extends State<SignupView> {
       height: 50,
       color: Colors.transparent,
       child: TextField(
-        controller: signupViewModel.nikController,
+        controller: signupViewModel.passwordController,
         obscureText: true,
         keyboardType: TextInputType.text,
         onChanged: (val) {

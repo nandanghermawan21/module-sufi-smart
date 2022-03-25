@@ -1,14 +1,16 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
+import 'package:sufismart/model/customer_model.dart';
+import 'package:sufismart/model/customer_register_model.dart';
 import 'package:sufismart/model/gender_model.dart';
-import 'package:sufismart/util/mode_util.dart';
+import 'package:sufismart/util/error_handling_util.dart';
 import 'package:sufismart/util/system.dart';
+import 'package:sufismart/component/cilcular_loader_component.dart';
 
 class SignupViewModel extends ChangeNotifier {
+  CircularLoaderController loadingController = CircularLoaderController();
+
   TextEditingController nikController = TextEditingController();
   String? _nik;
   String? get nik => _nik;
@@ -23,8 +25,6 @@ class SignupViewModel extends ChangeNotifier {
     _gender = type;
     commit();
   }
-
-  List<GenderModel> genders = GenderModel.getAll();
 
   CityModel? _city;
   CityModel? get city => _city;
@@ -70,25 +70,32 @@ class SignupViewModel extends ChangeNotifier {
   ImagePickerController imagePickerController = ImagePickerController();
 
   void register({VoidCallback? onRegisterSuccess}) {
-    String url =
-        "http://api-suzuki.lemburkuring.id/api/Fileservice/upload?path=testupload&name=filesaya";
-    imagePickerController.uploadFile(
-      url: url,
-      header: {
-        HttpHeaders.authorizationHeader: "bearer ${System.data.global.token}"
-      },
+    loadingController.startLoading();
+    CustomerModel.register(
+      registerModel: CustomerRegisterModel(
+        avatar: imagePickerController.value.fileBase64Compresed,
+        nik: nikController.text,
+        genderId: gender?.id,
+        fullName: fullnameController.text,
+        cityId: city?.id,
+        phoneNumber: phonenumberController.text.replaceFirst("0", "+62"),
+        username: usernameController.text,
+        password: passwordController.text,
+        deviceId: System.data.global.mmassagingToken,
+      ),
     ).then((value) {
-      imagePickerController.value.uploadedUrl =
-          json.decode(value)["url"] as String;
-      imagePickerController.commit();
+      loadingController.stopLoading(
+        message: "${value?.toJson()}",
+        isError: false,
+      );
     }).catchError(
       (onError) {
-        ModeUtil.debugPrint("error dari upload adalah $onError");
+        loadingController.stopLoading(
+          message: ErrorHandlingUtil.handleApiError(onError),
+          isError: true,
+        );
       },
     );
-    // if (onRegisterSuccess != null) {
-    //   onRegisterSuccess();
-    // }
   }
 
   void commit() {
