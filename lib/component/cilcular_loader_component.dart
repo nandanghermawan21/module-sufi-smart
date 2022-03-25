@@ -7,12 +7,14 @@ class CircularLoaderComponent extends StatelessWidget {
   final CircularLoaderController controller;
   final bool cover;
   final Widget? child;
+  final Widget? onLoadingWidget;
 
   const CircularLoaderComponent({
     Key? key,
     required this.controller,
     this.cover = true,
     this.child,
+    this.onLoadingWidget,
   }) : super(key: key);
 
   @override
@@ -51,7 +53,7 @@ class CircularLoaderComponent extends StatelessWidget {
       case CircularLoaderState.idle:
         return const SizedBox();
       case CircularLoaderState.onLoading:
-        return onLoading();
+        return onLoadingWidget != null ? onLoadingWidget! : onLoading();
       case CircularLoaderState.showError:
         return messageError();
       case CircularLoaderState.showMessage:
@@ -217,11 +219,14 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
       Timer.periodic(duration, (timer) {
         timer.cancel();
         close();
+        if (onCloseCallBack != null) {
+          onCloseCallBack();
+        }
       });
-    }
-
-    if (onCloseCallBack != null) {
-      onCloseCallBack();
+    } else {
+      if (onCloseCallBack != null) {
+        onCloseCallBack();
+      }
     }
 
     commit();
@@ -229,6 +234,11 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
 
   void close() {
     if (value.state == CircularLoaderState.onLoading) return;
+    value.state = CircularLoaderState.idle;
+    commit();
+  }
+
+  void forceClose() {
     value.state = CircularLoaderState.idle;
     commit();
   }
