@@ -180,4 +180,8 @@ class StringsEnUs implements Strings {
 
   @override
   String get logOut => "Logout";
+
+@override
+  String get readDataKtpSuccess => "Get KTP Success";
+
 }

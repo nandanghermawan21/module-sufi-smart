@@ -9,6 +9,7 @@ import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/gender_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/signup_view_model.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignupView extends StatefulWidget {
   final VoidCallback? onRegisterSucces;
@@ -139,7 +140,31 @@ class _SignupViewState extends State<SignupView> {
             height: 5,
           ),
           Expanded(
-            child: genderFuture(),
+            child: Container(
+              color: Colors.transparent,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children:[ 
+                  Expanded(
+                  child: Container(
+                    child: genderFuture()
+                    )),
+                    Consumer<SignupViewModel>(
+                      builder: (c,d,w){
+                          return Container(
+                            width: 100,
+                            color: Colors.transparent,
+                            child: signupViewModel.imageKtpPickerController.value.imagePickerState==ImagePickerState.loaded
+                            ?
+                            Image.memory(signupViewModel.imageKtpPickerController.value.fileUri!.contentAsBytes())
+                            : 
+                            const SizedBox());
+                      }
+                      
+                      )
+                ]
+              ),
+            ),
           ),
         ],
       ),
@@ -170,7 +195,21 @@ class _SignupViewState extends State<SignupView> {
             borderSide:
                 BorderSide(color: System.data.color!.primaryColor, width: 1.0),
           ),
+          suffixIcon: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              signupViewModel.onTapScanKtp();
+            },
+            child: Container(
+              color: Colors.transparent,
+              width: 40,
+              child: const Icon(
+                FontAwesomeIcons.idCard,
+              ),
+            ),
+          ),
         ),
+        
       ),
     );
   }

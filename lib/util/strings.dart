@@ -62,4 +62,6 @@ abstract class Strings {
   String get nIK => "NIK";
   String get city => "Kota";
   String get logOut => "Keluar";
+
+  get readDataKtpSuccess => "Berhasil Mendapatkan Data KTP";
 }
