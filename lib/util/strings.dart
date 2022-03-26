@@ -64,4 +64,6 @@ abstract class Strings {
   String get logOut => "Keluar";
 
   get readDataKtpSuccess => "Berhasil Mendapatkan Data KTP";
+
+  String get timeLeft => "Waktu anda sudah habis";
 }

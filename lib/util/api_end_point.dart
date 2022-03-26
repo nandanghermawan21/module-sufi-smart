@@ -7,6 +7,7 @@ class ApiEndPoint {
   String getAllGenderUrl = "gender/getAll";
   String postCustomerRegisterUrl = "customer/register";
   String postOcr = "sfi/ktp";
+  String loginCustomerUrl = "auth/customerLogin";
 
   String get url {
     if (ModeUtil.debugMode == true) {
@@ -34,6 +35,10 @@ String get ocr {
 
   String urlpostocr() {
     return ocr + postOcr;
+  }
+
+  String loginCustomer() {
+    return url + loginCustomerUrl;
   }
 
 }

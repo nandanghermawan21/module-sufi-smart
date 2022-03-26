@@ -1,3 +1,6 @@
+import 'package:http/http.dart' as http;
+import '../util/mode_util.dart';
+
 class OtpModel {
   String? resendUrl; //": "string",
   String? confirmUrl; //": "2022-03-19T06:36:03.576Z",
