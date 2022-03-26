@@ -29,6 +29,8 @@ class Data extends ChangeNotifier {
 
   Data();
 
+  get loadingController => null;
+
   Future<void> initialize() async {
     await _initSharedPreference();
     await _initDatabse();

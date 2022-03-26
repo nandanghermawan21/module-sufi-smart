@@ -48,4 +48,6 @@ class CityModel {
       },
     );
   }
+
+  static readCity(String s) {}
 }

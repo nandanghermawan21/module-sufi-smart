@@ -15,7 +15,6 @@ class CircularLoaderComponent extends StatelessWidget {
     this.child,
     this.cover = true,
     this.loadingBuilder,
-    required Widget onLoadingWidget,
   }) : super(key: key);
 
   @override
@@ -249,8 +248,6 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
   void commit() {
     notifyListeners();
   }
-
-  void forceClose() {}
 }
 
 class CircularLoaderValue {

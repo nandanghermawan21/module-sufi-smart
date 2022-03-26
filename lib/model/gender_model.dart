@@ -46,4 +46,6 @@ class GenderModel {
       throw onError;
     });
   }
+
+  static readGender(String s) {}
 }

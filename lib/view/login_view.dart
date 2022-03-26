@@ -27,10 +27,12 @@ class _LoginState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    var onLoadingWidget2 = null;
     return ChangeNotifierProvider.value(
       value: loginViewModel,
       child: CircularLoaderComponent(
         controller: loginViewModel.circularLoaderController,
+        onLoadingWidget: onLoadingWidget2,
         child: Stack(
           children: [
             Scaffold(

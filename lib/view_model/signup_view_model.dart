@@ -1,19 +1,33 @@
+// import 'dart:convert';
+// import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/image_picker_component.dart';
+import 'package:sufismart/component/pin_component.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/customer_model.dart';
-import 'package:sufismart/model/customer_register_model.dart';
 import 'package:sufismart/model/gender_model.dart';
+import 'package:sufismart/model/ktp_model.dart';
+import 'package:sufismart/model/customer_register_model.dart';
+import 'package:sufismart/model/otp_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
+import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
-import 'package:sufismart/component/cilcular_loader_component.dart';
+// import 'package:sufismart/util/mode_util.dart';
+// import 'package:sufismart/util/system.dart';
+// import 'package:sufismart/model/register_model.dart';
 
 class SignupViewModel extends ChangeNotifier {
   CircularLoaderController loadingController = CircularLoaderController();
+  ImagePickerController imagePickerController = ImagePickerController();
+  ImagePickerController imageKtpPickerController = ImagePickerController();
 
   TextEditingController nikController = TextEditingController();
   String? _nik;
   String? get nik => _nik;
+
+  get pinComponentController => null;
   set nik(String? value) {
     _nik = value;
     commit();
@@ -39,7 +53,7 @@ class SignupViewModel extends ChangeNotifier {
   String? _fullname;
   String? get fullname => _fullname;
   set fullname(String? value) {
-    _nik = value;
+    fullname = value;
     commit();
   }
 
@@ -47,7 +61,7 @@ class SignupViewModel extends ChangeNotifier {
   String? _phonenumber;
   String? get phonenumber => _phonenumber;
   set phonenumber(String? value) {
-    _nik = value;
+    _phonenumber = value;
     commit();
   }
 
@@ -55,7 +69,7 @@ class SignupViewModel extends ChangeNotifier {
   String? _username;
   String? get username => _username;
   set username(String? value) {
-    _nik = value;
+    _username = value;
     commit();
   }
 
@@ -63,15 +77,13 @@ class SignupViewModel extends ChangeNotifier {
   String? _password;
   String? get password => _password;
   set password(String? value) {
-    _nik = value;
+    _password = value;
     commit();
   }
 
-  ImagePickerController imagePickerController = ImagePickerController();
-
-  void register({VoidCallback? onRegisterSuccess}) {
+  void register({ValueChanged<CustomerModel>? onRegisterSuccess}) {
     loadingController.startLoading();
-    CustomerModel.register(
+    CustomerModel.post(
       registerModel: CustomerRegisterModel(
         avatar: imagePickerController.value.fileBase64Compresed,
         nik: nikController.text,
@@ -81,13 +93,105 @@ class SignupViewModel extends ChangeNotifier {
         phoneNumber: phonenumberController.text.replaceFirst("0", "+62"),
         username: usernameController.text,
         password: passwordController.text,
-        deviceId: System.data.global.mmassagingToken,
+        deviceId: System.data.global.messagingToken,
       ),
-    ).then((value) {
-      loadingController.stopLoading(
-        message: "${value?.toJson()}",
-        isError: false,
-      );
+    ).then((otp) {
+      loadingController.forceClose();
+      PinComponent.open(
+          context: System.data.context,
+          controller: pinComponentController,
+          title: "Input OTP",
+          timer: const Duration(seconds: 10),
+          onTapResend: (val) {
+            pinComponentController.value.loadingController.startLoading();
+            OtpModel.resend(url: System.data.apiEndPoint.url + otp!.resendUrl!)
+                .then(
+              (value) {
+                pinComponentController.value.loadingController.forceClose();
+                pinComponentController.value.timerController.start(
+                  duration: DateTime.now().toUtc().difference(value!.expired!),
+                );
+              },
+            ).catchError(
+              (onError) {
+                pinComponentController.value.loadingController.stopLoading(
+                    isError: true,
+                    message: ErrorHandlingUtil.handleApiError(onError));
+              },
+            );
+          },
+          onTapSend: (val) {
+            pinComponentController.value.loadingController.startLoading();
+            OtpModel.confirm<CustomerModel>(
+              url: System.data.apiEndPoint.url + (otp!.confirmUrl ?? ""),
+              otp: val,
+              jsonReader: (json) {
+                return CustomerModel.fromJson(json);
+              },
+            ).then(
+              (value) {
+                loadingController.stopLoading(
+                  isError: false,
+                  message: "Login success",
+                  duration: const Duration(seconds: 2),
+                  onCloseCallBack: () {
+                    if (onRegisterSuccess != null) {
+                      onRegisterSuccess(value);
+                    }
+                  },
+                );
+              },
+            ).catchError((onError) {
+              pinComponentController.value.loadingController.stopLoading(
+                  isError: true,
+                  message: ErrorHandlingUtil.handleApiError(onError));
+            });
+          });
+    }).catchError(
+      (onError) {
+        loadingController.stopLoading(
+          message: ErrorHandlingUtil.handleApiError(onError),
+          isError: true,
+        );
+      },
+    );
+  }
+
+  void onTapScanKtp() {
+    imageKtpPickerController
+        .getImages(
+      camera: true,
+    )
+        .then((value) {
+      loadingController.startLoading();
+      KtpModel.readFromImage(
+        key: System.data.global.ocrKey,
+        file: value.fileImage,
+      ).then(
+        (value) {
+          ModeUtil.debugPrint(value.toJson());
+          loadingController.stopLoading(
+            isError: false,
+            message:
+                "${System.data.strings!.readDataKtpSuccess} \n ${value.nik}",
+            onCloseCallBack: () {
+              nikController.text = value.nik ?? "";
+              fullnameController.text = value.nama ?? "";
+              GenderModel.readGender("Laki-Laki").then((value) {
+                gender = value;
+              });
+              CityModel.readCity(value.kotaKabupaten ?? "").then((value) {
+                city = value;
+              });
+            },
+          );
+        },
+      ).catchError((onError) {
+        loadingController.stopLoading(
+          message: ErrorHandlingUtil.handleApiError(onError),
+          isError: true,
+        );
+      });
     }).catchError(
       (onError) {
         loadingController.stopLoading(

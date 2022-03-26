@@ -180,4 +180,16 @@ class StringsEnUs implements Strings {
 
   @override
   String get logOut => "Logout";
+
+  @override
+  String get readDataKtpSuccess => "Read KTP Success";
+
+  @override
+  String get enterPin => "Enter OTP";
+
+  @override
+  String get timeLeft => "Time Left";
+
+  @override
+  get resend => "Resend";
 }

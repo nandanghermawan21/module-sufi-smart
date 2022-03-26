@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:sufismart/setting.dart';
 import 'package:sufismart/util/data.dart';
 import 'package:sufismart/util/mode_util.dart';
@@ -39,10 +40,10 @@ void initOnesignal() {
 void getDeviceId({int trial = 0}) {
   System.data.oneSignalMessaging?.getTokenId().then(
     (token) {
-      System.data.global.mmassagingToken = token;
+      System.data.global.messagingToken = token;
       ModeUtil.debugPrint(
-          "OneSignalMessagingToken trial to ${trial + 1} ${System.data.global.mmassagingToken}");
-      if (System.data.global.mmassagingToken == null) {
+          "OneSignalMessagingToken trial to ${trial + 1} ${System.data.global.messagingToken}");
+      if (System.data.global.messagingToken == null) {
         getDeviceId(
           trial: trial + 1,
         );
@@ -81,16 +82,29 @@ class MyAppState extends State<MyApp> {
       child: Consumer<Data>(
         builder: (c, d, w) {
           return MaterialApp(
-            title: System.data.strings!.appName,
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
+            home: Scaffold(
+              resizeToAvoidBottomInset: false,
+              backgroundColor: Colors.transparent,
+              body: CircularLoaderComponent(
+                controller: data.loadingController,
+                child: home(),
+              ),
             ),
-            routes: route,
-            initialRoute: initialRouteName,
-            navigatorKey: System.data.navigatorKey,
           );
         },
       ),
+    );
+  }
+
+  Widget home() {
+    return MaterialApp(
+      title: System.data.strings!.appName,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      routes: route,
+      initialRoute: initialRouteName,
+      navigatorKey: System.data.navigatorKey,
     );
   }
 

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
+import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/gender_model.dart';
+import 'package:sufismart/util/error_handling_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/signup_view_model.dart';
 
 class SignupView extends StatefulWidget {
-  final VoidCallback? onRegisterSucces;
+  final ValueChanged<CustomerModel>? onRegisterSucces;
 
   const SignupView({Key? key, this.onRegisterSucces}) : super(key: key);
 
@@ -29,10 +32,13 @@ class _SignupViewState extends State<SignupView> {
     return ChangeNotifierProvider<SignupViewModel>.value(
       value: signupViewModel,
       builder: (c, w) {
+        var onLoadingWidget2 = null;
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: BasicComponent.appBar(),
           body: CircularLoaderComponent(
             controller: signupViewModel.loadingController,
+            onLoadingWidget: onLoadingWidget2,
             child: Container(
               padding: const EdgeInsets.all(20),
               height: double.infinity,
@@ -170,6 +176,19 @@ class _SignupViewState extends State<SignupView> {
             borderSide:
                 BorderSide(color: System.data.color!.primaryColor, width: 1.0),
           ),
+          suffixIcon: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              signupViewModel.onTapScanKtp();
+            },
+            child: Container(
+              color: Colors.transparent,
+              width: 40,
+              child: const Icon(
+                FontAwesomeIcons.idCard,
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -188,13 +207,13 @@ class _SignupViewState extends State<SignupView> {
               return Expanded(
                 child: Row(
                   children: [
-                    Radio<GenderModel>(
-                      value: genders[index],
+                    Radio<String?>(
+                      value: genders[index].id,
                       onChanged: (val) {
                         signupViewModel.gender = genders[index];
                       },
                       activeColor: System.data.color!.primaryColor,
-                      groupValue: signupViewModel.gender,
+                      groupValue: signupViewModel.gender?.id,
                     ),
                     Expanded(
                       child: Container(
@@ -282,17 +301,28 @@ class _SignupViewState extends State<SignupView> {
       builder: (ctx, snap) {
         if (snap.hasData) {
           return city(snap.data ?? []);
+        } else if (snap.hasError) {
+          return Container(
+            color: Colors.white,
+            width: double.infinity,
+            height: 50,
+            child: Text(
+              "can't load city : ${ErrorHandlingUtil.handleApiError(snap.error)}",
+              style: const TextStyle(color: Colors.red),
+            ),
+          );
         } else {
           return SkeletonAnimation(
-              child: Container(
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: const BorderRadius.all(
-                Radius.circular(5),
+            child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(5),
+                ),
               ),
             ),
-          ));
+          );
         }
       },
     );
@@ -304,7 +334,7 @@ class _SignupViewState extends State<SignupView> {
         width: double.infinity,
         height: 50,
         color: Colors.transparent,
-        child: DropdownButton<CityModel>(
+        child: DropdownButton<String?>(
           underline: Container(
             height: 1,
             color: System.data.color!.primaryColor,
@@ -318,10 +348,10 @@ class _SignupViewState extends State<SignupView> {
               ),
             ],
           ),
-          value: signupViewModel.city,
+          value: signupViewModel.city?.id,
           items: List.generate(cities.length, (index) {
-            return DropdownMenuItem<CityModel>(
-                value: cities[index],
+            return DropdownMenuItem<String?>(
+                value: cities[index].id,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -330,7 +360,7 @@ class _SignupViewState extends State<SignupView> {
                 ));
           }),
           onChanged: (area) {
-            signupViewModel.city = area;
+            signupViewModel.city = cities.where((e) => e.id == area).first;
           },
         ),
       );
