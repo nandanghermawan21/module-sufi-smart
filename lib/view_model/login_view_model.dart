@@ -184,6 +184,8 @@ PinComponentController pinComponentController = PinComponentController();
             onCloseCallBack: () {
               if (onLoginSuccess != null) {
                 onLoginSuccess(value);
+              }else{
+                print("Login success, callback null");
               }
             },
           );
