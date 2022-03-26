@@ -7,7 +7,6 @@ import 'package:sufismart/model/gender_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
-import 'package:sufismart/component/image_picker_component.dart';
 
 import '../model/ktp_model.dart';
 import '../util/mode_util.dart';
@@ -90,7 +89,7 @@ class SignupViewModel extends ChangeNotifier {
       ),
     ).then((value) {
       loadingController.stopLoading(
-        message: "${value?.toJson()}",
+        message: "${value.toJson()}",
         isError: false,
       );
     }).catchError(

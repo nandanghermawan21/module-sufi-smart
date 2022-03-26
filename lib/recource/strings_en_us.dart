@@ -191,8 +191,7 @@ class StringsEnUs implements Strings {
   String get resend => "Resend";
 
   @override
-  // TODO: implement enterPin
-  get enterPin => "ENTER PIN";
+  String get enterPin => "ENTER PIN";
 
   
 
