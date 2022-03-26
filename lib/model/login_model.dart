@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:sufismart/model/customer_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:sufismart/util/system.dart';
@@ -42,16 +43,16 @@ class LoginModel {
         }).then(
       (value) {
         if (value.statusCode == 200) {
-          print("1");
+          debugPrint("1");
           return CustomerModel.fromJson(json.decode(value.body));
         } else {
-          print("2");
+          debugPrint("2");
           throw value;
         }
       },
     ).catchError(
       (onError) {
-        print("3");
+        debugPrint("3");
         throw onError;
       },
     );
