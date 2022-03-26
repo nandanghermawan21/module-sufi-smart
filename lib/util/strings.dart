@@ -62,4 +62,8 @@ abstract class Strings {
   String get nIK => "NIK";
   String get city => "Kota";
   String get logOut => "Keluar";
+  String get readDataKtpSuccess => "Sukses Membaca Ktp";
+  String get timeLeft => "Waktu Habis";
+  String get enterPin => "Masukan Pin";
+  String get resend => "Kirim Ulang";
 }

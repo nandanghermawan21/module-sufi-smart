@@ -103,7 +103,9 @@ class _LoginState extends State<LoginView> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              loginViewModel.login();
+                              loginViewModel.login(
+                                onLoginSuccess: widget.onLoginSuccess,
+                              );
                             },
                             child: Container(
                               height: 50,
