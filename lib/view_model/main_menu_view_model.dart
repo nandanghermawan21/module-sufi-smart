@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/lang_model.dart';
+import 'package:sufismart/util/enum.dart';
+import 'package:sufismart/util/system.dart';
 
 class MainMenuViewModel extends ChangeNotifier {
   int selectedIndex = 0;
@@ -26,6 +31,16 @@ class MainMenuViewModel extends ChangeNotifier {
   }
 
   Widget? body;
+
+  void readSession() {
+    if (System.data.session!.getString(SessionKey.user) != null ||
+        System.data.session!.getString(SessionKey.user) != "") {
+      System.data.global.customerModel = CustomerModel.fromJson(
+          json.decode(System.data.session!.getString(SessionKey.user)!));
+      System.data.global.token = System.data.global.customerModel?.token;
+      System.data.commit();
+    }
+  }
 
   void commit() {
     notifyListeners();

@@ -83,10 +83,10 @@ Map<String, WidgetBuilder> route = {
                   Navigator.of(context).pushNamed(RouteName.signUp);
                 },
                 onLoginSuccess: (customer) {
-                  System.data.session!.setString(
-                      SessionKey.user, json.encode(customer.toJson()));
                   System.data.global.token = customer.token;
                   System.data.global.customerModel = customer;
+                  System.data.session!.setString(
+                      SessionKey.user, json.encode(customer.toJson()));
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       RouteName.mainMenu, (x) => x.settings.name == "");
                 },

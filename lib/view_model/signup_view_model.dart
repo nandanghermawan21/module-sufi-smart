@@ -100,10 +100,10 @@ class SignupViewModel extends ChangeNotifier {
           context: System.data.context,
           controller: pinComponentController,
           title: "Input OTP",
-          timer: DateTime.now().toUtc().difference(otp!.expired!),
+          timer: const Duration(seconds: 10),
           onTapResend: (val) {
             pinComponentController.value.loadingController.startLoading();
-            OtpModel.resend(url: System.data.apiEndPoint.url + otp.resendUrl!)
+            OtpModel.resend(url: System.data.apiEndPoint.url + otp!.resendUrl!)
                 .then(
               (value) {
                 pinComponentController.value.loadingController.forceClose();
@@ -122,7 +122,7 @@ class SignupViewModel extends ChangeNotifier {
           onTapSend: (val) {
             pinComponentController.value.loadingController.startLoading();
             OtpModel.confirm<CustomerModel>(
-              url: System.data.apiEndPoint.url + (otp.confirmUrl ?? ""),
+              url: System.data.apiEndPoint.url + (otp!.confirmUrl ?? ""),
               otp: val,
               jsonReader: (json) {
                 return CustomerModel.fromJson(json);
