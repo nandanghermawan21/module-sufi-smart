@@ -66,4 +66,6 @@ abstract class Strings {
   get readDataKtpSuccess => "Berhasil Mendapatkan Data KTP";
 
   String get timeLeft => "Waktu anda sudah habis";
+
+  get enterPin => null;
 }

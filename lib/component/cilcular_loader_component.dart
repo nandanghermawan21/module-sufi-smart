@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CircularLoaderComponent extends StatelessWidget {
-  final CircularLoaderController controller;
-  final Widget? child;
+ final CircularLoaderController controller;
   final bool cover;
-  final Widget? loadingBuilder;
+  final Widget? child;
+  final Widget? onLoadingWidget;
 
   const CircularLoaderComponent({
     Key? key,
     required this.controller,
-    this.child,
     this.cover = true,
-    this.loadingBuilder,
+    this.child,
+    this.onLoadingWidget,
   }) : super(key: key);
 
   @override
@@ -53,7 +53,7 @@ class CircularLoaderComponent extends StatelessWidget {
       case CircularLoaderState.idle:
         return const SizedBox();
       case CircularLoaderState.onLoading:
-        return loadingBuilder == null ? onLoading() : loadingBuilder!;
+        return onLoadingWidget != null ? onLoadingWidget! : onLoading();
       case CircularLoaderState.showError:
         return messageError();
       case CircularLoaderState.showMessage:

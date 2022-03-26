@@ -187,4 +187,13 @@ class StringsEnUs implements Strings {
   @override
   String get timeLeft => "Your time has been left";
 
+ @override
+  String get resend => "Resend";
+
+  @override
+  // TODO: implement enterPin
+  get enterPin => "ENTER PIN";
+
+  
+
 }

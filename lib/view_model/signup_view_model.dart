@@ -77,7 +77,7 @@ class SignupViewModel extends ChangeNotifier {
   void register({VoidCallback? onRegisterSuccess}) {
     loadingController.startLoading();
     CustomerModel.register(
-      registerModel: CustomerRegisterModel(
+      customer: CustomerRegisterModel(
         avatar: imagePickerController.value.fileBase64Compresed,
         nik: nikController.text,
         genderId: gender?.id,

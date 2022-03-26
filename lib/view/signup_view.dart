@@ -154,9 +154,9 @@ class _SignupViewState extends State<SignupView> {
                           return Container(
                             width: 100,
                             color: Colors.transparent,
-                            child: signupViewModel.imageKtpPickerController.value.imagePickerState==ImagePickerState.loaded
+                            child: signupViewModel.imagePickerController.value.imagePickerState==ImagePickerState.loaded
                             ?
-                            Image.memory(signupViewModel.imageKtpPickerController.value.fileUri!.contentAsBytes())
+                            Image.memory(signupViewModel.imagePickerController.value.fileUri!.contentAsBytes())
                             : 
                             const SizedBox());
                       }
