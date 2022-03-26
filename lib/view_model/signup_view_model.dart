@@ -4,12 +4,15 @@ import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/customer_register_model.dart';
 import 'package:sufismart/model/gender_model.dart';
+import 'package:sufismart/model/ktp_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
+import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 
 class SignupViewModel extends ChangeNotifier {
   CircularLoaderController loadingController = CircularLoaderController();
+  ImagePickerController imageKtpPickerController = ImagePickerController();
 
   TextEditingController nikController = TextEditingController();
   String? _nik;
@@ -88,6 +91,51 @@ class SignupViewModel extends ChangeNotifier {
         message: "${value?.toJson()}",
         isError: false,
       );
+    }).catchError(
+      (onError) {
+        loadingController.stopLoading(
+          message: ErrorHandlingUtil.handleApiError(onError),
+          isError: true,
+        );
+      },
+    );
+  }
+
+  void onTapScanKtp() {
+    imageKtpPickerController
+        .getImages(
+      camera: true,
+    )
+        .then((value) {
+      loadingController.startLoading();
+      KtpModel.readFromImage(
+        key: System.data.global.ocrKey,
+        file: value.fileImage,
+      ).then(
+        (value) {
+          ModeUtil.debugPrint(value.toJson());
+          loadingController.stopLoading(
+            isError: false,
+            message:
+                "${System.data.strings!.readDataKtpSuccess} \n ${value.nik}",
+            onCloseCallBack: () {
+              nikController.text = value.nik ?? "";
+              fullnameController.text = value.nama ?? "";
+              GenderModel.readGender(value.jenisKelamin ?? "").then((value) {
+                gender = value;
+              });
+              CityModel.readCity(value.kotaKabupaten ?? "").then((value) {
+                city = value;
+              });
+            },
+          );
+        },
+      ).catchError((onError) {
+        loadingController.stopLoading(
+          message: ErrorHandlingUtil.handleApiError(onError),
+          isError: true,
+        );
+      });
     }).catchError(
       (onError) {
         loadingController.stopLoading(

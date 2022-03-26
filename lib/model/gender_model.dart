@@ -46,4 +46,18 @@ class GenderModel {
       throw onError;
     });
   }
+
+  static Future<GenderModel> readGender(String gender) {
+    return getAll().then(
+      (value) {
+        return value
+            .where((e) => e.name?.toLowerCase() == gender.toLowerCase())
+            .first;
+      },
+    ).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
+  }
 }
