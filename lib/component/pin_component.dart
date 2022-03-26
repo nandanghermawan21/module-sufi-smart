@@ -384,6 +384,7 @@ class PinComponentController extends ValueNotifier<PinComponentValue> {
 
   void close() {
     value.state = PinComponentState.close;
+    Navigator.of(System.data.context).pop();
     commit();
   }
 

@@ -15,7 +15,8 @@ class CircularLoaderComponent extends StatelessWidget {
     this.child,
     this.cover = true,
     this.loadingBuilder,
-    required Widget onLoadingWidget,
+    onLoadingWidget,
+    //required Widget onLoadingWidget,
   }) : super(key: key);
 
   @override
@@ -221,15 +222,18 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
       Timer.periodic(duration, (timer) {
         timer.cancel();
         close();
+        if (onCloseCallBack != null) {
+          onCloseCallBack();
+        }
       });
+    } else {
+      if (onCloseCallBack != null) {
+        onCloseCallBack();
+      }
     }
 
     if (message != null) {
       value.message = message;
-    }
-
-    if (onCloseCallBack != null) {
-      onCloseCallBack();
     }
 
     commit();
