@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/model/customer_model.dart';
@@ -57,7 +55,7 @@ PinComponentController pinComponentController = PinComponentController();
     return valid;
   }
 
-  
+
 void login() {
     circularLoaderController.startLoading();
     CustomerModel.login(
