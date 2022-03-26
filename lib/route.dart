@@ -75,6 +75,9 @@ Map<String, WidgetBuilder> route = {
             case 2:
               return const ContactView();
             case 3:
+             if (System.data.global.customerModel != null) {
+                return const DashboardView();
+              }
               return LoginView(
                 gotoSignup: () {
                   Navigator.of(context).pushNamed(RouteName.signUp);

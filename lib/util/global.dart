@@ -8,6 +8,8 @@ class Global {
 
   get ocrKey => null;
 
-  set customerModel(CustomerModel customerModel) {}
+  CustomerModel? customerModel;
+
+  // set customerModel(CustomerModel customerModel) {}
 
 }

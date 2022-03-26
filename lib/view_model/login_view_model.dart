@@ -179,7 +179,7 @@ PinComponentController pinComponentController = PinComponentController();
         if (value != null) {
           circularLoaderController.stopLoading(
             isError: false,
-            message: "Login success",
+            message: "Login success without OTP",
             duration: const Duration(seconds: 2),
             onCloseCallBack: () {
               if (onLoginSuccess != null) {
