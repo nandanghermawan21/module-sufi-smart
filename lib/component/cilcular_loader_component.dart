@@ -248,6 +248,8 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
   void commit() {
     notifyListeners();
   }
+
+  void forceClose() {}
 }
 
 class CircularLoaderValue {

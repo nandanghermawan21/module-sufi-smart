@@ -6,6 +6,7 @@ import 'package:sufismart/util/system.dart';
 import '../component/pin_component.dart';
 import '../model/otp_model.dart';
 import '../util/error_handling_util.dart';
+import '../util/mode_util.dart';
 
 class LoginViewModel extends ChangeNotifier {
   CircularLoaderController circularLoaderController =
@@ -56,59 +57,146 @@ PinComponentController pinComponentController = PinComponentController();
   }
 
 
-void login() {
+// void login() {
+//     circularLoaderController.startLoading();
+//     CustomerModel.login(
+//         user: UserModel(
+//             username: emailTextEditingController.text,
+//             password: passwordTextEditingController.text,
+//             deviceId: System.data.global.mmassagingToken),
+//         onRequestOtp: (otp) {
+//           PinComponent.open(
+//               context: System.data.context,
+//               controller: pinComponentController,
+//               timer: DateTime.now().toUtc().difference(otp.expired!),
+//               onTapResend: (pin) {
+//                 pinComponentController.value.loadingController.startLoading();
+//                 OtpModel.resend(url: otp.resendUrl ?? "").then((otp2) {
+//                   pinComponentController.value.timerController.start(
+//                     duration: DateTime.now().toUtc().difference(otp2!.expired!),
+//                   );
+//                 }).catchError((onErrorOtp2) {
+//                   pinComponentController.value.loadingController.stopLoading(
+//                       isError: true,
+//                       message: ErrorHandlingUtil.handleApiError(onErrorOtp2));
+//                 });
+//               },
+//               onTapSend: (pin) {
+//                 pinComponentController.value.loadingController.startLoading();
+//                 OtpModel.confirm<CustomerModel>(
+//                     url: otp.confirmUrl ?? "",
+//                     otp: pin,
+//                     jsonReader: (json) {
+//                       return CustomerModel.fromJson(json);
+//                     }).then((value) {
+//                   circularLoaderController.stopLoading(
+//                     duration: const Duration(seconds: 3),
+//                     isError: false,
+//                     message: "Login with OTP success.",
+//                   );
+//                 }).catchError((onErrorOTP3) {
+//                   pinComponentController.value.loadingController.stopLoading(
+//                       isError: true,
+//                       message: ErrorHandlingUtil.handleApiError(onErrorOTP3));
+//                 });
+//               });
+//         });
+
+//     // emailTextEditingController.text.isEmpty
+//     //     ? setEmailValidation = true
+//     //     : setEmailValidation = false;
+//     // passwordTextEditingController.text.isEmpty
+//     //     ? setPasswordValidation = true
+//     //     : setPasswordValidation = false;
+//   }
+  
+
+ void login({
+    ValueChanged<CustomerModel>? onLoginSuccess,
+  }) {
     circularLoaderController.startLoading();
     CustomerModel.login(
-        user: UserModel(
-            username: emailTextEditingController.text,
-            password: passwordTextEditingController.text,
-            deviceId: System.data.global.mmassagingToken),
-        onRequestOtp: (otp) {
-          PinComponent.open(
-              context: System.data.context,
-              controller: pinComponentController,
-              timer: DateTime.now().toUtc().difference(otp.expired!),
-              onTapResend: (pin) {
-                pinComponentController.value.loadingController.startLoading();
-                OtpModel.resend(url: otp.resendUrl ?? "").then((otp2) {
-                  pinComponentController.value.timerController.start(
-                    duration: DateTime.now().toUtc().difference(otp2!.expired!),
-                  );
-                }).catchError((onErrorOtp2) {
-                  pinComponentController.value.loadingController.stopLoading(
-                      isError: true,
-                      message: ErrorHandlingUtil.handleApiError(onErrorOtp2));
-                });
+      user: UserModel(
+        deviceId: System.data.global.mmassagingToken,
+        password: passwordTextEditingController.text,
+        username: emailTextEditingController.text,
+      ),
+      onRequestOtp: (otp) {
+        ModeUtil.debugPrint("masuk ke request otp");
+        ModeUtil.debugPrint(otp.toJson());
+        PinComponent.open(
+          context: System.data.context,
+          controller: pinComponentController,
+          title: "Input OTP",
+          timer: DateTime.now().difference(otp.expired!.toLocal()),
+          onTapResend: (val) {
+            pinComponentController.value.loadingController.startLoading();
+            OtpModel.resend(
+              url: System.data.apiEndPoint.url + (otp.resendUrl ?? ""),
+            ).then(
+              (value) {
+                pinComponentController.value.loadingController.forceClose();
+                pinComponentController.value.timerController.start(
+                  duration: DateTime.now().difference(otp.expired!.toLocal()),
+                );
               },
-              onTapSend: (pin) {
-                pinComponentController.value.loadingController.startLoading();
-                OtpModel.confirm<CustomerModel>(
-                    url: otp.confirmUrl ?? "",
-                    otp: pin,
-                    jsonReader: (json) {
-                      return CustomerModel.fromJson(json);
-                    }).then((value) {
-                  circularLoaderController.stopLoading(
-                    duration: const Duration(seconds: 3),
-                    isError: false,
-                    message: "Login with OTP success.",
-                  );
-                }).catchError((onErrorOTP3) {
-                  pinComponentController.value.loadingController.stopLoading(
-                      isError: true,
-                      message: ErrorHandlingUtil.handleApiError(onErrorOTP3));
-                });
-              });
-        });
-
-    // emailTextEditingController.text.isEmpty
-    //     ? setEmailValidation = true
-    //     : setEmailValidation = false;
-    // passwordTextEditingController.text.isEmpty
-    //     ? setPasswordValidation = true
-    //     : setPasswordValidation = false;
+            ).catchError((onError) {
+              pinComponentController.value.loadingController.stopLoading(
+                  isError: true,
+                  message: ErrorHandlingUtil.handleApiError(onError));
+            });
+          },
+          onTapSend: (val) {
+            OtpModel.confirm<CustomerModel>(
+              url: System.data.apiEndPoint.url + (otp.confirmUrl ?? ""),
+              otp: val,
+              jsonReader: (json) {
+                return CustomerModel.fromJson(json);
+              },
+            ).then(
+              (value) {
+                circularLoaderController.stopLoading(
+                  isError: false,
+                  message: "Login success",
+                  duration: const Duration(seconds: 2),
+                  onCloseCallBack: () {
+                    if (onLoginSuccess != null) {
+                      onLoginSuccess(value);
+                    }
+                  },
+                );
+              },
+            ).catchError((onError) {
+              pinComponentController.value.loadingController.stopLoading(
+                  isError: true,
+                  message: ErrorHandlingUtil.handleApiError(onError));
+            });
+          },
+        );
+      },
+    ).then(
+      (value) {
+        if (value != null) {
+          circularLoaderController.stopLoading(
+            isError: false,
+            message: "Login success",
+            duration: const Duration(seconds: 2),
+            onCloseCallBack: () {
+              if (onLoginSuccess != null) {
+                onLoginSuccess(value);
+              }
+            },
+          );
+        } else {
+          circularLoaderController.forceClose();
+        }
+      },
+    ).catchError((onError) {
+      circularLoaderController.stopLoading(
+          isError: true, message: ErrorHandlingUtil.handleApiError(onError));
+    });
   }
-  
+
   void commit() {
     notifyListeners();
   }

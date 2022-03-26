@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/util/api_end_point.dart';
 import 'package:sufismart/util/colour.dart';
 import 'package:sufismart/util/databases.dart';
@@ -18,6 +19,7 @@ class Data extends ChangeNotifier {
   BuildContext get context => navigatorKey.currentContext!;
   ApiEndPoint apiEndPoint = ApiEndPoint();
   Global global = Global();
+  CustomerModel customerModel = CustomerModel();
   Strings? strings;
   Colour? color;
   OneSignalMessaging? oneSignalMessaging;
