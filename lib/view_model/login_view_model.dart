@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
+import 'package:sufismart/model/login_model.dart';
+import 'package:sufismart/util/error_handling_util.dart';
+import 'package:sufismart/util/system.dart';
 
 class LoginViewModel extends ChangeNotifier {
   Future<void> onRefreshHomePage() async {
@@ -50,16 +53,30 @@ class LoginViewModel extends ChangeNotifier {
 
   void login() {
     circularLoaderController.startLoading();
-    Timer.periodic(
-      const Duration(seconds: 10),
-      (timer) {
-        timer.cancel();
-        circularLoaderController.stopLoading(
-            message: "Login Berhasil",
-            isError: false,
-            duration: const Duration(seconds: 10));
-      },
-    );
+    LoginModel.post(
+      loginModel: LoginModel(
+          username: emailTextEditingController.text,
+          password: passwordTextEditingController.text,
+          deviceId: System.data.global.messagingToken),
+    ).then((value) {
+      circularLoaderController.stopLoading(
+          message: "${value?.toJson()}", isError: false);
+    }).catchError((onError) {
+      circularLoaderController.stopLoading(
+        message: ErrorHandlingUtil.handleApiError(onError),
+        isError: true,
+      );
+    });
+    // Timer.periodic(
+    //   const Duration(seconds: 10),
+    //   (timer) {
+    //     timer.cancel();
+    //     circularLoaderController.stopLoading(
+    //         message: "Login Berhasil",
+    //         isError: false,
+    //         duration: const Duration(seconds: 10));
+    //   },
+    // );
   }
 
   void commit() {
