@@ -7,14 +7,18 @@ import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
+import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/gender_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/signup_view_model.dart';
 
 class SignupView extends StatefulWidget {
-  final VoidCallback? onRegisterSucces;
+  final ValueChanged<CustomerModel>? onRegisterSucces;
 
-  const SignupView({Key? key, this.onRegisterSucces}) : super(key: key);
+  const SignupView({
+    Key? key,
+    this.onRegisterSucces,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

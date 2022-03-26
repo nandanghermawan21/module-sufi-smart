@@ -7,6 +7,7 @@ class ApiEndPoint {
   String baseOcrUrlDebug = "https://konteks-api.konvergen.ai/";
   String getAllGenderUrl = "gender/getAll";
   String postCustomerRegisterUrl = "customer/register";
+  String postCustomerLoginUrl = "auth/customerLogin";
   String readOcrKtpUrl = "sfi/ktp";
 
   String get url {
@@ -35,5 +36,9 @@ class ApiEndPoint {
 
   String readKtp() {
     return ocr + readOcrKtpUrl;
+  }
+
+  String loginCustomer() {
+    return url + postCustomerLoginUrl;
   }
 }

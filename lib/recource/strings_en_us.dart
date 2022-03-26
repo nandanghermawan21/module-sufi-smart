@@ -183,4 +183,13 @@ class StringsEnUs implements Strings {
 
   @override
   String get readDataKtpSuccess => "Read KTP Success";
+
+  @override
+  String get timeLeft => "Time Left";
+
+  @override
+  String get enterPin => "Enter PIN";
+
+  @override
+  String get resend => "Resend";
 }
