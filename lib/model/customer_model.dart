@@ -46,21 +46,21 @@ class CustomerModel {
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) {
     return CustomerModel(
-      id: json["id"] as int,
-      nik: json["nik"] as String,
-      imageUrl: json["imageUrl"] as String,
-      imageId: json["imageId"] as String,
-      fullName: json["fullName"] as String,
-      genderId: json["genderId"] as String,
-      genderName: json["genderName"] as String,
-      cityId: json["cityId"] as String,
-      cityName: json["cityName"] as String,
-      phoneNumber: json["phoneNumber"] as String,
-      username: json["username"] as String,
-      password: json["password"] as String,
-      level: json["level"] as int,
-      deviceId: json["deviceId"] as String,
-      token: json["token"] as String,
+      id: json["id"] as int?,
+      nik: json["nik"] as String?,
+      imageUrl: json["imageUrl"] as String?,
+      imageId: json["imageId"] as String?,
+      fullName: json["fullName"] as String?,
+      genderId: json["genderId"] as String?,
+      genderName: json["genderName"] as String?,
+      cityId: json["cityId"] as String?,
+      cityName: json["cityName"] as String?,
+      phoneNumber: json["phoneNumber"] as String?,
+      username: json["username"] as String?,
+      password: json["password"] as String?,
+      level: json["level"] as int?,
+      deviceId: json["deviceId"] as String?,
+      token: json["token"] as String?,
     );
   }
 
