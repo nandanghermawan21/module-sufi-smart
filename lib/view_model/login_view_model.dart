@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
+import 'package:sufismart/model/customer_model.dart';
+import 'package:sufismart/model/user_model.dart';
 
 class LoginViewModel extends ChangeNotifier {
   CircularLoaderController circularLoaderController =
@@ -48,12 +50,18 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void login() {
-    emailTextEditingController.text.isEmpty
-        ? setEmailValidation = true
-        : setEmailValidation = false;
-    passwordTextEditingController.text.isEmpty
-        ? setPasswordValidation = true
-        : setPasswordValidation = false;
+    circularLoaderController.startLoading();
+    CustomerModel.login(user: UserModel(
+      username: emailTextEditingController.text,
+      password: passwordTextEditingController.text,
+      deviceId: 
+    ));
+    // emailTextEditingController.text.isEmpty
+    //     ? setEmailValidation = true
+    //     : setEmailValidation = false;
+    // passwordTextEditingController.text.isEmpty
+    //     ? setPasswordValidation = true
+    //     : setPasswordValidation = false;
   }
 
   void commit() {

@@ -21,6 +21,8 @@ class CustomerRegisterModel {
     this.deviceId,
   });
 
+  get token => null;
+
   CustomerRegisterModel fromJson(Map<String, dynamic> json) {
     return CustomerRegisterModel(
       avatar: json["avatar"] as String,
