@@ -89,7 +89,6 @@ class KtpModel {
     String? key,
     File? file,
   }) async {
-    print(System.data.apiEndPoint.readKtp());
     return Dio()
         .post(
       System.data.apiEndPoint.readKtp(),

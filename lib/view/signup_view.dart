@@ -149,7 +149,8 @@ class _SignupViewState extends State<SignupView> {
                       child: Container(
                     child: genderFuture(),
                   )),
-                  Consumer<SignupViewModel>(
+                  ValueListenableBuilder(
+                    valueListenable: signupViewModel.imageKtpPickerController,
                     builder: (c, d, w) {
                       return Container(
                           width: 100,
