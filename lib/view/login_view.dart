@@ -3,15 +3,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/pin_component.dart';
+import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/login_view_model.dart';
 
 class LoginView extends StatefulWidget {
   final VoidCallback? gotoSignup;
+  final ValueChanged<CustomerModel>? onLoginSuccess;
 
   const LoginView({
     Key? key,
     this.gotoSignup,
+    this.onLoginSuccess,
   }) : super(key: key);
 
   @override
@@ -32,6 +35,7 @@ class _LoginState extends State<LoginView> {
         child: Stack(
           children: [
             Scaffold(
+              resizeToAvoidBottomInset: false,
               body: SingleChildScrollView(
                 child: Consumer<LoginViewModel>(
                   builder: (c, d, w) {
@@ -99,7 +103,11 @@ class _LoginState extends State<LoginView> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: loginViewModel.login,
+                            onTap: () {
+                              loginViewModel.login(
+                                onLoginSuccess: widget.onLoginSuccess,
+                              );
+                            },
                             child: Container(
                               height: 50,
                               width: double.infinity,
@@ -152,7 +160,6 @@ class _LoginState extends State<LoginView> {
                 ),
               ),
             ),
-            // pin(),
           ],
         ),
       ),

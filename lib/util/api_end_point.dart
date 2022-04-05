@@ -7,12 +7,24 @@ class ApiEndPoint {
   String getAllCityUrl = "city/getAll";
   String loginCustomerUrl = "auth/customerLogin";
   String postCustomerRegisterUrl = "customer/register";
+  String baseOcrUrl = "https://konteks-api.konvergen.ai/";
+  String baseOcrUrlDebug = "https://konteks-api.konvergen.ai/";
+  String postCustomerLoginUrl = "auth/customerLogin";
+  String readOcrKtpUrl = "sfi/ktp";
 
   String get url {
     if (ModeUtil.debugMode == true) {
       return baseUrlDebug;
     } else {
       return baseUrl;
+    }
+  }
+
+  String get ocr {
+    if (ModeUtil.debugMode == true) {
+      return baseOcrUrl;
+    } else {
+      return baseOcrUrlDebug;
     }
   }
 
@@ -30,5 +42,9 @@ class ApiEndPoint {
 
   String customerRegister() {
     return url + postCustomerRegisterUrl;
+  }
+
+  String readKtp() {
+    return ocr + readOcrKtpUrl;
   }
 }

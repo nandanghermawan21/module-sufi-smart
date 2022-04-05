@@ -47,4 +47,19 @@ class CityModel {
       },
     );
   }
+
+  static Future<CityModel> readCity(String city) {
+    return getAll().then(
+      (value) {
+        return value
+            .where((e) =>
+                e.name?.toLowerCase().contains(city.toLowerCase()) == true)
+            .first;
+      },
+    ).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
+  }
 }

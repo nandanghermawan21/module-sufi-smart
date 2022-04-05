@@ -1,21 +1,21 @@
-// import 'dart:convert';
-// import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/image_picker_component.dart';
+import 'package:sufismart/component/pin_component.dart';
 import 'package:sufismart/model/city_model.dart';
+import 'package:sufismart/model/customer_model.dart';
+import 'package:sufismart/model/customer_register_model.dart';
 import 'package:sufismart/model/gender_model.dart';
-import 'package:sufismart/model/register_model.dart';
+import 'package:sufismart/model/ktp_model.dart';
+import 'package:sufismart/model/otp_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
+import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
-// import 'package:sufismart/util/mode_util.dart';
-// import 'package:sufismart/util/system.dart';
-// import 'package:sufismart/model/register_model.dart';
 
 class SignupViewModel extends ChangeNotifier {
   CircularLoaderController loadingController = CircularLoaderController();
-  ImagePickerController imagePickerController = ImagePickerController();
+  ImagePickerController imageKtpPickerController = ImagePickerController();
+  PinComponentController pinComponentController = PinComponentController();
 
   TextEditingController nikController = TextEditingController();
   String? _nik;
@@ -73,10 +73,12 @@ class SignupViewModel extends ChangeNotifier {
     commit();
   }
 
-  void register({VoidCallback? onRegisterSuccess}) {
+  ImagePickerController imagePickerController = ImagePickerController();
+
+  void register({ValueChanged<CustomerModel>? onRegisterSuccess}) {
     loadingController.startLoading();
-    RegisterModel.post(
-      registerModel: RegisterModel(
+    CustomerModel.register(
+      registerModel: CustomerRegisterModel(
         avatar: imagePickerController.value.fileBase64Compresed,
         nik: nikController.text,
         genderId: gender?.id,
@@ -87,11 +89,58 @@ class SignupViewModel extends ChangeNotifier {
         password: passwordController.text,
         deviceId: System.data.global.messagingToken,
       ),
-    ).then((value) {
-      loadingController.stopLoading(
-        message: "${value?.toJson()}",
-        isError: false,
-      );
+    ).then((otp) {
+      loadingController.forceStop();
+      PinComponent.open(
+          context: System.data.context,
+          controller: pinComponentController,
+          title: "Input OTP",
+          timer: const Duration(seconds: 10),
+          onTapResend: (val) {
+            pinComponentController.value.loadingController.startLoading();
+            OtpModel.resend(url: System.data.apiEndPoint.url + otp!.resendUrl!)
+                .then(
+              (value) {
+                pinComponentController.value.loadingController.forceStop();
+                pinComponentController.value.timerController.start(
+                  duration: DateTime.now().toUtc().difference(value!.expired!),
+                );
+              },
+            ).catchError(
+              (onError) {
+                pinComponentController.value.loadingController.stopLoading(
+                    isError: true,
+                    message: ErrorHandlingUtil.handleApiError(onError));
+              },
+            );
+          },
+          onTapSend: (val) {
+            pinComponentController.value.loadingController.startLoading();
+            OtpModel.confirm<CustomerModel>(
+              url: System.data.apiEndPoint.url + (otp!.confirmUrl ?? ""),
+              otp: val,
+              jsonReader: (json) {
+                return CustomerModel.fromJson(json);
+              },
+            ).then(
+              (value) {
+                loadingController.stopLoading(
+                  isError: false,
+                  message: "Login success",
+                  duration: const Duration(seconds: 2),
+                  onCloseCallBack: () {
+                    if (onRegisterSuccess != null) {
+                      onRegisterSuccess(value);
+                    }
+                  },
+                );
+              },
+            ).catchError((onError) {
+              pinComponentController.value.loadingController.stopLoading(
+                  isError: true,
+                  message: ErrorHandlingUtil.handleApiError(onError));
+            });
+          });
     }).catchError(
       (onError) {
         loadingController.stopLoading(
@@ -100,26 +149,51 @@ class SignupViewModel extends ChangeNotifier {
         );
       },
     );
+  }
 
-    // String url =
-    //     "http://api-suzuki.lemburkuring.id/api/Fileservice/upload?path=testupload&name=filesaya";
-    // imagePickerController.uploadFile(
-    //   url: url,
-    //   header: {
-    //     HttpHeaders.authorizationHeader: "bearer ${System.data.global.token}"
-    //   },
-    // ).then((value) {
-    //   imagePickerController.value.uploadedUrl =
-    //       json.decode(value)["url"] as String;
-    //   imagePickerController.commit();
-    // }).catchError(
-    //   (onError) {
-    //     ModeUtil.debugPrint("error dari upload adalah $onError");
-    //   },
-    // );
-    // if (onRegisterSuccess != null) {
-    //   onRegisterSuccess();
-    // }
+  void onTapScanKtp() {
+    imageKtpPickerController
+        .getImages(
+      camera: true,
+    )
+        .then((value) {
+      loadingController.startLoading();
+      KtpModel.readFromImage(
+        key: System.data.global.ocrKey,
+        file: value.fileImage,
+      ).then(
+        (value) {
+          ModeUtil.debugPrint(value.toJson());
+          loadingController.stopLoading(
+            isError: false,
+            message:
+                "${System.data.strings!.readDataKtpSuccess} \n ${value.nik}",
+            onCloseCallBack: () {
+              nikController.text = value.nik ?? "";
+              fullnameController.text = value.nama ?? "";
+              GenderModel.readGender(value.jenisKelamin ?? "").then((value) {
+                gender = value;
+              });
+              CityModel.readCity(value.kotaKabupaten ?? "").then((value) {
+                city = value;
+              });
+            },
+          );
+        },
+      ).catchError((onError) {
+        loadingController.stopLoading(
+          message: ErrorHandlingUtil.handleApiError(onError),
+          isError: true,
+        );
+      });
+    }).catchError(
+      (onError) {
+        loadingController.stopLoading(
+          message: ErrorHandlingUtil.handleApiError(onError),
+          isError: true,
+        );
+      },
+    );
   }
 
   void commit() {

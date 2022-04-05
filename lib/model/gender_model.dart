@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:sufismart/util/system.dart';
 
@@ -46,6 +45,20 @@ class GenderModel {
     ).catchError((onError) {
       throw onError;
     });
+  }
+
+  static Future<GenderModel> readGender(String gender) {
+    return getAll().then(
+      (value) {
+        return value
+            .where((e) => e.name?.toLowerCase() == gender.toLowerCase())
+            .first;
+      },
+    ).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
   }
 
   // return http
