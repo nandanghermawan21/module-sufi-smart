@@ -16,6 +16,7 @@ void setting() {
   //setting permisson [haru didefinisikan juga pada manifest dan info.pls]
   System.data.permission = [
     Permission.accessNotificationPolicy,
+    Permission.location,
   ];
   //setting oneSignal notification
   System.data.oneSignalMessaging = OneSignalMessaging(

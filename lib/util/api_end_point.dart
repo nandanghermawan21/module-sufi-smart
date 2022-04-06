@@ -1,8 +1,8 @@
 import 'package:sufismart/util/mode_util.dart';
 
 class ApiEndPoint {
-  String baseUrl = "http://api-suzuki.lemburkuring.id/api/";
-  String baseUrlDebug = "http://api-suzuki.lemburkuring.id/api/";
+  String baseUrl = "https://api-suzuki.lemburkuring.id/api/";
+  String baseUrlDebug = "https://api-suzuki.lemburkuring.id/api/";
   String getAllGenderUrl = "gender/getAll";
   String getAllCityUrl = "city/getAll";
   String loginCustomerUrl = "auth/customerLogin";
@@ -11,6 +11,7 @@ class ApiEndPoint {
   String baseOcrUrlDebug = "https://konteks-api.konvergen.ai/";
   String postCustomerLoginUrl = "auth/customerLogin";
   String readOcrKtpUrl = "sfi/ktp";
+  String postSavePositionUrl = "Service/savelocation";
 
   String get url {
     if (ModeUtil.debugMode == true) {
@@ -46,5 +47,9 @@ class ApiEndPoint {
 
   String readKtp() {
     return ocr + readOcrKtpUrl;
+  }
+
+  String savePosition() {
+    return url + postSavePositionUrl;
   }
 }

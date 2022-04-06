@@ -1,6 +1,12 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_background_service_android/flutter_background_service_android.dart';
+import 'package:flutter_background_service_ios/flutter_background_service_ios.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
@@ -11,12 +17,14 @@ import 'package:sufismart/util/system.dart';
 import 'package:sufismart/route.dart';
 import 'package:uni_links/uni_links.dart';
 import 'route.dart';
+import 'service.dart' as service;
 
 Data data = Data();
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setting();
-  data.initialize().then((val) {
+  await initializeService();
+  data.initialize().then((val) async {
     runApp(const MyApp());
   });
 }
@@ -52,6 +60,46 @@ void getDeviceId({int trial = 0}) {
   );
 }
 
+Future<void> initializeService() async {
+  await data.service.configure(
+    androidConfiguration: AndroidConfiguration(
+      // this will executed when app is in foreground or background in separated isolate
+      onStart: onStartService,
+
+      // auto start service
+      autoStart: true,
+      isForegroundMode: false,
+    ),
+    iosConfiguration: IosConfiguration(
+      // auto start service
+      autoStart: true,
+
+      // this will executed when app is in foreground in separated isolate
+      onForeground: onStartService,
+
+      // you have to enable background fetch capability on xcode project
+      onBackground: onIosBackground,
+    ),
+  );
+}
+
+void onIosBackground() {
+  WidgetsFlutterBinding.ensureInitialized();
+  debugPrint('FLUTTER BACKGROUND FETCH');
+}
+
+void onStartService() {
+  debugPrint("start services default");
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isIOS) FlutterBackgroundServiceIOS.registerWith();
+  if (Platform.isAndroid) FlutterBackgroundServiceAndroid.registerWith();
+  service.onServiceStarted();
+
+  data.service.onDataReceived.listen((event) {
+    service.onEvent(event);
+  });
+}
+
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -77,20 +125,34 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: System.data,
-      child: Consumer<Data>(
-        builder: (c, d, w) {
-          return MaterialApp(
-            home: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: CircularLoaderComponent(
-                controller: data.loadingController,
-                child: home(),
-              ),
+    return MaterialApp(
+      home: Stack(
+        children: [
+          StreamBuilder<Map<String, dynamic>?>(
+              stream: data.service.onDataReceived,
+              builder: (c, d) {
+                if (d.hasData && d.data != null) {
+                  data.service.sendData(d.data!);
+                }
+                return const SizedBox();
+              }),
+          ChangeNotifierProvider.value(
+            value: System.data,
+            child: Consumer<Data>(
+              builder: (c, d, w) {
+                return MaterialApp(
+                  home: Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: CircularLoaderComponent(
+                      controller: data.loadingController,
+                      child: home(),
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
