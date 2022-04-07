@@ -79,7 +79,7 @@ class _MainMenuViewState extends State<MainMenuView> {
       circleColor: System.data.color!.background,
       inactiveIconColor: System.data.color!.background,
       textColor: System.data.color!.background,
-      tabs: List.generate(widget.menus?.length ?? 0, (index) {
+      tabs: List.generate(4, (index) {
         return TabData(
           iconData: widget.menus![index]?.iconData ?? Icons.home,
           title: widget.menus![index]?.title ?? System.data.strings!.home,

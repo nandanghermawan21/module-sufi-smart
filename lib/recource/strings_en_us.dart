@@ -192,4 +192,10 @@ class StringsEnUs implements Strings {
 
   @override
   String get resend => "Resend";
+
+  @override
+  String get map => "Map";
+
+  @override
+  String get user => "User";
 }
