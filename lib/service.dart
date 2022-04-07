@@ -23,41 +23,48 @@ void onEvent(Map<String, dynamic>? event) {
 }
 
 void saveLocation() {
-  debugPrint("read permission");
-  Permission.location.isGranted.then(
-    (grandted) {
-      if (grandted == true) {
-        debugPrint("read location");
-        Geolocator.getCurrentPosition().then(
-          (value) {
-            PositionModel.save(
-              positionModel: PositionModel(
-                id: 0,
-                createDate: value.timestamp?.toUtc(),
-                ref: "TESTFROMAPP",
-                lat: value.latitude,
-                lon: value.longitude,
-                direction: value.heading,
-              ),
-            ).then((position) {
-              debugPrint("send success");
-              Future.delayed(const Duration(seconds: 1)).then((value) =>
-                  System.data.service.sendData(
-                      {ServiceKey.action: ServiceValueAction.sendPosition}));
-            }).catchError((onError) {
-              debugPrint(
-                  "send error ${ErrorHandlingUtil.handleApiError(onError)}");
-              Future.delayed(const Duration(seconds: 1)).then((value) =>
-                  System.data.service.sendData(
-                      {ServiceKey.action: ServiceValueAction.sendPosition}));
-            });
-          },
-        );
-      } else {
-        Future.delayed(const Duration(seconds: 1)).then((value) => System
-            .data.service
-            .sendData({ServiceKey.action: ServiceValueAction.sendPosition}));
-      }
-    },
-  );
+  debugPrint("send position ${System.data.global.customerModel?.id}");
+  if (System.data.global.customerModel?.id != null) {
+    Permission.location.isGranted.then(
+      (grandted) {
+        if (grandted == true) {
+          debugPrint("read location");
+          Geolocator.getCurrentPosition().then(
+            (value) {
+              PositionModel.save(
+                positionModel: PositionModel(
+                  id: 0,
+                  createDate: value.timestamp?.toUtc(),
+                  ref: "TESTFROMAPP",
+                  lat: value.latitude,
+                  lon: value.longitude,
+                  direction: value.heading,
+                ),
+              ).then((position) {
+                debugPrint("send success");
+                Future.delayed(const Duration(seconds: 1)).then((value) =>
+                    System.data.service.sendData(
+                        {ServiceKey.action: ServiceValueAction.sendPosition}));
+              }).catchError((onError) {
+                debugPrint(
+                    "send error ${ErrorHandlingUtil.handleApiError(onError)}");
+                Future.delayed(const Duration(seconds: 1)).then((value) =>
+                    System.data.service.sendData(
+                        {ServiceKey.action: ServiceValueAction.sendPosition}));
+              });
+            },
+          );
+        } else {
+          Future.delayed(const Duration(seconds: 1)).then((value) => System
+              .data.service
+              .sendData({ServiceKey.action: ServiceValueAction.sendPosition}));
+        }
+      },
+    );
+  } else {
+    debugPrint("send position cancel userid null ");
+    Future.delayed(const Duration(seconds: 1)).then((value) => System
+        .data.service
+        .sendData({ServiceKey.action: ServiceValueAction.sendPosition}));
+  }
 }

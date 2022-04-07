@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:sufismart/model/menu_model.dart';
 import 'package:sufismart/util/enum.dart';
+import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view/contact_view.dart';
 import 'package:sufismart/view/empty_page_view.dart';
@@ -89,6 +90,7 @@ Map<String, WidgetBuilder> route = {
                       SessionKey.user, json.encode(customer.toJson()));
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       RouteName.mainMenu, (r) => r.settings.name == "");
+                  ModeUtil.debugPrint("new customer ${customer.toJson()}");
                 },
               );
             default:

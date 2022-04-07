@@ -38,7 +38,7 @@ class ApiEndPoint {
   }
 
   String loginCustomer() {
-    return url + getAllCityUrl;
+    return url + loginCustomerUrl;
   }
 
   String customerRegister() {

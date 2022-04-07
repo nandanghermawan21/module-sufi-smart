@@ -36,6 +36,7 @@ class _SignupViewState extends State<SignupView> {
       value: signupViewModel,
       builder: (c, w) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: BasicComponent.appBar(),
           body: CircularLoaderComponent(
             controller: signupViewModel.loadingController,

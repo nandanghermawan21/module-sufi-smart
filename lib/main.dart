@@ -142,6 +142,7 @@ class MyAppState extends State<MyApp> {
               builder: (c, d, w) {
                 return MaterialApp(
                   home: Scaffold(
+                    resizeToAvoidBottomInset: false,
                     backgroundColor: Colors.transparent,
                     body: CircularLoaderComponent(
                       controller: data.loadingController,
