@@ -9,7 +9,6 @@ import 'package:sufismart/util/system.dart';
 
 void onServiceStarted() {
   debugPrint("onServiceStarted called");
-  System.data.service.setAsForegroundService();
 }
 
 void restartService({VoidCallback? onRestarted}) {
@@ -35,6 +34,10 @@ void onEvent(Map<String, dynamic>? event) {
       saveLocationUser(
         userId: event[Prefkey.userId],
       );
+      break;
+    case ServiceValueAction.sendToForeground:
+      debugPrint("send to foreground");
+      System.data.service.setAsForegroundService();
       break;
     default:
   }

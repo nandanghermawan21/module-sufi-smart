@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:sufismart/setting.dart';
 import 'package:sufismart/util/data.dart';
+import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/route.dart';
@@ -81,7 +82,7 @@ Future<void> initializeService() async {
       foregroundServiceNotificationTitle: "Sufi Smart",
       // auto start service
       autoStart: true,
-      isForegroundMode: true,
+      isForegroundMode: false,
     ),
     iosConfiguration: IosConfiguration(
       // auto start service
@@ -122,7 +123,7 @@ class MyApp extends StatefulWidget {
   }
 }
 
-class MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   bool _initialUriIsHandled = false;
 
   @override
@@ -134,6 +135,7 @@ class MyAppState extends State<MyApp> {
     getPermission().then((value) {
       initOnesignal();
     });
+    WidgetsBinding.instance?.addObserver(this);
   }
 
   @override
@@ -224,6 +226,33 @@ class MyAppState extends State<MyApp> {
           if (!mounted) return;
         },
       );
+    }
+  }
+
+  @override
+  void dispose() {
+    ModeUtil.debugPrint("APP Disposed");
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    ModeUtil.debugPrint("APP LifeCycle State");
+    System.data.service.sendData({
+      ServiceKey.action: ServiceValueAction.sendToForeground,
+    });
+    switch (state) {
+      case AppLifecycleState.resumed:
+        ModeUtil.debugPrint("APP Resume");
+        break;
+      case AppLifecycleState.inactive:
+        ModeUtil.debugPrint("APP Closed");
+        break;
+      case AppLifecycleState.paused:
+        break;
+      case AppLifecycleState.detached:
+        break;
     }
   }
 }

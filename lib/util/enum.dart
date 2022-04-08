@@ -4,11 +4,12 @@ class SessionKey {
 }
 
 class ServiceKey {
-  static const String action = "action:";
+  static const String action = "action";
 }
 
 class ServiceValueAction {
   static const String sendPosition = "sendPosition";
+  static const String sendToForeground = "sendToForeground";
 }
 
 class Prefkey {
