@@ -45,7 +45,7 @@ class CustomerModel {
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) {
     return CustomerModel(
-      id: json["id"] as int,
+      id: json["id"] as int?,
       nik: json["nik"] as String?,
       imageUrl: json["imageUrl"] as String?,
       imageId: json["imageId"] as String?,
@@ -56,7 +56,7 @@ class CustomerModel {
       cityName: json["cityName"] as String?,
       phoneNumber: json["phoneNumber"] as String?,
       username: json["username"] as String?,
-      level: json["level"] as int,
+      level: json["level"] as int?,
       token: json["token"] as String?,
     );
   }

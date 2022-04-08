@@ -10,3 +10,7 @@ class ServiceKey {
 class ServiceValueAction {
   static const String sendPosition = "sendPosition";
 }
+
+class Prefkey {
+  static const String userId = "UserId";
+}

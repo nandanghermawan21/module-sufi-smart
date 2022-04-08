@@ -88,9 +88,10 @@ Map<String, WidgetBuilder> route = {
                   System.data.global.token = customer.token;
                   System.data.session!.setString(
                       SessionKey.user, json.encode(customer.toJson()));
+                  ModeUtil.debugPrint(
+                      "new customer ${System.data.global.customerModel?.toJson()}");
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       RouteName.mainMenu, (r) => r.settings.name == "");
-                  ModeUtil.debugPrint("new customer ${customer.toJson()}");
                 },
               );
             default:

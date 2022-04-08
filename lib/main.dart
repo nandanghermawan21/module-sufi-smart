@@ -23,9 +23,21 @@ Data data = Data();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setting();
-  await initializeService();
   data.initialize().then((val) async {
-    runApp(const MyApp());
+    debugPrint("Start service");
+    Timer.periodic(
+      const Duration(seconds: 1),
+      (t) async {
+        debugPrint("Start service => check session ${t.tick}");
+        if (data.session != null) {
+          debugPrint("Start service => initialize");
+          initializeService().then((value) {
+            runApp(const MyApp());
+          });
+        }
+        t.cancel();
+      },
+    );
   });
 }
 
@@ -65,10 +77,11 @@ Future<void> initializeService() async {
     androidConfiguration: AndroidConfiguration(
       // this will executed when app is in foreground or background in separated isolate
       onStart: onStartService,
-
+      foregroundServiceNotificationContent: "Sufi Smart Aplication Service",
+      foregroundServiceNotificationTitle: "Sufi Smart",
       // auto start service
       autoStart: true,
-      isForegroundMode: false,
+      isForegroundMode: true,
     ),
     iosConfiguration: IosConfiguration(
       // auto start service
