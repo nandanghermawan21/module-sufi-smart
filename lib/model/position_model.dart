@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:sufismart/util/system.dart';
 
@@ -70,4 +71,30 @@ class PositionModel {
       throw onError;
     });
   }
+
+
+  static Future<List<PositionModel>> load({
+    String? filter,
+  }) {
+    return http.post(
+      Uri.parse(
+        System.data.apiEndPoint.loadlocation(filter: filter),
+      ),
+      headers: {
+        HttpHeaders.contentTypeHeader: Headers.jsonContentType,
+      },
+    ).then(
+      (value) {
+        if (value.statusCode == 200) {
+          return (json.decode(value.body) as List).map((e) => PositionModel.fromJson(e)).toList();
+        } else {
+          throw value;
+        }
+      },
+    ).catchError((onError) {
+      throw onError;
+    });
+  }
+
+
 }

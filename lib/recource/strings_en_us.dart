@@ -192,4 +192,8 @@ class StringsEnUs implements Strings {
 
   @override
   String get resend => "Resend";
+
+  @override
+  String get viewalluser => "View All User";
+
 }

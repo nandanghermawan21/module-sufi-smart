@@ -4,7 +4,10 @@ import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/dashboard_view_model.dart';
 
 class DashboardView extends StatefulWidget {
-  const DashboardView({Key? key}) : super(key: key);
+
+  final VoidCallback? ontapview;
+
+  const DashboardView({Key? key, this.ontapview}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -120,13 +123,35 @@ class _DashboardViewState extends State<DashboardView> {
     return Container(
       margin: const EdgeInsets.all(15),
       color: Colors.transparent,
-      height: 50,
-      child: ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(System.data.color!.primaryColor)),
-        onPressed: () {},
-        child: Text(System.data.strings!.logOut),
+      height: 110,
+      child: Column(
+        children: [
+         Container(
+           color: Colors.transparent,
+           width: double.infinity,
+           child: ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(System.data.color!.primaryColor)),
+            onPressed: () {
+
+              widget.ontapview!();
+            },
+            child: Text(System.data.strings!.viewalluser),
+        ),
+         ),
+          Container(
+            color: Colors.transparent,
+            width: double.infinity,
+            child: ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(System.data.color!.primaryColor)),
+            onPressed: () {},
+            child: Text(System.data.strings!.logOut),
+        ),
+          ),
+        ]
       ),
     );
   }
