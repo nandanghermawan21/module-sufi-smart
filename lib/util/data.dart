@@ -11,6 +11,9 @@ import 'package:sufismart/util/strings.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/one_signal_messaging.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_background_service_android/flutter_background_service_android.dart';
+import 'package:flutter_background_service_ios/flutter_background_service_ios.dart';
 
 import 'global.dart';
 
@@ -29,7 +32,7 @@ class Data extends ChangeNotifier {
   Databases? database;
   Function(Database?, int)? onCreateDb;
   ValueChanged<Map<String, dynamic>?>? onServiceDataReceived;
-
+  FlutterBackgroundService service = FlutterBackgroundService();
   Data();
 
   Future<void> initialize() async {
@@ -59,4 +62,6 @@ class Data extends ChangeNotifier {
     );
     return true;
   }
+
+  static fluterbackgroundservice() {}
 }
