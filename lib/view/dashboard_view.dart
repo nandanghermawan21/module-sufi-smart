@@ -4,7 +4,8 @@ import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/dashboard_view_model.dart';
 
 class DashboardView extends StatefulWidget {
-  const DashboardView({Key? key}) : super(key: key);
+  final VoidCallback? onTapViewAllUser;
+  const DashboardView({Key? key, this.onTapViewAllUser}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -118,16 +119,44 @@ class _DashboardViewState extends State<DashboardView> {
 
   Widget bottomNavigationBar() {
     return Container(
-      margin: const EdgeInsets.all(15),
-      color: Colors.transparent,
-      height: 50,
-      child: ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all(System.data.color!.primaryColor)),
-        onPressed: () {},
-        child: Text(System.data.strings!.logOut),
-      ),
-    );
+        margin: const EdgeInsets.all(15),
+        color: Colors.transparent,
+        height: 110,
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              color: Colors.transparent,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        System.data.color!.primaryColor)),
+                onPressed: () {
+                  if (widget.onTapViewAllUser != null) {
+                    widget.onTapViewAllUser!();
+                  }
+                },
+                child: Text(
+                  System.data.strings!.viewAllUser,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Container(
+              width: double.infinity,
+              color: Colors.transparent,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        System.data.color!.primaryColor)),
+                onPressed: () {},
+                child: Text(System.data.strings!.logOut),
+              ),
+            ),
+          ],
+        ));
   }
 }
