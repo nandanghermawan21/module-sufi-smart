@@ -85,34 +85,22 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Stack(
-        children: [
-          StreamBuilder<Map<String, dynamic>?>(
-              stream: data.service.onDataReceived,
-              builder: (c, d) {
-                if (d.hasData && d.data != null) {
-                  data.service.sendData(d.data!);
-                }
-                return const SizedBox();
-              }),
-          ChangeNotifierProvider.value(
-            value: System.data,
-            child: Consumer<Data>(
-              builder: (c, d, w) {
-                return MaterialApp(
-                  home: Scaffold(
-                    resizeToAvoidBottomInset: false,
-                    backgroundColor: Colors.transparent,
-                    body: CircularLoaderComponent(
-                      controller: data.loadingController,
-                      child: home(),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+      home: ChangeNotifierProvider.value(
+        value: System.data,
+        child: Consumer<Data>(
+          builder: (c, d, w) {
+            return MaterialApp(
+              home: Scaffold(
+                resizeToAvoidBottomInset: false,
+                backgroundColor: Colors.transparent,
+                body: CircularLoaderComponent(
+                  controller: data.loadingController,
+                  child: home(),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -29,7 +28,6 @@ class Data extends ChangeNotifier {
   SharedPreferences? session;
   Databases? database;
   Function(Database?, int)? onCreateDb;
-  FlutterBackgroundService service = FlutterBackgroundService();
   ValueChanged<Map<String, dynamic>?>? onServiceDataReceived;
 
   Data();
