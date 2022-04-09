@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:sufismart/setting.dart';
 import 'package:sufismart/util/data.dart';
-import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/route.dart';
@@ -69,7 +68,7 @@ class MyApp extends StatefulWidget {
   }
 }
 
-class MyAppState extends State<MyApp> with WidgetsBindingObserver {
+class MyAppState extends State<MyApp> {
   bool _initialUriIsHandled = false;
 
   @override
@@ -81,7 +80,6 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
     getPermission().then((value) {
       initOnesignal();
     });
-    WidgetsBinding.instance?.addObserver(this);
   }
 
   @override
@@ -172,33 +170,6 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
           if (!mounted) return;
         },
       );
-    }
-  }
-
-  @override
-  void dispose() {
-    ModeUtil.debugPrint("APP Disposed");
-    WidgetsBinding.instance?.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    ModeUtil.debugPrint("APP LifeCycle State");
-    System.data.service.sendData({
-      ServiceKey.action: ServiceValueAction.sendToForeground,
-    });
-    switch (state) {
-      case AppLifecycleState.resumed:
-        ModeUtil.debugPrint("APP Resume");
-        break;
-      case AppLifecycleState.inactive:
-        ModeUtil.debugPrint("APP Closed");
-        break;
-      case AppLifecycleState.paused:
-        break;
-      case AppLifecycleState.detached:
-        break;
     }
   }
 }
