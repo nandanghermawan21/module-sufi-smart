@@ -64,7 +64,7 @@ class _DashboardViewState extends State<DashboardView> {
             height: 10,
           ),
           Text(
-            System.data.strings!.fullname,
+            System.data.global.customerModel?.fullName ?? "",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
@@ -74,7 +74,7 @@ class _DashboardViewState extends State<DashboardView> {
             height: 10,
           ),
           Text(
-            System.data.strings!.username,
+            System.data.global.customerModel?.username ?? "",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,

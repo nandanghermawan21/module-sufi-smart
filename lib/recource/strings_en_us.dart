@@ -1,4 +1,4 @@
-import 'package:sufismart/util/strings.dart';
+import 'package:sufismart/util/strings.dart' show Strings;
 
 class StringsEnUs implements Strings {
   @override
@@ -180,4 +180,16 @@ class StringsEnUs implements Strings {
 
   @override
   String get logOut => "Logout";
+
+  @override
+  String get readDataKtpSuccess => "Success Read Ktp";
+
+  @override
+  String get timeLeft => "Timer Left";
+
+  @override
+  String get resend => "Resend";
+
+  @override  
+  String get enterPin => "Input Pin";
 }
