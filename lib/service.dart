@@ -54,26 +54,12 @@ void saveLocationUser({
       (grandted) {
         if (grandted == true) {
           debugPrint("send position user => Stream Position");
-          // Geolocator.getPositionStream().listen((event) {
-          //   debugPrint("send position user => Listen New Position");
-          //   postLocation(
-          //     value: event,
-          //     userId: userId,
-          //   );
-          // });
-          Geolocator.getCurrentPosition().then(
-            (event) {
-              postLocation(
-                value: event,
-                userId: userId,
-              );
-            },
-          ).whenComplete(() {
-            Future.delayed(const Duration(seconds: 30), () {
-              saveLocationUser(
-                userId: userId,
-              );
-            });
+          Geolocator.getPositionStream().listen((event) {
+            debugPrint("send position user => Listen New Position");
+            postLocation(
+              value: event,
+              userId: userId,
+            );
           });
         } else {
           debugPrint(
