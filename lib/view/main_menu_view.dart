@@ -27,7 +27,7 @@ class _MainMenuViewState extends State<MainMenuView> {
   void initState() {
     super.initState();
     mainMenuViewModel.initializeLang();
-    mainMenuViewModel.readSwssion();
+    mainMenuViewModel.readSession();
   }
 
   @override
