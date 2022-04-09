@@ -1,12 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
-import 'package:flutter_background_service_android/flutter_background_service_android.dart';
-import 'package:flutter_background_service_ios/flutter_background_service_ios.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
@@ -18,27 +14,13 @@ import 'package:sufismart/util/system.dart';
 import 'package:sufismart/route.dart';
 import 'package:uni_links/uni_links.dart';
 import 'route.dart';
-import 'service.dart' as service;
 
 Data data = Data();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setting();
   data.initialize().then((val) async {
-    debugPrint("Start service");
-    Timer.periodic(
-      const Duration(seconds: 1),
-      (t) async {
-        debugPrint("Start service => check session ${t.tick}");
-        if (data.session != null) {
-          debugPrint("Start service => initialize");
-          initializeService().then((value) {
-            runApp(const MyApp());
-          });
-        }
-        t.cancel();
-      },
-    );
+    runApp(const MyApp());
   });
 }
 
@@ -73,45 +55,9 @@ void getDeviceId({int trial = 0}) {
   );
 }
 
-Future<void> initializeService() async {
-  await data.service.configure(
-    androidConfiguration: AndroidConfiguration(
-      // this will executed when app is in foreground or background in separated isolate
-      onStart: onStartService,
-      foregroundServiceNotificationContent: "Sufi Smart Aplication Service",
-      foregroundServiceNotificationTitle: "Sufi Smart",
-      // auto start service
-      autoStart: true,
-      isForegroundMode: false,
-    ),
-    iosConfiguration: IosConfiguration(
-      // auto start service
-      autoStart: true,
-
-      // this will executed when app is in foreground in separated isolate
-      onForeground: onStartService,
-
-      // you have to enable background fetch capability on xcode project
-      onBackground: onIosBackground,
-    ),
-  );
-}
-
 void onIosBackground() {
   WidgetsFlutterBinding.ensureInitialized();
   debugPrint('FLUTTER BACKGROUND FETCH');
-}
-
-void onStartService() {
-  debugPrint("start services default");
-  WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isIOS) FlutterBackgroundServiceIOS.registerWith();
-  if (Platform.isAndroid) FlutterBackgroundServiceAndroid.registerWith();
-  service.onServiceStarted();
-
-  data.service.onDataReceived.listen((event) {
-    service.onEvent(event);
-  });
 }
 
 class MyApp extends StatefulWidget {

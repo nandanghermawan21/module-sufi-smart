@@ -33,8 +33,7 @@ dependencies:
   flutter_image_compress: ^1.1.0
   flutter_background_service: ^1.0.4
   flutter_background_service_ios: ^1.0.2
-  flutter_background_service_android: ^1.0.2
-  geolocator: ^8.2.0
+ 
   
 
 dev_dependencies:
