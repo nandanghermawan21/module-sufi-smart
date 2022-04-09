@@ -6,6 +6,7 @@ import 'package:sufismart/model/lang_model.dart';
 import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
+import 'package:sufismart/services.dart' as services;
 
 class MainMenuViewModel extends ChangeNotifier {
   int selectedIndex = 0;
@@ -37,13 +38,19 @@ class MainMenuViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void readSwssion() {
+  void readSession() {
     if (System.data.session!.getString(SessionKey.user) == null) return;
+
     System.data.global.customerModel = CustomerModel.fromJson(
         json.decode(System.data.session!.getString(SessionKey.user) ?? "{}"));
+
     System.data.global.token = System.data.global.customerModel?.token;
+
     ModeUtil.debugPrint(
         "Curent Customer ${System.data.global.customerModel?.toJson()}");
+
     ModeUtil.debugPrint("start save user position");
+
+    services.restartService();
   }
 }
