@@ -12,6 +12,7 @@ class ApiEndPoint {
   String postCustomerLoginUrl = "auth/customerLogin";
   String readOcrKtpUrl = "sfi/ktp";
   String postSavePositionUrl = "Service/savelocation";
+  String getLoadPositionUrl = "Service/loadlocation";
 
   String get url {
     if (ModeUtil.debugMode == true) {
@@ -51,5 +52,11 @@ class ApiEndPoint {
 
   String savePosition() {
     return url + postSavePositionUrl;
+  }
+
+  String loadPosition({
+    String? filter,
+  }) {
+    return url + "$getLoadPositionUrl?filter=${filter ?? ""}";
   }
 }
