@@ -66,4 +66,5 @@ abstract class Strings {
   String get timeLeft => "Waktu Habis";
   String get enterPin => "Masukan PIN";
   String get resend => "Keirim Ulang";
+  String get viewAllUser => "Lihat Semua Use";
 }
