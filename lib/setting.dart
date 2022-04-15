@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sufismart/model/news_model.dart';
 import 'package:sufismart/recource/color_default.dart';
@@ -56,6 +57,28 @@ void setting() {
         break;
       default:
         return;
+    }
+  };
+  System.data.onCreateDb = (db, version) {
+    switch (version) {
+      case 0:
+        rootBundle.loadString("dbmigration/dbv1.sql").then(
+          (sql) {
+            db?.execute(sql).then(
+              (v) {
+                db.setVersion(1);
+                ModeUtil.debugPrint("update db to 1 success");
+              },
+            );
+          },
+        );
+        break;
+      case 1:
+        ModeUtil.debugPrint("database is uptodate");
+        break;
+      default:
+        System.data.reInitDatabase();
+        break;
     }
   };
 }

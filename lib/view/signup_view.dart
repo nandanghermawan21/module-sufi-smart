@@ -281,15 +281,16 @@ class _SignupViewState extends State<SignupView> {
           );
         } else {
           return SkeletonAnimation(
-              child: Container(
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: const BorderRadius.all(
-                Radius.circular(5),
+            child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(5),
+                ),
               ),
             ),
-          ));
+          );
         }
       },
     );

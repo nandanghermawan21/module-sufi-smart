@@ -67,4 +67,10 @@ class Databases {
       throw e;
     }
   }
+
+  static Future<List<Map<String, Object?>>>? readSchema(Database? db) {
+    String sql =
+        "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;";
+    return db?.rawQuery(sql);
+  }
 }
