@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:sqflite/sqflite.dart';
-import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sprintf/sprintf.dart';
 
