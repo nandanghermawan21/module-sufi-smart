@@ -49,18 +49,30 @@ class ChatViewModel extends ChangeNotifier {
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeIn);
       commit();
-      newChat.sendNotifToCustomer(
-          senderName: System.data.global.customerModel?.fullName,
-          deviceIds: [reciver?.deviceId ?? ""]).then(
-        (value) {
-          ModeUtil.debugPrint("result from send notification id $value");
-        },
-      ).catchError((onError) {
-        loadingController.stopLoading(
-          isError: true,
-          message: ErrorHandlingUtil.handleApiError(onError),
-        );
-      });
+      // newChat.sendNotifToCustomer(
+      //     senderName: System.data.global.customerModel?.fullName,
+      //     deviceIds: [reciver?.deviceId ?? ""]).then(
+      //   (value) {
+      //     ModeUtil.debugPrint("result from send notification id $value");
+      //     newChat.notificationId = value;
+      //     newChat.status = 1;
+      //     newChat.updateStatusInDb(db: System.data.database?.db).then(
+      //       (value) {
+      //         ModeUtil.debugPrint("update chat success id $value");
+      //       },
+      //     ).catchError((onError) {
+      //       loadingController.stopLoading(
+      //         isError: true,
+      //         message: ErrorHandlingUtil.handleApiError(onError),
+      //       );
+      //     });
+      //   },
+      // ).catchError((onError) {
+      //   loadingController.stopLoading(
+      //     isError: true,
+      //     message: ErrorHandlingUtil.handleApiError(onError),
+      //   );
+      // });
     }).catchError(
       (onError) {
         loadingController.stopLoading(
