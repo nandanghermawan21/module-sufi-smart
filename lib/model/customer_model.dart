@@ -127,4 +127,27 @@ class CustomerModel {
       throw onError;
     });
   }
+
+  static Future<CustomerModel?> getInfo({
+    String? id,
+  }) {
+    return http.get(
+      Uri.parse(
+        System.data.apiEndPoint.getCustomerInfo(
+          id: id,
+        ),
+      ),
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+      },
+    ).then((value) {
+      if (value.statusCode == 200) {
+        return CustomerModel.fromJson(json.decode(value.body));
+      } else {
+        throw value;
+      }
+    }).catchError((onError) {
+      throw onError;
+    });
+  }
 }

@@ -18,6 +18,7 @@ import 'package:sufismart/view/credit_simulation_view.dart';
 import 'package:sufismart/view/signup_view.dart';
 import 'package:sufismart/view/dashboard_view.dart';
 import 'package:sufismart/view/map_user_view.dart';
+import 'package:sufismart/view/chat_view.dart';
 
 String initialRouteName = RouteName.mainMenu;
 
@@ -30,10 +31,12 @@ class RouteName {
   static const String signUp = "signUp";
   static const String dashboard = "dashboard";
   static const String mapUser = "mapUser";
+  static const String chat = "chat";
 }
 
 enum ParamName {
   newsModel,
+  customerModel,
 }
 
 Map<String, WidgetBuilder> route = {
@@ -144,6 +147,19 @@ Map<String, WidgetBuilder> route = {
     );
   },
   RouteName.mapUser: (BuildContext context) {
-    return const MapUserView();
+    return MapUserView(
+      goToChat: (customer) {
+        Navigator.of(context).pushReplacementNamed(RouteName.chat, arguments: {
+          ParamName.customerModel: customer,
+        });
+      },
+    );
+  },
+  RouteName.chat: (BuildContext context) {
+    Map<dynamic, dynamic> arg = (ModalRoute.of(context)?.settings.arguments ??
+        {}) as Map<dynamic, dynamic>;
+    return ChatView(
+      customerModel: arg[ParamName.customerModel],
+    );
   }
 };
