@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:sqflite/sqflite.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sprintf/sprintf.dart';
+import 'notifications_model.dart';
 
 class ChatModel {
   int? id;
@@ -120,5 +121,21 @@ class ChatModel {
     ).catchError((onError) {
       throw onError;
     });
+  }
+
+  Future<String?> sendNotifToCustomer({
+    required String? senderName,
+    required List<String>? deviceIds,
+  }) {
+    return NotificationModel(
+            appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
+            $apiKey: "NGVhYmMxNmEtODM3Zi00MDM3LWI5ZjYtNDQ3ZTNiMDExMWVi")
+        .sendBasicNotif(
+      title: senderName ?? "",
+      message: message ?? "",
+      receiver: deviceIds ?? [],
+      appUrl: "sufismart://customer/chat?sender=${sender ?? ""}&id=${id ?? ""}",
+      data: toJson(),
+    );
   }
 }

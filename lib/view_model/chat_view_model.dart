@@ -36,6 +36,7 @@ class ChatViewModel extends ChangeNotifier {
       sender: System.data.global.customerModel?.id.toString(),
       receiver: reciver?.id.toString(),
       message: messageController.text,
+      status: 0,
     );
 
     newChat.saveToDb(System.data.database?.db).then((value) {
@@ -48,6 +49,18 @@ class ChatViewModel extends ChangeNotifier {
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeIn);
       commit();
+      newChat.sendNotifToCustomer(
+          senderName: System.data.global.customerModel?.fullName,
+          deviceIds: [reciver?.deviceId ?? ""]).then(
+        (value) {
+          ModeUtil.debugPrint("result from send notification id $value");
+        },
+      ).catchError((onError) {
+        loadingController.stopLoading(
+          isError: true,
+          message: ErrorHandlingUtil.handleApiError(onError),
+        );
+      });
     }).catchError(
       (onError) {
         loadingController.stopLoading(
