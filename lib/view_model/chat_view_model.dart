@@ -59,6 +59,7 @@ class ChatViewModel extends ChangeNotifier {
           newChat.updateStatusInDb(db: System.data.database?.db).then(
             (value) {
               ModeUtil.debugPrint("update chat success id $value");
+              commit();
             },
           ).catchError((onError) {
             loadingController.stopLoading(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:sufismart/util/mode_util.dart';
 
 class OneSignalMessaging {
   String? appId = "ac7a2d3b-9c11-4ead-b50c-a8c6b6a13a81";
@@ -25,6 +26,7 @@ class OneSignalMessaging {
     this.notificationClickedHandler,
     this.notificationHandler,
     this.notificationOpenedHandler,
+    this.notificationWillShowInForegroundHandler,
   });
 
   Future<void> initOneSignal() async {
@@ -34,6 +36,7 @@ class OneSignalMessaging {
 
     OneSignal.shared
         .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+      ModeUtil.debugPrint("masuk setNotificationOpenedHandler");
       if (notificationClickedHandler != null) {
         notificationOpenedHandler!(result);
       }
@@ -42,6 +45,7 @@ class OneSignalMessaging {
     OneSignal.shared.setNotificationWillShowInForegroundHandler(
         (OSNotificationReceivedEvent event) {
       /// Display Notification, send null to not display
+      ModeUtil.debugPrint("masuk setNotificationWillShowInForegroundHandler");
       if (notificationWillShowInForegroundHandler != null) {
         notificationWillShowInForegroundHandler!(event);
       }
@@ -50,6 +54,7 @@ class OneSignalMessaging {
 
     OneSignal.shared
         .setInAppMessageClickedHandler((OSInAppMessageAction action) {
+      ModeUtil.debugPrint("masuk setInAppMessageClickedHandler");
       if (notificationClickedHandler != null) {
         notificationClickedHandler!(action);
       }
@@ -77,7 +82,7 @@ class OneSignalMessaging {
 
     OneSignal.shared.disablePush(false);
 
-    // await OneSignal.shared.userProvidedPrivacyConsent();
+    await OneSignal.shared.userProvidedPrivacyConsent();
   }
 
   Future<Map<String, dynamic>> getAllTag() {
