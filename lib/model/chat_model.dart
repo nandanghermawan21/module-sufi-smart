@@ -104,4 +104,31 @@ class ChatModel {
       throw onError;
     });
   }
+
+  Future<int?> updateStatusInDb({
+    required Database? db,
+    String? receiver,
+  }) {
+    return rootBundle
+        .loadString("dbquery/updatestatuschat.sql")
+        .then((sql) async {
+      sql = sprintf(
+        sql,
+        [
+          notificationId,
+          status,
+          id,
+        ],
+      );
+      return db?.rawUpdate(sql).then((value) {
+        return value;
+      }).catchError((onError) {
+        throw onError;
+      });
+    }).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
+  }
 }
