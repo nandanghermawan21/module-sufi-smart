@@ -17,6 +17,7 @@ import 'package:sufismart/view/news_detail_view.dart';
 import 'package:sufismart/view/credit_simulation_view.dart';
 import 'package:sufismart/view/signup_view.dart';
 import 'package:sufismart/view/dashboard_view.dart';
+import 'package:sufismart/view/map_user_view.dart';
 
 String initialRouteName = RouteName.mainMenu;
 
@@ -28,6 +29,7 @@ class RouteName {
   static const String creditSimulation = "creditSimulation";
   static const String signUp = "signUp";
   static const String dashboard = "dashboard";
+  static const String mapUser = "mapUser";
 }
 
 enum ParamName {
@@ -77,7 +79,11 @@ Map<String, WidgetBuilder> route = {
               return const ContactView();
             case 3:
               if (System.data.global.customerModel != null) {
-                return const DashboardView();
+                return DashboardView(
+                  onTapViewAllUser: () {
+                    Navigator.of(context).pushNamed(RouteName.mapUser);
+                  },
+                );
               }
               return LoginView(
                 gotoSignup: () {
@@ -129,8 +135,8 @@ Map<String, WidgetBuilder> route = {
             RouteName.mainMenu, (r) => r.settings.name == "");
       },
     );
-  },
-  RouteName.dashboard: (BuildContext context) {
-    return const DashboardView();
+  },  
+  RouteName.mapUser: (BuildContext context) {
+    return const MapUserView();
   }
 };

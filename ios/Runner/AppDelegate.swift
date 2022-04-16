@@ -1,5 +1,6 @@
 import UIKit
 import Flutter
+import GoogleMaps
 
 enum ChannelName {
   static let battery = "samples.flutter.dev/battery"
@@ -22,6 +23,7 @@ enum MyFlutterErrorCode {
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    GMSServices.provideAPIKey("AIzaSyCWi9yRcgHyxg8drr7iMRHWreJXB4snJdM")
     GeneratedPluginRegistrant.register(with: self)
     guard let controller = window?.rootViewController as? FlutterViewController else {
       fatalError("rootViewController is not type FlutterViewController")
