@@ -4,7 +4,8 @@ INSERT INTO
     messageType,
     sender,
     receiver,
-    message
+    message,
+    status
   )
 VALUES
-  ('%s', '%s', '%s', '%s', '%s')
+  ('%s', '%s', '%s', '%s', '%s', '%s')
