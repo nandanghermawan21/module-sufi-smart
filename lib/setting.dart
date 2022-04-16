@@ -61,25 +61,21 @@ void setting() {
   };
 
   System.data.onCreateDb = (db, version) {
-    int last = 2 ;
+    int last = 1 ;
     for (int i = version; i < last; i++) {
-      rootBundle.loadString("dbmigration/dbmasterv${i+1}.sql").then((value) {
-         (sql) {
+    int versi = version + 1;
+       rootBundle.loadString("dbmigration/dbmasterv$versi.sql").then(
+          (sql) {
             db?.execute(sql).then(
               (v) {
-                db.setVersion(i+1).then((value) {
-
-                ModeUtil.debugPrint("update db to 1 success");
-
-                });
+                db.setVersion(versi);
+                ModeUtil.debugPrint("update db to $versi success");
               },
             );
-          };
-      });
-
-        ModeUtil.debugPrint("database uptodate");
-
+          },
+        );
     }
+ 
   };
 
   //   System.data.onCreateDb = (db, version) {

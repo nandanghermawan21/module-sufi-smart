@@ -67,4 +67,6 @@ abstract class Strings {
   String get enterPin => "Masukan PIN";
   String get resend => "Keirim Ulang";
   String get viewAllUser => "Lihat Semua Use";
+
+  String get sendMessage => "Kirim Pesan";
 }

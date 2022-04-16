@@ -13,6 +13,7 @@ class ApiEndPoint {
   String readOcrKtpUrl = "sfi/ktp";
   String postSavePositionUrl = "Service/savelocation";
   String getLoadPositionUrl = "Service/loadlocation";
+  String getCustInfoUrl = "customer/info";
 
   String get url {
     if (ModeUtil.debugMode == true) {
@@ -59,4 +60,12 @@ class ApiEndPoint {
   }) {
     return url + "$getLoadPositionUrl?filter=${filter ?? ""}";
   }
+
+  String getCustomerInfo({
+    String? id,
+  }) {
+    return url + "$getCustInfoUrl?id=${id ?? ""}";
+  }
+
+
 }
