@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:sufismart/util/system.dart';
 
@@ -76,9 +77,11 @@ class PositionModel {
   static Future<List<PositionModel>> load({
     String? filter,
   }) {
-    return http.post(
+    debugPrint("url ${System.data.apiEndPoint.loadlocation(filter: filter!)}");
+    return http.get(
       Uri.parse(
-        System.data.apiEndPoint.loadlocation(filter: filter),
+        System.data.apiEndPoint.loadlocation(filter: filter!),
+        // "https://api-suzuki.lemburkuring.id/api/Service/loadlocation?filter=CUSTPOS-%"
       ),
       headers: {
         HttpHeaders.contentTypeHeader: Headers.jsonContentType,

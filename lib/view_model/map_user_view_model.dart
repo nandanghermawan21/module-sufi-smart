@@ -1,4 +1,3 @@
-
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -9,17 +8,15 @@ import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/model/position_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
 
-class MapUserViewModel extends ChangeNotifier{
-GoogleMapController? mapController;
-CircularLoaderController loaderController = CircularLoaderController();
-List<PositionModel> positions=[];
-List<Marker> markers = [] ; 
-CameraPosition  cameraPosition =const CameraPosition(
-  target: LatLng(-6.1857713, 106.9070565),
+class MapUserViewModel extends ChangeNotifier {
+  GoogleMapController? mapController;
+  CircularLoaderController loaderController = CircularLoaderController();
+  List<PositionModel> positions = [];
+  List<Marker> markers = [];
+  CameraPosition cameraPosition = const CameraPosition(
+    target: LatLng(-6.1857713, 106.9070565),
     zoom: 17,
-);
-
-
+  );
 
   void loadLocation({
     bool withLoadingIndicator = true,
@@ -60,17 +57,22 @@ CameraPosition  cameraPosition =const CameraPosition(
         (icon) {
           markers.add(
             Marker(
-              markerId: MarkerId(p.ref ?? ""),
-              position: LatLng(p.lat ?? 0, p.lon ?? 0),
-              rotation: p.direction ?? 0,
-              flat: false,
-              icon: BitmapDescriptor.fromBytes(
-                icon,
-              ),
-            ),
+                markerId: MarkerId(p.ref ?? ""),
+                position: LatLng(p.lat ?? 0, p.lon ?? 0),
+                rotation: p.direction ?? 0,
+                flat: false,
+                icon: BitmapDescriptor.fromBytes(
+                  icon,
+                ),
+                infoWindow: InfoWindow(
+                  title: "Customer",
+                  snippet: "${p.ref}",
+                )),
           );
         },
-      );
+      ).catchError((onError) {
+        debugPrint("onError $onError");
+      });
       commit();
       if (!animateCamera) return;
       mapController?.animateCamera(
@@ -110,16 +112,6 @@ CameraPosition  cameraPosition =const CameraPosition(
     }
   }
 
-  Future<Uint8List> iconMarker() async {
-    ByteData data = await rootBundle.load("assets/user_icon_map.png");
-    Codec codec = await instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: 100, targetHeight: 100);
-    FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ImageByteFormat.png))!
-        .buffer
-        .asUint8List();
-  }
-
   Future<Uint8List> labelMarker({
     String? label,
   }) {
@@ -139,6 +131,16 @@ CameraPosition  cameraPosition =const CameraPosition(
     ).catchError((onError) {
       throw onError;
     });
+  }
+
+  Future<Uint8List> iconMarker() async {
+    ByteData data = await rootBundle.load("assets/user_icon_map.png");
+    Codec codec = await instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: 100, targetHeight: 100);
+    FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   static Future<ByteData?> createLabelImage({
@@ -180,11 +182,7 @@ CameraPosition  cameraPosition =const CameraPosition(
     });
   }
 
-  
-  void commit(){
+  void commit() {
     notifyListeners();
   }
-  
 }
-
- 

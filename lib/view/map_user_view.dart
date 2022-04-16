@@ -15,6 +15,13 @@ class MapUserView extends StatefulWidget {
 class _MapUserViewState extends State<MapUserView> {
  MapUserViewModel mapUserViewModel = MapUserViewModel();
   
+
+  @override
+  void initState() {
+    super.initState();
+    mapUserViewModel.loadLocation();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(

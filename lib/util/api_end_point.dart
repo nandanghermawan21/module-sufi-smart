@@ -54,9 +54,9 @@ class ApiEndPoint {
     return url + postSavePositionUrl;
   }
 
-  String loadlocation({String? filter}){
+  String loadlocation({required String filter}){
       
-    return url+"$urlposition?filter=${filter ?? "" } ";
+    return url+"$urlposition?filter=$filter";
   
   }
 
