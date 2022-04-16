@@ -23,6 +23,7 @@ class CustomerModel {
   String? username; //": "Dudung123",
   int? level; //": 1,
   String? isVerifiedPhone; //": "1",
+  String? deviceId;
   String?
       token; //": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY2IiwidXNlcm5hbWUiOiJEdWR1bmcxMjMiLCJ0eXBlIjoiY3VzdG9tZXIiLCJpYXQiOjE2NDgyMDE2NDMsImV4cCI6MTY0ODIxOTY0M30.jPU5UvyuHcH5jg9uV1-wZ6Fsc97EKSTBEkXV79ltdcc"
 
@@ -41,6 +42,7 @@ class CustomerModel {
     this.level,
     this.isVerifiedPhone,
     this.token,
+    this.deviceId,
   });
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) {
@@ -58,6 +60,7 @@ class CustomerModel {
       username: json["username"] as String?,
       level: json["level"] as int?,
       token: json["token"] as String?,
+      deviceId: json["deviceId"] as String?,
     );
   }
 
@@ -76,6 +79,7 @@ class CustomerModel {
       "username": username,
       "level": level,
       "token": token,
+      "deviceId": deviceId,
     };
   }
 

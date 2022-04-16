@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:sufismart/model/chat_model.dart';
@@ -105,38 +106,65 @@ class _ChatViewState extends State<ChatView> {
   }
 
   Widget chatBallon(ChatModel chat) {
+    bool isSender =
+        chat.receiver == System.data.global.customerModel?.id.toString()
+            ? true
+            : false;
     return Container(
       color: Colors.transparent,
       child: Row(
         mainAxisAlignment:
-            chat.receiver == System.data.global.customerModel?.id.toString()
-                ? MainAxisAlignment.start
-                : MainAxisAlignment.end,
+            isSender ? MainAxisAlignment.start : MainAxisAlignment.end,
         children: [
           Container(
             margin: const EdgeInsets.all(5),
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: chat.receiver ==
-                      System.data.global.customerModel?.id.toString()
-                  ? Colors.white
-                  : Colors.blue.shade300,
+              color: isSender ? Colors.white : Colors.blue.shade300,
               borderRadius: BorderRadius.only(
-                bottomLeft: chat.receiver !=
-                        System.data.global.customerModel?.id.toString()
-                    ? const Radius.circular(15)
-                    : Radius.zero,
-                bottomRight: chat.receiver ==
-                        System.data.global.customerModel?.id.toString()
-                    ? const Radius.circular(15)
-                    : Radius.zero,
+                bottomLeft: !isSender ? const Radius.circular(15) : Radius.zero,
+                bottomRight: isSender ? const Radius.circular(15) : Radius.zero,
               ),
             ),
-            child: Text(chat.message ?? ""),
+            child: Row(
+              children: [
+                isSender ? status(chat.status) : const SizedBox(),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(chat.message ?? ""),
+                const SizedBox(
+                  width: 5,
+                ),
+                !isSender ? status(chat.status) : const SizedBox(),
+              ],
+            ),
           ),
         ],
       ),
     );
+  }
+
+  Widget status(int? status) {
+    switch (status) {
+      case 0:
+        return const Icon(
+          FontAwesomeIcons.clock,
+          size: 15,
+        );
+      case 1:
+        return const Icon(
+          FontAwesomeIcons.check,
+          size: 15,
+        );
+      case 2:
+        return const Icon(
+          FontAwesomeIcons.checkDouble,
+          size: 15,
+        );
+      default:
+        return const SizedBox();
+    }
   }
 
   Widget chatImput() {
