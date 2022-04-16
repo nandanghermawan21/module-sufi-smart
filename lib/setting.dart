@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sufismart/model/news_model.dart';
 import 'package:sufismart/recource/color_default.dart';
@@ -58,4 +59,64 @@ void setting() {
         return;
     }
   };
+
+  System.data.onCreateDb = (db, version) {
+    int last = 2 ;
+    for (int i = version; i < last; i++) {
+      rootBundle.loadString("dbmigration/dbmasterv${i+1}.sql").then((value) {
+         (sql) {
+            db?.execute(sql).then(
+              (v) {
+                db.setVersion(i+1).then((value) {
+
+                ModeUtil.debugPrint("update db to 1 success");
+
+                });
+              },
+            );
+          };
+      });
+
+        ModeUtil.debugPrint("database uptodate");
+
+    }
+  };
+
+  //   System.data.onCreateDb = (db, version) {
+  //   switch (version) {
+  //     case 0:
+  //       rootBundle.loadString("dbmigration/dbmaster.sql").then(
+  //         (sql) {
+  //           db?.execute(sql).then(
+  //             (v) {
+  //               db.setVersion(1);
+  //               ModeUtil.debugPrint("update db to 1 success");
+  //             },
+  //           );
+  //         },
+  //       );
+  //       break;
+  //     case 1:
+  //       ModeUtil.debugPrint("database is uptodate");
+  //       rootBundle.loadString('dbmigration/dbmasterv1.sql').then(
+  //         (sql) {
+  //           db?.execute(sql).then((value) {
+  //             db.setVersion(2).then((value) {
+  //                 ModeUtil.debugPrint('update v1 ');
+  //             });
+              
+  //           }).catchError((onError){
+  //             ModeUtil.debugPrint('update error');
+  //             ModeUtil.debugPrint(onError);
+  //           });
+  //       });
+  //       break;
+  //       case 2:
+  //         ModeUtil.debugPrint('database uptodate');
+  //       break;
+  //     default:
+  //       System.data.reInitDatabase();
+  //       break;
+  //   }
+  // };
 }

@@ -61,4 +61,20 @@ class Data extends ChangeNotifier {
     );
     return true;
   }
+
+   Future<bool> reInitDatabase() async {
+    database = await Databases().initializeDb(
+      deleteOldDb: true,
+      onCreate: (db, version) {
+        ModeUtil.debugPrint("Reinit Database information :");
+        ModeUtil.debugPrint("path                 : ${db?.path}");
+        ModeUtil.debugPrint("version              : $version");
+        if (onCreateDb != null) {
+          onCreateDb!(db, version);
+        }
+      },
+    );
+    return true;
+  }
+  
 }
