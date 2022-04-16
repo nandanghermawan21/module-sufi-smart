@@ -14,9 +14,6 @@ class OneSignalMessaging {
 
   ValueChanged<OSInAppMessageAction>? notificationClickedHandler;
 
-  ValueChanged<OSNotificationReceivedEvent>?
-      notificationWillShowInForegroundHandler;
-
   ValueChanged<OSSubscriptionStateChanges>? subscriptionChangeHandler;
 
   ValueChanged<OSPermissionStateChanges>? permissionStateChangeHandler;
@@ -26,63 +23,35 @@ class OneSignalMessaging {
     this.notificationClickedHandler,
     this.notificationHandler,
     this.notificationOpenedHandler,
-    this.notificationWillShowInForegroundHandler,
   });
 
   Future<void> initOneSignal() async {
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+    OneSignal.shared.setRequiresUserPrivacyConsent(false);
 
-    OneSignal.shared.setRequiresUserPrivacyConsent(true);
+    if (notificationHandler != null) {
+      OneSignal.shared.setNotificationWillShowInForegroundHandler((event) {
+        ModeUtil.debugPrint(
+            "setNotificationWillShowInForegroundHandler ${event.notification.badge}");
+        event.complete(event.notification);
+        notificationHandler!((event.notification));
+      });
+    }
 
-    OneSignal.shared
-        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-      ModeUtil.debugPrint("masuk setNotificationOpenedHandler");
-      if (notificationClickedHandler != null) {
+    if (notificationOpenedHandler != null) {
+      OneSignal.shared
+          .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+        ModeUtil.debugPrint(
+            "setNotificationWillShowInForegroundHandler ${result.notification.badge}");
         notificationOpenedHandler!(result);
-      }
-    });
-
-    OneSignal.shared.setNotificationWillShowInForegroundHandler(
-        (OSNotificationReceivedEvent event) {
-      /// Display Notification, send null to not display
-      ModeUtil.debugPrint("masuk setNotificationWillShowInForegroundHandler");
-      if (notificationWillShowInForegroundHandler != null) {
-        notificationWillShowInForegroundHandler!(event);
-      }
-      event.complete(null);
-    });
+      });
+    }
 
     OneSignal.shared
-        .setInAppMessageClickedHandler((OSInAppMessageAction action) {
-      ModeUtil.debugPrint("masuk setInAppMessageClickedHandler");
-      if (notificationClickedHandler != null) {
-        notificationClickedHandler!(action);
-      }
-    });
-
-    OneSignal.shared
-        .setSubscriptionObserver((OSSubscriptionStateChanges changes) {
-      if (subscriptionChangeHandler != null) {
-        return subscriptionChangeHandler!(changes);
-      }
-    });
-
-    OneSignal.shared.setPermissionObserver((OSPermissionStateChanges changes) {
-      if (permissionStateChangeHandler != null) {
-        permissionStateChangeHandler!(changes);
-      }
-    });
-
-    // NOTE: Replace with your own app ID from https://www.onesignal.com
-    await OneSignal.shared.setAppId(appId ?? "");
-
-    await OneSignal().consentGranted(true);
-
-    await OneSignal.shared.requiresUserPrivacyConsent();
-
-    OneSignal.shared.disablePush(false);
-
-    await OneSignal.shared.userProvidedPrivacyConsent();
+        .setInAppMessageClickedHandler((OSInAppMessageAction action) {});
+    ModeUtil.debugPrint("init one signal with appid $appId}");
+    await OneSignal.shared.setAppId("$appId");
+    OneSignal.shared.consentGranted(true);
   }
 
   Future<Map<String, dynamic>> getAllTag() {

@@ -21,23 +21,20 @@ void setting() {
   ];
   //setting oneSignal notification
   System.data.oneSignalMessaging = OneSignalMessaging(
-      appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
-      notificationHandler: (notification) {
-        ModeUtil.debugPrint("notification notificationHandler fire");
-      },
-      notificationOpenedHandler: (notification) {
-        ModeUtil.debugPrint("notification notificationOpenedHandler fire");
-      },
-      notificationClickedHandler: (notification) {
-        ModeUtil.debugPrint("notification notificationClickedHandler fire");
-      },
-      notificationWillShowInForegroundHandler: (notif) {
-        ModeUtil.debugPrint(
-            "notification notificationWillShowInForegroundHandler fire");
-        // ModeUtil.debugPrint("title ${notif.notification.title}");
-        // ModeUtil.debugPrint("body ${notif.notification.body}");
-        // ModeUtil.debugPrint("body ${notif.notification.additionalData}");
-      });
+    appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
+    notificationHandler: (notification) {
+      ModeUtil.debugPrint("notification notificationHandler fire");
+      ModeUtil.debugPrint("title ${notification.title}");
+      ModeUtil.debugPrint("body ${notification.body}");
+      ModeUtil.debugPrint("body ${notification.additionalData}");
+    },
+    notificationOpenedHandler: (notification) {
+      ModeUtil.debugPrint("notification notificationOpenedHandler fire");
+    },
+    notificationClickedHandler: (notification) {
+      ModeUtil.debugPrint("notification notificationClickedHandler fire");
+    },
+  );
   //subscribe chanel
   System.data.oneSignalMessaging!.sendTag("specialUser", true);
   System.data.deepLinkingHandler = (uri) {
