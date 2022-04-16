@@ -66,6 +66,7 @@ class ChatModel {
         sender,
         receiver,
         message,
+        status ?? 0,
       ]);
       return db?.rawInsert(sql).then((value) {
         return value;
