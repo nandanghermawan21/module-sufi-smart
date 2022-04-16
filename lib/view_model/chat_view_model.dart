@@ -36,6 +36,7 @@ class ChatViewModel extends ChangeNotifier {
       sender: System.data.global.customerModel?.id.toString(),
       receiver: reciver?.id.toString(),
       message: messageController.text,
+      status: 0,
     );
 
     newChat.saveToDb(System.data.database?.db).then((value) {
