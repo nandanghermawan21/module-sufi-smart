@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
+import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/position_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
 
 class MapUserViewModel extends ChangeNotifier {
+  ValueChanged<PositionModel>? onTapMarker;
   GoogleMapController? mapController;
   CircularLoaderController loaderController = CircularLoaderController();
   List<PositionModel> positions = [];
@@ -20,6 +22,14 @@ class MapUserViewModel extends ChangeNotifier {
 
   void commit() {
     notifyListeners();
+  }
+
+  Future<CustomerModel?> getCustomerInfo({
+    String? id,
+  }) {
+    return CustomerModel.getInfo(
+      id: id,
+    );
   }
 
   void loadLocation({
@@ -72,7 +82,9 @@ class MapUserViewModel extends ChangeNotifier {
                   title: "Customer",
                   snippet: "${p.ref}",
                 ),
-                onTap: () {}),
+                onTap: () {
+                  onTapMarker!(p);
+                }),
           );
         },
       );
