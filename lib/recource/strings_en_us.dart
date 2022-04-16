@@ -195,4 +195,7 @@ class StringsEnUs implements Strings {
 
   @override
   String get viewAllUser => "View All User";
+
+  @override
+  String get sendMessage => "Send Message";
 }

@@ -64,7 +64,7 @@ class ChatModel {
   }
 
   Future<int?> saveToDb({
-    Database? db,
+    required Database? db,
   }) {
     return rootBundle.loadString("dbquery/insertnewchat.sql").then((sql) async {
       sql = sprintf(sql, [
