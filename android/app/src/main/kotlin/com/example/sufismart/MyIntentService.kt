@@ -7,7 +7,9 @@
     import android.content.Intent
     import android.os.Bundle
     import android.util.Log
+    import android.view.WindowManager
     import androidx.core.app.NotificationCompat
+    import io.flutter.util.ViewUtils.getActivity
 
 
     const val NOTIFICATION_ID = 1

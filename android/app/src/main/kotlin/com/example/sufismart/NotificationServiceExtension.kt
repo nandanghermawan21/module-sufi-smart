@@ -3,24 +3,26 @@ package com.example.sufismart
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.PowerManager
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.view.WindowManager
 import androidx.core.app.NotificationCompat
-import com.onesignal.OneSignal.OSRemoteNotificationReceivedHandler
 import com.onesignal.OSNotificationReceivedEvent
-import com.onesignal.OSNotification
-import com.onesignal.OSMutableNotification
+import com.onesignal.OneSignal.OSRemoteNotificationReceivedHandler
+import io.flutter.util.ViewUtils
+import io.flutter.util.ViewUtils.getActivity
 import java.math.BigInteger
-import android.os.PowerManager
 
 
 class NotificationServiceExtension : OSRemoteNotificationReceivedHandler {
     override fun remoteNotificationReceived(
-        context: Context,
-        notificationReceivedEvent: OSNotificationReceivedEvent
+            context: Context,
+            notificationReceivedEvent: OSNotificationReceivedEvent
     ) {
+
         val notification = notificationReceivedEvent.notification
 
         // Example of modifying the notification's accent color
@@ -46,11 +48,8 @@ class NotificationServiceExtension : OSRemoteNotificationReceivedHandler {
 
         // If complete isn't call within a time period of 25 seconds, OneSignal internal logic will show the original notification
         // To omit displaying a notification, pass `null` to complete()
-
-        Intent().setAction("com.example.sufismart.MyWakefulReceiver")
-        Intent().putExtra("data", "Notice me senpai!")
-        context.sendBroadcast(Intent())
-
         notificationReceivedEvent.complete(mutableNotification)
+
+
     }
 }
