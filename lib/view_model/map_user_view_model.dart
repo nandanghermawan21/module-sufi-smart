@@ -19,7 +19,6 @@ class MapUserViewModel extends ChangeNotifier {
     target: LatLng(-6.1857713, 106.9070565),
     zoom: 17,
   );
-  ValueChanged<PositionModel>? onTapMarker;
 
   void commit() {
     notifyListeners();
