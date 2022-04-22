@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:sufismart/component/circular_loader_component.dart';
+import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/model/chat_model.dart';
 import 'package:sufismart/model/customer_model.dart';
-import 'package:sufismart/view_model/chat_view_model.dart';
 import 'package:sufismart/util/system.dart';
+import 'package:sufismart/view_model/chat_view_model.dart';
 
 class ChatView extends StatefulWidget {
-  final CustomerModel? customer;
+  final CustomerModel? customerModel;
 
   const ChatView({
     Key? key,
-    this.customer,
+    this.customerModel,
   }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _ChatViewState();
+    return ChatViewState();
   }
 }
 
-class _ChatViewState extends State<ChatView> {
+class ChatViewState extends State<ChatView> {
   ChatViewModel chatViewModel = ChatViewModel();
 
   @override
   void initState() {
     super.initState();
-    chatViewModel.reciver = widget.customer;
+    chatViewModel.reciver = widget.customerModel;
     chatViewModel.getAll();
   }
 
@@ -36,52 +36,16 @@ class _ChatViewState extends State<ChatView> {
     return ChangeNotifierProvider.value(
       value: chatViewModel,
       child: Scaffold(
-        backgroundColor: Colors.grey.shade300,
         appBar: appBar(),
+        backgroundColor: Colors.grey,
         body: CircularLoaderComponent(
           controller: chatViewModel.loadingController,
-          child: Container(
-            color: Colors.transparent,
-            child: Column(
-              children: [
-                chatArea(),
-                chatImput(),
-              ],
-            ),
+          child: Column(
+            children: [
+              chatArea(),
+              chatInput(),
+            ],
           ),
-        ),
-      ),
-    );
-  }
-
-  PreferredSizeWidget appBar() {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      title: Container(
-        color: Colors.transparent,
-        child: Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              color: Colors.transparent,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(50)),
-                child: Image.network(
-                  widget.customer?.imageUrl ?? "",
-                  fit: BoxFit.cover,
-                  errorBuilder: (bb, o, st) => Container(
-                    color: Colors.transparent,
-                    child: Image.asset("assets/avatar.jpeg"),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 15,
-            ),
-            Text(widget.customer?.fullName ?? ""),
-          ],
         ),
       ),
     );
@@ -107,41 +71,39 @@ class _ChatViewState extends State<ChatView> {
 
   Widget chatBallon(ChatModel chat) {
     bool isSender =
-        chat.receiver == System.data.global.customerModel?.id.toString()
+        chat.sender == System.data.global.customerModel?.id.toString()
             ? true
             : false;
-    return Container(
-      color: Colors.transparent,
-      child: Row(
-        mainAxisAlignment:
-            isSender ? MainAxisAlignment.start : MainAxisAlignment.end,
-        children: [
-          Container(
-            margin: const EdgeInsets.all(5),
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: isSender ? Colors.white : Colors.blue.shade300,
-              borderRadius: BorderRadius.only(
-                bottomLeft: !isSender ? const Radius.circular(15) : Radius.zero,
-                bottomRight: isSender ? const Radius.circular(15) : Radius.zero,
-              ),
-            ),
-            child: Row(
-              children: [
-                isSender ? status(chat.status) : const SizedBox(),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(chat.message ?? ""),
-                const SizedBox(
-                  width: 5,
-                ),
-                !isSender ? status(chat.status) : const SizedBox(),
-              ],
-            ),
+
+    return Row(
+      mainAxisAlignment:
+          isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: isSender ? Colors.blue.shade300 : Colors.white,
+            borderRadius: BorderRadius.only(
+                bottomLeft: isSender ? const Radius.circular(10) : Radius.zero,
+                bottomRight:
+                    !isSender ? const Radius.circular(10) : Radius.zero),
           ),
-        ],
-      ),
+          child: Row(
+            children: [
+              isSender ? const SizedBox() : status(chat.status),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(chat.message ?? ""),
+              const SizedBox(
+                width: 5,
+              ),
+              !isSender ? const SizedBox() : status(chat.status),
+            ],
+          ),
+        )
+      ],
     );
   }
 
@@ -167,27 +129,60 @@ class _ChatViewState extends State<ChatView> {
     }
   }
 
-  Widget chatImput() {
+  PreferredSizeWidget appBar() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      title: Container(
+        color: Colors.transparent,
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              color: Colors.transparent,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(50)),
+                child: Image.network(
+                  widget.customerModel?.imageUrl ?? "",
+                  fit: BoxFit.cover,
+                  errorBuilder: (bb, o, st) => Container(
+                    color: Colors.transparent,
+                    child: Image.asset("assets/avatar.jpeg"),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Text(widget.customerModel?.fullName ?? ""),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget chatInput() {
     return Container(
-      color: Colors.transparent,
       height: 60,
-      width: double.infinity,
+      color: Colors.transparent,
       child: Row(
         children: [
           Expanded(
             child: Container(
               margin:
-                  const EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 15),
-              color: Colors.transparent,
+                  const EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 10),
               child: TextField(
                 controller: chatViewModel.messageController,
                 decoration: const InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
                     borderSide: BorderSide(
-                      color: Colors.red,
+                      color: Colors.blue,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(50),
                     ),
                   ),
                 ),
@@ -195,23 +190,26 @@ class _ChatViewState extends State<ChatView> {
             ),
           ),
           GestureDetector(
-            onTap: chatViewModel.send,
+            onTap: () {
+              chatViewModel.send();
+            },
             child: Container(
               margin: const EdgeInsets.only(top: 5, bottom: 5, right: 15),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(50),
-                  ),
-                  border: Border.all(
-                    color: Colors.blue,
-                    width: 2,
-                  )),
               width: 50,
               height: 50,
-              child: const Icon(Icons.send),
+              decoration: const BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(50),
+                ),
+              ),
+              child: const Icon(
+                Icons.send,
+                color: Colors.white,
+                size: 20,
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

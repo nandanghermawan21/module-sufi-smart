@@ -24,9 +24,6 @@ void setting() {
     appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
     notificationHandler: (notification) {
       ModeUtil.debugPrint("notification notificationHandler fire");
-      ModeUtil.debugPrint("title ${notification.title}");
-      ModeUtil.debugPrint("body ${notification.body}");
-      ModeUtil.debugPrint("body ${notification.additionalData}");
     },
     notificationOpenedHandler: (notification) {
       ModeUtil.debugPrint("notification notificationOpenedHandler fire");
@@ -63,25 +60,16 @@ void setting() {
     }
   };
   System.data.onCreateDb = (db, version) {
-    switch (version) {
-      case 0:
-        rootBundle.loadString("dbmigration/dbv1.sql").then(
-          (sql) {
-            db?.execute(sql).then(
-              (v) {
-                db.setVersion(1);
-                ModeUtil.debugPrint("update db to 1 success");
-              },
-            );
-          },
-        );
-        break;
-      case 1:
-        ModeUtil.debugPrint("database is uptodate");
-        break;
-      default:
-        System.data.reInitDatabase();
-        break;
+    int _last = 3;
+    for (int i = version; i < _last; i++) {
+      rootBundle.loadString("dbmigration/dbv${i + 1}.sql").then((sql) {
+        db?.execute(sql).then((v) {
+          db.setVersion(i + 1).then((v) {
+            ModeUtil.debugPrint("update to version ${i + 1}");
+          });
+        });
+      });
+      ModeUtil.debugPrint("update is uptodate");
     }
   };
 }

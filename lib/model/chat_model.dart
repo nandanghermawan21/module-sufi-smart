@@ -1,72 +1,81 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'package:sqflite/sqflite.dart';
-import 'package:sufismart/util/system.dart';
 import 'package:sprintf/sprintf.dart';
-import 'notifications_model.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 class ChatModel {
-  int? id;
-  String? messageType;
-  DateTime? createDate;
-  String? sender;
-  String? receiver;
-  String? message;
-  String? notificationId;
-  int? status;
+  int? id; // INTEGER PRIMARY KEY,
+  DateTime? creteDate; // DATETIME,
+  String? messageType; // VARCHAR(50),
+  String? sender; // VARCHAR(50),
+  String? receiver; // VARCHAR(50),
+  String? message; // TEXT,
+  String? notificationId; // VARCHAR(50),
+  int? status; // int,
+  DateTime? receivedDate; // DATETIME,
+  DateTime? deliveredDate;
 
   ChatModel({
     this.id,
+    this.creteDate,
     this.messageType,
-    this.createDate,
     this.sender,
     this.receiver,
     this.message,
     this.notificationId,
     this.status,
-  });
+    this.receivedDate,
+    this.deliveredDate,
+  }); // DateTime
 
   static ChatModel fromJson(Map<String, dynamic> json) {
     return ChatModel(
       id: json["id"] as int?,
-      messageType: json["messageType"] as String?,
-      createDate: json["createDate"] == null
+      creteDate: json["creteDate"] == null
           ? null
-          : DateTime.parse(json['createDate'] as String),
+          : DateTime.parse(json['creteDate'] as String),
+      messageType: json["messageType"] as String?,
       sender: json["sender"] as String?,
       receiver: json["receiver"] as String?,
       message: json["message"] as String?,
       notificationId: json["notificationId"] as String?,
       status: json["status"] as int?,
+      receivedDate: json["receivedDate"] == null
+          ? null
+          : DateTime.parse(json['receivedDate'] as String),
+      deliveredDate: json["deliveredDate"] == null
+          ? null
+          : DateTime.parse(json['deliveredDate'] as String),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       "id": id,
+      "creteDate": creteDate?.toIso8601String(),
       "messageType": messageType,
-      "createDate": createDate?.toIso8601String(),
       "sender": sender,
       "receiver": receiver,
       "message": message,
       "notificationId": notificationId,
       "status": status,
+      "receivedDate": receivedDate?.toIso8601String(),
+      "deliveredDate": deliveredDate?.toIso8601String(),
     };
   }
 
-  Future<int?> saveToDb(Database? db) {
+  Future<int?> saveToDb({
+    required Database? db,
+  }) {
     return rootBundle.loadString("dbquery/insertnewchat.sql").then((sql) async {
       sql = sprintf(sql, [
-        createDate?.toIso8601String() ??
-            DateTime.now().toUtc().toIso8601String(),
+        creteDate != null
+            ? creteDate?.toIso8601String()
+            : DateTime.now().toUtc().toIso8601String(),
         messageType,
         sender,
         receiver,
         message,
-        status ?? 0,
+        status,
       ]);
       return db?.rawInsert(sql).then((value) {
         return value;
@@ -120,50 +129,6 @@ class ChatModel {
       (onError) {
         throw onError;
       },
-    );
-  }
-
-  sendToCustomer({
-    String? token,
-  }) {
-    http.post(
-      Uri.parse(System.data.apiEndPoint.sendChatToCustomer()),
-      body: json.encode(
-        {
-          "receiverId": receiver,
-          "message": message,
-        },
-      ),
-      headers: {
-        HttpHeaders.authorizationHeader: "bearer $token",
-        HttpHeaders.contentTypeHeader: "application/json",
-      },
-    ).then(
-      (value) {
-        if (value.statusCode == 200) {
-          return ChatModel.fromJson(json.decode(value.body));
-        } else {
-          throw json;
-        }
-      },
-    ).catchError((onError) {
-      throw onError;
-    });
-  }
-
-  Future<String?> sendNotifToCustomer({
-    required String? senderName,
-    required List<String>? deviceIds,
-  }) {
-    return NotificationModel(
-            appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
-            $apiKey: "NGVhYmMxNmEtODM3Zi00MDM3LWI5ZjYtNDQ3ZTNiMDExMWVi")
-        .sendBasicNotif(
-      title: senderName ?? "",
-      message: message ?? "",
-      receiver: deviceIds ?? [],
-      appUrl: "sufismart://customer/chat?sender=${sender ?? ""}&id=${id ?? ""}",
-      data: toJson(),
     );
   }
 }

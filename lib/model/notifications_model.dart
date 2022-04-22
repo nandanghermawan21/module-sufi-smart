@@ -5,11 +5,11 @@ import 'package:http/http.dart' as http;
 
 class NotificationModel {
   String appId;
-  String $apiKey;
+  String apiKey;
 
   NotificationModel({
     required this.appId,
-    required this.$apiKey,
+    required this.apiKey,
   });
 
   Future<String?> sendBasicNotif({
@@ -35,7 +35,7 @@ class NotificationModel {
         "app_url": appUrl,
         "ios_sound": "my_notification_sound.wav",
         "android_channel_id": "6d52b765-dc9f-4735-a38b-77b784dbe90b",
-        "ddata": data ?? {},
+        "data": data ?? {},
       }),
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",

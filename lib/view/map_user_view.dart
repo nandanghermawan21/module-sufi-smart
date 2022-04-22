@@ -5,15 +5,16 @@ import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/position_model.dart';
+import 'package:sufismart/util/error_handling_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/map_user_view_model.dart';
 
 class MapUserView extends StatefulWidget {
-  final ValueChanged<CustomerModel?>? onTapMarker;
+  final ValueChanged<CustomerModel>? goToChat;
 
   const MapUserView({
     Key? key,
-    this.onTapMarker,
+    this.goToChat,
   }) : super(key: key);
 
   @override
@@ -30,6 +31,7 @@ class _MapUserViewState extends State<MapUserView> {
     super.initState();
     mapUserViewModel.onTapMarker = onTapMarker;
     mapUserViewModel.loadLocation();
+    mapUserViewModel.onTapMarker = onTapMarker;
   }
 
   @override
@@ -62,19 +64,20 @@ class _MapUserViewState extends State<MapUserView> {
 
   void onTapMarker(PositionModel positionModel) {
     showModalBottomSheet(
-      context: context,
       backgroundColor: Colors.transparent,
+      context: context,
       builder: (ctx) {
         return Container(
           height: 300,
           decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
             ),
           ),
           child: FutureBuilder<CustomerModel?>(
-            future: mapUserViewModel.getCustomerInfo(
+            future: CustomerModel.getInfo(
               id: positionModel.ref?.split("-")[1],
             ),
             builder: (ctx, snap) {
@@ -123,7 +126,7 @@ class _MapUserViewState extends State<MapUserView> {
                             ),
                             item(
                               title: System.data.strings!.phoneNumber,
-                              value: snap.data?.username,
+                              value: snap.data?.phoneNumber,
                             ),
                           ],
                         ),
@@ -132,6 +135,9 @@ class _MapUserViewState extends State<MapUserView> {
                     bottonSendMessage(snap.data),
                   ],
                 );
+              } else if (snap.hasError) {
+                return Center(
+                    child: Text(ErrorHandlingUtil.handleApiError(snap.error)));
               } else {
                 return SkeletonAnimation(
                   child: Container(
@@ -185,7 +191,7 @@ class _MapUserViewState extends State<MapUserView> {
                 MaterialStateProperty.all(System.data.color!.primaryColor)),
         onPressed: () {
           Navigator.of(context).pop();
-          widget.onTapMarker!(customer);
+          widget.goToChat!(customer ?? CustomerModel());
         },
         child: Text(System.data.strings!.sendMessage),
       ),

@@ -23,9 +23,9 @@ class CustomerModel {
   String? username; //": "Dudung123",
   int? level; //": 1,
   String? isVerifiedPhone; //": "1",
-  String? deviceId;
+  String? token;
   String?
-      token; //": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY2IiwidXNlcm5hbWUiOiJEdWR1bmcxMjMiLCJ0eXBlIjoiY3VzdG9tZXIiLCJpYXQiOjE2NDgyMDE2NDMsImV4cCI6MTY0ODIxOTY0M30.jPU5UvyuHcH5jg9uV1-wZ6Fsc97EKSTBEkXV79ltdcc"
+      deviceId; //": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY2IiwidXNlcm5hbWUiOiJEdWR1bmcxMjMiLCJ0eXBlIjoiY3VzdG9tZXIiLCJpYXQiOjE2NDgyMDE2NDMsImV4cCI6MTY0ODIxOTY0M30.jPU5UvyuHcH5jg9uV1-wZ6Fsc97EKSTBEkXV79ltdcc"
 
   CustomerModel({
     this.id,
@@ -144,15 +144,13 @@ class CustomerModel {
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
       },
-    ).then(
-      (value) {
-        if (value.statusCode == 200) {
-          return CustomerModel.fromJson(json.decode(value.body));
-        } else {
-          throw value;
-        }
-      },
-    ).catchError((onError) {
+    ).then((value) {
+      if (value.statusCode == 200) {
+        return CustomerModel.fromJson(json.decode(value.body));
+      } else {
+        throw value;
+      }
+    }).catchError((onError) {
       throw onError;
     });
   }

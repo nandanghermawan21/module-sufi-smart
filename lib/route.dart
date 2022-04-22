@@ -31,7 +31,7 @@ class RouteName {
   static const String signUp = "signUp";
   static const String dashboard = "dashboard";
   static const String mapUser = "mapUser";
-  static const String chat = "chatView";
+  static const String chat = "chat";
 }
 
 enum ParamName {
@@ -148,13 +148,10 @@ Map<String, WidgetBuilder> route = {
   },
   RouteName.mapUser: (BuildContext context) {
     return MapUserView(
-      onTapMarker: (customer) {
-        Navigator.of(context).pushReplacementNamed(
-          RouteName.chat,
-          arguments: {
-            ParamName.customerModel: customer,
-          },
-        );
+      goToChat: (customer) {
+        Navigator.of(context).pushReplacementNamed(RouteName.chat, arguments: {
+          ParamName.customerModel: customer,
+        });
       },
     );
   },
@@ -162,7 +159,7 @@ Map<String, WidgetBuilder> route = {
     Map<dynamic, dynamic> arg = (ModalRoute.of(context)?.settings.arguments ??
         {}) as Map<dynamic, dynamic>;
     return ChatView(
-      customer: arg[ParamName.customerModel],
+      customerModel: arg[ParamName.customerModel],
     );
   }
 };

@@ -13,7 +13,6 @@ class ApiEndPoint {
   String readOcrKtpUrl = "sfi/ktp";
   String postSavePositionUrl = "Service/savelocation";
   String getLoadPositionUrl = "Service/loadlocation";
-  String postChatToCustomer = "chat/toCustomer";
   String getCustomerInfoUrl = "customer/info";
 
   String get url {
@@ -60,10 +59,6 @@ class ApiEndPoint {
     String? filter,
   }) {
     return url + "$getLoadPositionUrl?filter=${filter ?? ""}";
-  }
-
-  String sendChatToCustomer() {
-    return url + postChatToCustomer;
   }
 
   String getCustomerInfo({

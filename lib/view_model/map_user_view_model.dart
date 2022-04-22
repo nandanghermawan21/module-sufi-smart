@@ -10,6 +10,7 @@ import 'package:sufismart/model/position_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
 
 class MapUserViewModel extends ChangeNotifier {
+  ValueChanged<PositionModel>? onTapMarker;
   GoogleMapController? mapController;
   CircularLoaderController loaderController = CircularLoaderController();
   List<PositionModel> positions = [];
