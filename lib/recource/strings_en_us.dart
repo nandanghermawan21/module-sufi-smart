@@ -198,4 +198,10 @@ class StringsEnUs implements Strings {
 
   @override
   String get sendMessage => "Send Message";
+
+  @override
+  get yourMessageSent => "Your message sent";
+
+  @override
+  String get someMesageHasBeenRead => "Eome message has been read";
 }

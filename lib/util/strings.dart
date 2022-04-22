@@ -68,4 +68,6 @@ abstract class Strings {
   String get resend => "Keirim Ulang";
   String get viewAllUser => "Lihat Semua Use";
   String get sendMessage => "Kirim Pesan";
+  String get yourMessageSent => "Pesan anda terkirim";
+  String get someMesageHasBeenRead => "beberapa pesan telah dibaca";
 }

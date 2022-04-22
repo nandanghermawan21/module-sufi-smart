@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart';
 import 'package:sufismart/model/chat_model.dart';
 import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/model/notifications_model.dart';
+import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/error_handling_util.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
@@ -18,6 +20,7 @@ class ChatViewModel extends ChangeNotifier {
     ChatModel.getByReceiverFromDb(
       db: System.data.database?.db,
       receiver: reciver?.id.toString(),
+      semder: System.data.global.customerModel?.id.toString(),
     ).then(
       (value) {
         ModeUtil.debugPrint("get all ${value?.length}");
@@ -37,8 +40,11 @@ class ChatViewModel extends ChangeNotifier {
       messageType: "CustomerToCustomer",
       creteDate: DateTime.now().toUtc(),
       receiver: reciver?.id.toString(),
+      receiverToken: reciver?.deviceId,
       sender: System.data.global.customerModel?.id.toString(),
+      senderToken: System.data.global.customerModel?.deviceId.toString(),
       message: messageController.text,
+      messageId: "${reciver?.id}-${randomAlphaNumeric(10)}",
       status: 0,
     );
     chatModel
@@ -51,19 +57,21 @@ class ChatViewModel extends ChangeNotifier {
       messageController.text = "";
       chats.add(chatModel);
       commit();
+      toButton();
       NotificationModel(
-        appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
-        apiKey: "63773c22-a638-49a1-b538-440bdd3b7975",
-      )
-          .sendBasicNotif(
+        appId: System.data.global.notifAppId,
+        apiKey: System.data.global.notifAppKey,
+      ).sendBasicNotif(
         title: System.data.global.customerModel?.fullName ?? "",
         message: chatModel.message ?? "",
         receiver: reciver?.deviceId != null ? [reciver?.deviceId ?? ""] : [],
         appUrl:
             "sufismart://customer/chat?sender=${reciver?.id ?? ""}&id=${chatModel.id ?? ""}",
-        data: chatModel.toJson(),
-      )
-          .then(
+        data: {
+          "key": NotifKey.newChat,
+          "data": chatModel.toJson(),
+        },
+      ).then(
         (value) {
           chatModel.notificationId = value;
           chatModel.status = 1;
@@ -87,6 +95,55 @@ class ChatViewModel extends ChangeNotifier {
         );
       },
     );
+  }
+
+  void toButton() {
+    listScrollController.animateTo(
+        listScrollController.position.maxScrollExtent + 100,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeIn);
+  }
+
+  void sendReadReport() {
+    List<ChatModel> chatAsRead = chats
+        .where((e) =>
+            e.onVisible == true &&
+            e.status == 2 &&
+            e.receiver == System.data.global.customerModel?.id.toString())
+        .toList();
+    if (chatAsRead.isNotEmpty) {
+      for (var e in chatAsRead) {
+        e.deliveredDate = DateTime.now().toUtc();
+      }
+      ChatModel.updateAllStatusInDb(
+              db: System.data.database?.db,
+              messageIds: chatAsRead.map((e) => e.messageId).toList(),
+              deliveredDate: chatAsRead.first.deliveredDate,
+              status: 3)
+          .then(
+        (val) {
+          for (var e in chatAsRead) {
+            e.status = 3;
+          }
+          NotificationModel(
+            appId: System.data.global.notifAppId,
+            apiKey: System.data.global.notifAppKey,
+          ).sendSilentNotif(
+            title: System.data.strings!.someMesageHasBeenRead,
+            message:
+                "${System.data.strings!.someMesageHasBeenRead} ${chatAsRead.first.deliveredDate?.toIso8601String()}}",
+            receiver:
+                reciver?.deviceId == null ? [] : [reciver?.deviceId ?? ""],
+            appUrl: "sufismart://customer",
+            data: {
+              "key": NotifKey.readChat,
+              "data": chatAsRead.map((e) => e.messageId).toList(),
+              "date": chatAsRead.first.deliveredDate?.toIso8601String()
+            },
+          );
+        },
+      );
+    }
   }
 
   void commit() {
