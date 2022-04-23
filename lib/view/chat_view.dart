@@ -6,6 +6,7 @@ import 'package:sufismart/model/chat_model.dart';
 import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/chat_view_model.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class ChatView extends StatefulWidget {
   final CustomerModel? customerModel;
@@ -29,6 +30,12 @@ class ChatViewState extends State<ChatView> {
     super.initState();
     chatViewModel.reciver = widget.customerModel;
     chatViewModel.getAll();
+  }
+
+  @override
+  void dispose() {
+    System.data.global.chatViewModel = null;
+    super.dispose();
   }
 
   @override
@@ -79,28 +86,47 @@ class ChatViewState extends State<ChatView> {
       mainAxisAlignment:
           isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        Container(
-          margin: const EdgeInsets.all(5),
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: isSender ? Colors.blue.shade300 : Colors.white,
-            borderRadius: BorderRadius.only(
-                bottomLeft: isSender ? const Radius.circular(10) : Radius.zero,
-                bottomRight:
-                    !isSender ? const Radius.circular(10) : Radius.zero),
-          ),
-          child: Row(
-            children: [
-              isSender ? const SizedBox() : status(chat.status),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(chat.message ?? ""),
-              const SizedBox(
-                width: 5,
-              ),
-              !isSender ? const SizedBox() : status(chat.status),
-            ],
+        VisibilityDetector(
+          key: Key(chat.messageId ?? ""),
+          onVisibilityChanged: (VisibilityInfo info) {
+            var visiblePercentage = info.visibleFraction * 100;
+            if (visiblePercentage > 50) {
+              chatViewModel.chats
+                  .where((e) => e.messageId == chat.messageId)
+                  .first
+                  .isVisible = true;
+              chatViewModel.markAsRead();
+            } else {
+              chatViewModel.chats
+                  .where((e) => e.messageId == chat.messageId)
+                  .first
+                  .isVisible = true;
+            }
+          },
+          child: Container(
+            margin: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: isSender ? Colors.blue.shade300 : Colors.white,
+              borderRadius: BorderRadius.only(
+                  bottomLeft:
+                      isSender ? const Radius.circular(10) : Radius.zero,
+                  bottomRight:
+                      !isSender ? const Radius.circular(10) : Radius.zero),
+            ),
+            child: Row(
+              children: [
+                isSender ? const SizedBox() : status(chat.status),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(chat.message ?? ""),
+                const SizedBox(
+                  width: 5,
+                ),
+                !isSender ? const SizedBox() : status(chat.status),
+              ],
+            ),
           ),
         )
       ],
@@ -122,6 +148,12 @@ class ChatViewState extends State<ChatView> {
       case 2:
         return const Icon(
           FontAwesomeIcons.checkDouble,
+          size: 15,
+        );
+      case 3:
+        return const Icon(
+          FontAwesomeIcons.checkDouble,
+          color: Colors.white,
           size: 15,
         );
       default:
