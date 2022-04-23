@@ -26,6 +26,7 @@ class ChatViewModel extends ChangeNotifier {
         ModeUtil.debugPrint("get all ${value?.length}");
         chats = value ?? [];
         commit();
+        toBottom();
       },
     ).catchError((onError) {
       loadingController.stopLoading(
@@ -66,7 +67,7 @@ class ChatViewModel extends ChangeNotifier {
         message: chatModel.message ?? "",
         receiver: reciver?.deviceId != null ? [reciver?.deviceId ?? ""] : [],
         appUrl:
-            "sufismart://customer/chat?sender=${reciver?.id ?? ""}&id=${chatModel.id ?? ""}",
+            "sufismart://customer/chat?sender=${System.data.global.customerModel?.id ?? ""}}",
         data: {
           "key": NotifKey.newChat,
           "data": chatModel.toJson(),
@@ -102,6 +103,47 @@ class ChatViewModel extends ChangeNotifier {
         listScrollController.position.maxScrollExtent + 500,
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeIn);
+  }
+
+  markAsRead() async {
+    List<ChatModel> readedChat = chats
+        .where((e) =>
+            e.isVisible == true &&
+            (e.status ?? 0) < 3 &&
+            e.isRead == false &&
+            e.receiver == System.data.global.customerModel?.id.toString())
+        .toList();
+
+    if (readedChat.isNotEmpty) {
+      for (var e in readedChat) {
+        e.isRead = true;
+      }
+
+      for (var e in readedChat) {
+        e.status = 3;
+        e.receivedDate = DateTime.now().toUtc();
+        await e.updateStatusInDb(db: System.data.database?.db).then((value) {
+          ModeUtil.debugPrint("siccess update read ${e.messageId}");
+        });
+      }
+
+      NotificationModel(
+              appId: System.data.global.notifAppId,
+              apiKey: System.data.global.notifAppKey)
+          .sendBasicNotif(
+        title: "Beberapa pesan anda telah dibaca",
+        message: "${readedChat.length} pesan anda telah dibaca",
+        receiver: reciver?.deviceId != null ? [reciver?.deviceId ?? ""] : [],
+        appUrl: "sufismart://customer",
+        data: {
+          "key": NotifKey.readChat,
+          "data": readedChat.map((e) => e.messageId).toList(),
+          "date": readedChat.first.receivedDate?.toIso8601String()
+        },
+      ).then((value) {
+        commit();
+      });
+    }
   }
 
   void commit() {

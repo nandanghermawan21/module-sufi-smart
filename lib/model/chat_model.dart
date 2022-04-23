@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -16,6 +18,8 @@ class ChatModel {
   DateTime? receivedDate; // DATETIME,
   DateTime? deliveredDate;
   String? messageId;
+  bool isVisible;
+  bool isRead;
 
   ChatModel({
     this.id,
@@ -31,6 +35,8 @@ class ChatModel {
     this.receivedDate,
     this.deliveredDate,
     this.messageId,
+    this.isVisible = false,
+    this.isRead = false,
   }); // DateTime
 
   static ChatModel fromJson(Map<String, dynamic> json) {
@@ -88,7 +94,9 @@ class ChatModel {
         receiver,
         message,
         status,
-        messageId
+        messageId,
+        senderToken,
+        receiverToken
       ]);
       return db?.rawInsert(sql).then((value) {
         return value;
@@ -119,6 +127,22 @@ class ChatModel {
       });
     }).catchError((onError) {
       throw onError;
+    });
+  }
+
+  static Future<ChatModel?> getByMessageId({
+    required Database? db,
+    required String messageId,
+  }) {
+    return rootBundle
+        .loadString("dbquery/getchatbymessageId.sql")
+        .then((sql) async {
+      sql = sprintf(sql, [
+        messageId,
+      ]);
+      return db?.rawQuery(sql).then((value) {
+        return value.map((e) => ChatModel.fromJson(e)).toList().first;
+      });
     });
   }
 
