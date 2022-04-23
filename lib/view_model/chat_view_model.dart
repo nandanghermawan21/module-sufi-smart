@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart';
 import 'package:sufismart/model/chat_model.dart';
 import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/model/notifications_model.dart';
+import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/error_handling_util.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
@@ -16,9 +18,10 @@ class ChatViewModel extends ChangeNotifier {
 
   void getAll() {
     ChatModel.getByReceiverFromDb(
-      db: System.data.database?.db,
-      receiver: reciver?.id.toString(),
-    ).then(
+            db: System.data.database?.db,
+            receiver: reciver?.id.toString(),
+            sender: System.data.global.customerModel?.id.toString())
+        .then(
       (value) {
         ModeUtil.debugPrint("get all ${value?.length}");
         chats = value ?? [];
@@ -40,6 +43,9 @@ class ChatViewModel extends ChangeNotifier {
       sender: System.data.global.customerModel?.id.toString(),
       message: messageController.text,
       status: 0,
+      receiverToken: reciver?.deviceId,
+      senderToken: System.data.global.customerModel!.deviceId,
+      messageId: "${reciver?.id}-${randomAlphaNumeric(10)}",
     );
     chatModel
         .saveToDb(
@@ -50,20 +56,22 @@ class ChatViewModel extends ChangeNotifier {
       chatModel.id = value;
       messageController.text = "";
       chats.add(chatModel);
+      toBottom();
       commit();
       NotificationModel(
         appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
         apiKey: "63773c22-a638-49a1-b538-440bdd3b7975",
-      )
-          .sendBasicNotif(
+      ).sendBasicNotif(
         title: System.data.global.customerModel?.fullName ?? "",
         message: chatModel.message ?? "",
         receiver: reciver?.deviceId != null ? [reciver?.deviceId ?? ""] : [],
         appUrl:
             "sufismart://customer/chat?sender=${reciver?.id ?? ""}&id=${chatModel.id ?? ""}",
-        data: chatModel.toJson(),
-      )
-          .then(
+        data: {
+          "key": NotifKey.newChat,
+          "data": chatModel.toJson(),
+        },
+      ).then(
         (value) {
           chatModel.notificationId = value;
           chatModel.status = 1;
@@ -87,6 +95,13 @@ class ChatViewModel extends ChangeNotifier {
         );
       },
     );
+  }
+
+  void toBottom() {
+    listScrollController.animateTo(
+        listScrollController.position.maxScrollExtent + 500,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeIn);
   }
 
   void commit() {

@@ -29,7 +29,14 @@ class ChatViewState extends State<ChatView> {
     super.initState();
     chatViewModel.reciver = widget.customerModel;
     chatViewModel.getAll();
+    System.data.global.chatViewModel = chatViewModel;
   }
+
+  // @override
+  // void dispose() {
+  //   System.data.global.chatViewModel = null;
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -91,10 +98,6 @@ class ChatViewState extends State<ChatView> {
           ),
           child: Row(
             children: [
-              isSender ? const SizedBox() : status(chat.status),
-              const SizedBox(
-                width: 5,
-              ),
               Text(chat.message ?? ""),
               const SizedBox(
                 width: 5,

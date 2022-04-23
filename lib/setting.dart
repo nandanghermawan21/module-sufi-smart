@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sufismart/model/news_model.dart';
+import 'package:sufismart/model/notifications_model.dart';
 import 'package:sufismart/recource/color_default.dart';
 import 'package:sufismart/recource/string_id_id.dart';
 import 'package:sufismart/route.dart';
@@ -24,6 +25,10 @@ void setting() {
     appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
     notificationHandler: (notification) {
       ModeUtil.debugPrint("notification notificationHandler fire");
+      NotificationModel(
+        appId: System.data.global.notifAppId,
+        apiKey: System.data.global.notifAppKey,
+      ).handleNotif(notification.additionalData ?? {});
     },
     notificationOpenedHandler: (notification) {
       ModeUtil.debugPrint("notification notificationOpenedHandler fire");
@@ -60,7 +65,7 @@ void setting() {
     }
   };
   System.data.onCreateDb = (db, version) {
-    int _last = 3;
+    int _last = 4;
     for (int i = version; i < _last; i++) {
       rootBundle.loadString("dbmigration/dbv${i + 1}.sql").then((sql) {
         db?.execute(sql).then((v) {

@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:sufismart/model/chat_model.dart';
+import 'package:sufismart/util/enum.dart';
+import 'package:sufismart/util/system.dart';
 
 class NotificationModel {
   String appId;
@@ -51,5 +54,28 @@ class NotificationModel {
     ).catchError((onError) {
       throw onError;
     });
+  }
+
+  Future<void> handleNotif(Map<String, dynamic> data) async {
+    String key = data["key"];
+    switch (key) {
+      case NotifKey.newChat:
+        Map<String, dynamic> notifData = json.decode(json.encode(data["data"]));
+        ChatModel chat = ChatModel.fromJson(notifData);
+        chat.saveToDb(db: System.data.database?.db).then(
+          (value) {
+            if (System.data.global.chatViewModel != null &&
+                System.data.global.customerModel?.id.toString() ==
+                    chat.receiver) {
+              System.data.global.chatViewModel?.chats.add(chat);
+              System.data.global.chatViewModel?.commit();
+              System.data.global.chatViewModel?.toBottom();
+            }
+          },
+        );
+        break;
+      default:
+        break;
+    }
   }
 }
