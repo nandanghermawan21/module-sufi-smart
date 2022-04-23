@@ -104,14 +104,29 @@ class NotificationModel {
         case NotifKey.readChat:
              
           List<String> messageid = data["data"];
+          DateTime? date = data["date"] == null ? null : 
+          DateTime.parse(data["date"]as String) ;
 
-          chat.updateStatusInDb(db: System.data.database?.db).then((value) {
-               if (System.data.global.chatViewModel!=null && System.data.global.chatViewModel?.reciver?.id.toString()==chat.receiver) 
+          for (var msgid in messageid) {
+
+            await ChatModel.getByMessageId(db:System.data.database?.db, messageid: msgid ).then((chat){
+        
+            if (chat!=null) {
+
+            chat.updateStatusInDb(db: System.data.database?.db).then((v) {
+
+              if (System.data.global.chatViewModel!=null && System.data.global.chatViewModel?.reciver?.id.toString() == chat.receiver) 
                {
-               System.data.global.chatViewModel?.chats.where((e) => e.messageid == chat.messageid).first.status = chat.status;
+
+               System.data.global.chatViewModel?.chats.where((e) => e.messageid == chat.messageid).first.status = 3;
                System.data.global.chatViewModel?.commit();
-             }
-          });
+
+              }
+
+            });
+          }
+         });
+       }
 
         break;
 
