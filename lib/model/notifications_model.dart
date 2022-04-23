@@ -1,7 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:sufismart/model/chat_model.dart';
+import 'package:sufismart/util/enum.dart';
+import 'package:sufismart/util/mode_util.dart';
+import 'package:sufismart/util/system.dart';
 
 class NotificationModel {
   String appId;
@@ -51,5 +56,96 @@ class NotificationModel {
     ).catchError((onError) {
       throw onError;
     });
+  }
+
+  Future<void> handleNotif(Map<String, dynamic> data) async {
+    String key = data["key"];
+    switch (key) {
+      case Notifkey.newChat:
+        Map<String, dynamic> notifData = jsonDecode(jsonEncode(data["data"]));
+        ChatModel chat = ChatModel.fromJson(notifData);
+        chat.deliveredDate = DateTime.now().toUtc();
+        chat.status = 2;
+        chat.saveToDb(db: System.data.database?.db).then(
+          (value) {
+            if (System.data.global.chatViewModel != null &&
+                System.data.global.customerModel?.id.toString() ==
+                    chat.receiver) {
+              System.data.global.chatViewModel?.chats.add(chat);
+              System.data.global.chatViewModel?.commit();
+              System.data.global.chatViewModel?.toBottom();
+            }
+            NotificationModel(
+                    appId: System.data.global.notifAppId,
+                    apiKey: System.data.global.notifAppKey)
+                .sendBasicNotif(
+              title: "Your Message Send",
+              message: "Your Message Send at ${chat.deliveredDate}",
+              receiver:
+                  chat.senderToken != null ? [chat.senderToken ?? ""] : [],
+              appUrl: "sufismart://customer",
+              data: {
+                "key": Notifkey.sendChat,
+                "data": chat,
+              },
+            );
+          },
+        );
+        break;
+      case Notifkey.sendChat:
+        Map<String, dynamic> notifData = jsonDecode(jsonEncode(data["data"]));
+        ChatModel chat = ChatModel.fromJson(notifData);
+        chat.status = 2;
+        chat.updateStatusInDb(db: System.data.database?.db).then(
+          (value) {
+            if (System.data.global.chatViewModel?.chats != null &&
+                System.data.global.chatViewModel?.reciver?.id.toString() ==
+                    chat.receiver) {
+              System.data.global.chatViewModel?.chats
+                  .where((e) => e.messageId == chat.message)
+                  .first
+                  .status = chat.status;
+              System.data.global.chatViewModel?.commit();
+            }
+          },
+        );
+        break;
+      case Notifkey.readChat:
+        try {
+          List<String?> messageIds = data["data"];
+          DateTime? date = data["date"] == null
+              ? null
+              : DateTime.parse(data['date'] as String);
+          for (var messageId in messageIds) {
+            ChatModel.getByMessageId(
+              db: System.data.database?.db,
+              messageId: messageId ?? "",
+            ).then((chat) {
+              if (chat != null) {
+                chat.status = 3;
+                chat.receivedDate = date;
+                chat.updateStatusInDb(db: System.data.database?.db).then(
+                  (v) {
+                    if (System.data.global.chatViewModel != null) {
+                      ModeUtil.debugPrint("Test Centang 3");
+                      ModeUtil.debugPrint("Test Centang 3");
+                      System.data.global.chatViewModel?.chats
+                          .where((e) => e.messageId == chat.messageId)
+                          .first
+                          .status = chat.status;
+                      System.data.global.chatViewModel?.commit();
+                    }
+                  },
+                );
+              }
+            });
+          }
+        } catch (e) {
+          ModeUtil.debugPrint(e);
+        }
+        break;
+      default:
+        break;
+    }
   }
 }

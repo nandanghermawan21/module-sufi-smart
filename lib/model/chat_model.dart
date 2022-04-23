@@ -7,24 +7,32 @@ class ChatModel {
   DateTime? creteDate; // DATETIME,
   String? messageType; // VARCHAR(50),
   String? sender; // VARCHAR(50),
+  String? senderToken;
   String? receiver; // VARCHAR(50),
+  String? receiverToken;
   String? message; // TEXT,
   String? notificationId; // VARCHAR(50),
   int? status; // int,
   DateTime? receivedDate; // DATETIME,
   DateTime? deliveredDate;
+  String? messageId;
+  bool isVisible = false;
+  bool isRead = false;
 
   ChatModel({
     this.id,
     this.creteDate,
     this.messageType,
     this.sender,
+    this.senderToken,
     this.receiver,
+    this.receiverToken,
     this.message,
     this.notificationId,
     this.status,
     this.receivedDate,
     this.deliveredDate,
+    this.messageId,
   }); // DateTime
 
   static ChatModel fromJson(Map<String, dynamic> json) {
@@ -35,7 +43,9 @@ class ChatModel {
           : DateTime.parse(json['creteDate'] as String),
       messageType: json["messageType"] as String?,
       sender: json["sender"] as String?,
+      senderToken: json["senderToken"] as String?,
       receiver: json["receiver"] as String?,
+      receiverToken: json["receiverToken"] as String?,
       message: json["message"] as String?,
       notificationId: json["notificationId"] as String?,
       status: json["status"] as int?,
@@ -45,6 +55,7 @@ class ChatModel {
       deliveredDate: json["deliveredDate"] == null
           ? null
           : DateTime.parse(json['deliveredDate'] as String),
+      messageId: json["messageID"] as String?,
     );
   }
 
@@ -54,12 +65,15 @@ class ChatModel {
       "creteDate": creteDate?.toIso8601String(),
       "messageType": messageType,
       "sender": sender,
+      "senderToken": senderToken,
       "receiver": receiver,
+      "receiverToken": receiverToken,
       "message": message,
       "notificationId": notificationId,
       "status": status,
       "receivedDate": receivedDate?.toIso8601String(),
       "deliveredDate": deliveredDate?.toIso8601String(),
+      "messageId": messageId,
     };
   }
 
@@ -76,6 +90,9 @@ class ChatModel {
         receiver,
         message,
         status,
+        messageId,
+        senderToken,
+        receiverToken
       ]);
       return db?.rawInsert(sql).then((value) {
         return value;
@@ -89,10 +106,14 @@ class ChatModel {
 
   static Future<List<ChatModel>?> getByReceiverFromDb({
     required Database? db,
-    String? receiver,
+    required String? receiver,
+    required String? sender,
   }) {
     return rootBundle.loadString("dbquery/selectchat.sql").then((sql) async {
       sql = sprintf(sql, [
+        receiver,
+        sender,
+        sender,
         receiver,
       ]);
       return db?.rawQuery(sql).then((value) {
@@ -102,6 +123,22 @@ class ChatModel {
       });
     }).catchError((onError) {
       throw onError;
+    });
+  }
+
+  static Future<ChatModel?> getByMessageId({
+    required Database? db,
+    required String messageId,
+  }) {
+    return rootBundle
+        .loadString("dbquery/getchatbymessageId.sql")
+        .then((sql) async {
+      sql = sprintf(sql, [
+        messageId,
+      ]);
+      return db?.rawQuery(sql).then((value) {
+        return value.map((e) => ChatModel.fromJson(e)).toList().first;
+      });
     });
   }
 
@@ -117,7 +154,7 @@ class ChatModel {
         [
           notificationId,
           status,
-          id,
+          messageId,
         ],
       );
       return db?.rawUpdate(sql).then((value) {

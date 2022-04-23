@@ -15,3 +15,9 @@ class ServiceValueAction {
 class Prefkey {
   static const String userId = "UserId";
 }
+
+class Notifkey {
+  static const String newChat = "NewChat";
+  static const String sendChat = "SendChat";
+  static const String readChat = "ReadChat";
+}
