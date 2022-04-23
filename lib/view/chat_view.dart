@@ -77,7 +77,7 @@ class ChatViewState extends State<ChatView> {
     );
   }
 
-  Widget chatBallon(ChatModel chat) {
+   Widget chatBallon(ChatModel chat) {
     bool isSender =
         chat.sender == System.data.global.customerModel?.id.toString()
             ? true
@@ -88,21 +88,21 @@ class ChatViewState extends State<ChatView> {
           isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         VisibilityDetector(
-          key: Key('${chat.id}'),
-          onVisibilityChanged: (VisibilityInfo info) {
+          key: Key(chat.messageId ?? ""),
+          onVisibilityChanged: (info) {
             var visiblePercentage = info.visibleFraction * 100;
-            if (visiblePercentage > 0) {
+            if (visiblePercentage > 50) {
               chatViewModel.chats
-                  .where((e) => e.id == chat.id)
+                  .where((e) => e.messageId == chat.messageId)
                   .first
                   .isVisible = true;
+              chatViewModel.marAsRead();
             } else {
               chatViewModel.chats
-                  .where((e) => e.id == chat.id)
+                  .where((e) => e.messageId == chat.messageId)
                   .first
                   .isVisible = true;
             }
-            chatViewModel.commit();
           },
           child: Container(
             margin: const EdgeInsets.all(5),
@@ -129,7 +129,7 @@ class ChatViewState extends State<ChatView> {
       ],
     );
   }
-
+  
   Widget status(int? status) {
     switch (status) {
       case 0:
