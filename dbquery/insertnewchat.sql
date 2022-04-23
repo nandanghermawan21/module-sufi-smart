@@ -5,7 +5,10 @@ INSERT INTO
     sender,
     receiver,
     message,
-    status
+    status,
+    messageId,
+    senderToken,
+    receiverToken    
   )
 VALUES
-  ('%s', '%s', '%s', '%s', '%s', '%s')
+  ('%s', '%s', '%s', '%s', '%s', '%s','%s','%s','%s')

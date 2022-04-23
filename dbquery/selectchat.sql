@@ -1,2 +1,2 @@
 SELECT * from chat
-WHERE receiver = '%s'
+where (receiver = '%s' and sender = '%s') or (receiver = '%s' and sender = '%s')
