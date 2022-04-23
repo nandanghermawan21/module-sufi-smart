@@ -97,6 +97,7 @@ class ChatViewState extends State<ChatView> {
                   .where((e) => e.id == chat.id)
                   .first
                   .isVisible = true;
+                  chatViewModel.markAsRead();
             } else {
               chatViewModel.chats
                   .where((e) => e.id == chat.id)
@@ -104,7 +105,7 @@ class ChatViewState extends State<ChatView> {
                   .isVisible = true;
             }
             chatViewModel.commit();
-            // chatViewModel.sendReadReport();
+            // chatViewModel.h;
           },
         
          child: Container(

@@ -1,6 +1,9 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/news_model.dart';
 import 'package:sufismart/recource/color_default.dart';
 import 'package:sufismart/recource/string_id_id.dart';
@@ -56,6 +59,17 @@ void setting() {
           },
         );
         break;
+
+        case "/chat":
+          String? id = uri?.queryParameters["receiver"] as String;
+          CustomerModel.getInfo(
+            id: id
+          ).then((customer) {
+            Navigator.of(System.data.context).pushNamed(RouteName.chat,
+            arguments: {ParamName.customerModel:customer});
+          });
+        break;
+        
       default:
         return;
     }

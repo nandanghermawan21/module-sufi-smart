@@ -104,8 +104,6 @@ class NotificationModel {
         case NotifKey.readChat:
              
           List<String> messageid = data["data"];
-          DateTime? date = data["date"] == null ? null : 
-          DateTime.parse(data["date"]as String) ;
 
           for (var msgid in messageid) {
 

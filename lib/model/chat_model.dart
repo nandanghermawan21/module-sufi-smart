@@ -137,7 +137,7 @@ class ChatModel {
       sql = sprintf(sql, [
        messageid
       ]);
-      return db?.query(sql).then((value) { 
+      return db?.rawQuery(sql).then((value) { 
         return value.map((e) => ChatModel.fromJson(e)).toList().first;
       }).catchError((onError) {
         throw onError;
