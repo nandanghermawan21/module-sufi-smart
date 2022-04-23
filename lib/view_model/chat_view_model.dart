@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
 import 'package:sufismart/model/chat_model.dart';
@@ -20,7 +22,7 @@ class ChatViewModel extends ChangeNotifier {
     ChatModel.getByReceiverFromDb(
       db: System.data.database?.db,
       receiver: reciver?.id.toString(),
-      // semder: System.data.global.customerModel?.id.toString(),
+      sender: System.data.global.customerModel?.id.toString(),
     ).then(
       (value) {
         ModeUtil.debugPrint("get all ${value?.length}");
@@ -104,46 +106,86 @@ class ChatViewModel extends ChangeNotifier {
         curve: Curves.easeIn);
   }
 
-  void sendReadReport() {
-    List<ChatModel> chatAsRead = chats
-        .where((e) =>
-            e.onVisible == true &&
-            e.status == 2 &&
-            e.receiver == System.data.global.customerModel?.id.toString())
-        .toList();
-    if (chatAsRead.isNotEmpty) {
-      for (var e in chatAsRead) {
-        e.deliveredDate = DateTime.now().toUtc();
+  // void sendReadReport() {
+  //   List<ChatModel> chatAsRead = chats
+  //       .where((e) =>
+  //           e.onVisible == true &&
+  //           e.status == 2 &&
+  //           e.receiver == System.data.global.customerModel?.id.toString())
+  //       .toList();
+  //   if (chatAsRead.isNotEmpty) {
+  //     for (var e in chatAsRead) {
+  //       e.deliveredDate = DateTime.now().toUtc();
+  //     }
+  //     ChatModel.updateAllStatusInDb(
+  //             db: System.data.database?.db,
+  //             messageIds: chatAsRead.map((e) => e.messageId).toList(),
+  //             deliveredDate: chatAsRead.first.deliveredDate,
+  //             status: 3)
+  //         .then(
+  //       (val) {
+  //         for (var e in chatAsRead) {
+  //           e.status = 3;
+  //         }
+  //         NotificationModel(
+  //           appId: System.data.global.notifAppId,
+  //           apiKey: System.data.global.notifAppKey,
+  //         ).sendSilentNotif(
+  //           title: System.data.strings!.someMesageHasBeenRead,
+  //           message:
+  //               "${System.data.strings!.someMesageHasBeenRead} ${chatAsRead.first.deliveredDate?.toIso8601String()}}",
+  //           receiver:
+  //               reciver?.deviceId == null ? [] : [reciver?.deviceId ?? ""],
+  //           appUrl: "sufismart://customer",
+  //           data: {
+  //             "key": NotifKey.readChat,
+  //             "data": chatAsRead.map((e) => e.messageId).toList(),
+  //             "date": chatAsRead.first.deliveredDate?.toIso8601String()
+  //           },
+  //         );
+  //       },
+  //     );
+  //   }
+  // }
+
+  markAsRead() async{
+    
+    List<ChatModel> readedChat=chats.where((e) => e.isVisible==true && (e.status??0)<3 && e.isRead==false && e.receiver==System.data.global.customerModel?.id.toString() ).toList();
+    if (readedChat.isNotEmpty) {
+      for (var e in readedChat) {
+        e.isRead =true;
       }
-      ChatModel.updateAllStatusInDb(
-              db: System.data.database?.db,
-              messageIds: chatAsRead.map((e) => e.messageId).toList(),
-              deliveredDate: chatAsRead.first.deliveredDate,
-              status: 3)
-          .then(
-        (val) {
-          for (var e in chatAsRead) {
-            e.status = 3;
-          }
-          NotificationModel(
-            appId: System.data.global.notifAppId,
-            apiKey: System.data.global.notifAppKey,
-          ).sendSilentNotif(
-            title: System.data.strings!.someMesageHasBeenRead,
-            message:
-                "${System.data.strings!.someMesageHasBeenRead} ${chatAsRead.first.deliveredDate?.toIso8601String()}}",
-            receiver:
-                reciver?.deviceId == null ? [] : [reciver?.deviceId ?? ""],
-            appUrl: "sufismart://customer",
-            data: {
-              "key": NotifKey.readChat,
-              "data": chatAsRead.map((e) => e.messageId).toList(),
-              "date": chatAsRead.first.deliveredDate?.toIso8601String()
-            },
-          );
-        },
-      );
+
+      for (var e in readedChat) {
+        e.status =3;
+        e.receivedDate=DateTime.now().toUtc();
+        await e.updateStatusInDb(db: System.data.database?.db).then((value) {
+          ModeUtil.debugPrint("Success update read ${e.messageid}");
+        });
+      }
+
+      NotificationModel(
+        apiKey: System.data.global.notifAppKey,
+        appId: System.data.global.notifAppId
+      ).sendBasicNotif(
+
+        title: "pesan telah dibuka", 
+        message: "pesan telah dibuka", 
+        receiver: reciver?.deviceId != null ? [ reciver?.deviceId  ??""] : [] ,
+        appUrl: "sufismart://customer",
+        data: {
+          
+          "key":NotifKey.readChat,
+          "data":readedChat.map((e) => e.messageid).toList(),
+          "date":readedChat.first.receivedDate?.toIso8601String()
+         
+         }
+        );
+
+        commit();
+
     }
+
   }
 
   void commit() {

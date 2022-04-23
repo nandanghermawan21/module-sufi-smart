@@ -16,6 +16,8 @@ class ChatModel {
   DateTime? receivedDate; // DATETIME,
   DateTime? deliveredDate;
   String? messageid;
+  bool? isVisible;
+  bool? isRead;
 
   ChatModel({
     this.id,
@@ -31,6 +33,8 @@ class ChatModel {
     this.receivedDate,
     this.deliveredDate,
     this.messageid,
+    this.isVisible = false,
+    this.isRead = false
   }); // DateTime
 
   static ChatModel fromJson(Map<String, dynamic> json) {
@@ -105,10 +109,14 @@ class ChatModel {
   static Future<List<ChatModel>?> getByReceiverFromDb({
     required Database? db,
     String? receiver,
+    String? sender
   }) {
     return rootBundle.loadString("dbquery/selectchat.sql").then((sql) async {
       sql = sprintf(sql, [
         receiver,
+        sender,
+        sender,
+        receiver
       ]);
       return db?.rawQuery(sql).then((value) {
         return value.map((e) => ChatModel.fromJson(e)).toList();
@@ -119,6 +127,25 @@ class ChatModel {
       throw onError;
     });
   }
+  
+
+  static Future<ChatModel?> getByMessageId ({
+    required Database? db,
+    required String? messageid
+  }) {
+    return rootBundle.loadString("dbquery/getbymessageid.sql").then((sql) async {
+      sql = sprintf(sql, [
+       messageid
+      ]);
+      return db?.query(sql).then((value) { 
+        return value.map((e) => ChatModel.fromJson(e)).toList().first;
+      }).catchError((onError) {
+        throw onError;
+      });
+  });
+  }
+
+  
 
   Future<int?> updateStatusInDb({
     required Database? db,

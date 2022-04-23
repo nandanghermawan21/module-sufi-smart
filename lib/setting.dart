@@ -14,6 +14,7 @@ void setting() {
   System.data.apiEndPoint = ApiEndPoint();
   System.data.strings = StringsIdId();
   System.data.color = ColorDefault();
+
   //setting permisson [haru didefinisikan juga pada manifest dan info.pls]
   System.data.permission = [
     Permission.accessNotificationPolicy,
@@ -60,7 +61,7 @@ void setting() {
     }
   };
   System.data.onCreateDb = (db, version) {
-    int _last = 3;
+    int _last = 7;
     for (int i = version; i < _last; i++) {
       rootBundle.loadString("dbmigration/dbv${i + 1}.sql").then((sql) {
         db?.execute(sql).then((v) {

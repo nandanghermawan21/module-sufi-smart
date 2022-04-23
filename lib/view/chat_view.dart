@@ -6,6 +6,7 @@ import 'package:sufismart/model/chat_model.dart';
 import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/chat_view_model.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class ChatView extends StatefulWidget {
   final CustomerModel? customerModel;
@@ -29,6 +30,13 @@ class ChatViewState extends State<ChatView> {
     super.initState();
     chatViewModel.reciver = widget.customerModel;
     chatViewModel.getAll();
+    System.data.global.chatViewModel = chatViewModel ;
+  }
+
+  @override
+  void dispose() {
+    System.data.global.chatViewModel = null ;
+    super.dispose();
   }
 
   @override
@@ -79,7 +87,27 @@ class ChatViewState extends State<ChatView> {
       mainAxisAlignment:
           isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        Container(
+
+          VisibilityDetector(
+          key: Key('${chat.id}'),
+          onVisibilityChanged: (VisibilityInfo info) {
+            var visiblePercentage = info.visibleFraction * 100;
+            if (visiblePercentage > 0) {
+              chatViewModel.chats
+                  .where((e) => e.id == chat.id)
+                  .first
+                  .isVisible = true;
+            } else {
+              chatViewModel.chats
+                  .where((e) => e.id == chat.id)
+                  .first
+                  .isVisible = true;
+            }
+            chatViewModel.commit();
+            // chatViewModel.sendReadReport();
+          },
+        
+         child: Container(
           margin: const EdgeInsets.all(5),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -103,6 +131,7 @@ class ChatViewState extends State<ChatView> {
             ],
           ),
         )
+          )
       ],
     );
   }
@@ -124,6 +153,13 @@ class ChatViewState extends State<ChatView> {
           FontAwesomeIcons.checkDouble,
           size: 15,
         );
+      case 3:
+        return const Icon(
+          FontAwesomeIcons.checkDouble,
+          color: Colors.white,
+          size: 15,
+        );
+
       default:
         return const SizedBox();
     }

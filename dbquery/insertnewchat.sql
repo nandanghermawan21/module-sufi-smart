@@ -3,9 +3,12 @@ INSERT INTO
     creteDate,
     messageType,
     sender,
+    senderToken,
     receiver,
+    receiverToken,
     message,
+    messageId,
     status
   )
 VALUES
-  ('%s', '%s', '%s', '%s', '%s', '%s')
+  ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')
