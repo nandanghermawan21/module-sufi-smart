@@ -7,12 +7,16 @@ class ChatModel {
   DateTime? creteDate; // DATETIME,
   String? messageType; // VARCHAR(50),
   String? sender; // VARCHAR(50),
-  String? receiver; // VARCHAR(50),
+  String? senderToken;
+  String? receiver;
+  String? receiverToken; // VARCHAR(50),
   String? message; // TEXT,
   String? notificationId; // VARCHAR(50),
   int? status; // int,
   DateTime? receivedDate; // DATETIME,
   DateTime? deliveredDate;
+  String? messageId;
+  bool? isVisible;
 
   ChatModel({
     this.id,
@@ -25,6 +29,10 @@ class ChatModel {
     this.status,
     this.receivedDate,
     this.deliveredDate,
+    this.messageId,
+    this.senderToken,
+    this.receiverToken,
+    this.isVisible = false,
   }); // DateTime
 
   static ChatModel fromJson(Map<String, dynamic> json) {
@@ -45,6 +53,9 @@ class ChatModel {
       deliveredDate: json["deliveredDate"] == null
           ? null
           : DateTime.parse(json['deliveredDate'] as String),
+      messageId: json["sender"] as String?,
+      senderToken: json["sender"] as String?,
+      receiverToken: json["sender"] as String?,
     );
   }
 
@@ -60,6 +71,9 @@ class ChatModel {
       "status": status,
       "receivedDate": receivedDate?.toIso8601String(),
       "deliveredDate": deliveredDate?.toIso8601String(),
+      "messageId": messageId,
+      "senderToken": senderToken,
+      "receiverToken": receiverToken,
     };
   }
 
@@ -76,6 +90,9 @@ class ChatModel {
         receiver,
         message,
         status,
+        messageId,
+        senderToken,
+        receiverToken
       ]);
       return db?.rawInsert(sql).then((value) {
         return value;
@@ -89,12 +106,15 @@ class ChatModel {
 
   static Future<List<ChatModel>?> getByReceiverFromDb({
     required Database? db,
-    String? receiver,
+    required String? receiver,
+    required String? sender,
+    required String? reciver,
+    required String? receiverToken,
+    required String? senderToken,
   }) {
     return rootBundle.loadString("dbquery/selectchat.sql").then((sql) async {
-      sql = sprintf(sql, [
-        receiver,
-      ]);
+      sql = sprintf(sql,
+          [receiver, sender, sender, receiver, senderToken, receiverToken]);
       return db?.rawQuery(sql).then((value) {
         return value.map((e) => ChatModel.fromJson(e)).toList();
       }).catchError((onError) {

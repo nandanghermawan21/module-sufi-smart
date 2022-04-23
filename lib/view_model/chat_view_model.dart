@@ -17,7 +17,11 @@ class ChatViewModel extends ChangeNotifier {
   void getAll() {
     ChatModel.getByReceiverFromDb(
       db: System.data.database?.db,
-      receiver: reciver?.id.toString(),
+      reciver: reciver?.id.toString(),
+      sender: 'sender?.id.toString()',
+      receiver: '',
+      receiverToken: '',
+      senderToken: '',
     ).then(
       (value) {
         ModeUtil.debugPrint("get all ${value?.length}");
