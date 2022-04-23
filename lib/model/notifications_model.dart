@@ -6,7 +6,6 @@ import 'package:sufismart/model/chat_model.dart';
 import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class NotificationModel {
   String appId;

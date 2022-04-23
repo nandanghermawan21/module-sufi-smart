@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/dashboard_view_model.dart';
 
@@ -21,6 +23,12 @@ class _DashboardViewState extends State<DashboardView> {
   DashboardViewModel dashboardViewModel = DashboardViewModel();
 
   @override
+  void initState() {
+    super.initState();
+    dashboardViewModel.checkAuthenticate();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: dashboardViewModel,
@@ -30,29 +38,48 @@ class _DashboardViewState extends State<DashboardView> {
             padding: const EdgeInsets.all(15),
             color: Colors.transparent,
             height: double.infinity,
-            child: SingleChildScrollView(
-              child: Column(
+            child: Container(
+              color: Colors.transparent,
+              child: Stack(
                 children: [
-                  header(),
-                  const SizedBox(
-                    height: 20,
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        header(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        item(
+                            title: System.data.strings!.nIK,
+                            value: System.data.global.customerModel?.nik),
+                        item(
+                          title: System.data.strings!.phoneNumber,
+                          value: System.data.global.customerModel?.phoneNumber,
+                        ),
+                        item(
+                          title: System.data.strings!.city,
+                          value: System.data.global.customerModel?.cityName,
+                        ),
+                      ],
+                    ),
                   ),
-                  item(
-                      title: System.data.strings!.nIK,
-                      value: System.data.global.customerModel?.nik),
-                  item(
-                    title: System.data.strings!.phoneNumber,
-                    value: System.data.global.customerModel?.phoneNumber,
-                  ),
-                  item(
-                    title: System.data.strings!.city,
-                    value: System.data.global.customerModel?.cityName,
-                  ),
+                  Consumer<DashboardViewModel>(
+                    builder: (c, d, w) {
+                      return Align(
+                        alignment: Alignment.topRight,
+                        child: lockWithMiometric(),
+                      );
+                    },
+                  )
                 ],
               ),
             ),
           ),
-          bottomNavigationBar: bottomNavigationBar(),
+          bottomNavigationBar: Consumer<DashboardViewModel>(
+            builder: (e, d, w) {
+              return bottomNavigationBar();
+            },
+          ),
         );
       },
     );
@@ -156,6 +183,47 @@ class _DashboardViewState extends State<DashboardView> {
                       System.data.color!.primaryColor)),
               onPressed: () {},
               child: Text(System.data.strings!.logOut),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget lockWithMiometric() {
+    return Container(
+      height: 50,
+      width: 50,
+      margin: const EdgeInsets.only(top: 10),
+      color: System.data.color!.primaryColor,
+      child: Stack(
+        children: [
+          Center(
+            child: Icon(
+              Icons.fingerprint,
+              color: dashboardViewModel.lockStatus == LockStatus.unRegister
+                  ? Colors.red.shade500
+                  : Colors.green,
+              size: 45,
+            ),
+          ),
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                dashboardViewModel.lockDashboard();
+              },
+              onLongPress: () {
+                if (dashboardViewModel.lockStatus == LockStatus.opened) {
+                  dashboardViewModel.registerAuth();
+                }
+              },
+              child: Icon(
+                dashboardViewModel.lockStatus == LockStatus.locked
+                    ? FontAwesomeIcons.lock
+                    : FontAwesomeIcons.lockOpen,
+                color: Colors.white,
+                size: 20,
+              ),
             ),
           ),
         ],

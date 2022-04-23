@@ -16,8 +16,10 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Build.VERSION_CODES
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-class MainActivity: FlutterActivity() {
+
+class MainActivity: FlutterFragmentActivity() {
     private val CHANNEL = "samples.flutter.dev/battery"
 
     lateinit var notificationManager: NotificationManager
