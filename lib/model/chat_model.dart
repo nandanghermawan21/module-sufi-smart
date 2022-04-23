@@ -7,12 +7,15 @@ class ChatModel {
   DateTime? creteDate; // DATETIME,
   String? messageType; // VARCHAR(50),
   String? sender; // VARCHAR(50),
+  String? sendertoken; // VARCHAR(50),
   String? receiver; // VARCHAR(50),
+  String? receivertoken; // VARCHAR(50),
   String? message; // TEXT,
   String? notificationId; // VARCHAR(50),
   int? status; // int,
   DateTime? receivedDate; // DATETIME,
   DateTime? deliveredDate;
+  String? messageid;
 
   ChatModel({
     this.id,
@@ -20,11 +23,14 @@ class ChatModel {
     this.messageType,
     this.sender,
     this.receiver,
+    this.sendertoken,
+    this.receivertoken,
     this.message,
     this.notificationId,
     this.status,
     this.receivedDate,
     this.deliveredDate,
+    this.messageid,
   }); // DateTime
 
   static ChatModel fromJson(Map<String, dynamic> json) {
@@ -35,8 +41,11 @@ class ChatModel {
           : DateTime.parse(json['creteDate'] as String),
       messageType: json["messageType"] as String?,
       sender: json["sender"] as String?,
+      sendertoken: json["senderToken"] as String?,
       receiver: json["receiver"] as String?,
+      receivertoken: json["receiverToken"] as String?,
       message: json["message"] as String?,
+      messageid: json["messageId"] as String?,
       notificationId: json["notificationId"] as String?,
       status: json["status"] as int?,
       receivedDate: json["receivedDate"] == null
@@ -54,8 +63,11 @@ class ChatModel {
       "creteDate": creteDate?.toIso8601String(),
       "messageType": messageType,
       "sender": sender,
+      "senderToken": sendertoken,
       "receiver": receiver,
+      "receiverToken": receivertoken,
       "message": message,
+      "messageId": messageid,
       "notificationId": notificationId,
       "status": status,
       "receivedDate": receivedDate?.toIso8601String(),
@@ -73,8 +85,11 @@ class ChatModel {
             : DateTime.now().toUtc().toIso8601String(),
         messageType,
         sender,
+        sendertoken,
         receiver,
+        receivertoken,
         message,
+        messageid,
         status,
       ]);
       return db?.rawInsert(sql).then((value) {
