@@ -1,7 +1,7 @@
 UPDATE
   chat
 SET
-  notificationId = '%s',
+  messageId = '%s',
   status = '%s'
 WHERE
   id = '%s'
