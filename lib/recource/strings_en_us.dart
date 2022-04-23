@@ -204,4 +204,13 @@ class StringsEnUs implements Strings {
 
   @override
   String get someMesageHasBeenRead => "Eome message has been read";
+
+  @override
+  String get lockWithBiometric => "Lock with biometric";
+
+  @override
+  String get cancel => "Cancel";
+
+  @override
+  String get registerYourBiometric => "Register ypur biometric data";
 }

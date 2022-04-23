@@ -70,4 +70,7 @@ abstract class Strings {
   String get sendMessage => "Kirim Pesan";
   String get yourMessageSent => "Pesan anda terkirim";
   String get someMesageHasBeenRead => "beberapa pesan telah dibaca";
+  String get lockWithBiometric => "Kunci dengan bimetrik";
+  String get registerYourBiometric => "Daftarkan data iometrik anda";
+  String get cancel => "Batal";
 }
