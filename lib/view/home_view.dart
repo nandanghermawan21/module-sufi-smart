@@ -1,10 +1,14 @@
+import 'dart:math';
+
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_voip_kit/flutter_voip_kit.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/model/news_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/home_view_model.dart';
+import 'package:uuid/uuid.dart';
 
 class HomeView extends StatefulWidget {
   final VoidCallback? gotoForgotPassword;
@@ -119,7 +123,16 @@ class _HomeViewState extends State<HomeView> {
                 buttonFeature(
                   image: 'assets/ic_icon_promo.png',
                   ontap: () {
-                    widget.gotoPromo!();
+                    // widget.gotoPromo!();
+                    FlutterVoipKit.checkPermissions(openSettings: true)
+                        .then((value) => setState(() {
+                              Future.delayed(const Duration(seconds: 2))
+                                  .then((value) {
+                                FlutterVoipKit.reportIncomingCall(
+                                    handle: "${Random().nextInt(10)}" * 9,
+                                    uuid: const Uuid().v4());
+                              });
+                            }));
                   },
                   title: System.data.strings!.promo,
                 ),

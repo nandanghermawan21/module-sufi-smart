@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application android:name="${applicationName}" android:icon="@mipmap/launcher_icon" android:label="Sufi Smart">
         <service android:name=".BackNotife" android:enabled="true" android:exported="true"></service>
@@ -31,7 +33,7 @@
             <!-- for deeplink -->
             <intent-filter android:label="Sufismart">
                 <action android:name="android.intent.action.VIEW" />
-
+                
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "example://gizmos” -->
@@ -53,6 +55,14 @@
                 <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
             </intent-filter>
         </receiver>
+
+        <service android:name="com.example.flutter_voip_kit.VoipConnectionService"
+           android:label="VoipConnectionService"
+           android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE">
+           <intent-filter>
+               <action android:name="android.telecom.ConnectionService" />
+           </intent-filter>
+       </service>
     </application>
 
 </manifest>

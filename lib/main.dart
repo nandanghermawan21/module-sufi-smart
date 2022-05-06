@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:developer' as dev;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ import 'package:sufismart/route.dart';
 import 'package:uni_links/uni_links.dart';
 import 'route.dart';
 import 'service.dart' as service;
+import 'package:flutter_voip_kit/call.dart';
+import 'package:flutter_voip_kit/flutter_voip_kit.dart';
 
 Data data = Data();
 Future<void> main() async {
@@ -105,6 +108,9 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   bool _initialUriIsHandled = false;
+  List<Call> calls = [];
+  bool hasPermission = false;
+  bool callShouldFail = false;
 
   @override
   void initState() {
@@ -115,6 +121,9 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
     getPermission().then((value) {
       initOnesignal();
     });
+    FlutterVoipKit.init(
+        callStateChangeHandler: callStateChangeHandler,
+        callActionHandler: callActionHandler);
     WidgetsBinding.instance?.addObserver(this);
   }
 
@@ -234,6 +243,52 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         break;
       case AppLifecycleState.detached:
         break;
+    }
+  }
+
+  Future<bool> callStateChangeHandler(call) async {
+    dev.log("widget call state changed lisener: $call");
+    setState(
+        () {}); //calls states have been updated, setState so ui can reflect that
+
+    //it is important we perform logic and return true/false for every CallState possible
+    switch (call.callState) {
+      case CallState
+          .connecting: //simulate connection time of 3 seconds for our VOIP service
+        dev.log("--------------> Call connecting");
+        await Future.delayed(const Duration(seconds: 3));
+        return true;
+      case CallState
+          .active: //here we would likely begin playig audio out of speakers
+        dev.log("--------> Call active");
+        return true;
+      case CallState.ended: //end audio, disconnect
+        dev.log("--------> Call ended");
+        await Future.delayed(const Duration(seconds: 1));
+        return true;
+      case CallState.failed: //cleanup
+        dev.log("--------> Call failed");
+        return true;
+      case CallState.held: //pause audio for specified call
+        dev.log("--------> Call held");
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  Future<bool> callActionHandler(Call call, CallAction action) async {
+    dev.log("widget call action handler: $call");
+    setState(
+        () {}); //calls states have been updated, setState so ui can reflect that
+
+    //it is important we perform logic and return true/false for every CallState possible
+    switch (action) {
+      case CallAction.muted:
+        //EXAMPLE: here we would perform the logic on our end to mute the audio streams between the caller and reciever
+        return true;
+      default:
+        return false;
     }
   }
 }

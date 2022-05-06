@@ -235,6 +235,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_voip_kit:
+    dependency: "direct main"
+    description:
+      name: flutter_voip_kit
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.6"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

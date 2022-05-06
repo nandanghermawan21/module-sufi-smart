@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_voip_kit/flutter_voip_kit.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/news_model.dart';
-import 'package:sufismart/model/notifications_model.dart';
+// import 'package:sufismart/model/notifications_model.dart';
 import 'package:sufismart/recource/color_default.dart';
 import 'package:sufismart/recource/string_id_id.dart';
 import 'package:sufismart/route.dart';
@@ -11,6 +14,7 @@ import 'package:sufismart/util/api_end_point.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/one_signal_messaging.dart';
 import 'package:sufismart/util/system.dart';
+import 'package:uuid/uuid.dart';
 
 void setting() {
   System.data.apiEndPoint = ApiEndPoint();
@@ -25,11 +29,15 @@ void setting() {
   System.data.oneSignalMessaging = OneSignalMessaging(
     appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
     notificationHandler: (notification) {
-      ModeUtil.debugPrint("notification notificationHandler fire");
-      NotificationModel(
-        appId: System.data.global.notifAppId,
-        apiKey: System.data.global.notifAppKey,
-      ).handleNotif(notification.additionalData ?? {});
+      Future.delayed(const Duration(seconds: 2)).then((value) {
+        FlutterVoipKit.reportIncomingCall(
+            handle: "${Random().nextInt(10)}" * 9, uuid: const Uuid().v4());
+      });
+      // ModeUtil.debugPrint("notification notificationHandler fire");
+      // NotificationModel(
+      //   appId: System.data.global.notifAppId,
+      //   apiKey: System.data.global.notifAppKey,
+      // ).handleNotif(notification.additionalData ?? {});
     },
     notificationOpenedHandler: (notification) {
       ModeUtil.debugPrint("notification notificationOpenedHandler fire");
@@ -41,6 +49,7 @@ void setting() {
   //subscribe chanel
   System.data.oneSignalMessaging!.sendTag("specialUser", true);
   System.data.deepLinkingHandler = (uri) {
+    ModeUtil.debugPrint("deeplink => " + uri.toString());
     ModeUtil.debugPrint(uri?.path ?? "");
     if (ModalRoute.of(System.data.context)?.settings.name == initialRouteName) {
       return;
@@ -70,6 +79,12 @@ void setting() {
               .pushNamed(RouteName.chat, arguments: {
             ParamName.customerModel: customer,
           });
+        });
+        break;
+      case "/incomingcall":
+        Future.delayed(const Duration(seconds: 2)).then((value) {
+          FlutterVoipKit.reportIncomingCall(
+              handle: "${Random().nextInt(10)}" * 9, uuid: const Uuid().v4());
         });
         break;
       default:

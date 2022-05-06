@@ -15,6 +15,10 @@ import com.onesignal.OneSignal.OSRemoteNotificationReceivedHandler
 import io.flutter.util.ViewUtils
 import io.flutter.util.ViewUtils.getActivity
 import java.math.BigInteger
+import android.net.Uri
+import java.net.URLEncoder
+import java.net.URLDecoder
+
 
 
 class NotificationServiceExtension : OSRemoteNotificationReceivedHandler {
@@ -45,6 +49,18 @@ class NotificationServiceExtension : OSRemoteNotificationReceivedHandler {
         }
         val data = notification.additionalData
         Log.i("OneSignalExample", "Received Notification Data: $data")
+
+        // val action = Intent() 
+        // action.data = Uri.parse("sufismart://customer/incomingcall")
+        // action.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        // context.startActivity(action)
+
+        val launchIntent =
+           Intent(Intent.ACTION_VIEW)
+              .setData(Uri.parse("sufismart://customer/incomingcall"))
+              .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(launchIntent)
+      
 
         // If complete isn't call within a time period of 25 seconds, OneSignal internal logic will show the original notification
         // To omit displaying a notification, pass `null` to complete()
