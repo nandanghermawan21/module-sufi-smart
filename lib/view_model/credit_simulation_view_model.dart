@@ -1,160 +1,161 @@
 import 'package:flutter/material.dart';
 import 'package:sufismart/model/loan_type_model.dart';
-import'package:sufismart/model/area_model.dart';
-import'package:sufismart/model/insurance_type_model.dart';
+import 'package:sufismart/model/area_model.dart';
+import 'package:sufismart/model/insurance_type_model.dart';
+import 'package:sufismart/util/system.dart';
+import 'package:intl/intl.dart';
 
 class CreditSimulationViewModel extends ChangeNotifier {
   LoanTypeModel? _loanType;
-LoanTypeModel? getloanType =>_loanType;
-setloanType(LoanTypeModel? type) {
-_loanType = type;
-commit();
+  LoanTypeModel? get loanType => _loanType;
+  set loanType(LoanTypeModel? type) {
+    _loanType = type;
+    commit();
   }
 
-List<LoanTypeModel>loanTypes = LoanTypeModel.getForCreditSimulation();
-AreaModel? _area;
-AreaModel? getarea =>_area;
-setarea(AreaModel? area) {
-_area = area;
-commit();
+  List<LoanTypeModel> loanTypes = LoanTypeModel.getForCreditSimulation();
+  AreaModel? _area;
+  AreaModel? get area => _area;
+  set area(AreaModel? area) {
+    _area = area;
+    commit();
   }
 
-List<AreaModel>areas = AreaModel.getAllArea();
+  List<AreaModel> areas = AreaModel.getAllArea();
 
-finalList<InsuraceTypeModel>_insuranceType = [];
+  final List<InsuraceTypeModel> _insuranceType = [];
 
-List<InsuraceTypeModel>getinsuranceType =>_insuranceType;
-voidaddInsuranceType(InsuraceTypeModelinsuraceTypeModel) {
-_insuranceType.add(insuraceTypeModel);
-commit();
+  List<InsuraceTypeModel> get insuranceType => _insuranceType;
+  void addInsuranceType(InsuraceTypeModel insuraceTypeModel) {
+    _insuranceType.add(insuraceTypeModel);
+    commit();
   }
 
-voidremoveInsuranceType(InsuraceTypeModelinsuraceTypeModel) {
-_insuranceType.remove(insuraceTypeModel);
-commit();
+  void removeInsuranceType(InsuraceTypeModel insuraceTypeModel) {
+    _insuranceType.remove(insuraceTypeModel);
+    commit();
   }
 
-boolinsuranceTypeIsCheked(InsuraceTypeModelinsuraceTypeModel) {
-return_insuranceType.contains(insuraceTypeModel);
+  bool insuranceTypeIsCheked(InsuraceTypeModel insuraceTypeModel) {
+    return _insuranceType.contains(insuraceTypeModel);
   }
 
-List<InsuraceTypeModel>insuranceTypes =
-InsuraceTypeModel.getAllInsuranceType();
+  List<InsuraceTypeModel> insuranceTypes =
+      InsuraceTypeModel.getAllInsuranceType();
 
-TextEditingControllerpriceController = TextEditingController();
-double? _price = 0;
-double? getprice =>_price;
-setprice(double? price) {
-_price = price;
-calcPercentage();
-commit();
+  TextEditingController priceController = TextEditingController();
+  double? _price = 0;
+  double? get price => _price;
+  set price(double? price) {
+    _price = price;
+    calcPercentage();
+    commit();
   }
 
-TextEditingControllerdpAmountController = TextEditingController();
-double? _dpAmount = 0;
-double? getdpAmount =>_dpAmount;
-setdpAmount(double? amount) {
-_dpAmount = amount;
-calcPercentage();
-commit();
+  TextEditingController dpAmountController = TextEditingController();
+  double? _dpAmount = 0;
+  double? get dpAmount => _dpAmount;
+  set dpAmount(double? amount) {
+    _dpAmount = amount;
+    calcPercentage();
+    commit();
   }
 
-TextEditingControllerdownPaymentPercentageController =
-TextEditingController();
-double? _dpPercent = 0;
-double? getdpPercent =>_dpPercent;
-setdpPercent(double? dpPercent) {
-_dpPercent = dpPercent;
-_dpAmount = (_price ?? 8) * (_dpPercent ?? 0) / 100;
-dpAmountController.text = (_dpPercent ?? 0) == 0
+  TextEditingController downPaymentPercentageController =
+      TextEditingController();
+  double? _dpPercent = 0;
+  double? get dpPercent => _dpPercent;
+  set dpPercent(double? dpPercent) {
+    _dpPercent = dpPercent;
+    _dpAmount = (_price ?? 8) * (_dpPercent ?? 0) / 100;
+    dpAmountController.text = (_dpPercent ?? 0) == 0
         ? ""
         : "Rp. " +
-NumberFormat("#,###", System.data.strings!.locale)
+            NumberFormat("#,###", System.data.strings!.locale)
                 .format(_dpAmount);
-commit();
+    commit();
   }
 
-TextEditingValuepriceFormater(
-TextEditingValueoldValue, TextEditingValuenewValue) {
-String_val =
-newValue.text.replaceAllMapped(RegExp("[^0-9]"), (match) =>"");
-String_num = _val.isNotEmpty
+  TextEditingValue priceFormater(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String _val =
+        newValue.text.replaceAllMapped(RegExp("[^0-9]"), (match) => "");
+    String _num = _val.isNotEmpty
         ? "Rp. " +
-NumberFormat("#,###", System.data.strings!.locale)
+            NumberFormat("#,###", System.data.strings!.locale)
                 .format(double.parse(_val))
         : "";
 
-if ((parseDoubleFromString(_num) ?? 0) < (_dpAmount ?? 0)) {
-dpAmount = null;
-dpAmountController.clear();
+    if ((parseDoubleFromString(_num) ?? 0) < (_dpAmount ?? 0)) {
+      dpAmount = null;
+      dpAmountController.clear();
     }
-returnTextEditingValue(
-composing: newValue.composing,
-selection: TextSelection.fromPosition(TextPosition(offset: _num.length)),
-text: _num,
+    return TextEditingValue(
+      composing: newValue.composing,
+      selection: TextSelection.fromPosition(TextPosition(offset: _num.length)),
+      text: _num,
     );
   }
 
-TextEditingValuedownPaymentAmountFormater(
-TextEditingValueoldValue, TextEditingValuenewValue) {
-String_val =
-newValue.text.replaceAllMapped(RegExp("[^0-9]"), (match) =>"");
-String_num = _val.isNotEmpty
+  TextEditingValue downPaymentAmountFormater(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String _val =
+        newValue.text.replaceAllMapped(RegExp("[^0-9]"), (match) => "");
+    String _num = _val.isNotEmpty
         ? "Rp. " +
-NumberFormat("#,###", System.data.strings!.locale)
+            NumberFormat("#,###", System.data.strings!.locale)
                 .format(double.parse(_val))
         : "";
 
-if ((parseDoubleFromString(_num) ?? 0) > (_price ?? 0)) {
-returnTextEditingValue(
-composing: newValue.composing,
-selection: TextSelection.fromPosition(
-TextPosition(offset: oldValue.text.length)),
-text: oldValue.text,
+    if ((parseDoubleFromString(_num) ?? 0) > (_price ?? 0)) {
+      return TextEditingValue(
+        composing: newValue.composing,
+        selection: TextSelection.fromPosition(
+            TextPosition(offset: oldValue.text.length)),
+        text: oldValue.text,
       );
     } else {
-returnTextEditingValue(
-composing: newValue.composing,
-selection:
-TextSelection.fromPosition(TextPosition(offset: _num.length)),
-text: _num,
+      return TextEditingValue(
+        composing: newValue.composing,
+        selection:
+            TextSelection.fromPosition(TextPosition(offset: _num.length)),
+        text: _num,
       );
     }
   }
 
-TextEditingValuedownPaymentPercentageFormater(
-TextEditingValueoldValue, TextEditingValuenewValue) {
-String_val =
-newValue.text.replaceAllMapped(RegExp("[^0-9]"), (match) =>"");
-String_num = (_val.isNotEmpty&& (_price ?? 0) != 0)
-        ? double.parse(_val) >100
+  TextEditingValue downPaymentPercentageFormater(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String _val =
+        newValue.text.replaceAllMapped(RegExp("[^0-9]"), (match) => "");
+    String _num = (_val.isNotEmpty && (_price ?? 0) != 0)
+        ? double.parse(_val) > 100
             ? oldValue.text.replaceFirst(" %", "")
             : _val
         : "";
-returnTextEditingValue(
-composing: newValue.composing,
-selection: TextSelection.fromPosition(TextPosition(offset: _num.length)),
-text: (_num.isNotEmpty&& (_price ?? 0) != 0) ? _num + " %" : "",
+    return TextEditingValue(
+      composing: newValue.composing,
+      selection: TextSelection.fromPosition(TextPosition(offset: _num.length)),
+      text: (_num.isNotEmpty && (_price ?? 0) != 0) ? _num + " %" : "",
     );
   }
 
-voidcalcPercentage() {
-_dpPercent = ((price ?? 0) == 0) || ((_dpAmount ?? 0) == 0)
+  void calcPercentage() {
+    _dpPercent = ((price ?? 0) == 0) || ((_dpAmount ?? 0) == 0)
         ? null
         : (_dpAmount! / _price!) * 100;
-downPaymentPercentageController.text =
-_dpPercent == null ? "" : _dpPercent!.toStringAsFixed(2) + " %";
+    downPaymentPercentageController.text =
+        _dpPercent == null ? "" : _dpPercent!.toStringAsFixed(2) + " %";
   }
 
-double? parseDoubleFromString(StringpriceString) {
-returnpriceString.isNotEmpty
+  double? parseDoubleFromString(String priceString) {
+    return priceString.isNotEmpty
         ? double.parse(
-priceString.replaceAllMapped(RegExp("[^0-9]"), (match) =>""))
+            priceString.replaceAllMapped(RegExp("[^0-9]"), (match) => ""))
         : null;
   }
 
-voidcalculate() {}
-
+  voidcalculate() {}
 
   void commit() {
     notifyListeners();

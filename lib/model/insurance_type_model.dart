@@ -1,30 +1,30 @@
-classInsuraceTypeModel {
-int? id;
-String? name;
+class InsuraceTypeModel {
+  int? id;
+  String? name;
 
-InsuraceTypeModel({
-this.id,
-this.name,
+  InsuraceTypeModel({
+    this.id,
+    this.name,
   });
 
-factoryInsuraceTypeModel.fromJson(Map<String, dynamic>json) {
-returnInsuraceTypeModel(
-id: json["id"] asint,
-name: json["name"] asString,
+  factory InsuraceTypeModel.fromJson(Map<String, dynamic> json) {
+    return InsuraceTypeModel(
+      id: json["id"] as int,
+      name: json["name"] as String,
     );
   }
 
-Map<String, dynamic>tiJson() {
-return {
-'id': id,
-'name': name,
+  Map<String, dynamic> tiJson() {
+    return {
+      'id': id,
+      'name': name,
     };
   }
 
-staticList<InsuraceTypeModel>getAllInsuranceType() {
-return [
-InsuraceTypeModel(id: 1, name: "KOMPERHENSIVE"),
-InsuraceTypeModel(id: 1, name: "TLO"),
+  static List<InsuraceTypeModel> getAllInsuranceType() {
+    return [
+      InsuraceTypeModel(id: 1, name: "KOMPERHENSIVE"),
+      InsuraceTypeModel(id: 1, name: "TLO"),
     ];
   }
 }

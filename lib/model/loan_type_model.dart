@@ -1,37 +1,37 @@
-import'package:sufismart/util/system.dart';
+import 'package:sufismart/util/system.dart';
 
-classLoanTypeModel {
-int? id;
-String? name;
+class LoanTypeModel {
+  int? id;
+  String? name;
 
-LoanTypeModel({
-this.id,
-this.name,
+  LoanTypeModel({
+    this.id,
+    this.name,
   });
 
-factoryLoanTypeModel.fromJson(Map<String, dynamic>json) {
-returnLoanTypeModel(
-id: json["id"] asint,
-name: json["name"] asString,
+  factory LoanTypeModel.fromJson(Map<String, dynamic> json) {
+    return LoanTypeModel(
+      id: json["id"] as int,
+      name: json["name"] as String,
     );
   }
 
-Map<String, dynamic>toJson() {
-return {
-"id": id,
-"name": name,
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "name": name,
     };
   }
 
-staticList<LoanTypeModel>getForCreditSimulation() {
-return [
-LoanTypeModel(
-id: 1,
-name: System.data.strings!.motorCyclingFinancing,
+  static List<LoanTypeModel> getForCreditSimulation() {
+    return [
+      LoanTypeModel(
+        id: 1,
+        name: System.data.strings!.motorCyclingFinancing,
       ),
-LoanTypeModel(
-id: 2,
-name: System.data.strings!.carFinancing,
+      LoanTypeModel(
+        id: 2,
+        name: System.data.strings!.carFinancing,
       )
     ];
   }
