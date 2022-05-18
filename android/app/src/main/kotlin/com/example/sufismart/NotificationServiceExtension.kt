@@ -40,7 +40,6 @@ class NotificationServiceExtension : OSRemoteNotificationReceivedHandler {
             spannableBody.setSpan(ForegroundColorSpan(Color.BLUE), 0, notification.body.length, 0)
             builder.setContentText(spannableBody)
             builder.setFullScreenIntent(fullScreenPendingIntent, true)
-
             //Force remove push from Notification Center after 30 seconds
             builder.setTimeoutAfter(30000)
             builder
