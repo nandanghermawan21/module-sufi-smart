@@ -27,7 +27,7 @@ abstract class Strings {
   String get message => "pesan";
   String get send => "kirim";
   String get canNotBeEmpty => "tidak boleh kosong";
-  String get login => "masuk";
+  String get login => "Masuk";
   String get signUp => "Daftar";
   String get username => "nama pengguna";
   String get password => "kata sandi";
@@ -65,5 +65,74 @@ abstract class Strings {
   String get readDataKtpSuccess => "Membaca Ktp Sukses";
   String get timeLeft => "Waktu Habis";
   String get enterPin => "Masukan PIN";
-  String get resend => "Keirim Ulang";
+  String get resend => "Kirim Ulang";
+
+  String get startFrom => "Mulai Dari";
+
+  String get producttype => "Tipe Produk";
+
+  String get noteProduct => "* Harga sewaktu-waktu dapat berubah tanpa pemberitahuan terlebih dahulu";
+
+  String get description => "Deskripsi";
+
+  String get descriptionLink => "Silahkan Kunjungi https://www.sfi.co.id";
+
+  String get hitungCicilan => "Hitung Cicilan Produk ini";
+
+  String get infoOtrJakarta => "Daftar Harga Diatas Menggunakan OTR Jakarta";
+
+  String get hitungcreditSimulation => "Simulasi Credit";
+
+  String get cityBranch => "Pilih Kota";
+
+  String get branchSfi => "Cabang Suzuki Finance";
+
+  String get viewLocation => "Lihat Lokasi";
+
+  String get forgotPassword => "Lupa Password";
+
+  String get fillForgotPassword => "Silahkan masukan email valid yang sudah terdaftar dalam aplikasi SUFI SMART";
+
+  String get faq => "FAQ";
+
+  String get settingPassword => "Atur Ulang Kata Sandi";
+
+  String get updateProfile => "Memperbaharui Profil";
+
+  String get passwordLama => "Password Lama";
+
+  String get passwordBaru => "Password Baru";
+
+  String get passwordConfirm => "Password Konfirmasi";
+
+  String get update => "Update";
+
+  String get validatePassNewAndConfirm => "kata sandi Baru dan konfirmasi kata sandi tidak sama";
+
+  String get ajukanPembiayaan => "Pengajuan kendaraan";
+
+  String get descProfile => "Terimakasih sudah bergabung dan menjadi bagian dari Suzuki finance dan aplikasi Sufi smart";
+
+  String get chooseJob => "Pilih Pekerjaan";
+
+  String get chooseGender => "Pilih Gender";
+
+  String get birthdate => "Tanggal Lahir";
+
+  String get gender => "Gender";
+
+  String get job => "Pekerjaan";
+
+  String get infoNoKontrak => "isi informasi no KTP dan nomor kontrak jika anda nasabah suzuki finance";
+
+  String get nomorKontrak1 => "Nomor Kontrak 1";
+
+  String get nomorKontrak2 => "Nomor Kontrak 2";
+
+  String get nomorKontrak3 => "Nomor Kontrak 3";
+
+  String get noKtp => "No KTP";
+
+  String get infoLogout => "apakah anda yakin ingin keluar \ndari akun ini ?";
+  
 }

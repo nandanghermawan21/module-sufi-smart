@@ -18,6 +18,7 @@ class SignupViewModel extends ChangeNotifier {
   PinComponentController pinComponentController = PinComponentController();
 
   TextEditingController nikController = TextEditingController();
+  
   String? _nik;
   String? get nik => _nik;
   set nik(String? value) {
@@ -45,7 +46,7 @@ class SignupViewModel extends ChangeNotifier {
   String? _fullname;
   String? get fullname => _fullname;
   set fullname(String? value) {
-    _nik = value;
+    _fullname = value;
     commit();
   }
 
@@ -53,7 +54,7 @@ class SignupViewModel extends ChangeNotifier {
   String? _phonenumber;
   String? get phonenumber => _phonenumber;
   set phonenumber(String? value) {
-    _nik = value;
+    _phonenumber = value;
     commit();
   }
 
@@ -61,7 +62,7 @@ class SignupViewModel extends ChangeNotifier {
   String? _username;
   String? get username => _username;
   set username(String? value) {
-    _nik = value;
+    _username = value;
     commit();
   }
 
@@ -69,7 +70,7 @@ class SignupViewModel extends ChangeNotifier {
   String? _password;
   String? get password => _password;
   set password(String? value) {
-    _nik = value;
+    _password = value;
     commit();
   }
 
@@ -152,7 +153,7 @@ class SignupViewModel extends ChangeNotifier {
     );
   }
 
-  void onTapScanKtp() {
+  void onTapScanKtp() { 
     imageKtpPickerController
         .getImages(
       camera: true,

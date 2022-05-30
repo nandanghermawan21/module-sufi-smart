@@ -192,4 +192,109 @@ class StringsEnUs implements Strings {
 
   @override
   String get resend => "Resend";
+
+  @override  
+  String get startFrom => "Start From";
+
+  @override  
+  String get producttype => "Product Type";
+
+  @override  
+  String get noteProduct => "* Prices are subject to change at any time without prior notice";
+
+  @override
+  String get description => "Description";
+
+  @override  
+  get descriptionLink => "Please visit https://www.sfi.co.id";
+
+  @override  
+  String get hitungCicilan => "Calculate Installments for this Product";
+
+  @override  
+  String get infoOtrJakarta => "Price List Above Using OTR Jakarta";
+
+  @override  
+  String get hitungcreditSimulation => "Credit Simulation";
+
+  @override  
+  String get cityBranch => "Choose City";
+
+  @override  
+  String get branchSfi => "Branch of Suzuki Finance";
+
+  @override  
+  String get viewLocation => "View Location";
+
+  @override  
+  String get forgotPassword => "Forgot Password";
+
+  @override  
+  String get fillForgotPassword => "Please enter a valid email that has been registered in the SUFI SMART application";
+
+  @override
+  
+  String get faq => "FAQ";
+
+  @override  
+  String get settingPassword => "Change Password";
+
+  @override  
+  String get updateProfile => "Update Profile";
+
+  @override  
+  String get passwordBaru => "New Password";
+
+  @override  
+  String get passwordConfirm => "Confirm Password";
+
+  @override  
+  String get passwordLama => "Old Password";
+
+  @override  
+  String get update => "Update";
+
+  @override  
+  String get validatePassNewAndConfirm => "New password and confirm password are not the same";
+
+  @override  
+  String get ajukanPembiayaan => "Vehicle submission";
+
+  @override  
+  String get descProfile => "Thank you for joining and being a part of Suzuki finance and the Sufi smart application";
+
+  @override  
+  String get chooseJob => "Choose Job";
+
+  @override  
+  String get chooseGender => "Choose Gender";
+
+  @override
+  
+  String get birthdate => "Birthdate";
+
+  @override  
+  String get gender => "Gender";
+
+  @override  
+  String get job => "Job";
+
+  @override    
+  String get infoNoKontrak => "fill in the information on your ID card and contract number if you are a suzuki finance customer";
+
+  @override  
+  String get nomorKontrak1 => "Contract ID 1";
+
+  @override  
+  String get nomorKontrak2 => "Contract ID 2";
+
+  @override  
+  String get nomorKontrak3 => "Contract ID 3";
+
+  @override  
+  String get noKtp => "ID Card";
+
+  @override
+  
+  String get infoLogout => "are you sure you want to log out \nfrom this account ?";  
 }

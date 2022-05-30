@@ -1,8 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
+import 'package:sufismart/model/banner_model.dart';
 import 'package:sufismart/model/news_model.dart';
+import 'package:sufismart/model/news_model_new.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/home_view_model.dart';
 
@@ -15,7 +19,7 @@ class HomeView extends StatefulWidget {
   final VoidCallback? gotoInstallment;
   final VoidCallback? gotoPayment;
   final VoidCallback? gotoShowAll;
-  final ValueChanged<NewsModel>? gotoDetailNews;
+  final ValueChanged<NewsModelNew>? gotoDetailNews;
 
   const HomeView(
       {Key? key,
@@ -51,6 +55,8 @@ class _HomeViewState extends State<HomeView> {
               onRefresh: homeViewModel.onRefreshHomePage,
               child: SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     swiperBanner(),
                     featureList(),
@@ -67,24 +73,42 @@ class _HomeViewState extends State<HomeView> {
 
   Widget swiperBanner() {
     return Container(
-      height: 200,
-      margin: const EdgeInsets.only(bottom: 5, top: 5),
+      height: 230,
+      margin: const EdgeInsets.only(bottom: 5),
       width: double.infinity,
-      child: Swiper(
-        itemBuilder: (BuildContext context, int index) {
-          return Image.asset(
-            "${homeViewModel.listBanner[index].imagepath}",
-            fit: BoxFit.fill,
-          );
+      child: FutureBuilder<List<BannerModel>>(
+        future: homeViewModel.listBannerSufi,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Swiper(
+              itemBuilder: (BuildContext context, int index) {
+                return Image.network(
+                  "${snapshot.data?[index].imagepath}",
+                  fit: BoxFit.fill,
+                );
+              },
+              indicatorLayout: PageIndicatorLayout.COLOR,
+              autoplay: true,
+              itemCount: snapshot.data?.length ?? 0,
+              pagination: const SwiperPagination(
+                alignment: Alignment.bottomRight,
+                margin: EdgeInsets.only(right: 0, bottom: 10),
+              ),
+              // control: const SwiperControl(),
+            );
+          } else {
+            return SkeletonAnimation(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                ),
+              ),
+            );
+          }
         },
-        indicatorLayout: PageIndicatorLayout.COLOR,
-        autoplay: true,
-        itemCount: homeViewModel.listBanner.length,
-        pagination: const SwiperPagination(
-          alignment: Alignment.bottomRight,
-          margin: EdgeInsets.only(right: 0, bottom: 10),
-        ),
-        // control: const SwiperControl(),
       ),
     );
   }
@@ -117,25 +141,28 @@ class _HomeViewState extends State<HomeView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 buttonFeature(
-                  image: 'assets/ic_icon_promo.png',
+                  image:
+                      "https://www.sfi.co.id/assets/images/menu/Icon-Promo.png",
                   ontap: () {
                     widget.gotoPromo!();
                   },
                   title: System.data.strings!.promo,
                 ),
                 buttonFeature(
-                  image: 'assets/ic_icon_product.png',
+                  image:
+                      "https://www.sfi.co.id/assets/images/menu/ic_menu/product.png",
                   ontap: () {
                     widget.gotoProduct!();
                   },
                   title: System.data.strings!.product,
                 ),
                 buttonFeature(
-                  title: System.data.strings!.branch,
+                  title: System.data.strings!.creditSimulation,
                   ontap: () {
-                    widget.gotoBranch!();
+                    widget.gotoSimulation!();
                   },
-                  image: 'assets/ic_icon_branch.png',
+                  image:
+                      "https://www.sfi.co.id/assets/images/menu/creditsimulation.png",
                 ),
               ],
             ),
@@ -146,25 +173,28 @@ class _HomeViewState extends State<HomeView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 buttonFeature(
-                  title: System.data.strings!.creditSimulation,
-                  ontap: () {
-                    widget.gotoSimulation!();
-                  },
-                  image: 'assets/ic_icon_credit_simulation.png',
-                ),
-                buttonFeature(
                   title: System.data.strings!.installmentStatus,
                   ontap: () {
                     widget.gotoInstallment!();
                   },
-                  image: 'assets/ic_icon_installment_status.png',
+                  image:
+                      "https://www.sfi.co.id/assets/images/menu/inststat.png",
+                ),
+                buttonFeature(
+                  title: System.data.strings!.branch,
+                  ontap: () {
+                    widget.gotoBranch!();
+                  },
+                  image:
+                      "https://www.sfi.co.id/assets/images/menu/dealerservice.png",
                 ),
                 buttonFeature(
                   ontap: () {
                     widget.gotoPayment!();
                   },
                   title: System.data.strings!.paymentOption,
-                  image: 'assets/ic_icon_wop.png',
+                  image:
+                      "https://www.sfi.co.id/assets/images/menu/Icon-Layanan.png",
                 ),
               ],
             ),
@@ -186,10 +216,43 @@ class _HomeViewState extends State<HomeView> {
         child: Center(
           child: Column(
             children: <Widget>[
-              Image.asset(
-                image,
-                width: 60,
-                height: 60,
+              CachedNetworkImage(
+                imageUrl: image,
+                imageBuilder: (context, imageProvider) => Container(
+                  //height: MediaQuery.of(context).size.height / 3.5,
+                  //height: 230,
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(50)),
+                    // borderRadius: BorderRadius.all(
+                    //     Radius.circular(15)),
+                    image:
+                        DecorationImage(image: imageProvider, fit: BoxFit.fill),
+                  ),
+                ),
+                placeholder: (context, url) => SkeletonAnimation(
+                    child: Container(
+                  //height: MediaQuery.of(context).size.height / 3,
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: const BorderRadius.all(Radius.circular(50)),
+                  ),
+                )),
+                errorWidget: (context, url, error) => Container(
+                  //height: MediaQuery.of(context).size.height / 3,
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: const BorderRadius.all(Radius.circular(50)),
+                  ),
+                  child: const Center(
+                    child: Icon(Icons.error),
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 10,
@@ -212,7 +275,9 @@ class _HomeViewState extends State<HomeView> {
     return Column(
       children: [
         Container(
+          color: Colors.white,
           margin: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -254,30 +319,50 @@ class _HomeViewState extends State<HomeView> {
         ),
         Container(
           // padding: const EdgeInsets.symmetric(vertical: 10.0),
-          height: MediaQuery.of(context).size.height * 0.33,
-          color: Colors.transparent,
-          child: Container(
-            margin: const EdgeInsets.only(top: 5),
-            height: 200,
-            child: ListView.builder(
-              itemCount: homeViewModel.listNews.length,
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemBuilder: (ctx, i) {
-                return GestureDetector(
-                    onTap: () {
-                      widget.gotoDetailNews!(homeViewModel.listNews[i]);
+          height: MediaQuery.of(context).size.height * 0.30,
+          padding: const EdgeInsets.all(5),
+          color: Colors.white,
+          child: FutureBuilder<List<NewsModelNew>>(
+            future: homeViewModel.listNewsHomeSufi,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Container(
+                  margin: const EdgeInsets.only(top: 5),
+                  height: 200,
+                  child: ListView.builder(
+                    itemCount: snapshot.data?.length ?? 0,
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemBuilder: (ctx, i) {
+                      return GestureDetector(
+                          onTap: () {
+                            widget.gotoDetailNews!(snapshot.data![i]);
+                          },
+                          child: photos(snapshot.data![i]));
                     },
-                    child: photos(homeViewModel.listNews[i]));
-              },
-            ),
+                  ),
+                );
+              } else {
+                return SkeletonAnimation(
+                  child: Container(
+                    margin: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                  ),
+                );
+              }
+            },
           ),
         ),
       ],
     );
   }
 
-  Widget photos(NewsModel pm) {
+  Widget photos(NewsModelNew pm) {
     double width = (MediaQuery.of(context).size.width - 50) > 370
         ? 370
         : MediaQuery.of(context).size.width - 50;
@@ -286,7 +371,7 @@ class _HomeViewState extends State<HomeView> {
         width: width,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: BasicComponent.newsImageContainer(
+          child: BasicComponent.newsImageContainer2(
             pm,
           ),
         ));

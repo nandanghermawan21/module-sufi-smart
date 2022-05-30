@@ -26,6 +26,8 @@ class NewsModel {
         'title': title,
         'newsContent': newsContent,
       };
+  
+     
 
   static List<NewsModel> dummy() {
     return [

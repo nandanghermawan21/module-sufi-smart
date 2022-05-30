@@ -1,10 +1,12 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/pin_component.dart';
 import 'package:sufismart/model/customer_model.dart';
+import 'package:sufismart/model/customernew_model.dart';
 import 'package:sufismart/model/otp_model.dart';
+import 'package:sufismart/model/otp_new_model.dart';
 import 'package:sufismart/model/user_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
 import 'package:sufismart/util/system.dart';
@@ -20,6 +22,8 @@ class LoginViewModel extends ChangeNotifier {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
   PinComponentController pinComponentController = PinComponentController();
+
+  String? deviceId;
 
   bool _emailValidation = false;
   bool get emailValidation => _emailValidation;
@@ -56,77 +60,217 @@ class LoginViewModel extends ChangeNotifier {
     return valid;
   }
 
-  void login({
-    ValueChanged<CustomerModel>? onLoginSuccess,
+  // void login({
+  //   ValueChanged<CustomerModel>? onLoginSuccess,
+  // }) {
+  //   circularLoaderController.startLoading();
+  //   CustomerModel.login(
+  //     user: UserModel(
+  //       username: emailTextEditingController.text,
+  //       password: passwordTextEditingController.text,
+  //       deviceId: System.data.global.messagingToken,
+  //     ),
+  //     onRequestOtp: (otp) {
+  //       PinComponent.open(
+  //         context: System.data.context,
+  //         controller: pinComponentController,
+  //         // timer: DateTime.now().toUtc().difference(otp.expired!),
+  //         timer: const Duration(seconds: 5),
+  //         onTapResend: (pin) {
+  //           pinComponentController.value.loadingController.startLoading();
+  //           OtpModel.resend(
+  //                   url: System.data.apiEndPoint.url + (otp.resendUrl ?? ""))
+  //               .then((otp2) {
+  //             pinComponentController.value.loadingController.forceStop();
+  //             pinComponentController.value.timerController.start(
+  //               duration: DateTime.now().toUtc().difference(otp2!.expired!),
+  //             );
+  //           }).catchError(
+  //             (onErrorOtp2) {
+  //               pinComponentController.value.loadingController.stopLoading(
+  //                   isError: true,
+  //                   message: ErrorHandlingUtil.handleApiError(onErrorOtp2));
+  //             },
+  //           );
+  //         },
+  //         onTapSend: (pin) {
+  //           pinComponentController.value.loadingController.startLoading();
+  //           OtpModel.confirm<CustomerModel>(
+  //               url: System.data.apiEndPoint.url + (otp.confirmUrl ?? ""),
+  //               otp: pin,
+  //               jsonReader: (json) {
+  //                 return CustomerModel.fromJson(json);
+  //               }).then((customer) {
+  //             pinComponentController.value.loadingController.forceStop();
+  //             pinComponentController.close();
+  //             circularLoaderController.stopLoading(
+  //                 duration: const Duration(seconds: 3),
+  //                 isError: false,
+  //                 message: "Login Berhasil With Otp",
+  //                 onCloseCallBack: () {
+  //                   if (onLoginSuccess != null) {
+  //                     onLoginSuccess(customer);
+  //                   }
+  //                 });
+  //           }).catchError((onErrorOtp3) {
+  //             pinComponentController.value.loadingController.stopLoading(
+  //                 isError: true,
+  //                 message: ErrorHandlingUtil.handleApiError(onErrorOtp3));
+  //           });
+  //         },
+  //       );
+  //     },
+  //   ).then((value) {
+  //     if (value != null) {
+  //       circularLoaderController.stopLoading(
+  //           duration: const Duration(seconds: 3),
+  //           isError: false,
+  //           message: "Login Berhasil Without Otp",
+  //           onCloseCallBack: () {
+  //             if (onLoginSuccess != null) {
+  //               onLoginSuccess(value);
+  //             }
+  //           });
+  //     } else {
+  //       circularLoaderController.forceStop();
+  //     }
+  //   }).catchError((onError) {
+  //     circularLoaderController.stopLoading(
+  //         duration: const Duration(seconds: 3),
+  //         isError: true,
+  //         message: ErrorHandlingUtil.handleApiError(onError));
+  //   });
+
+  //   // emailTextEditingController.text.isEmpty
+  //   //     ? setEmailValidation = true
+  //   //     : setEmailValidation = false;
+  //   // passwordTextEditingController.text.isEmpty
+  //   //     ? setPasswordValidation = true
+  //   //     : setPasswordValidation = false;
+  // }
+
+  // Future<String> getInfoDevice() {
+  //   return Permission.phone.isGranted.then((granted) async {
+  //     if (granted == true) {
+  //       return DeviceInformation.deviceModel.then((value) {
+  //         return value;
+  //       });
+  //     } else {
+  //       return "";
+  //     }
+  //   }).catchError((onError) {
+  //     throw onError;
+  //   });
+  //   //return DeviceInformation.deviceIMEINumber;
+  // }
+
+  // String? getPlatform(){
+  //   if (Platform.isAndroid){
+  //     return Platform.operatingSystem;
+  //     //return "ANDROID";
+  //   }else if(Platform.isIOS){
+  //     //return "IOS";
+  //     return Platform.operatingSystem;
+  //   }
+  //   return Platform.operatingSystem;
+
+  // }
+
+  void login2({
+    ValueChanged<CustomerNewModel>? onLoginSuccess2,
   }) {
     circularLoaderController.startLoading();
-    CustomerModel.login(
-      user: UserModel(
-        username: emailTextEditingController.text,
-        password: passwordTextEditingController.text,
-        deviceId: System.data.global.messagingToken,
-      ),
-      onRequestOtp: (otp) {
-        PinComponent.open(
-          context: System.data.context,
-          controller: pinComponentController,
-          // timer: DateTime.now().toUtc().difference(otp.expired!),
-          timer: const Duration(seconds: 5),
-          onTapResend: (pin) {
-            pinComponentController.value.loadingController.startLoading();
-            OtpModel.resend(
-                    url: System.data.apiEndPoint.url + (otp.resendUrl ?? ""))
-                .then((otp2) {
-              pinComponentController.value.loadingController.forceStop();
-              pinComponentController.value.timerController.start(
-                duration: DateTime.now().toUtc().difference(otp2!.expired!),
-              );
-            }).catchError(
-              (onErrorOtp2) {
-                pinComponentController.value.loadingController.stopLoading(
-                    isError: true,
-                    message: ErrorHandlingUtil.handleApiError(onErrorOtp2));
-              },
-            );
-          },
-          onTapSend: (pin) {
-            pinComponentController.value.loadingController.startLoading();
-            OtpModel.confirm<CustomerModel>(
-                url: System.data.apiEndPoint.url + (otp.confirmUrl ?? ""),
-                otp: pin,
-                jsonReader: (json) {
-                  return CustomerModel.fromJson(json);
-                }).then((customer) {
-              pinComponentController.value.loadingController.forceStop();
-              pinComponentController.close();
-              circularLoaderController.stopLoading(
-                  duration: const Duration(seconds: 3),
-                  isError: false,
-                  message: "Login Berhasil With Otp",
-                  onCloseCallBack: () {
-                    if (onLoginSuccess != null) {
-                      onLoginSuccess(customer);
-                    }
-                  });
-            }).catchError((onErrorOtp3) {
-              pinComponentController.value.loadingController.stopLoading(
-                  isError: true,
-                  message: ErrorHandlingUtil.handleApiError(onErrorOtp3));
-            });
-          },
-        );
-      },
-    ).then((value) {
+
+    // getPlatform.then((imei) {
+    //deviceId = value.toString();
+
+    //ModeUtil.debugPrint(imei.toString());
+    CustomerNewModel.login(
+        user: UserModel(
+      username: emailTextEditingController.text,
+      password: passwordTextEditingController.text,
+      deviceId: Platform.operatingSystem,
+      playerid: System.data.global.messagingToken,
+    )).then((value) {
       if (value != null) {
-        circularLoaderController.stopLoading(
-            duration: const Duration(seconds: 3),
-            isError: false,
-            message: "Login Berhasil Without Otp",
-            onCloseCallBack: () {
-              if (onLoginSuccess != null) {
-                onLoginSuccess(value);
-              }
-            });
+        if (value.status == "1") {
+          circularLoaderController.forceStop();
+          PinComponent.open(
+              context: System.data.context,
+              controller: pinComponentController,
+              title: "Input OTP",
+              timer: DateTime.now().toUtc().difference(value.expired!) * -1,
+              onTapResend: (val) {
+                pinComponentController.value.loadingController.startLoading();
+                OtpNewModel.resendOtp(
+                  userid: value.userid!,
+                ).then((value) {
+                  pinComponentController.value.loadingController.forceStop();
+                  pinComponentController.value.timerController.start(
+                    duration:
+                        DateTime.now().toUtc().difference(value!.expired!) * -1,
+                  );
+                }).catchError((onError) {
+                  pinComponentController.value.loadingController.stopLoading(
+                    isError: true,
+                    message: ErrorHandlingUtil.handleApiError(onError),
+                  );
+                });
+              },
+              onTapSend: (val) {
+                pinComponentController.value.loadingController.startLoading();
+                OtpNewModel.confirmOtp(
+                  otp: val,
+                  userid: value.userid!,
+                ).then((value) {
+                  if (value != null) {
+                    if (value.status == "0") {
+                      pinComponentController.value.loadingController
+                          .stopLoading(
+                        isError: false,
+                        message: value.msg!,
+                        duration: const Duration(seconds: 2),
+                        onCloseCallBack: () {
+                          if (onLoginSuccess2 != null) {
+                            onLoginSuccess2(value);
+                          }
+                        },
+                      );
+                    } else if (value.status == "1") {
+                      pinComponentController.value.loadingController
+                          .stopLoading(
+                        isError: true,
+                        duration: const Duration(seconds: 2),
+                        message: ErrorHandlingUtil.handleApiError(value.msg!),
+                      );
+                    }
+                  }
+                }).catchError((onError) {
+                  pinComponentController.value.loadingController.stopLoading(
+                      isError: true,
+                      message: ErrorHandlingUtil.handleApiError(onError));
+                });
+              });
+          // circularLoaderController.stopLoading(
+          //     duration: const Duration(seconds: 3),
+          //     isError: false,
+          //     message: value.msg,
+          //     onCloseCallBack: () {
+          //       if (onLoginSuccess2 != null) {
+          //         onLoginSuccess2(value);
+          //       }
+          //     });
+        } else if (value.status == "2") {
+          circularLoaderController.stopLoading(
+              duration: const Duration(seconds: 3),
+              isError: true,
+              message: ErrorHandlingUtil.handleApiError(value.msg));
+        } else if (value.status == "3") {
+          circularLoaderController.stopLoading(
+              duration: const Duration(seconds: 3),
+              isError: true,
+              message: ErrorHandlingUtil.handleApiError(value.msg));
+        }
       } else {
         circularLoaderController.forceStop();
       }
@@ -136,13 +280,6 @@ class LoginViewModel extends ChangeNotifier {
           isError: true,
           message: ErrorHandlingUtil.handleApiError(onError));
     });
-
-    // emailTextEditingController.text.isEmpty
-    //     ? setEmailValidation = true
-    //     : setEmailValidation = false;
-    // passwordTextEditingController.text.isEmpty
-    //     ? setPasswordValidation = true
-    //     : setPasswordValidation = false;
   }
 
   void commit() {

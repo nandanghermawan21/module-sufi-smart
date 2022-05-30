@@ -35,6 +35,9 @@ dependencies:
   flutter_background_service_android: ^1.0.2
   flutter_background_service_ios: ^1.0.2
   geolocator: ^8.2.0
+  flutter_widget_from_html: ^0.8.5
+  webview_flutter: ^3.0.0  
+  device_information: ^0.0.4
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +51,13 @@ flutter:
   assets:
     - assets/
   #   - images/a_dot_ham.jpeg
+  fonts:
+    - family: NeoSans
+      fonts:
+        - asset: assets/fonts/NeoSansStd-Regular.otf
+    - family: NeoSansBold
+      fonts:
+        - asset: assets/fonts/NeoSansStd-Bold.otf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

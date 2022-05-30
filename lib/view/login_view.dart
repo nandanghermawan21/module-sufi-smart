@@ -3,18 +3,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/pin_component.dart';
-import 'package:sufismart/model/customer_model.dart';
+import 'package:sufismart/model/customernew_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/login_view_model.dart';
 
 class LoginView extends StatefulWidget {
   final VoidCallback? gotoSignup;
-  final ValueChanged<CustomerModel>? onLoginSuccess;
+  final VoidCallback? gotoForgetPassword;
+  final ValueChanged<CustomerNewModel>? onLoginSuccess2;
 
   const LoginView({
     Key? key,
     this.gotoSignup,
-    this.onLoginSuccess,
+    this.onLoginSuccess2,
+    this.gotoForgetPassword,
   }) : super(key: key);
 
   @override
@@ -104,8 +106,8 @@ class _LoginState extends State<LoginView> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              loginViewModel.login(
-                                onLoginSuccess: widget.onLoginSuccess,
+                              loginViewModel.login2(
+                                onLoginSuccess2: widget.onLoginSuccess2,
                               );
                             },
                             child: Container(
@@ -138,7 +140,7 @@ class _LoginState extends State<LoginView> {
                               height: 50,
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                  color: System.data.color!.primaryColor,
+                                  color: System.data.color!.greyColor,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(5))),
                               child: Center(
@@ -150,6 +152,24 @@ class _LoginState extends State<LoginView> {
                                     fontSize: 15,
                                   ),
                                 ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                               widget.gotoForgetPassword!();
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 20),
+                              width: MediaQuery.of(context).size.width,
+                              child: Text(
+                                System.data.strings!.forgotPassword,
+                                style: TextStyle(
+                                  color: System.data.color!.primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold
+                                ),
+                                textAlign: TextAlign.right,
                               ),
                             ),
                           ),

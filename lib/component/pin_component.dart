@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/timer_component.dart';
+import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 
 class PinComponent extends StatelessWidget {
@@ -66,7 +67,7 @@ class PinComponent extends StatelessWidget {
     if (timer != null) {
       controller.value.timerController.start(
         duration: timer,
-      );
+      );      
     }
     controller.commit();
   }
@@ -336,6 +337,7 @@ class PinComponent extends StatelessWidget {
       onTap: () {
         if (onTapResend != null) {
           onTapResend!(controller.readPin());
+          controller.clear();
         }
       },
       child: Text(
@@ -350,10 +352,10 @@ class PinComponent extends StatelessWidget {
 
   Widget buttonSubmit() {
     return GestureDetector(
-      onTap: () {
+      onTap: () {           
         if (controller.validatePin()) {
           if (onTapSend != null) {
-            onTapSend!(controller.readPin());
+            onTapSend!(controller.readPin());            
           }
         }
       },

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/model/news_model.dart';
+import 'package:sufismart/model/news_model_new.dart';
 import 'package:sufismart/util/system.dart';
 
 class NewsDetailView extends StatefulWidget {
-  final NewsModel newsModel;
+  //final NewsModel newsModel;
+  final NewsModelNew newsModel;
 
   const NewsDetailView({
     Key? key,
@@ -26,7 +29,7 @@ class _NewsDetailViewState extends State<NewsDetailView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            BasicComponent.newsImageContainer(widget.newsModel),
+            BasicComponent.newsImageContainer2(widget.newsModel),
             Container(
               padding: const EdgeInsets.all(10),
               width: double.infinity,
@@ -42,8 +45,8 @@ class _NewsDetailViewState extends State<NewsDetailView> {
             Container(
               padding: const EdgeInsets.all(10),
               width: double.infinity,
-              child: Text(
-                widget.newsModel.newsContent ?? "",
+              child: HtmlWidget(
+                widget.newsModel.desc ?? "",
               ),
             )
           ],

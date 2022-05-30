@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/model/news_model.dart';
+import 'package:sufismart/model/news_model_new.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/all_news_view_model.dart';
 
 class AllNewsView extends StatefulWidget {
-  final ValueChanged<NewsModel>? gotoDetailNews;
+  final ValueChanged<NewsModelNew>? gotoDetailNews;
 
   const AllNewsView({
     Key? key,
@@ -28,14 +30,10 @@ class _AllNewsViewState extends State<AllNewsView> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: homeViewModel,
-      child: Consumer<AllNewsViewModel>(
-        builder: (BuildContext context, vm, Widget? child) {
-          return Scaffold(
-            appBar: appBar(),
-            backgroundColor: System.data.color!.mainColor,
-            body: homePage(),
-          );
-        },
+      child: Scaffold(
+        appBar: appBar(),
+        backgroundColor: System.data.color!.background,
+        body: homePage(),
       ),
     );
   }
@@ -58,24 +56,51 @@ class _AllNewsViewState extends State<AllNewsView> {
       child: Container(
         padding: const EdgeInsets.all(10),
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: List.generate(
-              homeViewModel.listNews.length,
-              (i) => GestureDetector(
-                  onTap: () {
-                    widget.gotoDetailNews!(homeViewModel.listNews[i]);
-                  },
-                  child: photos(homeViewModel.listNews[i])),
-            ),
+          child: FutureBuilder<List<NewsModelNew>>(
+            future: homeViewModel.allListNews,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: List.generate(snapshot.data?.length ?? 0, (index) {
+                    return GestureDetector(
+                      onTap: () {
+                        widget.gotoDetailNews!(snapshot.data![index]);
+                      },
+                      child: photos(snapshot.data![index]),
+                    );
+                  }),
+                );
+              } else {
+                return Column(
+                  children: List.generate(
+                    3,
+                    (index) {
+                      return SkeletonAnimation(
+                        child: Container(
+                          margin: const EdgeInsets.all(5),
+                          height: MediaQuery.of(context).size.height / 2,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(5),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }
+            },
           ),
         ),
       ),
     );
   }
 
-  Widget photos(NewsModel pm) {
+  Widget photos(NewsModelNew pm) {
     double width = (MediaQuery.of(context).size.width - 10) >= 400
         ? 400
         : MediaQuery.of(context).size.width - 10;
@@ -84,7 +109,7 @@ class _AllNewsViewState extends State<AllNewsView> {
         width: width,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: BasicComponent.newsImageContainer(pm),
+          child: BasicComponent.newsImageContainer2(pm),
         ));
   }
 }

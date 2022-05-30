@@ -17,6 +17,7 @@ void setting() {
   System.data.permission = [
     Permission.accessNotificationPolicy,
     Permission.location,
+    Permission.phone,
   ];
   //setting oneSignal notification
   System.data.oneSignalMessaging = OneSignalMessaging(

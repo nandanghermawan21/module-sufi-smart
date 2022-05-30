@@ -25,9 +25,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setting();
   data.initialize().then((val) async {
-    initializeService().then((value) {
-      runApp(const MyApp());
-    });
+    runApp(const MyApp());
+    // initializeService().then((value) {
+    //   runApp(const MyApp());
+    // });
   });
 }
 
@@ -158,6 +159,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return MaterialApp(
       title: System.data.strings!.appName,
       theme: ThemeData(
+        fontFamily: 'NeoSans',
         primarySwatch: Colors.blue,
       ),
       routes: route,

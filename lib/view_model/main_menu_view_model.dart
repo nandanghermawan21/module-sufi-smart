@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:sufismart/model/customernew_model.dart';
 import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/lang_model.dart';
 import 'package:sufismart/util/enum.dart';
@@ -39,12 +40,13 @@ class MainMenuViewModel extends ChangeNotifier {
   }
 
   void readSessions() {
-    if (System.data.session!.getString(SessionKey.user) == null) return;
-    System.data.global.customerModel = CustomerModel.fromJson(
-        json.decode(System.data.session!.getString(SessionKey.user) ?? "{}"));
-    System.data.global.token = System.data.global.customerModel?.token;
+    if (System.data.session!.getString(SessionKey.user) == "") return;
+    System.data.global.customerNewModel = CustomerNewModel.fromJson(json.decode(
+      System.data.session!.getString(SessionKey.user) ?? "{}",
+    ));
+    System.data.global.token = System.data.global.customerNewModel?.deviceid;
     ModeUtil.debugPrint(
-        "Curent Customer ${System.data.global.customerModel?.toJson()}");
+        "Curent Customer ${System.data.global.customerNewModel?.toJson()}");
     ModeUtil.debugPrint("start save user position");
     service.restartService();
   }

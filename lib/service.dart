@@ -18,7 +18,7 @@ void restartService({VoidCallback? onRestarted}) {
       System.data.service.sendData(
         {
           ServiceKey.action: ServiceValueAction.sendPosition,
-          Prefkey.userId: System.data.global.customerModel?.id,
+          Prefkey.userId: System.data.global.customerNewModel?.userid,
         },
       );
       if (onRestarted != null) {
@@ -34,9 +34,9 @@ void onEvent(Map<String, dynamic>? event) {
 
   switch (event[ServiceKey.action]) {
     case ServiceValueAction.sendPosition:
-      saveLocationUser(
-        userId: event[Prefkey.userId],
-      );
+      // saveLocationUser(
+      //   userId: event[Prefkey.userId],
+      // );
       break;
     case ServiceValueAction.sendToForeground:
       debugPrint("send to foreground");
@@ -56,10 +56,10 @@ void saveLocationUser({
           debugPrint("send position user => Stream Position");
           Geolocator.getPositionStream().listen((event) {
             debugPrint("send position user => Listen New Position");
-            postLocation(
-              value: event,
-              userId: userId,
-            );
+            // postLocation(
+            //   value: event,
+            //   userId: userId,
+            // );
           });
         } else {
           debugPrint(
