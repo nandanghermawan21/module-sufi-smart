@@ -67,7 +67,9 @@ class NewsModelNew {
   //berita di list berita
   static Future<List<NewsModelNew>> getListNews() {
     ModeUtil.debugPrint("call get list news api");
-    return http.get(Uri.parse(System.data.apiEndPoint.getListAllNews())).then((value) {
+    return http
+        .get(Uri.parse(System.data.apiEndPoint.getListAllNews()))
+        .then((value) {
       if (value.statusCode == 200) {
         var response = json.decode(value.body);
         ModeUtil.debugPrint("call get list news api 4 + ${response["data"]}");
@@ -87,6 +89,26 @@ class NewsModelNew {
       }
     }).catchError((onError) {
       ModeUtil.debugPrint("masuk on error " + onError.toString());
+      throw onError;
+    });
+  }
+
+  //getberita by id
+  static Future<NewsModelNew?> getNewsById({
+    required String? id,
+  }) {
+    ModeUtil.debugPrint("call get list news api by id");
+    return http
+        .get(Uri.parse(System.data.apiEndPoint.getDetailNewsId(id: id)))
+        .then((value) {
+      if (value.statusCode == 200) {
+        ModeUtil.debugPrint("call get aplikasi new api ${value.body}");
+        return NewsModelNew.fromJson(json.decode(value.body));
+      } else {
+        ModeUtil.debugPrint("error not status code 200");
+        throw value;
+      }
+    }).catchError((onError) {
       throw onError;
     });
   }

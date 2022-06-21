@@ -14,7 +14,7 @@ class StringsEnUs implements Strings {
   String get area => "Area";
 
   @override
-  String get branch => "Branch";
+  String get branch => "Branch\n";
 
   @override
   String get bugetSimulation => "Buget Simulation";
@@ -47,7 +47,7 @@ class StringsEnUs implements Strings {
   String get contactUs => "Contact Us";
 
   @override
-  String get creditSimulation => "Credit \n Simulation";
+  String get creditSimulation => "Credit \n Simulation & Apply";
 
   @override
   String get dpAmount => "DP Amount";
@@ -136,10 +136,10 @@ class StringsEnUs implements Strings {
   String get price => "Price";
 
   @override
-  String get product => "Product";
+  String get product => "Product\n";
 
   @override
-  String get promo => "Gromo";
+  String get promo => "Promo\n";
 
   @override
   String get send => "Send";
@@ -215,7 +215,7 @@ class StringsEnUs implements Strings {
   String get infoOtrJakarta => "Price List Above Using OTR Jakarta";
 
   @override  
-  String get hitungcreditSimulation => "Credit Simulation";
+  String get hitungcreditSimulation => "Credit Simulation & Apply";
 
   @override  
   String get cityBranch => "Choose City";
@@ -296,5 +296,14 @@ class StringsEnUs implements Strings {
 
   @override
   
-  String get infoLogout => "are you sure you want to log out \nfrom this account ?";  
+  String get infoLogout => "are you sure you want to log out \nfrom this account ?";
+
+  @override  
+  String get applykendaraan => "Order Suzuki Cars & Motorcycles";
+
+  @override  
+  String get apply => "Apply";
+
+  @override  
+  String get doesNotHaveAcc => 'Does not have account ? ';  
 }

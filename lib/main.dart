@@ -115,7 +115,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
     handleDeeplink();
     getPermission().then((value) {
       initOnesignal();
-    });
+    });    
     WidgetsBinding.instance?.addObserver(this);
   }
 
@@ -238,4 +238,6 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         break;
     }
   }
+
+  
 }

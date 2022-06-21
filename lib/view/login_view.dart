@@ -73,6 +73,7 @@ class _LoginState extends State<LoginView> {
                           TextField(
                             controller:
                                 loginViewModel.emailTextEditingController,
+                            keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               labelText:
                                   '${System.data.strings!.enterThe} ${System.data.strings!.email}',
@@ -106,6 +107,29 @@ class _LoginState extends State<LoginView> {
                           ),
                           GestureDetector(
                             onTap: () {
+                              widget.gotoForgetPassword!();
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 15),
+                              color: Colors.transparent,
+                              width: MediaQuery.of(context).size.width,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    System.data.strings!.forgotPassword,
+                                    style: TextStyle(
+                                        color: System.data.color!.primaryColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
                               loginViewModel.login2(
                                 onLoginSuccess2: widget.onLoginSuccess2,
                               );
@@ -114,8 +138,16 @@ class _LoginState extends State<LoginView> {
                               height: 50,
                               width: double.infinity,
                               margin:
-                                  const EdgeInsets.only(bottom: 10, top: 30),
+                                  const EdgeInsets.only(bottom: 10, top: 15),
                               decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Color(0xff0d306b),
+                                      Colors.indigo,
+                                    ],
+                                  ),
                                   color: System.data.color!.primaryColor,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(5))),
@@ -136,40 +168,34 @@ class _LoginState extends State<LoginView> {
                               widget.gotoSignup!();
                             },
                             child: Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              height: 50,
+                              margin: const EdgeInsets.only(bottom: 5, top: 10),
                               width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: System.data.color!.greyColor,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(5))),
+                              // decoration: BoxDecoration(
+                              //     color: System.data.color!.greyColor,
+                              //     borderRadius: const BorderRadius.all(
+                              //         Radius.circular(5))),
                               child: Center(
-                                child: Text(
-                                  System.data.strings!.signUp,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      System.data.strings!.doesNotHaveAcc,
+                                      style: TextStyle(
+                                        color: System.data.color!.greyColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    Text(
+                                      System.data.strings!.signUp,
+                                      style: TextStyle(
+                                        color: System.data.color!.primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                               widget.gotoForgetPassword!();
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 20),
-                              width: MediaQuery.of(context).size.width,
-                              child: Text(
-                                System.data.strings!.forgotPassword,
-                                style: TextStyle(
-                                  color: System.data.color!.primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold
-                                ),
-                                textAlign: TextAlign.right,
                               ),
                             ),
                           ),

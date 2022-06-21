@@ -11,7 +11,7 @@ abstract class Strings {
   String get latestNews => "Berita Terbaru";
   String get paymentOption => "Opsi\nPembayaran";
   String get installmentStatus => "Status\nkontrak";
-  String get creditSimulation => "Simulasi\nKredit";
+  String get creditSimulation => "Simulasi\nKredit & Apply";
   String get branch => "Cabang\n";
   String get product => "Produk\n";
   String get promo => "Promo\n";
@@ -81,7 +81,7 @@ abstract class Strings {
 
   String get infoOtrJakarta => "Daftar Harga Diatas Menggunakan OTR Jakarta";
 
-  String get hitungcreditSimulation => "Simulasi Credit";
+  String get hitungcreditSimulation => "Simulasi Credit & Apply";
 
   String get cityBranch => "Pilih Kota";
 
@@ -134,5 +134,11 @@ abstract class Strings {
   String get noKtp => "No KTP";
 
   String get infoLogout => "apakah anda yakin ingin keluar \ndari akun ini ?";
+
+  String get applykendaraan => "Order Mobil & Motor Suzuki";
+
+  String get apply => "Apply";
+
+  String get doesNotHaveAcc => "Tidak memiliki akun ? ";
   
 }

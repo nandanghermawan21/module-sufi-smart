@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sufismart/model/news_model.dart';
+import 'package:sufismart/model/notification_model.dart';
 import 'package:sufismart/recource/color_default.dart';
 import 'package:sufismart/recource/string_id_id.dart';
 import 'package:sufismart/route.dart';
@@ -23,7 +23,14 @@ void setting() {
   System.data.oneSignalMessaging = OneSignalMessaging(
     appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
     notificationHandler: (notification) {
+      //System.data.showmodal();
       ModeUtil.debugPrint("notification handler fire");
+
+      NotificationModel(
+        appid: System.data.global.notifAppId,
+      ).handleNotif(notification.additionalData ?? {});
+
+      ModeUtil.debugPrint("notification additional data ${notification.additionalData}");
     },
     notificationOpenedHandler: (notification) {
       ModeUtil.debugPrint("notification opened fire");
@@ -43,18 +50,34 @@ void setting() {
       case "/allNews":
         Navigator.of(System.data.context).pushNamed(RouteName.allNews);
         break;
+      // case "/news":
+      //   NewsModel _news = NewsModel.dummy()
+      //       .where((e) =>
+      //           e.newsid == int.parse((uri?.queryParameters["id"] as String)))
+      //       .first;
+      //   Navigator.of(System.data.context).pushNamed(
+      //     RouteName.detailNews,
+      //     arguments: {
+      //       ParamName.newsModel: _news,
+      //     },
+      //   );
+      //   break;
       case "/news":
-        NewsModel _news = NewsModel.dummy()
-            .where((e) =>
-                e.newsid == int.parse((uri?.queryParameters["id"] as String)))
-            .first;
+        String? id = (uri?.queryParameters["id"]);
+        // NewsModel _news = NewsModel.dummy()
+        //     .where((e) =>
+        //         e.newsid == int.parse((uri?.queryParameters["id"] as String)))
+        //     .first;
         Navigator.of(System.data.context).pushNamed(
-          RouteName.detailNews,
+          RouteName.detailNewsDeepLink,
           arguments: {
-            ParamName.newsModel: _news,
+            ParamName.newsdetailid: id,
           },
         );
         break;
+      // case "announcement":
+      //   System.data.showmodal();
+      //   break;
       default:
         return;
     }

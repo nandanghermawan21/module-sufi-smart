@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/model/product_type_model.dart';
+import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/product_detaill_view_model.dart';
 
@@ -22,6 +23,7 @@ class ProductDetailView extends StatefulWidget {
 
 class _ProductDetailViewState extends State<ProductDetailView> {
   ProductDetailViewModel productDetailViewModel = ProductDetailViewModel();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
@@ -197,7 +199,24 @@ class _ProductDetailViewState extends State<ProductDetailView> {
               ),
               GestureDetector(
                 onTap: () {
-                  widget.ontapSimulatiCreditProduct!("https://sufismart.sfi.co.id/sufismart/api/credit_simulation4.php?prod_code=${widget.productTypeModel?.productCode}&detail_code=${widget.productTypeModel?.productDetailCode}");
+                  String? strUserid =
+                      System.data.global.customerNewModel?.userid;
+
+                  //ModeUtil.debugPrint(strUserid!);
+                  if (strUserid == null) {
+                    ModeUtil.debugPrint("user id kosong");
+                    widget.ontapSimulatiCreditProduct!(
+                        "https://uat.sfi.co.id/sufismart/api/credit_simulation_sufismart.php?prod_code=${widget.productTypeModel?.productCode}&detail_code=${widget.productTypeModel?.productDetailCode}&userid="
+                        "");
+                  } else {
+                    widget.ontapSimulatiCreditProduct!(
+                        "https://uat.sfi.co.id/sufismart/api/credit_simulation_sufismart.php?prod_code=${widget.productTypeModel?.productCode}&detail_code=${widget.productTypeModel?.productDetailCode}&userid=" +
+                            strUserid);
+                    ModeUtil.debugPrint(
+                        "${System.data.global.customerNewModel?.userid}");
+                  }
+
+                  //
                 },
                 child: Card(
                   color: System.data.color?.mainColor,

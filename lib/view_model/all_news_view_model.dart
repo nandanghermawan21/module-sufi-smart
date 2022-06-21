@@ -5,6 +5,12 @@ import 'package:sufismart/model/news_model_new.dart';
 class AllNewsViewModel extends ChangeNotifier {
   Future<List<NewsModelNew>> allListNews = NewsModelNew.getListNews();
 
+   Future<NewsModelNew?> getDataNewsById({
+    required String? id,
+  }) {
+    return NewsModelNew.getNewsById(id: id);
+  }
+
   Future<void> onRefreshHomePage() async {
     return Future.delayed(const Duration(seconds: 5));
   }

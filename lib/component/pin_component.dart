@@ -9,14 +9,16 @@ class PinComponent extends StatelessWidget {
   final PinComponentController controller;
   final ValueChanged<String>? onTapSend;
   final ValueChanged<String>? onTapResend;
+  final ValueChanged<String>? checkTimer;
 
-  const PinComponent({
-    Key? key,
-    required this.controller,
-    this.onTapSend,
-    this.onTapResend,
-    this.title,
-  }) : super(key: key);
+  const PinComponent(
+      {Key? key,
+      required this.controller,
+      this.onTapSend,
+      this.onTapResend,
+      this.title,
+      this.checkTimer})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,7 @@ class PinComponent extends StatelessWidget {
     if (timer != null) {
       controller.value.timerController.start(
         duration: timer,
-      );      
+      );
     }
     controller.commit();
   }
@@ -352,29 +354,37 @@ class PinComponent extends StatelessWidget {
 
   Widget buttonSubmit() {
     return GestureDetector(
-      onTap: () {           
+      onTap: () {
         if (controller.validatePin()) {
-          if (onTapSend != null) {
-            onTapSend!(controller.readPin());            
+          if (onTapSend != null &&
+              controller.value.timerController.value.secondLeft > 0) {
+            onTapSend!(controller.readPin());
           }
         }
       },
-      child: Container(
-        height: 50,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: System.data.color!.primaryColor,
-        ),
-        child: Center(
-          child: Text(
-            System.data.strings!.send,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
+      child: ValueListenableBuilder(
+        valueListenable: controller.value.timerController,
+        builder: (c, d, w) {
+          return Container(
+            height: 50,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: controller.value.timerController.value.secondLeft > 0
+                  ? System.data.color!.primaryColor
+                  : Colors.grey,
             ),
-          ),
-        ),
+            child: Center(
+              child: Text(
+                System.data.strings!.send,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

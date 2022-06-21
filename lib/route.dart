@@ -6,6 +6,7 @@ import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view/alert_login_view.dart';
+import 'package:sufismart/view/apply_user_view.dart';
 import 'package:sufismart/view/branch_view.dart';
 import 'package:sufismart/view/change_password_view.dart';
 import 'package:sufismart/view/contact_view.dart';
@@ -19,6 +20,7 @@ import 'package:sufismart/view/home_view.dart';
 import 'package:sufismart/view/all_news_view.dart';
 import 'package:sufismart/view/news_detail_view.dart';
 import 'package:sufismart/view/credit_simulation_view.dart';
+import 'package:sufismart/view/news_detail_view_deeplink.dart';
 import 'package:sufismart/view/product_category_view.dart';
 import 'package:sufismart/view/product_detail_view.dart';
 import 'package:sufismart/view/product_type_view.dart';
@@ -52,6 +54,8 @@ class RouteName {
   static const String changeProfile = "changeProfile";
   static const String splashScreen = "splashScreen";
   static const String register = "register";
+  static const String applyUserview = "ApplyViewUser";
+  static const String detailNewsDeepLink = "detailNewsDeepLink";
 }
 
 enum ParamName {
@@ -61,6 +65,7 @@ enum ParamName {
   productItemDetail,
   urlWebview,
   productSimulasi,
+  newsdetailid
 }
 
 Map<String, WidgetBuilder> route = {
@@ -97,7 +102,14 @@ Map<String, WidgetBuilder> route = {
                   });
                 },
                 gotoSimulation: () {
-                  Navigator.of(context).pushNamed(RouteName.creditSimulation);
+                  String? userid = System.data.global.customerNewModel?.userid;
+                  Navigator.of(context)
+                      .pushNamed(RouteName.webView, arguments: {
+                    ParamName.urlWebview:
+                        "https://uat.sfi.co.id/sufismart/api/simulasi_page_sufismart.php?userid=" +
+                            userid!,
+                  });
+                  //Navigator.of(context).pushNamed(RouteName.creditSimulation);
                 },
                 gotoPromo: () {
                   Navigator.of(context).pushNamed(RouteName.allNews);
@@ -121,13 +133,22 @@ Map<String, WidgetBuilder> route = {
                     Navigator.of(context)
                         .pushNamed(RouteName.webView, arguments: {
                       ParamName.urlWebview:
-                          "https://sufismart.sfi.co.id/sufismart/api/ic_product.php?EMAIL=" +
+                          "https://uat.sfi.co.id/sufismart/api/ic_product.php?EMAIL=" +
                               email!,
                     });
                   } else {
                     Navigator.of(context).pushNamed(RouteName.alertNoLogin);
                   }
                   //Navigator.of(context).pushNamed(RouteName.alertNoLogin);
+                },
+                gotoApply: () {
+                  String? userid = System.data.global.customerNewModel?.userid;
+                  Navigator.of(context)
+                      .pushNamed(RouteName.webView, arguments: {
+                    ParamName.urlWebview:
+                        "https://uat.sfi.co.id/sufismart/api/credit_simulation_apply_all.php?userid=" +
+                            userid!,
+                  });
                 },
               );
             case 1:
@@ -159,6 +180,9 @@ Map<String, WidgetBuilder> route = {
                         "new customer ${System.data.global.customerNewModel?.toJson()}");
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         RouteName.mainMenu, (r) => r.settings.name == "");
+                  },
+                  goToListApply: () {
+                    Navigator.of(context).pushNamed(RouteName.applyUserview);
                   },
                 );
               }
@@ -284,7 +308,17 @@ Map<String, WidgetBuilder> route = {
     return const ChangePasswordView();
   },
   RouteName.changeProfile: (BuildContext context) {
-    return const ProfileView();
+    return const ProfileView(
+        // onUpdateSuccefuly: (value) {
+        //   System.data.global.customerNewModel = null;
+        //   System.data.global.customerNewModel = value;
+        //   System.data.session!
+        //       .setString(SessionKey.user, json.encode(value.toJson()));
+        //   ModeUtil.debugPrint(
+        //       "new customer ${System.data.global.customerNewModel?.toJson()}");
+        //   Navigator.of(context).pop();
+        // },
+        );
   },
   RouteName.splashScreen: (BuildContext context) {
     return SplashScreenView(
@@ -305,6 +339,23 @@ Map<String, WidgetBuilder> route = {
         Navigator.of(context).pushNamedAndRemoveUntil(
             RouteName.mainMenu, (r) => r.settings.name == "");
       },
+    );
+  },
+  RouteName.applyUserview: (BuildContext context) {
+    return ApplyViewUser(
+      tapDetailApply: (str) {
+        ModeUtil.debugPrint(str);
+        Navigator.of(context).pushNamed(RouteName.webView, arguments: {
+          ParamName.urlWebview: str,
+        });
+      },
+    );
+  },
+  RouteName.detailNewsDeepLink: (BuildContext context) {
+    Map<dynamic, dynamic> arg = (ModalRoute.of(context)?.settings.arguments ??
+        {}) as Map<dynamic, dynamic>;
+    return NewsDetailViewDeepLink(
+      newsid: arg[ParamName.newsdetailid],
     );
   }
 };

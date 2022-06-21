@@ -14,10 +14,8 @@ import 'package:sufismart/view_model/profile_view_model.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileView extends StatefulWidget {
-  final ValueChanged<CustomerNewModel>? onUpdateSuccefuly;
   const ProfileView({
     Key? key,
-    this.onUpdateSuccefuly,
   }) : super(key: key);
 
   @override
@@ -158,13 +156,13 @@ class ProfileViewState extends State<ProfileView> {
           // ModeUtil.debugPrint(
           //     "homeViewModel.formKeyContact.currentState ${registerViewModel.formKeyContact.currentState}");
           ModeUtil.debugPrint("masuk");
-          profileViewModel.sendUpdateProfil(
-            onUpdateSuccefuly: widget.onUpdateSuccefuly,
-          );
+          // profileViewModel.sendUpdateProfil(
+          //   onUpdateSuccefuly: widget.onUpdateSuccefuly,
+          // );
           // registerViewModel.sendRegistrasi(
           //   onRegisterSuccess: widget.onRegisterSucces,
           // );
-          //registerViewModel.sendRegistrasi();
+          profileViewModel.sendUpdateProfil();
         }
       },
       child: Container(

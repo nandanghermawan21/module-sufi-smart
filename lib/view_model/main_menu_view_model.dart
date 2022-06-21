@@ -48,6 +48,6 @@ class MainMenuViewModel extends ChangeNotifier {
     ModeUtil.debugPrint(
         "Curent Customer ${System.data.global.customerNewModel?.toJson()}");
     ModeUtil.debugPrint("start save user position");
-    service.restartService();
+    // service.restartService();
   }
 }

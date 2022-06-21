@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
@@ -5,6 +7,7 @@ import 'package:sufismart/model/customernew_model.dart';
 import 'package:sufismart/model/gendernew_model.dart';
 import 'package:sufismart/model/infodetailuser_model.dart';
 import 'package:sufismart/model/job_model.dart';
+import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/error_handling_util.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
@@ -139,9 +142,7 @@ class ProfileViewModel extends ChangeNotifier {
     });
   }
 
-  void sendUpdateProfil({
-    ValueChanged<CustomerNewModel>? onUpdateSuccefuly,
-  }) {
+  void sendUpdateProfil() {
     loadingController.startLoading();
     ModeUtil.debugPrint("${System.data.global.customerNewModel!.userid}");
     InfoDetailuserModel.updateDetailInfoUser(
@@ -171,9 +172,15 @@ class ProfileViewModel extends ChangeNotifier {
             message: value.msg,
             duration: const Duration(seconds: 2),
             onCloseCallBack: () {
-              // if (onUpdateSuccefuly != null) {
-              //   onUpdateSuccefuly(value);
-              // }
+              System.data.global.customerNewModel = null;
+              System.data.global.customerNewModel = value;
+              // System.data.session!
+              //     .setString(SessionKey.user, json.encode(value.toJson()));
+              ModeUtil.debugPrint(
+                  "new customer ${System.data.global.customerNewModel?.toJson()}");
+              System.data.commit();
+              Navigator.of(System.data.context).pop();
+              commit();
             },
           );
         }

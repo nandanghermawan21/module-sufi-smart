@@ -12,6 +12,7 @@ import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/one_signal_messaging.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:sufismart/util/system.dart';
 
 import 'global.dart';
 
@@ -60,5 +61,59 @@ class Data extends ChangeNotifier {
       },
     );
     return true;
+  }
+
+  void showmodal() {
+    showDialog(
+      context: System.data.context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text(""), // To display the title it is optional
+        // content: Text(
+        //   System.data.strings!.infoLogout,
+        // ), // Message which will be pop up on the screen
+        content: (SingleChildScrollView(
+            child: Container(
+          color: Colors.transparent,
+          child: Column(
+            children: const [
+              Text(
+                "Announcement",
+                style: TextStyle(
+                    color: Color(0xff0d306b),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                textAlign: TextAlign.justify,
+              ),
+            ],
+          ),
+        ))),
+        // Action widget which will provide the user to acknowledge the choice
+        actions: [
+          ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(System.data.color!.primaryColor)),
+            onPressed: () {
+              Navigator.pop(context);
+            }, // function used to perform after pressing the button
+            child: const Text('No'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              //widget.goTologout!();
+            },
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
+    );
   }
 }

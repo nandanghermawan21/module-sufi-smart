@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:sufismart/component/basic_component.dart';
-import 'package:sufismart/model/news_model.dart';
 import 'package:sufismart/model/news_model_new.dart';
 import 'package:sufismart/util/system.dart';
 

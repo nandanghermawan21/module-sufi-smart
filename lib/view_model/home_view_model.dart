@@ -22,8 +22,11 @@ class HomeViewModel extends ChangeNotifier {
     _listNews = listNews;
   }
 
-  Future<void> onRefreshHomePage() async {
+  Future<void> onRefreshHomePage() async {   
     return Future.delayed(const Duration(seconds: 5));
+    // await listBannerSufi;
+    // await listNewsHomeSufi;   
+    // commit(); 
   }
 
   void commit() {

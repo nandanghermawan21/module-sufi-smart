@@ -32,11 +32,14 @@ class ApiEndPoint {
   String postChangePassUrl = "update_password_new";
   String getGenderUrl = "getGender";
   String getJobUrl = "getJob";
-  String postCustomerRegister = "registrasi_customer_new";
-  String getConfirmOtpUser = "confirmasiUserOtp";
-  String getResendOtpUser = "resendUserOtp";
-  String getDetailInfoUser = "getDetailInfoUser";
-  String postUpdateProfile = "updateProfilNew";
+  String postCustomerRegisterNewUrl = "registrasi_customer_new";
+  String getConfirmOtpUserUrl = "confirmasiUserOtp";
+  String getResendOtpUserUrl = "resendUserOtp";
+  String getDetailInfoUserUrl = "getDetailInfoUser";
+  String postUpdateProfileUrl = "updateProfilNew";
+  String getDataApplyUserUrl = "getListUserApply";
+  String getDataNewsByIdUrl = "getDetailNewsId";
+  String getDataPointUserUrl = "getPointUser";
 
   String get url {
     if (ModeUtil.debugMode == true) {
@@ -159,7 +162,7 @@ class ApiEndPoint {
   }
 
   String registerCustomer() {
-    return urlSufiSmart + postCustomerRegister;
+    return urlSufiSmart + postCustomerRegisterNewUrl;
   }
 
   String confirmOtpUser({
@@ -167,24 +170,43 @@ class ApiEndPoint {
     required String? userid,
   }) {
     return urlSufiSmart +
-        "$getConfirmOtpUser${otp != null ? "/$otp" : ""}${userid != null ? "/$userid" : ""}";
+        "$getConfirmOtpUserUrl${otp != null ? "/$otp" : ""}${userid != null ? "/$userid" : ""}";
   }
 
   String resendOtpUser({
     required String? userid,
   }) {
     return urlSufiSmart +
-        "$getResendOtpUser${userid != null ? "/$userid" : ""}";
+        "$getResendOtpUserUrl${userid != null ? "/$userid" : ""}";
   }
 
   String detailInfoUser({
     required String? userid,
   }) {
     return urlSufiSmart +
-        "$getDetailInfoUser${userid != null ? "/$userid" : ""}";
+        "$getDetailInfoUserUrl${userid != null ? "/$userid" : ""}";
   }
 
-  String updateProfilUser(){
-    return urlSufiSmart + postUpdateProfile;
+  String updateProfilUser() {
+    return urlSufiSmart + postUpdateProfileUrl;
+  }
+
+  String getDataApplyUser({
+    required String? userid,
+  }) {
+    return urlSufiSmart +
+        "$getDataApplyUserUrl${userid != null ? "/$userid" : ""}";
+  }
+
+  String getDetailNewsId({
+    required String? id,
+  }) {
+    return urlSufiSmart + "$getDataNewsByIdUrl${id != null ? "/$id" : ""}";
+  }
+
+  String getPointUserId({
+    required String? id,
+  }) {
+    return urlSufiSmart + "$getDataPointUserUrl${id != null ? "/$id" : ""}";
   }
 }

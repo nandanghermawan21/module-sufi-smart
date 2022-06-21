@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/model/banner_model.dart';
-import 'package:sufismart/model/news_model.dart';
 import 'package:sufismart/model/news_model_new.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/home_view_model.dart';
@@ -20,6 +20,7 @@ class HomeView extends StatefulWidget {
   final VoidCallback? gotoPayment;
   final VoidCallback? gotoShowAll;
   final ValueChanged<NewsModelNew>? gotoDetailNews;
+  final VoidCallback? gotoApply;
 
   const HomeView(
       {Key? key,
@@ -31,7 +32,8 @@ class HomeView extends StatefulWidget {
       this.gotoInstallment,
       this.gotoPayment,
       this.gotoShowAll,
-      this.gotoDetailNews})
+      this.gotoDetailNews,
+      this.gotoApply})
       : super(key: key);
 
   @override
@@ -58,8 +60,10 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    swiperBanner(),
+                    //header(),
+                    swiperBanner(),                    
                     featureList(),
+                    buttonApply(),
                     latestNews(),
                   ],
                 ),
@@ -67,6 +71,76 @@ class _HomeViewState extends State<HomeView> {
             );
           },
         ),
+      ),
+    );
+  }
+
+  Widget header() {
+    return Container(
+      padding: const EdgeInsets.only(top:15,left: 30, right: 30, bottom: 30),
+      //height: 100,
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xff0d306b),
+                Colors.indigo,
+              ]),
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              const Expanded(
+                flex: 3,
+                child: Text(
+                  "Welcome,",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Row(
+                  // mainAxisAlignment: MainAxisAlignment.end,
+                  // children: const [
+                  //   Icon(
+                  //     FontAwesomeIcons.userCircle,
+                  //     color: Colors.white,
+                  //   ),
+                  //   SizedBox(
+                  //     width: 10,
+                  //   ),
+                  //   Icon(
+                  //     FontAwesomeIcons.bell,
+                  //     color: Colors.white,
+                  //   )
+                  // ],
+                ),
+              )
+            ],
+          ),
+          Text(
+            "${System.data.global.customerNewModel?.name}",
+            style: const TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w900),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          // const Text(
+          //   "Choose Suzuki Finance Indonesia \nfor your Suzuki credit",
+          //   //"Pilih Suzuki Finance Indonesia \nUntuk kenyamanan kredit Suzuki anda",
+          //   style: TextStyle(color: Colors.white, fontSize: 12),
+          // ),
+        ],
       ),
     );
   }
@@ -80,21 +154,98 @@ class _HomeViewState extends State<HomeView> {
         future: homeViewModel.listBannerSufi,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Swiper(
+            return
+                // Swiper(
+                //   itemBuilder: (BuildContext context, int index) {
+                //     return Image.network(
+                //       "${snapshot.data?[index].imagepath}",
+                //       fit: BoxFit.fill,
+                //     );
+                //   },
+                //   indicatorLayout: PageIndicatorLayout.COLOR,
+                //   autoplay: true,
+                //   itemCount: snapshot.data?.length ?? 0,
+                //   pagination: const SwiperPagination(
+                //     alignment: Alignment.bottomRight,
+                //     margin: EdgeInsets.only(right: 0, bottom: 10),
+                //   ),
+                //   // control: const SwiperControl(),
+                // );
+                Swiper(
               itemBuilder: (BuildContext context, int index) {
-                return Image.network(
-                  "${snapshot.data?[index].imagepath}",
-                  fit: BoxFit.fill,
+                return Container(
+                  decoration: const BoxDecoration(
+                      // border: Border.all(
+                      //     color: Color(0xffeeeeee), width: 1.0),
+                      //borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                  child: snapshot.data?[index].imagepath == null
+                      ? Container(
+                          //height: MediaQuery.of(context).size.height / 3.5,
+                          height: 230,
+                          decoration: const BoxDecoration(
+                            // borderRadius: BorderRadius.all(
+                            //     Radius.circular(10)),
+                            image: DecorationImage(
+                                image: AssetImage("assets/logo_sfi_white.png"),
+                                fit: BoxFit.fill),
+                          ),
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: snapshot.data?[index].imagepath ?? "",
+                          imageBuilder: (context, imageProvider) => Container(
+                            //height: MediaQuery.of(context).size.height / 3.5,
+                            height: 230,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                  // bottomLeft: Radius.circular(15),
+                                  // bottomRight: Radius.circular(15),
+                                  ),
+                              // borderRadius: BorderRadius.all(
+                              //     Radius.circular(15)),
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.fill),
+                            ),
+                          ),
+                          placeholder: (context, url) => SkeletonAnimation(
+                              child: Container(
+                            //height: MediaQuery.of(context).size.height / 3,
+                            height: 230,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(15)),
+                            ),
+                          )),
+                          errorWidget: (context, url, error) => Container(
+                            //height: MediaQuery.of(context).size.height / 3,
+                            height: 230,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(15))
+                              // borderRadius: BorderRadius.all(
+                              //     Radius.circular(10))
+                              ,
+                            ),
+                            child: const Center(
+                              child: Icon(Icons.error),
+                            ),
+                          ),
+                        ),
                 );
               },
-              indicatorLayout: PageIndicatorLayout.COLOR,
-              autoplay: true,
               itemCount: snapshot.data?.length ?? 0,
               pagination: const SwiperPagination(
                 alignment: Alignment.bottomRight,
                 margin: EdgeInsets.only(right: 0, bottom: 10),
               ),
-              // control: const SwiperControl(),
+              //control: new SwiperControl(),
+              autoplay: true,
+              duration: 3,
+              containerHeight: 180,
             );
           } else {
             return SkeletonAnimation(
@@ -116,7 +267,7 @@ class _HomeViewState extends State<HomeView> {
   Widget featureList() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(topRight: Radius.circular(50)),
@@ -136,71 +287,161 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 25, right: 25),
+            //margin: const EdgeInsets.only(left: 25, right: 25),
+            color: Colors.transparent,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                buttonFeature(
-                  image:
-                      "https://www.sfi.co.id/assets/images/menu/Icon-Promo.png",
-                  ontap: () {
-                    widget.gotoPromo!();
-                  },
-                  title: System.data.strings!.promo,
+                Expanded(
+                  flex: 1,
+                  child: buttonFeature(
+                    image:
+                        "https://www.sfi.co.id/assets/images/menu/Icon-Promo.png",
+                    ontap: () {
+                      widget.gotoPromo!();
+                    },
+                    title: System.data.strings!.promo,
+                  ),
                 ),
-                buttonFeature(
-                  image:
-                      "https://www.sfi.co.id/assets/images/menu/ic_menu/product.png",
-                  ontap: () {
-                    widget.gotoProduct!();
-                  },
-                  title: System.data.strings!.product,
+                Expanded(
+                  flex: 1,
+                  child: buttonFeature(
+                    image:
+                        "https://www.sfi.co.id/assets/images/menu/ic_menu/product.png",
+                    ontap: () {
+                      widget.gotoProduct!();
+                    },
+                    title: System.data.strings!.product,
+                  ),
                 ),
-                buttonFeature(
-                  title: System.data.strings!.creditSimulation,
-                  ontap: () {
-                    widget.gotoSimulation!();
-                  },
-                  image:
-                      "https://www.sfi.co.id/assets/images/menu/creditsimulation.png",
+                Expanded(
+                  flex: 1,
+                  child: buttonFeature(
+                    title: System.data.strings!.creditSimulation,
+                    ontap: () {
+                      widget.gotoSimulation!();
+                    },
+                    image:
+                        "https://www.sfi.co.id/assets/images/menu/creditsimulation.png",
+                  ),
                 ),
               ],
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 25, right: 25),
+            //margin: const EdgeInsets.only(left: 5, right: 5),
+            color: Colors.transparent,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                buttonFeature(
-                  title: System.data.strings!.installmentStatus,
-                  ontap: () {
-                    widget.gotoInstallment!();
-                  },
-                  image:
-                      "https://www.sfi.co.id/assets/images/menu/inststat.png",
+                Expanded(
+                  flex: 1,
+                  child: buttonFeature(
+                    title: System.data.strings!.installmentStatus,
+                    ontap: () {
+                      widget.gotoInstallment!();
+                    },
+                    image:
+                        "https://www.sfi.co.id/assets/images/menu/inststat.png",
+                  ),
                 ),
-                buttonFeature(
-                  title: System.data.strings!.branch,
-                  ontap: () {
-                    widget.gotoBranch!();
-                  },
-                  image:
-                      "https://www.sfi.co.id/assets/images/menu/dealerservice.png",
+                Expanded(
+                  flex: 1,
+                  child: buttonFeature(
+                    title: System.data.strings!.branch,
+                    ontap: () {
+                      widget.gotoBranch!();
+                    },
+                    image:
+                        "https://www.sfi.co.id/assets/images/menu/dealerservice.png",
+                  ),
                 ),
-                buttonFeature(
-                  ontap: () {
-                    widget.gotoPayment!();
-                  },
-                  title: System.data.strings!.paymentOption,
-                  image:
-                      "https://www.sfi.co.id/assets/images/menu/Icon-Layanan.png",
+                Expanded(
+                  flex: 1,
+                  child: buttonFeature(
+                    ontap: () {
+                      widget.gotoPayment!();
+                    },
+                    title: System.data.strings!.paymentOption,
+                    image:
+                        "https://www.sfi.co.id/assets/images/menu/Icon-Layanan.png",
+                  ),
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget buttonApply() {
+    return Column(
+      children: [
+        Container(
+          color: Colors.white,
+          margin: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(left: 10),
+                child: Text(
+                  System.data.strings!.applykendaraan,
+                  style: TextStyle(
+                      color: System.data.color!.primaryColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+            margin: const EdgeInsets.only(right: 10),
+            color: Colors.white,
+            padding: const EdgeInsets.only(top: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (widget.gotoApply != null) {
+                      widget.gotoApply!();
+                    }
+                  },
+                  child: Container(
+                    width: 120,
+                    height: 40,
+                    padding: const EdgeInsets.only(
+                      left: 5,
+                      right: 5,
+                      top: 10,
+                    ),
+                    margin: const EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xff0d306b),
+                            Colors.indigo,
+                          ],
+                        ),
+                        color: System.data.color!.primaryColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20))),
+                    child: Text(
+                      System.data.strings!.apply,
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ))
+      ],
     );
   }
 
@@ -300,7 +541,7 @@ class _HomeViewState extends State<HomeView> {
                     }
                   },
                   child: Container(
-                    width: 80,
+                    width: 100,
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                         color: System.data.color!.primaryColor,
@@ -319,7 +560,8 @@ class _HomeViewState extends State<HomeView> {
         ),
         Container(
           // padding: const EdgeInsets.symmetric(vertical: 10.0),
-          height: MediaQuery.of(context).size.height * 0.30,
+          //height: MediaQuery.of(context).size.height * 0.30,
+          height: 250,
           padding: const EdgeInsets.all(5),
           color: Colors.white,
           child: FutureBuilder<List<NewsModelNew>>(
@@ -328,7 +570,7 @@ class _HomeViewState extends State<HomeView> {
               if (snapshot.hasData) {
                 return Container(
                   margin: const EdgeInsets.only(top: 5),
-                  height: 200,
+                  height: 250,
                   child: ListView.builder(
                     itemCount: snapshot.data?.length ?? 0,
                     scrollDirection: Axis.horizontal,
@@ -363,12 +605,18 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget photos(NewsModelNew pm) {
-    double width = (MediaQuery.of(context).size.width - 50) > 370
-        ? 370
-        : MediaQuery.of(context).size.width - 50;
+    // double width = (MediaQuery.of(context).size.width - 50) > 370
+    //     ? 370
+    //     : MediaQuery.of(context).size.width - 50;
+    // width:
+    //                                                       MediaQuery.of(context)
+    //                                                               .size
+    //                                                               .width *
+    //                                                           0.6,
+    //                                                           height: 250,
     return Container(
         margin: const EdgeInsets.all(5),
-        width: width,
+        width: MediaQuery.of(context).size.width * 0.6,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: BasicComponent.newsImageContainer2(

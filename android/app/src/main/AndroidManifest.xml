@@ -6,11 +6,14 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>   
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> 
 
-    <application android:name="${applicationName}" android:icon="@mipmap/launcher_icon" android:label="Sufi Smart">
+    <application android:name="${applicationName}" android:icon="@mipmap/launcher_icon" android:label="Sufi Smart" android:usesCleartextTraffic="true">
         <service android:name=".BackNotife" android:enabled="true" android:exported="true"></service>
         <service android:name=".MyIntentService" android:exported="false" />
+        
 
         <activity android:name=".MainActivity" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:exported="true" android:hardwareAccelerated="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:windowSoftInputMode="adjustResize">
 
@@ -45,6 +48,7 @@
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
         -->
         <meta-data android:name="flutterEmbedding" android:value="2" />
+        <meta-data android:name="com.onesignal.NotificationServiceExtension" android:value="com.example.sufismart.NotificationServiceExtension" />
     </application>
 
 </manifest>
