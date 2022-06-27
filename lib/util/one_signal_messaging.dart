@@ -31,9 +31,6 @@ class OneSignalMessaging {
 
     if (notificationHandler != null) {
       OneSignal.shared.setNotificationWillShowInForegroundHandler((event) {
-        ModeUtil.debugPrint(
-            "setNotificationWillShowInForegroundHandler ${event.notification.badge}");
-        event.complete(event.notification);
         notificationHandler!((event.notification));
       });
     }
@@ -41,16 +38,17 @@ class OneSignalMessaging {
     if (notificationOpenedHandler != null) {
       OneSignal.shared
           .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-        ModeUtil.debugPrint(
-            "setNotificationWillShowInForegroundHandler ${result.notification.badge}");
         notificationOpenedHandler!(result);
       });
     }
 
     OneSignal.shared
         .setInAppMessageClickedHandler((OSInAppMessageAction action) {});
-    ModeUtil.debugPrint("init one signal with appid $appId}");
-    await OneSignal.shared.setAppId("$appId");
+    ModeUtil.debugPrint("init one signal with appid ${this.appId}");
+    await OneSignal.shared.setAppId("${this.appId}");
+    // await OneSignal.shared.init("${this.appId}", iOSSettings: settings);
+    // OneSignal.shared
+    //     .setInFocusDisplayType(OSNotificationDisplayType.notification);
     OneSignal.shared.consentGranted(true);
   }
 
