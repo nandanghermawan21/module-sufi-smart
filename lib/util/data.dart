@@ -1,9 +1,13 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:sufismart/route.dart';
 import 'package:sufismart/util/api_end_point.dart';
 import 'package:sufismart/util/colour.dart';
 import 'package:sufismart/util/databases.dart';
@@ -46,7 +50,7 @@ class Data extends ChangeNotifier {
 
   Future<bool> _initSharedPreference() async {
     session = await SharedPreferences.getInstance();
-    return true;
+    return true;    
   }
 
   Future<bool> _initDatabse() async {
@@ -63,54 +67,145 @@ class Data extends ChangeNotifier {
     return true;
   }
 
-  void showmodal() {
+  void showmodal(String? strContent, String? strTitle) {
     showDialog(
       context: System.data.context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text(""), // To display the title it is optional
+        title: Text(
+          strTitle!,
+          style: const TextStyle(
+            color: Color(0xff0d306b),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.left,
+        ), // To display the title it is optional
         // content: Text(
         //   System.data.strings!.infoLogout,
         // ), // Message which will be pop up on the screen
         content: (SingleChildScrollView(
-            child: Container(
-          color: Colors.transparent,
-          child: Column(
-            children: const [
-              Text(
-                "Announcement",
-                style: TextStyle(
-                    color: Color(0xff0d306b),
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                textAlign: TextAlign.justify,
-              ),
-            ],
+          child: Container(
+            color: Colors.transparent,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  strContent!,
+                  textAlign: TextAlign.justify,
+                ),
+              ],
+            ),
           ),
-        ))),
-        // Action widget which will provide the user to acknowledge the choice
+        )),
         actions: [
-          ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(System.data.color!.primaryColor)),
-            onPressed: () {
-              Navigator.pop(context);
-            }, // function used to perform after pressing the button
-            child: const Text('No'),
-          ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
               //widget.goTologout!();
             },
-            child: const Text('Yes'),
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void popupModalImage(String? img, String? strid, String? strTitle) {
+    showDialog(
+      context: System.data.context,
+      builder: (BuildContext context) => AlertDialog(
+        backgroundColor: Colors.transparent,
+        title: Text(
+          strTitle!,
+          style: TextStyle(
+            color: System.data.color!.whiteColor,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ), // To display the title it is optional
+        // content: Text(
+        //   System.data.strings!.infoLogout,
+        // ), // Message which will be pop up on the screen
+        content: (SingleChildScrollView(
+          child: Container(
+            color: Colors.transparent,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                // Text(
+                //   strContent!,
+                //   textAlign: TextAlign.justify,
+                // ),
+                CachedNetworkImage(
+                  imageUrl: img ?? "",
+                  imageBuilder: (context, imageProvider) => Container(
+                    // height: MediaQuery.of(context).size.height * 250,
+                    // width: MediaQuery.of(context).size.width * 300 ,
+                    height: 300,
+                    width: 300,
+                    decoration: BoxDecoration(
+                      // borderRadius: BorderRadius.only(
+                      //     bottomLeft: Radius.circular(15),
+                      //     bottomRight: Radius.circular(15)),
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.fill),
+                    ),
+                  ),
+                  placeholder: (context, url) => SkeletonAnimation(
+                      child: Container(
+                    //height: MediaQuery.of(context).size.height / 3.5,
+                    height: 300,
+                    width: 300,
+                    decoration: BoxDecoration(
+                      color: System.data.color!.greyColor2,
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15)),
+                    ),
+                  )),
+                  errorWidget: (context, url, error) => Container(
+                    //height: MediaQuery.of(context).size.height / 3.5,
+                    height: 300,
+                    width: 300,
+                    decoration: BoxDecoration(
+                      color: System.data.color!.greyColor2,
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15))
+                      // borderRadius: BorderRadius.all(
+                      //     Radius.circular(10))
+                      ,
+                    ),
+                    child: const Center(
+                      child: Icon(Icons.error),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.of(System.data.context).pushNamed(
+                RouteName.detailNewsDeepLink,
+                arguments: {
+                  ParamName.newsdetailid: strid,
+                },
+              );
+              //widget.goTologout!();
+            },
+            child: Text(
+              System.data.strings!.seepromo,
+            ),
           ),
         ],
       ),

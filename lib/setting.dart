@@ -18,10 +18,13 @@ void setting() {
     Permission.accessNotificationPolicy,
     Permission.location,
     Permission.phone,
+    Permission.camera,
+    Permission.storage,
   ];
   //setting oneSignal notification
   System.data.oneSignalMessaging = OneSignalMessaging(
-    appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
+    //appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
+    appId: "8857c98d-aba9-45c2-abd8-692ad94f9521",
     notificationHandler: (notification) {
       //System.data.showmodal();
       ModeUtil.debugPrint("notification handler fire");
@@ -30,7 +33,8 @@ void setting() {
         appid: System.data.global.notifAppId,
       ).handleNotif(notification.additionalData ?? {});
 
-      ModeUtil.debugPrint("notification additional data ${notification.additionalData}");
+      ModeUtil.debugPrint(
+          "notification additional data ${notification.additionalData}");
     },
     notificationOpenedHandler: (notification) {
       ModeUtil.debugPrint("notification opened fire");
@@ -40,7 +44,7 @@ void setting() {
     },
   );
   //subscribe chanel
-  System.data.oneSignalMessaging!.sendTag("specialUser", true);
+  System.data.oneSignalMessaging!.sendTag("userSmart", true);
   System.data.deepLinkingHandler = (uri) {
     ModeUtil.debugPrint(uri?.path ?? "");
     if (ModalRoute.of(System.data.context)?.settings.name == initialRouteName) {
@@ -75,9 +79,15 @@ void setting() {
           },
         );
         break;
-      // case "announcement":
-      //   System.data.showmodal();
-      //   break;
+      case "/notif":    
+        String? id = (uri?.queryParameters["id"]);  
+        Navigator.of(System.data.context).pushNamed(
+          RouteName.announcementView,
+          arguments: {
+            ParamName.notifid: id,
+          },
+        );
+        break;
       default:
         return;
     }

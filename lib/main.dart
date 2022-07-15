@@ -52,11 +52,10 @@ void onStartService() {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isIOS) FlutterBackgroundServiceIOS.registerWith();
   if (Platform.isAndroid) FlutterBackgroundServiceAndroid.registerWith();
-  service.onServiceStarted();
-
-  data.service.onDataReceived.listen((event) {
-    service.onEvent(event);
-  });
+  //service.onServiceStarted();
+  // data.service.onDataReceived.listen((event) {
+  //   service.onEvent(event);
+  // });
 }
 
 Future<void> getPermission() async {

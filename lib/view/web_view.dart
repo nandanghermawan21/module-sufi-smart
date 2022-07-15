@@ -41,9 +41,9 @@ class _WebViewState extends State<WebViewSufi> {
               setState(() {
                 isLoading = false;
               });
-            },            
-            javascriptMode: JavascriptMode.unrestricted,
+            },
             
+            javascriptMode: JavascriptMode.unrestricted,
             javascriptChannels: {
               JavascriptChannel(
                   name: 'backSuccess',

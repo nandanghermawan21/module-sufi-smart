@@ -14,25 +14,25 @@ class ApiEndPoint {
   String postSavePositionUrl = "Service/savelocation";
 
   //sufismart
-  String baseUrlSufismart = "https://sufismart.sfi.co.id/sufismart_ci/api/";
-  String baseUrlDebugSufismart = "https://uat.sfi.co.id/sufismart_ci/api/";
+  String baseUrlSufismart = "https://sufismart.sfi.co.id/sufismart_ci/api_sufi/";
+  String baseUrlDebugSufismart = "https://sufismart.sfi.co.id/sufismart_ci/api_sufi/";
 
-  String getBannerUrl = "getBannerList";
-  String getNewsHomeUrl = "getImgNews";
-  String getListNewsUrl = "getNewsNew";
-  String getListProductCategoryUrl = "getProductCategory";
-  String getListProductUrl = "getProductList";
-  String getListProductypeUrl = "getProductType";
-  String getListBranchUrl = "getData_branch";
+  String getBannerUrl = "getBannerListNew";
+  String getNewsHomeUrl = "getImgNewsNew";
+  String getListNewsUrl = "getApiNewsNew";
+  String getListProductCategoryUrl = "getProductCategoryNew";
+  String getListProductUrl = "getProductListNew";
+  String getListProductypeUrl = "getProductTypeNew";
+  String getListBranchUrl = "getDataBranchNew";
   String getListDataBranchByIdUrl = "getDataBranchID_new";
-  String postLoginCustomerNewUrl = "action_login_new";
-  String postContactUrl = "action_keluhan_new";
-  String postForgotPassUrl = "action_resetpassword_new";
-  String getAplikasiUrl = "getAplikasi_new";
-  String postChangePassUrl = "update_password_new";
+  String postLoginCustomerNewUrl = "actionLoginNew";
+  String postContactUrl = "actionKeluhanNew";
+  String postForgotPassUrl = "actionResetPasswordNew";
+  String getAplikasiUrl = "getAplikasiNew";
+  String postChangePassUrl = "updatePasswordNew";
   String getGenderUrl = "getGender";
   String getJobUrl = "getJob";
-  String postCustomerRegisterNewUrl = "registrasi_customer_new";
+  String postCustomerRegisterNewUrl = "registrasiCustomerNew";
   String getConfirmOtpUserUrl = "confirmasiUserOtp";
   String getResendOtpUserUrl = "resendUserOtp";
   String getDetailInfoUserUrl = "getDetailInfoUser";
@@ -40,6 +40,7 @@ class ApiEndPoint {
   String getDataApplyUserUrl = "getListUserApply";
   String getDataNewsByIdUrl = "getDetailNewsId";
   String getDataPointUserUrl = "getPointUser";
+  String getDataNotifUrl = "getNotifAnnouncement";
 
   String get url {
     if (ModeUtil.debugMode == true) {
@@ -208,5 +209,11 @@ class ApiEndPoint {
     required String? id,
   }) {
     return urlSufiSmart + "$getDataPointUserUrl${id != null ? "/$id" : ""}";
+  }
+
+  String getDataNotif({
+    required String? id,
+  }) {
+    return urlSufiSmart + "$getDataNotifUrl${id != null ? "/$id" : ""}";
   }
 }

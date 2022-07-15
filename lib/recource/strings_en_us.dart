@@ -81,7 +81,7 @@ class StringsEnUs implements Strings {
   String get installmentSimulation => "Installment Simulation";
 
   @override
-  String get installmentStatus => "Installment \n Status";
+  String get installmentStatus => "Facility\n";
 
   @override
   String get insuranceType => "Insurance Type";
@@ -148,7 +148,7 @@ class StringsEnUs implements Strings {
   String get showAll => "ShowAll";
 
   @override
-  String get signUp => "SignUp";
+  String get signUp => "Sign Up Now";
 
   @override
   String get totalPaySimulation => "Total Pay Simulation";
@@ -163,7 +163,7 @@ class StringsEnUs implements Strings {
   String get version => "Version";
 
   @override
-  String get welcomeBack => "Welcome Back";
+  String get welcomeBack => "Hi Buddy, Welcome Back";
 
   @override
   String get registration => "Registration";
@@ -230,7 +230,7 @@ class StringsEnUs implements Strings {
   String get forgotPassword => "Forgot Password";
 
   @override  
-  String get fillForgotPassword => "Please enter a valid email that has been registered in the SUFI SMART application";
+  String get fillForgotPassword => "if you want to recover your account, please fill in a valid email that has been registered in SUFI SMART application";
 
   @override
   
@@ -305,5 +305,14 @@ class StringsEnUs implements Strings {
   String get apply => "Apply";
 
   @override  
-  String get doesNotHaveAcc => 'Does not have account ? ';  
+  String get doesNotHaveAcc => 'Does not have accounts yet? ';
+
+  @override  
+  String get whatsapp => "Whatsapp";
+
+  @override  
+  String get seepromo => "See the promo";
+
+  @override  
+  String get welcomeUser => "Hi Buddy Sufi, ";  
 }

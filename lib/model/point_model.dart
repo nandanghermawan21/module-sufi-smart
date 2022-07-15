@@ -7,16 +7,22 @@ import 'package:http/http.dart' as http;
 class PointModel {
   String? point;
   String? leveluser;
+  String? tipe;
+  String? idkomunitas;
 
   PointModel({
     this.point,
     this.leveluser,
+    this.tipe,
+    this.idkomunitas,
   });
 
   factory PointModel.fromJson(Map<String, dynamic> json) {
     return PointModel(
       point: json["point"] as String?,
       leveluser: json["leveluser"] as String?,
+      tipe: json["tipe"] as String?,
+      idkomunitas: json["idkomunitas"] as String?,
     );
   }
 
@@ -24,6 +30,8 @@ class PointModel {
     return {
       "point": point,
       "leveluser": leveluser,
+      "tipe": tipe,
+      "idkomunitas": idkomunitas,
     };
   }
 
@@ -38,7 +46,7 @@ class PointModel {
         ModeUtil.debugPrint("call get point new api ${value.body}");
         return PointModel.fromJson(json.decode(value.body));
       } else {
-        ModeUtil.debugPrint("error not status code 200");
+        ModeUtil.debugPrint("error not status code 200 get Point Id");
         throw value;
       }
     }).catchError((onError) {

@@ -206,11 +206,11 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                   if (strUserid == null) {
                     ModeUtil.debugPrint("user id kosong");
                     widget.ontapSimulatiCreditProduct!(
-                        "https://uat.sfi.co.id/sufismart/api/credit_simulation_sufismart.php?prod_code=${widget.productTypeModel?.productCode}&detail_code=${widget.productTypeModel?.productDetailCode}&userid="
+                        "https://sufismart.sfi.co.id/sufismart/api/credit_simulation_sufismart.php?prod_code=${widget.productTypeModel?.productCode}&detail_code=${widget.productTypeModel?.productDetailCode}&userid="
                         "");
                   } else {
                     widget.ontapSimulatiCreditProduct!(
-                        "https://uat.sfi.co.id/sufismart/api/credit_simulation_sufismart.php?prod_code=${widget.productTypeModel?.productCode}&detail_code=${widget.productTypeModel?.productDetailCode}&userid=" +
+                        "https://sufismart.sfi.co.id/sufismart/api/credit_simulation_sufismart.php?prod_code=${widget.productTypeModel?.productCode}&detail_code=${widget.productTypeModel?.productDetailCode}&userid=" +
                             strUserid);
                     ModeUtil.debugPrint(
                         "${System.data.global.customerNewModel?.userid}");

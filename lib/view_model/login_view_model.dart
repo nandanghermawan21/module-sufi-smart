@@ -181,105 +181,114 @@ class LoginViewModel extends ChangeNotifier {
   }) {
     circularLoaderController.startLoading();
 
-    // getPlatform.then((imei) {
-    //deviceId = value.toString();
-
-    //ModeUtil.debugPrint(imei.toString());
-    CustomerNewModel.login(
-        user: UserModel(
-      username: emailTextEditingController.text,
-      password: passwordTextEditingController.text,
-      deviceId: Platform.operatingSystem,
-      playerid: System.data.global.messagingToken,
-    )).then((value) {
-      if (value != null) {
-        if (value.status == "1") {
-          circularLoaderController.forceStop();
-          PinComponent.open(
-              context: System.data.context,
-              controller: pinComponentController,
-              title: "Input OTP",
-              timer: DateTime.now().toUtc().difference(value.expired!) * -1,
-              onTapResend: (val) {
-                pinComponentController.value.loadingController.startLoading();
-                OtpNewModel.resendOtp(
-                  userid: value.userid!,
-                ).then((value) {
-                  pinComponentController.value.loadingController.forceStop();
-                  pinComponentController.value.timerController.start(
-                    duration:
-                        DateTime.now().toUtc().difference(value!.expired!) * -1,
-                  );
-                }).catchError((onError) {
-                  pinComponentController.value.loadingController.stopLoading(
-                    isError: true,
-                    message: ErrorHandlingUtil.handleApiError(onError),
-                  );
-                });
-              },
-              onTapSend: (val) {
-                pinComponentController.value.loadingController.startLoading();
-                OtpNewModel.confirmOtp(
-                  otp: val,
-                  userid: value.userid!,
-                ).then((value) {
-                  if (value != null) {
-                    if (value.status == "0") {
-                      pinComponentController.value.loadingController
-                          .stopLoading(
-                        isError: false,
-                        message: value.msg!,
-                        duration: const Duration(seconds: 2),
-                        onCloseCallBack: () {
-                          if (onLoginSuccess2 != null) {
-                            onLoginSuccess2(value);
-                          }
-                        },
-                      );
-                    } else if (value.status == "1") {
-                      pinComponentController.value.loadingController
-                          .stopLoading(
-                        isError: true,
-                        duration: const Duration(seconds: 2),
-                        message: ErrorHandlingUtil.handleApiError(value.msg!),
-                      );
-                    }
-                  }
-                }).catchError((onError) {
-                  pinComponentController.value.loadingController.stopLoading(
-                      isError: true,
-                      message: ErrorHandlingUtil.handleApiError(onError));
-                });
-              });
-          // circularLoaderController.stopLoading(
-          //     duration: const Duration(seconds: 3),
-          //     isError: false,
-          //     message: value.msg,
-          //     onCloseCallBack: () {
-          //       if (onLoginSuccess2 != null) {
-          //         onLoginSuccess2(value);
-          //       }
-          //     });
-        } else if (value.status == "2") {
-          circularLoaderController.stopLoading(
-              duration: const Duration(seconds: 3),
-              isError: true,
-              message: ErrorHandlingUtil.handleApiError(value.msg));
-        } else if (value.status == "3") {
-          circularLoaderController.stopLoading(
-              duration: const Duration(seconds: 3),
-              isError: true,
-              message: ErrorHandlingUtil.handleApiError(value.msg));
-        }
-      } else {
-        circularLoaderController.forceStop();
-      }
-    }).catchError((onError) {
+    if (emailTextEditingController.text.isEmpty &&
+        passwordTextEditingController.text.isEmpty) {
+      String msg = "email dan kata sandi wajib di isi";
       circularLoaderController.stopLoading(
           duration: const Duration(seconds: 3),
           isError: true,
-          message: ErrorHandlingUtil.handleApiError(onError));
-    });
+          message: ErrorHandlingUtil.handleApiError(msg));
+    } else {
+    // getPlatform.then((imei) {
+      //deviceId = value.toString();
+      //ModeUtil.debugPrint(imei.toString());
+      CustomerNewModel.login(
+          user: UserModel(
+        username: emailTextEditingController.text,
+        password: passwordTextEditingController.text,
+        deviceId: Platform.operatingSystem,
+        playerid: System.data.global.messagingToken,
+      )).then((value) {
+        if (value != null) {
+          if (value.status == "1") {
+            circularLoaderController.forceStop();
+            PinComponent.open(
+                context: System.data.context,
+                controller: pinComponentController,
+                title: "Input OTP",
+                timer: DateTime.now().toUtc().difference(value.expired!) * -1,
+                onTapResend: (val) {
+                  pinComponentController.value.loadingController.startLoading();
+                  OtpNewModel.resendOtp(
+                    userid: value.userid!,
+                  ).then((value) {
+                    pinComponentController.value.loadingController.forceStop();
+                    pinComponentController.value.timerController.start(
+                      duration:
+                          DateTime.now().toUtc().difference(value!.expired!) *
+                              -1,
+                    );
+                  }).catchError((onError) {
+                    pinComponentController.value.loadingController.stopLoading(
+                      isError: true,
+                      message: ErrorHandlingUtil.handleApiError(onError),
+                    );
+                  });
+                },
+                onTapSend: (val) {
+                  pinComponentController.value.loadingController.startLoading();
+                  OtpNewModel.confirmOtp(
+                    otp: val,
+                    userid: value.userid!,
+                  ).then((value) {
+                    if (value != null) {
+                      if (value.status == "0") {
+                        pinComponentController.value.loadingController
+                            .stopLoading(
+                          isError: false,
+                          message: value.msg!,
+                          duration: const Duration(seconds: 2),
+                          onCloseCallBack: () {
+                            if (onLoginSuccess2 != null) {
+                              onLoginSuccess2(value);
+                            }
+                          },
+                        );
+                      } else if (value.status == "1") {
+                        pinComponentController.value.loadingController
+                            .stopLoading(
+                          isError: true,
+                          duration: const Duration(seconds: 2),
+                          message: ErrorHandlingUtil.handleApiError(value.msg!),
+                        );
+                      }
+                    }
+                  }).catchError((onError) {
+                    pinComponentController.value.loadingController.stopLoading(
+                        isError: true,
+                        message: ErrorHandlingUtil.handleApiError(onError));
+                  });
+                });
+            // circularLoaderController.stopLoading(
+            //     duration: const Duration(seconds: 3),
+            //     isError: false,
+            //     message: value.msg,
+            //     onCloseCallBack: () {
+            //       if (onLoginSuccess2 != null) {
+            //         onLoginSuccess2(value);
+            //       }
+            //     });
+          } else if (value.status == "2") {
+            circularLoaderController.stopLoading(
+                duration: const Duration(seconds: 3),
+                isError: true,
+                message: ErrorHandlingUtil.handleApiError(value.msg));
+          } else if (value.status == "3") {
+            circularLoaderController.stopLoading(
+                duration: const Duration(seconds: 3),
+                isError: true,
+                message: ErrorHandlingUtil.handleApiError(value.msg));
+          }
+        } else {
+          circularLoaderController.forceStop();
+        }
+      }).catchError((onError) {
+        circularLoaderController.stopLoading(
+            duration: const Duration(seconds: 3),
+            isError: true,
+            message: ErrorHandlingUtil.handleApiError(onError));
+      });
+    }
   }
 
   void commit() {

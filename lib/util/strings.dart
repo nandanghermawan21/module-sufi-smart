@@ -10,7 +10,7 @@ abstract class Strings {
   String get showAll => "Tampilkan Semua";
   String get latestNews => "Berita Terbaru";
   String get paymentOption => "Opsi\nPembayaran";
-  String get installmentStatus => "Status\nkontrak";
+  String get installmentStatus => "Fasilitas\n";
   String get creditSimulation => "Simulasi\nKredit & Apply";
   String get branch => "Cabang\n";
   String get product => "Produk\n";
@@ -28,11 +28,11 @@ abstract class Strings {
   String get send => "kirim";
   String get canNotBeEmpty => "tidak boleh kosong";
   String get login => "Masuk";
-  String get signUp => "Daftar";
+  String get signUp => "Daftar Sekarang";
   String get username => "nama pengguna";
   String get password => "kata sandi";
   String get enterThe => "masukan";
-  String get welcomeBack => "selamat datang kembali,";
+  String get welcomeBack => "Hai Sobat, selamat datang kembali";
   String get enterYourEmailAndPasswordRegisteredInTheSUFISMARTApplication =>
       "masukkan email dan kata sandi Anda yang terdaftar di aplikasi SUFISMART";
   String get cantBeEmpty => "tidak boleh kosong";
@@ -91,13 +91,13 @@ abstract class Strings {
 
   String get forgotPassword => "Lupa Password";
 
-  String get fillForgotPassword => "Silahkan masukan email valid yang sudah terdaftar dalam aplikasi SUFI SMART";
+  String get fillForgotPassword => "jika ingin memulihkan akun anda, silahkan isi email valid yang sudah terdaftar dalam aplikasi SUFI SMART";
 
   String get faq => "FAQ";
 
   String get settingPassword => "Atur Ulang Kata Sandi";
 
-  String get updateProfile => "Memperbaharui Profil";
+  String get updateProfile => "Ubah Profil";
 
   String get passwordLama => "Password Lama";
 
@@ -139,6 +139,12 @@ abstract class Strings {
 
   String get apply => "Apply";
 
-  String get doesNotHaveAcc => "Tidak memiliki akun ? ";
+  String get doesNotHaveAcc => "Belum Punya akun? ";
+
+  String get whatsapp => "Whatsapp";
+
+  String get seepromo => "Lihat Promo";
+
+  String get welcomeUser => "Hai Sobat Sufi, ";
   
 }

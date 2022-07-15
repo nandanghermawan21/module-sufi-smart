@@ -15,6 +15,10 @@ class AboutViewModel extends ChangeNotifier {
     return launch('mailto:$email');
   }
 
+  Future<void> sendWhatsapp(String notelp){
+   return launch('https://wa.me/$notelp?text=Hello'); 
+  }
+
   void commit() {
     notifyListeners();
   }

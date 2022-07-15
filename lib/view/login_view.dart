@@ -46,6 +46,7 @@ class _LoginState extends State<LoginView> {
                       child: Column(
                         children: [
                           Container(
+                            color: Colors.transparent,
                             margin: const EdgeInsets.only(top: 5),
                             width: MediaQuery.of(context).size.width,
                             child: Text(

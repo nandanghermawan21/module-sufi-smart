@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/model/point_model.dart';
 import 'package:sufismart/util/mode_util.dart';
@@ -97,7 +94,7 @@ class _DashboardViewState extends State<DashboardView> {
                     GestureDetector(
                       onTap: () {
                         widget.goToChangePass!();
-                        ModeUtil.debugPrint("tap change pass");
+                        //ModeUtil.debugPrint("tap change pass");
                       },
                       child: menuProfilBar(System.data.strings!.settingPassword,
                           "assets/ic_icon_password.png", FontAwesomeIcons.lock),
@@ -321,22 +318,41 @@ class _DashboardViewState extends State<DashboardView> {
             height: 10,
           ),
           Text(
-            System.data.global.customerNewModel?.name ?? "",
+            "${System.data.strings!.welcomeUser}${System.data.global.customerNewModel?.name ?? ""}",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 18,
             ),
           ),
           const SizedBox(
             height: 10,
           ),
-          Text(
-            System.data.global.customerNewModel?.email ?? "",
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
+          Container(
+            color: Colors.transparent,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 4),
+                  child: Icon(
+                    FontAwesomeIcons.envelopeSquare,
+                    size: 15,
+                    color: System.data.color!.greyColor2,
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  System.data.global.customerNewModel?.email ?? "",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  ),
+                ),
+              ],
             ),
-          ),
+          )
         ],
       ),
     );
@@ -457,52 +473,113 @@ class _DashboardViewState extends State<DashboardView> {
         future: dashboardViewModel.getDataPointById(id: struser),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            String strtipe = snapshot.data?.tipe ?? "";
             return Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: System.data.color!.whiteColor,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-              child: Column(
-                children: [
-                  menuPoint(
-                    "Points :",
-                    snapshot.data?.point,
-                    FontAwesomeIcons.coins,
-                    Colors.amber,
-                  ),
-                  menuPoint(
-                    "Level :",
-                    snapshot.data?.leveluser,
-                    FontAwesomeIcons.solidArrowAltCircleUp,
-                    System.data.color!.primaryColor,
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return SkeletonAnimation(
-              child: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: System.data.color!.greyColor2,
+                  color: System.data.color!.whiteColor,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(10),
                   ),
                 ),
+                child: Container(
+                  color: Colors.transparent,
+                  child: Column(
+                    children: [
+                      snapshot.data?.tipe == "Agent"
+                          ? Container(
+                              color: Colors.transparent,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    snapshot.data?.tipe ?? "",
+                                    style: TextStyle(
+                                      color: System.data.color!.greyColor,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  Text(
+                                    " - ",
+                                    style: TextStyle(
+                                      color: System.data.color!.greyColor,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  Text(
+                                    snapshot.data?.idkomunitas ?? "",
+                                    style: TextStyle(
+                                      color: System.data.color!.greyColor,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          : Container(),
+                      Row(
+                        children: [
+                          menuPoint("Points", snapshot.data?.point,
+                              FontAwesomeIcons.coins, Colors.amber),
+                          menuPoint(
+                              "Level",
+                              snapshot.data?.leveluser,
+                              FontAwesomeIcons.solidArrowAltCircleUp,
+                              System.data.color!.primaryColor),
+                          // menuPoint(
+                          //   "Points",
+                          //   snapshot.data?.point,
+                          //   FontAwesomeIcons.coins,
+                          //   Colors.amber,
+                          // ),
+                          // menuPoint(
+                          //   "Level",
+                          //   snapshot.data?.leveluser,
+                          //   FontAwesomeIcons.solidArrowAltCircleUp,
+                          //   System.data.color!.primaryColor,
+                          // ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ));
+          } else {
+            return SkeletonAnimation(
+              child: Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.all(10),
+                // decoration: BoxDecoration(
+                //   color: System.data.color!.greyColor2,
+                //   borderRadius: const BorderRadius.all(
+                //     Radius.circular(10),
+                //   ),
+                // ),
                 child: Column(
                   children: [
                     Container(
-                      height: 30,
+                      decoration: BoxDecoration(
+                        color: System.data.color!.greyColor2,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      height: 20,
                       width: double.infinity,
-                      color: Colors.transparent,
+                      //color: Colors.transparent,
+                    ),
+                    const SizedBox(
+                      height: 3,
                     ),
                     Container(
-                      height: 30,
+                      decoration: BoxDecoration(
+                        color: System.data.color!.greyColor2,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      height: 20,
                       width: double.infinity,
-                      color: Colors.transparent,
+                      //color: Colors.transparent,
                     ),
                   ],
                 ),
@@ -512,7 +589,7 @@ class _DashboardViewState extends State<DashboardView> {
         });
   }
 
-  Widget menuPoint(
+  Widget menuPoint2(
       String? title, String? title2, IconData iconstr, colorChild) {
     return Container(
       color: Colors.transparent,
@@ -599,6 +676,45 @@ class _DashboardViewState extends State<DashboardView> {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget menuPoint(String? title, String? value, IconData iconstr, colorChild) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            title ?? "",
+            style: TextStyle(
+              color: System.data.color!.greyColor,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Icon(
+                  iconstr,
+                  size: 20,
+                  color: colorChild,
+                ),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                value ?? "",
+                style: TextStyle(
+                  color: System.data.color!.greyColor,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

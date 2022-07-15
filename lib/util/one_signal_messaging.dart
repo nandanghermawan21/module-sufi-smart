@@ -3,7 +3,7 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:sufismart/util/mode_util.dart';
 
 class OneSignalMessaging {
-  String? appId = "5950883a-0066-4be7-ac84-3d240982ffaf";
+  String? appId = "8857c98d-aba9-45c2-abd8-692ad94f9521";
   Map<OSiOSSettings, dynamic> settings = {
     OSiOSSettings.autoPrompt: false,
     OSiOSSettings.promptBeforeOpeningPushUrl: true
@@ -44,8 +44,8 @@ class OneSignalMessaging {
 
     OneSignal.shared
         .setInAppMessageClickedHandler((OSInAppMessageAction action) {});
-    ModeUtil.debugPrint("init one signal with appid ${this.appId}");
-    await OneSignal.shared.setAppId("${this.appId}");
+    ModeUtil.debugPrint("init one signal with appid $appId}");
+    await OneSignal.shared.setAppId("$appId");
     // await OneSignal.shared.init("${this.appId}", iOSSettings: settings);
     // OneSignal.shared
     //     .setInFocusDisplayType(OSNotificationDisplayType.notification);

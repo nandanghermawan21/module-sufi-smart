@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
-
-import 'package:sufismart/model/customernew_model.dart';
 import 'package:sufismart/model/gendernew_model.dart';
 import 'package:sufismart/model/job_model.dart';
 import 'package:sufismart/util/mode_util.dart';

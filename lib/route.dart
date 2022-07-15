@@ -6,6 +6,7 @@ import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view/alert_login_view.dart';
+import 'package:sufismart/view/announcement_view.dart';
 import 'package:sufismart/view/apply_user_view.dart';
 import 'package:sufismart/view/branch_view.dart';
 import 'package:sufismart/view/change_password_view.dart';
@@ -56,6 +57,7 @@ class RouteName {
   static const String register = "register";
   static const String applyUserview = "ApplyViewUser";
   static const String detailNewsDeepLink = "detailNewsDeepLink";
+  static const String announcementView = "announcementView";
 }
 
 enum ParamName {
@@ -65,7 +67,8 @@ enum ParamName {
   productItemDetail,
   urlWebview,
   productSimulasi,
-  newsdetailid
+  newsdetailid,
+  notifid
 }
 
 Map<String, WidgetBuilder> route = {
@@ -106,7 +109,7 @@ Map<String, WidgetBuilder> route = {
                   Navigator.of(context)
                       .pushNamed(RouteName.webView, arguments: {
                     ParamName.urlWebview:
-                        "https://uat.sfi.co.id/sufismart/api/simulasi_page_sufismart.php?userid=" +
+                        "https://sufismart.sfi.co.id/sufismart/api/simulasi_page_sufismart.php?userid=" +
                             userid!,
                   });
                   //Navigator.of(context).pushNamed(RouteName.creditSimulation);
@@ -133,7 +136,7 @@ Map<String, WidgetBuilder> route = {
                     Navigator.of(context)
                         .pushNamed(RouteName.webView, arguments: {
                       ParamName.urlWebview:
-                          "https://uat.sfi.co.id/sufismart/api/ic_product.php?EMAIL=" +
+                          "https://sufismart.sfi.co.id/sufismart/api/ic_product_sufismart.php?EMAIL=" +
                               email!,
                     });
                   } else {
@@ -146,7 +149,7 @@ Map<String, WidgetBuilder> route = {
                   Navigator.of(context)
                       .pushNamed(RouteName.webView, arguments: {
                     ParamName.urlWebview:
-                        "https://uat.sfi.co.id/sufismart/api/credit_simulation_apply_all.php?userid=" +
+                        "https://sufismart.sfi.co.id/sufismart/api/credit_simulation_apply_all.php?userid=" +
                             userid!,
                   });
                 },
@@ -164,7 +167,7 @@ Map<String, WidgetBuilder> route = {
             case 2:
               return const ContactView();
             case 3:
-              if (System.data.global.customerNewModel != null) {
+              if (System.data.global.customerNewModel?.userid != null) {
                 return DashboardView(
                   goToChangePass: () {
                     Navigator.of(context).pushNamed(RouteName.changePassword);
@@ -185,27 +188,28 @@ Map<String, WidgetBuilder> route = {
                     Navigator.of(context).pushNamed(RouteName.applyUserview);
                   },
                 );
+              } else {
+                return LoginView(
+                  gotoSignup: () {
+                    //Navigator.of(context).pushNamed(RouteName.signUp);
+                    Navigator.of(context).pushNamed(RouteName.register);
+                  },
+                  gotoForgetPassword: () {
+                    Navigator.of(context).pushNamed(RouteName.forgotPassword);
+                    //Navigator.of(context).pushNamed(RouteName.register);
+                  },
+                  onLoginSuccess2: (customer) {
+                    System.data.global.customerNewModel = customer;
+                    System.data.global.token = customer.deviceid;
+                    System.data.session!.setString(
+                        SessionKey.user, json.encode(customer.toJson()));
+                    ModeUtil.debugPrint(
+                        "new customer ${System.data.global.customerNewModel?.toJson()}");
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        RouteName.mainMenu, (r) => r.settings.name == "");
+                  },
+                );
               }
-              return LoginView(
-                gotoSignup: () {
-                  //Navigator.of(context).pushNamed(RouteName.signUp);
-                  Navigator.of(context).pushNamed(RouteName.register);
-                },
-                gotoForgetPassword: () {
-                  Navigator.of(context).pushNamed(RouteName.forgotPassword);
-                  //Navigator.of(context).pushNamed(RouteName.register);
-                },
-                onLoginSuccess2: (customer) {
-                  System.data.global.customerNewModel = customer;
-                  System.data.global.token = customer.deviceid;
-                  System.data.session!.setString(
-                      SessionKey.user, json.encode(customer.toJson()));
-                  ModeUtil.debugPrint(
-                      "new customer ${System.data.global.customerNewModel?.toJson()}");
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      RouteName.mainMenu, (r) => r.settings.name == "");
-                },
-              );
             default:
               return const EmptyPageView();
           }
@@ -356,6 +360,13 @@ Map<String, WidgetBuilder> route = {
         {}) as Map<dynamic, dynamic>;
     return NewsDetailViewDeepLink(
       newsid: arg[ParamName.newsdetailid],
+    );
+  },
+  RouteName.announcementView: (BuildContext context) {
+    Map<dynamic, dynamic> arg = (ModalRoute.of(context)?.settings.arguments ??
+        {}) as Map<dynamic, dynamic>;
+    return AnnouncementView(
+      id: arg[ParamName.notifid],
     );
   }
 };

@@ -33,6 +33,7 @@ class BranchViewModel extends ChangeNotifier {
   void getBranchId() {
     loadingController.startLoading();
     getLocation().then((value) {
+      ModeUtil.debugPrint("masuk");
       ModeUtil.debugPrint("latitude ${value?.latitude}");
       ModeUtil.debugPrint("longitude ${value?.longitude}");
       BranchModel.getBranchByid(

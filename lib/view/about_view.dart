@@ -72,17 +72,18 @@ class _AboutState extends State<AboutView> {
                           ],
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          aboutViewModel.openPhone(snapshot.data?.phone ?? "");
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.only(top: 50),
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
+                      Container(
+                        margin: const EdgeInsets.only(top: 50),
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            GestureDetector(
+                              onTap: () {
+                                aboutViewModel
+                                    .openPhone(snapshot.data?.phone ?? "");
+                              },
+                              child: Container(
                                 margin: const EdgeInsets.only(bottom: 8),
                                 child: Row(
                                   mainAxisAlignment:
@@ -107,72 +108,101 @@ class _AboutState extends State<AboutView> {
                                   ],
                                 ),
                               ),
-                              const Divider(),
-                              GestureDetector(
-                                onTap: () {
-                                  aboutViewModel
-                                      .sendEmail(snapshot.data?.email ?? "");
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(bottom: 8),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text(
-                                        System.data.strings!.email,
-                                        style: TextStyle(
-                                          color:
-                                              System.data.color!.primaryColor,
-                                          fontSize: 18,
-                                        ),
-                                        textAlign: TextAlign.center,
+                            ),
+                            const Divider(),
+                            GestureDetector(
+                              onTap: () {
+                                aboutViewModel
+                                    .sendWhatsapp(snapshot.data?.phone ?? "");
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      System.data.strings!.whatsapp,
+                                      style: TextStyle(
+                                        color: System.data.color!.primaryColor,
+                                        fontSize: 18,
                                       ),
-                                      Text(
-                                        snapshot.data?.email ?? "",
-                                        style: TextStyle(
-                                          color:
-                                              System.data.color!.primaryColor,
-                                          fontSize: 18,
-                                        ),
-                                        textAlign: TextAlign.center,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      snapshot.data?.phone ?? "",
+                                      style: TextStyle(
+                                        color: System.data.color!.primaryColor,
+                                        fontSize: 18,
                                       ),
-                                    ],
-                                  ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
                                 ),
                               ),
-                              const Divider(),
-                              GestureDetector(
-                                onTap: () {
-                                  widget.onTapFaq!();
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(bottom: 8),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text(
-                                        System.data.strings!.faq,
-                                        style: TextStyle(
-                                          color:
-                                              System.data.color!.primaryColor,
-                                          fontSize: 18,
-                                        ),
-                                        textAlign: TextAlign.center,
+                            ),
+                            const Divider(),
+                            GestureDetector(
+                              onTap: () {
+                                aboutViewModel
+                                    .sendEmail(snapshot.data?.email ?? "");
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      System.data.strings!.email,
+                                      style: TextStyle(
+                                        color: System.data.color!.primaryColor,
+                                        fontSize: 18,
                                       ),
-                                      Icon(
-                                        FontAwesomeIcons.chevronRight,
-                                        color: System.data.color?.primaryColor,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      snapshot.data?.email ?? "",
+                                      style: TextStyle(
+                                        color: System.data.color!.primaryColor,
+                                        fontSize: 18,
                                       ),
-                                    ],
-                                  ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            const Divider(),
+                            GestureDetector(
+                              onTap: () {
+                                widget.onTapFaq!();
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      System.data.strings!.faq,
+                                      style: TextStyle(
+                                        color: System.data.color!.primaryColor,
+                                        fontSize: 18,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Icon(
+                                      FontAwesomeIcons.chevronRight,
+                                      color: System.data.color?.primaryColor,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 );

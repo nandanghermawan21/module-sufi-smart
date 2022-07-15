@@ -72,8 +72,8 @@ class NewsModelNew {
         .then((value) {
       if (value.statusCode == 200) {
         var response = json.decode(value.body);
-        ModeUtil.debugPrint("call get list news api 4 + ${response["data"]}");
-        ModeUtil.debugPrint("call get list news api 3 ${value.body}");
+        // ModeUtil.debugPrint("call get list news api 4 + ${response["data"]}");
+        // ModeUtil.debugPrint("call get list news api 3 ${value.body}");
 
         if (response["isSuccess"] == true) {
           return (response["data"] as List)
@@ -102,7 +102,7 @@ class NewsModelNew {
         .get(Uri.parse(System.data.apiEndPoint.getDetailNewsId(id: id)))
         .then((value) {
       if (value.statusCode == 200) {
-        ModeUtil.debugPrint("call get aplikasi new api ${value.body}");
+        //ModeUtil.debugPrint("call get aplikasi new api ${value.body}");
         return NewsModelNew.fromJson(json.decode(value.body));
       } else {
         ModeUtil.debugPrint("error not status code 200");

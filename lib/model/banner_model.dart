@@ -23,9 +23,9 @@ class BannerModel {
         //ModeUtil.debugPrint("call get Banner api 2");
         if (value.statusCode == 200) {
           var response = json.decode(value.body);
-          ModeUtil.debugPrint("call get Banner api 4 + ${response["data"]}");
-          ModeUtil.debugPrint("call get Banner api 3 ${value.body}");
-          ModeUtil.debugPrint("Success -> " + response.toString());
+          // ModeUtil.debugPrint("call get Banner api 4 + ${response["data"]}");
+          // ModeUtil.debugPrint("call get Banner api 3 ${value.body}");
+          // ModeUtil.debugPrint("Success -> " + response.toString());
           if (response["isSuccess"] == true) {
             return (response["data"] as List)
                 .map((e) => BannerModel.fromJson(e))

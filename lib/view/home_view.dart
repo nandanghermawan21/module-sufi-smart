@@ -2,12 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/model/banner_model.dart';
 import 'package:sufismart/model/news_model_new.dart';
+import 'package:sufismart/model/point_model.dart';
+import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
+import 'package:sufismart/view_model/dashboard_view_model.dart';
 import 'package:sufismart/view_model/home_view_model.dart';
 
 class HomeView extends StatefulWidget {
@@ -44,6 +48,8 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   HomeViewModel homeViewModel = HomeViewModel();
+  DashboardViewModel dashboardViewModel = DashboardViewModel();
+  String? strUserid = System.data.global.customerNewModel?.userid;
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +66,8 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //header(),
-                    swiperBanner(),                    
+                    swiperBanner(),
+                    header(strUserid ?? ""),
                     featureList(),
                     buttonApply(),
                     latestNews(),
@@ -75,80 +81,209 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget header() {
-    return Container(
-      padding: const EdgeInsets.only(top:15,left: 30, right: 30, bottom: 30),
-      //height: 100,
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xff0d306b),
-                Colors.indigo,
-              ]),
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              const Expanded(
-                flex: 3,
-                child: Text(
-                  "Welcome,",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600),
-                ),
+  Widget header(String? userid) {
+    ModeUtil.debugPrint('userid $userid');
+    return userid != ""
+        ? Container(
+            //padding: const EdgeInsets.only(top: 15, left: 30, right: 30, bottom: 5),
+            margin: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.all(10),
+            //height: 100,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              // gradient: LinearGradient(
+              //     begin: Alignment.topCenter,
+              //     end: Alignment.bottomCenter,
+              //     colors: [
+              //       Color(0xff0d306b),
+              //       Color.fromARGB(255, 63, 81, 181),
+              //     ]),
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(0),
               ),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  // mainAxisAlignment: MainAxisAlignment.end,
-                  // children: const [
-                  //   Icon(
-                  //     FontAwesomeIcons.userCircle,
-                  //     color: Colors.white,
-                  //   ),
-                  //   SizedBox(
-                  //     width: 10,
-                  //   ),
-                  //   Icon(
-                  //     FontAwesomeIcons.bell,
-                  //     color: Colors.white,
-                  //   )
-                  // ],
+            ),
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        color: Colors.transparent,
+                        margin: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          "${System.data.strings!.welcomeUser}${System.data.global.customerNewModel?.name}",
+                          style: TextStyle(
+                              color: System.data.color?.primaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ),
+                    // Expanded(
+                    //   flex: 1,
+                    //   child: Row(
+                    //     // mainAxisAlignment: MainAxisAlignment.end,
+                    //     // children: const [
+                    //     //   Icon(
+                    //     //     FontAwesomeIcons.userCircle,
+                    //     //     color: Colors.white,
+                    //     //   ),
+                    //     //   SizedBox(
+                    //     //     width: 10,
+                    //     //   ),
+                    //     //   Icon(
+                    //     //     FontAwesomeIcons.bell,
+                    //     //     color: Colors.white,
+                    //     //   )
+                    //     // ],
+                    //   ),
+                    // )
+                  ],
                 ),
-              )
-            ],
-          ),
-          Text(
-            "${System.data.global.customerNewModel?.name}",
-            style: const TextStyle(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w900),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          // const Text(
-          //   "Choose Suzuki Finance Indonesia \nfor your Suzuki credit",
-          //   //"Pilih Suzuki Finance Indonesia \nUntuk kenyamanan kredit Suzuki anda",
-          //   style: TextStyle(color: Colors.white, fontSize: 12),
-          // ),
-        ],
-      ),
-    );
+                const SizedBox(
+                  height: 5,
+                ),
+                pointuser(strUserid),
+                // Container(
+                //   margin: const EdgeInsets.only(left: 10),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Expanded(
+                //         flex: 2,
+                //         child: Container(
+                //           color: Colors.transparent,
+                //           child: Column(
+                //             mainAxisAlignment: MainAxisAlignment.start,
+                //             children: [
+                //               Container(
+                //                 padding: const EdgeInsets.only(bottom: 5),
+                //                 color: Colors.transparent,
+                //                 child: Row(
+                //                   children: [
+                //                     Container(
+                //                         color: Colors.transparent,
+                //                         padding: const EdgeInsets.only(
+                //                             bottom: 5, right: 5),
+                //                         child: const Icon(
+                //                           FontAwesomeIcons.coins,
+                //                           size: 25,
+                //                           color: Colors.amber,
+                //                         )),
+                //                     Container(
+                //                       color: Colors.transparent,
+                //                       child: Column(
+                //                         children: [
+                //                           Text(
+                //                             "Points",
+                //                             style: TextStyle(
+                //                               fontSize: 12,
+                //                               fontWeight: FontWeight.bold,
+                //                               color: System.data.color?.primaryColor,
+                //                             ),
+                //                           ),
+                //                           Text(
+                //                             "100",
+                //                             style: TextStyle(
+                //                               fontSize: 12,
+                //                               fontWeight: FontWeight.bold,
+                //                               color: System.data.color?.primaryColor,
+                //                             ),
+                //                           ),
+                //                         ],
+                //                       ),
+                //                     ),
+                //                   ],
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //       Expanded(
+                //         flex: 2,
+                //         child: Container(
+                //           color: Colors.transparent,
+                //           child: Column(
+                //             mainAxisAlignment: MainAxisAlignment.start,
+                //             children: [
+                //               Container(
+                //                 padding: const EdgeInsets.only(bottom: 5),
+                //                 color: Colors.transparent,
+                //                 child: Row(
+                //                   children: [
+                //                     Container(
+                //                         color: Colors.transparent,
+                //                         padding: const EdgeInsets.only(
+                //                             bottom: 5, right: 5),
+                //                         child: Icon(
+                //                           FontAwesomeIcons.solidArrowAltCircleUp,
+                //                           size: 25,
+                //                           color: System.data.color!.primaryColor,
+                //                         )),
+                //                     Container(
+                //                       color: Colors.transparent,
+                //                       child: Column(
+                //                         children: [
+                //                           Text(
+                //                             "Level",
+                //                             style: TextStyle(
+                //                               fontSize: 12,
+                //                               fontWeight: FontWeight.bold,
+                //                               color: System.data.color?.primaryColor,
+                //                             ),
+                //                           ),
+                //                           Text(
+                //                             "Diamond",
+                //                             style: TextStyle(
+                //                               fontSize: 12,
+                //                               fontWeight: FontWeight.bold,
+                //                               color: System.data.color?.primaryColor,
+                //                             ),
+                //                           ),
+                //                         ],
+                //                       ),
+                //                     ),
+                //                   ],
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // // Text(
+                // //   "Hi,${System.data.global.customerNewModel?.name}",
+                //   style: const TextStyle(
+                //       color: Colors.white, fontSize: 20, fontWeight: FontWeight.w900),
+                //   overflow: TextOverflow.ellipsis,
+                //   maxLines: 1,
+                // ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
+                // const Text(
+                //   "Choose Suzuki Finance Indonesia \nfor your Suzuki credit",
+                //   //"Pilih Suzuki Finance Indonesia \nUntuk kenyamanan kredit Suzuki anda",
+                //   style: TextStyle(color: Colors.white, fontSize: 12),
+                // ),
+              ],
+            ),
+          )
+        : Container();
   }
 
   Widget swiperBanner() {
     return Container(
       height: 230,
-      margin: const EdgeInsets.only(bottom: 5),
+      margin: const EdgeInsets.all(0),
       width: double.infinity,
       child: FutureBuilder<List<BannerModel>>(
         future: homeViewModel.listBannerSufi,
@@ -277,7 +412,7 @@ class _HomeViewState extends State<HomeView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            margin: const EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(bottom: 10, left: 10),
             child: Text(
               System.data.strings!.features,
               style: TextStyle(
@@ -386,7 +521,7 @@ class _HomeViewState extends State<HomeView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                margin: const EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.all(0),
                 child: Text(
                   System.data.strings!.applykendaraan,
                   style: TextStyle(
@@ -523,7 +658,7 @@ class _HomeViewState extends State<HomeView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
-                margin: const EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.only(left: 20),
                 child: Text(
                   System.data.strings!.latestNews,
                   style: TextStyle(
@@ -623,5 +758,222 @@ class _HomeViewState extends State<HomeView> {
             pm,
           ),
         ));
+  }
+
+  Widget pointuser(String? struser) {
+    return FutureBuilder<PointModel?>(
+        future: dashboardViewModel.getDataPointById(id: struser),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Container(
+              padding: const EdgeInsets.only(left: 0),
+              decoration: BoxDecoration(
+                color: System.data.color!.whiteColor,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
+                ),
+              ),
+              child: Row(
+                children: [
+                  menuPoint("Points", snapshot.data?.point,
+                      FontAwesomeIcons.coins, Colors.amber),
+                  menuPoint(
+                      "Level",
+                      snapshot.data?.leveluser,
+                      FontAwesomeIcons.solidArrowAltCircleUp,
+                      System.data.color!.primaryColor),
+                ],
+              ),
+              // child: Column(
+              //   children: [
+              //     menuPoint(
+              //       "Points",
+              //       snapshot.data?.point,
+              //       FontAwesomeIcons.coins,
+              //       Colors.amber,
+              //     ),
+              //     menuPoint(
+              //       "Level",
+              //       snapshot.data?.leveluser,
+              //       FontAwesomeIcons.solidArrowAltCircleUp,
+              //       System.data.color!.primaryColor,
+              //     ),
+              //   ],
+              // ),
+            );
+          } else {
+            return SkeletonAnimation(
+              child: Container(
+                padding: const EdgeInsets.only(left: 0),
+                // decoration: BoxDecoration(
+                //   color: System.data.color!.greyColor2,
+                //   borderRadius: const BorderRadius.all(
+                //     Radius.circular(10),
+                //   ),
+                // ),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: System.data.color!.greyColor2,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      height: 20,
+                      width: double.infinity,
+                      //color: Colors.transparent,
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: System.data.color!.greyColor2,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      height: 20,
+                      width: double.infinity,
+                      //color: Colors.transparent,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        });
+  }
+
+  Widget menuPoint2(
+      String? title, String? title2, IconData iconstr, colorChild) {
+    return Container(
+      color: Colors.transparent,
+      child: Column(
+        children: [
+          Container(
+            color: Colors.transparent,
+            width: MediaQuery.of(System.data.context).size.width,
+            child: Container(
+              padding: const EdgeInsets.all(0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 2),
+                                color: Colors.transparent,
+                                child: Text(
+                                  title ?? "",
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                //     Image.asset(
+                                //   imageAsset ?? "",
+                                //   width: 15,
+                                //   height: 15,
+                                // ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 6,
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                color: Colors.transparent,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      color: Colors.transparent,
+                                      padding: const EdgeInsets.only(bottom: 5),
+                                      child: Icon(
+                                        iconstr,
+                                        size: 20,
+                                        color: colorChild,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      title2 ?? "",
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget menuPoint(String? title, String? value, IconData iconstr, colorChild) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            title ?? "",
+            style: TextStyle(
+              color: System.data.color!.greyColor,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Icon(
+                  iconstr,
+                  size: 20,
+                  color: colorChild,
+                ),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                value ?? "",
+                style: TextStyle(
+                  color: System.data.color!.greyColor,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }

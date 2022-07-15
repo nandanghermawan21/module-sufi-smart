@@ -19,6 +19,9 @@ class CustomerNewModel {
   String? deviceid;
   String? imageuser;
   DateTime? expired;
+  String? tipe;
+  String? reveralid;
+  String? idkomunitas;
 
   CustomerNewModel(
       {this.userid,
@@ -33,7 +36,10 @@ class CustomerNewModel {
       this.gender,
       this.deviceid,
       this.imageuser,
-      this.expired});
+      this.expired,
+      this.tipe,
+      this.reveralid,
+      this.idkomunitas});
 
   factory CustomerNewModel.fromJson(Map<String, dynamic> json) {
     return CustomerNewModel(
@@ -52,6 +58,9 @@ class CustomerNewModel {
       expired: json["expired"] == null
           ? null
           : DateTime.parse(json['expired'] as String),
+      tipe : json["tipe"] as String?,
+      reveralid : json["reveralid"] as String?,
+      idkomunitas : json["idkomunitas"] as String?,
     );
   }
 
@@ -70,6 +79,9 @@ class CustomerNewModel {
       'deviceid': deviceid,
       'imageuser': imageuser,
       'expired' : expired,
+      'tipe' : tipe,
+      'reveralid' : reveralid,
+      'idkomunitas' : idkomunitas,
     };
   }
 
