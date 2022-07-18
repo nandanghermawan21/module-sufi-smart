@@ -454,6 +454,7 @@ class _HomeViewState extends State<HomeView> {
                   child: buttonFeature(
                     title: System.data.strings!.creditSimulation,
                     ontap: () {
+                      print("fire me");
                       widget.gotoSimulation!();
                     },
                     image:

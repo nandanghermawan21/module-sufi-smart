@@ -110,7 +110,7 @@ Map<String, WidgetBuilder> route = {
                       .pushNamed(RouteName.webView, arguments: {
                     ParamName.urlWebview:
                         "https://sufismart.sfi.co.id/sufismart/api/simulasi_page_sufismart.php?userid=" +
-                            userid!,
+                            (userid ?? ""),
                   });
                   //Navigator.of(context).pushNamed(RouteName.creditSimulation);
                 },
@@ -137,7 +137,7 @@ Map<String, WidgetBuilder> route = {
                         .pushNamed(RouteName.webView, arguments: {
                       ParamName.urlWebview:
                           "https://sufismart.sfi.co.id/sufismart/api/ic_product_sufismart.php?EMAIL=" +
-                              email!,
+                              (email ?? ""),
                     });
                   } else {
                     Navigator.of(context).pushNamed(RouteName.alertNoLogin);
@@ -150,7 +150,7 @@ Map<String, WidgetBuilder> route = {
                       .pushNamed(RouteName.webView, arguments: {
                     ParamName.urlWebview:
                         "https://sufismart.sfi.co.id/sufismart/api/credit_simulation_apply_all.php?userid=" +
-                            userid!,
+                            (userid ?? ""),
                   });
                 },
               );
