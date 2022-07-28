@@ -25,7 +25,7 @@ class _WebViewState extends State<WebViewSufi> {
   void initState() {
     super.initState();
     // Enable virtual display.
-    if (Platform.isAndroid) WebView.platform = AndroidWebView();
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   @override
@@ -75,7 +75,7 @@ class _WebViewState extends State<WebViewSufi> {
                     ModeUtil.debugPrint("message ${message.message}");
                     webViewModel.openbrowser(message.message);
                   }),
-            },
+            }.toSet(),
           ),
           isLoading
               ? const Center(

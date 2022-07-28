@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
@@ -25,20 +26,24 @@ class HomeView extends StatefulWidget {
   final VoidCallback? gotoShowAll;
   final ValueChanged<NewsModelNew>? gotoDetailNews;
   final VoidCallback? gotoApply;
+  final VoidCallback? goToRedeemPointHome;
+  final VoidCallback? goTolevel;
 
-  const HomeView(
-      {Key? key,
-      this.gotoForgotPassword,
-      this.gotoPromo,
-      this.gotoProduct,
-      this.gotoBranch,
-      this.gotoSimulation,
-      this.gotoInstallment,
-      this.gotoPayment,
-      this.gotoShowAll,
-      this.gotoDetailNews,
-      this.gotoApply})
-      : super(key: key);
+  const HomeView({
+    Key? key,
+    this.gotoForgotPassword,
+    this.gotoPromo,
+    this.gotoProduct,
+    this.gotoBranch,
+    this.gotoSimulation,
+    this.gotoInstallment,
+    this.gotoPayment,
+    this.gotoShowAll,
+    this.gotoDetailNews,
+    this.gotoApply,
+    this.goToRedeemPointHome,
+    this.goTolevel,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -106,6 +111,7 @@ class _HomeViewState extends State<HomeView> {
               //mainAxisAlignment: MainAxisAlignment.center,
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                const SizedBox(height: 5),
                 Row(
                   //mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -283,6 +289,7 @@ class _HomeViewState extends State<HomeView> {
   Widget swiperBanner() {
     return Container(
       height: 230,
+      //height: MediaQuery.of(context).size.height / 3.3,
       margin: const EdgeInsets.all(0),
       width: double.infinity,
       child: FutureBuilder<List<BannerModel>>(
@@ -316,8 +323,8 @@ class _HomeViewState extends State<HomeView> {
                       ),
                   child: snapshot.data?[index].imagepath == null
                       ? Container(
-                          //height: MediaQuery.of(context).size.height / 3.5,
-                          height: 230,
+                          height: MediaQuery.of(context).size.height / 3,
+                          //height: 230,
                           decoration: const BoxDecoration(
                             // borderRadius: BorderRadius.all(
                             //     Radius.circular(10)),
@@ -329,7 +336,7 @@ class _HomeViewState extends State<HomeView> {
                       : CachedNetworkImage(
                           imageUrl: snapshot.data?[index].imagepath ?? "",
                           imageBuilder: (context, imageProvider) => Container(
-                            //height: MediaQuery.of(context).size.height / 3.5,
+                            //height: MediaQuery.of(context).size.height / 3,
                             height: 230,
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.only(
@@ -348,9 +355,9 @@ class _HomeViewState extends State<HomeView> {
                             height: 230,
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
-                              borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(15),
-                                  bottomRight: Radius.circular(15)),
+                              // borderRadius: const BorderRadius.only(
+                              //     bottomLeft: Radius.circular(15),
+                              //     bottomRight: Radius.circular(15)),
                             ),
                           )),
                           errorWidget: (context, url, error) => Container(
@@ -358,12 +365,12 @@ class _HomeViewState extends State<HomeView> {
                             height: 230,
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
-                              borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(15),
-                                  bottomRight: Radius.circular(15))
-                              // borderRadius: BorderRadius.all(
-                              //     Radius.circular(10))
-                              ,
+                              // borderRadius: const BorderRadius.only(
+                              //     bottomLeft: Radius.circular(15),
+                              //     bottomRight: Radius.circular(15))
+                              // // borderRadius: BorderRadius.all(
+                              // //     Radius.circular(10))
+                              // ,
                             ),
                             child: const Center(
                               child: Icon(Icons.error),
@@ -454,7 +461,7 @@ class _HomeViewState extends State<HomeView> {
                   child: buttonFeature(
                     title: System.data.strings!.creditSimulation,
                     ontap: () {
-                      print("fire me");
+                      //print("fire me");
                       widget.gotoSimulation!();
                     },
                     image:
@@ -721,13 +728,27 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 );
               } else {
+                // return SkeletonAnimation(
+                //   child: Container(
+                //     margin: const EdgeInsets.all(5),
+                //     decoration: BoxDecoration(
+                //       color: Colors.grey[300],
+                //       borderRadius: const BorderRadius.all(
+                //         Radius.circular(5),
+                //       ),
+                //     ),
+                //   ),
+                // );
+
                 return SkeletonAnimation(
                   child: Container(
-                    margin: const EdgeInsets.all(5),
+                    width: MediaQuery.of(context).size.width,
+                    height: 220,
+                    margin: const EdgeInsets.all(3),
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: const BorderRadius.all(
-                        Radius.circular(5),
+                        Radius.circular(20),
                       ),
                     ),
                   ),
@@ -776,13 +797,26 @@ class _HomeViewState extends State<HomeView> {
               ),
               child: Row(
                 children: [
-                  menuPoint("Points", snapshot.data?.point,
-                      FontAwesomeIcons.coins, Colors.amber),
+                  menuPoint(
+                    "Points",
+                    snapshot.data?.point,
+                    FontAwesomeIcons.coins,
+                    Colors.amber,
+                    widget.goToRedeemPointHome,
+                  ),
+                  Container(
+                    color: Colors.transparent,
+                    height: 40,
+                    child: VerticalDivider(
+                      color: System.data.color!.greyColor,
+                    ),
+                  ),
                   menuPoint(
                       "Level",
                       snapshot.data?.leveluser,
-                      FontAwesomeIcons.solidArrowAltCircleUp,
-                      System.data.color!.primaryColor),
+                      FontAwesomeIcons.medal,
+                      System.data.color!.primaryColor,
+                      widget.goTolevel),
                 ],
               ),
               // child: Column(
@@ -847,133 +881,45 @@ class _HomeViewState extends State<HomeView> {
         });
   }
 
-  Widget menuPoint2(
-      String? title, String? title2, IconData iconstr, colorChild) {
-    return Container(
-      color: Colors.transparent,
-      child: Column(
-        children: [
-          Container(
-            color: Colors.transparent,
-            width: MediaQuery.of(System.data.context).size.width,
-            child: Container(
-              padding: const EdgeInsets.all(0),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          color: Colors.transparent,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                margin: const EdgeInsets.only(bottom: 2),
-                                color: Colors.transparent,
-                                child: Text(
-                                  title ?? "",
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                //     Image.asset(
-                                //   imageAsset ?? "",
-                                //   width: 15,
-                                //   height: 15,
-                                // ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: Container(
-                          color: Colors.transparent,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                color: Colors.transparent,
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      color: Colors.transparent,
-                                      padding: const EdgeInsets.only(bottom: 5),
-                                      child: Icon(
-                                        iconstr,
-                                        size: 20,
-                                        color: colorChild,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      title2 ?? "",
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget menuPoint(String? title, String? value, IconData iconstr, colorChild) {
+  Widget menuPoint(String? title, String? value, IconData iconstr, colorChild,
+      VoidCallback? ontp) {
     return Expanded(
-      child: Column(
-        children: [
-          Text(
-            title ?? "",
-            style: TextStyle(
-              color: System.data.color!.greyColor,
+      child: GestureDetector(
+        onTap: ontp,
+        child: Column(
+          children: [
+            Text(
+              title ?? "",
+              style: TextStyle(
+                color: System.data.color!.greyColor,
+              ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                color: Colors.transparent,
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Icon(
-                  iconstr,
-                  size: 20,
-                  color: colorChild,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  color: Colors.transparent,
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Icon(
+                    iconstr,
+                    size: 20,
+                    color: colorChild,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                value ?? "",
-                style: TextStyle(
-                  color: System.data.color!.greyColor,
-                  fontWeight: FontWeight.normal,
+                const SizedBox(
+                  width: 5,
                 ),
-              ),
-            ],
-          )
-        ],
+                Text(
+                  value ?? "",
+                  style: TextStyle(
+                    color: System.data.color!.greyColor,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

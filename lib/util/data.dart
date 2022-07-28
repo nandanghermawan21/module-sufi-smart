@@ -93,7 +93,7 @@ class Data extends ChangeNotifier {
                 ),
                 Text(
                   strContent!,
-                  textAlign: TextAlign.justify,
+                  //textAlign: TextAlign.justify,
                 ),
               ],
             ),
@@ -152,7 +152,7 @@ class Data extends ChangeNotifier {
                       // borderRadius: BorderRadius.only(
                       //     bottomLeft: Radius.circular(15),
                       //     bottomRight: Radius.circular(15)),
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
                       image: DecorationImage(
                           image: imageProvider, fit: BoxFit.fill),
                     ),
@@ -164,9 +164,10 @@ class Data extends ChangeNotifier {
                     width: 300,
                     decoration: BoxDecoration(
                       color: System.data.color!.greyColor2,
-                      borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15)),
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      // borderRadius: const BorderRadius.only(
+                      //     bottomLeft: Radius.circular(15),
+                      //     bottomRight: Radius.circular(15)),
                     ),
                   )),
                   errorWidget: (context, url, error) => Container(
@@ -175,12 +176,13 @@ class Data extends ChangeNotifier {
                     width: 300,
                     decoration: BoxDecoration(
                       color: System.data.color!.greyColor2,
-                      borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15))
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      // borderRadius: const BorderRadius.only(
+                      //     bottomLeft: Radius.circular(15),
+                      //     bottomRight: Radius.circular(15))
                       // borderRadius: BorderRadius.all(
                       //     Radius.circular(10))
-                      ,
+                      //,
                     ),
                     child: const Center(
                       child: Icon(Icons.error),

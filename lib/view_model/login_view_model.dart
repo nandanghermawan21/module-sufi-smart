@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/cilcular_loader_component.dart';
 import 'package:sufismart/component/pin_component.dart';
-import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/customernew_model.dart';
-import 'package:sufismart/model/otp_model.dart';
 import 'package:sufismart/model/otp_new_model.dart';
 import 'package:sufismart/model/user_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
@@ -22,6 +20,7 @@ class LoginViewModel extends ChangeNotifier {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
   PinComponentController pinComponentController = PinComponentController();
+  final GlobalKey<FormState> formKeyContact = GlobalKey<FormState>();
 
   String? deviceId;
 
@@ -39,10 +38,24 @@ class LoginViewModel extends ChangeNotifier {
     commit();
   }
 
-  bool _showPassword = false;
+  bool _showPassword = true;
   bool get showPassword => _showPassword;
   set setShowPassword(bool showPassword) {
     _showPassword = showPassword;
+    commit();
+  }
+
+  String? _email;
+  String? get email => _email;
+  set email(String? value) {
+    _email = value;
+    commit();
+  }
+
+  String? _password;
+  String? get password => _password;
+  set password(String? value) {
+    _password = value;
     commit();
   }
 

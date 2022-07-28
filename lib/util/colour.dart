@@ -6,6 +6,7 @@ abstract class Colour {
   Color get primaryColor => const Color(0xff0d306b);
   Color get greyColor => const Color(0xFF808080);
   Color get whiteColor => const Color(0xFFFFFFFF);
+  Color get whiteSmoke => const Color(0xFFF2F2F2);
   Color get primaryColor2 => const Color(0xff0d306b);
   Color get greyColor2 => const Color(0xffCCCCCC);
 }

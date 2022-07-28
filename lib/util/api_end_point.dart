@@ -16,6 +16,8 @@ class ApiEndPoint {
   //sufismart
   String baseUrlSufismart = "https://sufismart.sfi.co.id/sufismart_ci/api_sufi/";
   String baseUrlDebugSufismart = "https://sufismart.sfi.co.id/sufismart_ci/api_sufi/";
+  // String baseUrlSufismart = "https://uat.sfi.co.id/sufismart_ci/api_sufi/";
+  // String baseUrlDebugSufismart = "https://uat.sfi.co.id/sufismart_ci/api_sufi/";
 
   String getBannerUrl = "getBannerListNew";
   String getNewsHomeUrl = "getImgNewsNew";
@@ -41,6 +43,9 @@ class ApiEndPoint {
   String getDataNewsByIdUrl = "getDetailNewsId";
   String getDataPointUserUrl = "getPointUser";
   String getDataNotifUrl = "getNotifAnnouncement";
+  String getDataListMerchantUrl = "getListMerchant";
+  String getDataHistoryPointUrl = "getHistoryPointUser";
+  String postRedeemPointUrl = "submitRedeemPoint";
 
   String get url {
     if (ModeUtil.debugMode == true) {
@@ -215,5 +220,23 @@ class ApiEndPoint {
     required String? id,
   }) {
     return urlSufiSmart + "$getDataNotifUrl${id != null ? "/$id" : ""}";
+  }
+
+  String getMerchant({
+    required String? userid,
+  }) {
+    return urlSufiSmart +
+        "$getDataListMerchantUrl${userid != null ? "/$userid" : ""}";
+  }
+
+  String getHistoryPoint({
+    required String? userid,
+  }) {
+    return urlSufiSmart +
+        "$getDataHistoryPointUrl${userid != null ? "/$userid" : ""}";
+  }
+
+  String redeemPointSufismart() {
+    return urlSufiSmart + postRedeemPointUrl;
   }
 }

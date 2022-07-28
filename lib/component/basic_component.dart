@@ -29,7 +29,7 @@ class BasicComponent {
 
   static Future<void> opengooglemap(double lat, double lon) async {
     //final url = 'http://maps.google.com/maps?q=loc:${lat},${lon}(${tag})';
-    final url = 'http://www.google.com/maps/search/?api=1&query=$lat,$lon';
+    final url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lon';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -43,13 +43,14 @@ class BasicComponent {
       imageBuilder: (context, imageProvider) => SizedBox(
         height: MediaQuery.of(context).size.height / 2,
         //width: MediaQuery.of(context).size.width,
-        child: Card(
+        child: Container(
           margin: const EdgeInsets.only(bottom: 10.0),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(5)),
-              image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
             ),
+            image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
           ),
         ),
       ),
@@ -125,9 +126,9 @@ class BasicComponent {
           CachedNetworkImage(
             imageUrl: prodCat.categoryimage ?? "",
             imageBuilder: (context, imageProvider) => Container(
+              margin: const EdgeInsets.all(0),
               width: 110,
-              height: 115,
-              margin: const EdgeInsets.only(bottom: 10.0),
+              height: 115,              
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -140,14 +141,16 @@ class BasicComponent {
                 child: Container(
               //height: MediaQuery.of(context).size.height / 2,
               width: 110,
-              height: 110,
+              height: 115,
+              
               decoration: BoxDecoration(
                   color: Colors.grey[300],
                   borderRadius: const BorderRadius.all(Radius.circular(5))),
             )),
             errorWidget: (context, url, error) => Container(
               width: 110,
-              height: 110,
+              height: 115,
+              
               decoration: BoxDecoration(
                   color: Colors.grey[300],
                   borderRadius: const BorderRadius.all(Radius.circular(5))),
@@ -219,6 +222,7 @@ class BasicComponent {
               //height: 190,
               width: MediaQuery.of(context).size.width,
               height: 190,
+              margin: const EdgeInsets.only(bottom: 5.0),
               decoration: BoxDecoration(
                   color: Colors.grey[300],
                   borderRadius: const BorderRadius.all(Radius.circular(5))),
@@ -228,6 +232,7 @@ class BasicComponent {
               //height: 190,
               width: MediaQuery.of(context).size.width,
               height: 190,
+              margin: const EdgeInsets.only(bottom: 5.0),
               decoration: BoxDecoration(
                   color: Colors.grey[300],
                   borderRadius: const BorderRadius.all(Radius.circular(5))),

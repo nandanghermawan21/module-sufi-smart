@@ -46,8 +46,10 @@ class _NewsDetailViewDeepLink extends State<NewsDetailViewDeepLink> {
                             margin: const EdgeInsets.only(bottom: 10.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(5)),
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
+                                ),
                                 image: DecorationImage(
                                     image: imageProvider, fit: BoxFit.fill),
                               ),
@@ -58,16 +60,22 @@ class _NewsDetailViewDeepLink extends State<NewsDetailViewDeepLink> {
                             child: Container(
                           height: MediaQuery.of(context).size.height / 2,
                           decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(5))),
+                            color: Colors.grey[300],
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(15),
+                            ),
+                          ),
                         )),
                         errorWidget: (context, url, error) => Container(
                           height: MediaQuery.of(context).size.height / 2,
                           decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(5))),
+                            color: Colors.grey[300],
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(15),
+                            ),
+                          ),
                           child: const Center(
                             child: Icon(Icons.error),
                           ),

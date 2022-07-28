@@ -12,13 +12,20 @@ class DashboardView extends StatefulWidget {
   final VoidCallback? goToChangeProfile;
   final VoidCallback? goTologout;
   final VoidCallback? goToListApply;
-  const DashboardView(
-      {Key? key,
-      this.goToChangePass,
-      this.goToChangeProfile,
-      this.goTologout,
-      this.goToListApply})
-      : super(key: key);
+  final VoidCallback? goToListHistoryPoint;
+  final VoidCallback? goToLevelUser;
+  final VoidCallback? goToRedeemPoint;
+
+  const DashboardView({
+    Key? key,
+    this.goToChangePass,
+    this.goToChangeProfile,
+    this.goTologout,
+    this.goToListApply,
+    this.goToListHistoryPoint,
+    this.goToLevelUser,
+    this.goToRedeemPoint,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -79,6 +86,16 @@ class _DashboardViewState extends State<DashboardView> {
                           System.data.strings!.ajukanPembiayaan,
                           "assets/ic_icon_address.png",
                           FontAwesomeIcons.clipboardList),
+                    ),
+                    const Divider(),
+                    GestureDetector(
+                      onTap: () {
+                        widget.goToListHistoryPoint!();
+                      },
+                      child: menuProfilBar(
+                          System.data.strings!.historyPoint,
+                          "assets/ic_icon_address.png",
+                          FontAwesomeIcons.history),
                     ),
                     const Divider(),
                     GestureDetector(
@@ -473,7 +490,6 @@ class _DashboardViewState extends State<DashboardView> {
         future: dashboardViewModel.getDataPointById(id: struser),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            String strtipe = snapshot.data?.tipe ?? "";
             return Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -519,13 +535,26 @@ class _DashboardViewState extends State<DashboardView> {
                           : Container(),
                       Row(
                         children: [
-                          menuPoint("Points", snapshot.data?.point,
-                              FontAwesomeIcons.coins, Colors.amber),
+                          menuPoint(
+                              "Points",
+                              snapshot.data?.point,
+                              FontAwesomeIcons.coins,
+                              Colors.amber,
+                              widget.goToRedeemPoint!),
+                          Container(
+                            color: Colors.transparent,
+                            height: 40,
+                            child: VerticalDivider(
+                              color: System.data.color!.greyColor,
+                            ),
+                          ),
                           menuPoint(
                               "Level",
                               snapshot.data?.leveluser,
-                              FontAwesomeIcons.solidArrowAltCircleUp,
-                              System.data.color!.primaryColor),
+                              FontAwesomeIcons.medal,
+                              System.data.color!.primaryColor,
+                              widget.goToLevelUser),
+
                           // menuPoint(
                           //   "Points",
                           //   snapshot.data?.point,
@@ -568,7 +597,7 @@ class _DashboardViewState extends State<DashboardView> {
                       //color: Colors.transparent,
                     ),
                     const SizedBox(
-                      height: 3,
+                      height: 2,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -589,133 +618,137 @@ class _DashboardViewState extends State<DashboardView> {
         });
   }
 
-  Widget menuPoint2(
-      String? title, String? title2, IconData iconstr, colorChild) {
-    return Container(
-      color: Colors.transparent,
-      child: Column(
-        children: [
-          Container(
-            color: Colors.transparent,
-            width: MediaQuery.of(System.data.context).size.width,
-            child: Container(
-              padding: const EdgeInsets.all(0),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          color: Colors.transparent,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                margin: const EdgeInsets.only(bottom: 2),
-                                color: Colors.transparent,
-                                child: Text(
-                                  title ?? "",
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                //     Image.asset(
-                                //   imageAsset ?? "",
-                                //   width: 15,
-                                //   height: 15,
-                                // ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: Container(
-                          color: Colors.transparent,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                color: Colors.transparent,
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      color: Colors.transparent,
-                                      padding: const EdgeInsets.only(bottom: 5),
-                                      child: Icon(
-                                        iconstr,
-                                        size: 24,
-                                        color: colorChild,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      title2 ?? "",
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget menuPoint2(
+  //     String? title, String? title2, IconData iconstr, colorChild) {
+  //   return Container(
+  //     color: Colors.transparent,
+  //     child: Column(
+  //       children: [
+  //         Container(
+  //           color: Colors.transparent,
+  //           width: MediaQuery.of(System.data.context).size.width,
+  //           child: Container(
+  //             padding: const EdgeInsets.all(0),
+  //             child: Column(
+  //               children: <Widget>[
+  //                 Row(
+  //                   children: <Widget>[
+  //                     Expanded(
+  //                       flex: 2,
+  //                       child: Container(
+  //                         color: Colors.transparent,
+  //                         child: Column(
+  //                           crossAxisAlignment: CrossAxisAlignment.start,
+  //                           children: <Widget>[
+  //                             Container(
+  //                               margin: const EdgeInsets.only(bottom: 2),
+  //                               color: Colors.transparent,
+  //                               child: Text(
+  //                                 title ?? "",
+  //                                 style: const TextStyle(
+  //                                   fontSize: 15,
+  //                                   fontWeight: FontWeight.bold,
+  //                                   color: Colors.grey,
+  //                                 ),
+  //                               ),
+  //                               //     Image.asset(
+  //                               //   imageAsset ?? "",
+  //                               //   width: 15,
+  //                               //   height: 15,
+  //                               // ),
+  //                             ),
+  //                           ],
+  //                         ),
+  //                       ),
+  //                     ),
+  //                     Expanded(
+  //                       flex: 6,
+  //                       child: Container(
+  //                         color: Colors.transparent,
+  //                         child: Column(
+  //                           crossAxisAlignment: CrossAxisAlignment.start,
+  //                           children: <Widget>[
+  //                             Container(
+  //                               color: Colors.transparent,
+  //                               child: Row(
+  //                                 children: [
+  //                                   Container(
+  //                                     color: Colors.transparent,
+  //                                     padding: const EdgeInsets.only(bottom: 5),
+  //                                     child: Icon(
+  //                                       iconstr,
+  //                                       size: 24,
+  //                                       color: colorChild,
+  //                                     ),
+  //                                   ),
+  //                                   const SizedBox(
+  //                                     width: 5,
+  //                                   ),
+  //                                   Text(
+  //                                     title2 ?? "",
+  //                                     style: const TextStyle(
+  //                                       fontSize: 15,
+  //                                       fontWeight: FontWeight.bold,
+  //                                       color: Colors.grey,
+  //                                     ),
+  //                                   ),
+  //                                 ],
+  //                               ),
+  //                             ),
+  //                           ],
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget menuPoint(String? title, String? value, IconData iconstr, colorChild) {
+  Widget menuPoint(String? title, String? value, IconData iconstr, colorChild,
+      VoidCallback? ontp) {
     return Expanded(
-      child: Column(
-        children: [
-          Text(
-            title ?? "",
-            style: TextStyle(
-              color: System.data.color!.greyColor,
+      child: GestureDetector(
+        onTap: ontp,
+        child: Column(
+          children: [
+            Text(
+              title ?? "",
+              style: TextStyle(
+                color: System.data.color!.greyColor,
+              ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                color: Colors.transparent,
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Icon(
-                  iconstr,
-                  size: 20,
-                  color: colorChild,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  color: Colors.transparent,
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Icon(
+                    iconstr,
+                    size: 20,
+                    color: colorChild,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                value ?? "",
-                style: TextStyle(
-                  color: System.data.color!.greyColor,
-                  fontWeight: FontWeight.normal,
+                const SizedBox(
+                  width: 3,
                 ),
-              ),
-            ],
-          )
-        ],
+                Text(
+                  value ?? "",
+                  style: TextStyle(
+                    color: System.data.color!.greyColor,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

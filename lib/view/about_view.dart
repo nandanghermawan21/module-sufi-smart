@@ -251,12 +251,12 @@ class _AboutState extends State<AboutView> {
                         margin: const EdgeInsets.only(top: 50),
                         child: Column(
                           children: List.generate(
-                            3,
+                            4,
                             (index) {
                               return SkeletonAnimation(
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
-                                  height: 50,
+                                  height: 30,
                                   margin: const EdgeInsets.all(5),
                                   decoration: BoxDecoration(
                                     color: Colors.grey[300],

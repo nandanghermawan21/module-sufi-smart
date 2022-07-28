@@ -79,7 +79,7 @@ class _ProductCategoryViewState extends State<ProductCategoryView> {
                       return SkeletonAnimation(
                         child: Container(
                           width: MediaQuery.of(context).size.width,
-                          height: 110,
+                          height: 120,
                           margin: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             color: Colors.grey[300],

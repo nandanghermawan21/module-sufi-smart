@@ -163,14 +163,14 @@ class StringsEnUs implements Strings {
   String get version => "Version";
 
   @override
-  String get welcomeBack => "Hi Buddy, Welcome Back";
+  String get welcomeBack => "Welcome Back";
 
   @override
   String get registration => "Registration";
 
   @override
   String get pleaseCompleteYourAccountInformation =>
-      "Please complete your account information";
+      "Please complete your personal data information";
 
   @override
   String get nIK => "NIK";
@@ -258,7 +258,7 @@ class StringsEnUs implements Strings {
   String get validatePassNewAndConfirm => "New password and confirm password are not the same";
 
   @override  
-  String get ajukanPembiayaan => "Vehicle submission";
+  String get ajukanPembiayaan => "My vehicle application";
 
   @override  
   String get descProfile => "Thank you for joining and being a part of Suzuki finance and the Sufi smart application";
@@ -314,5 +314,31 @@ class StringsEnUs implements Strings {
   String get seepromo => "See the promo";
 
   @override  
-  String get welcomeUser => "Hi Buddy Sufi, ";  
+  String get welcomeUser => "Hi Buddy Sufi, ";
+
+  @override  
+  String get silahkanloginterlebihdulu => "Please login to open this menu";
+
+  @override  
+  String? get historyPoint => "History transaction Point";
+
+  @override  
+  String? get pointtidakcukup => "sorry your points are not enough";
+
+  @override
+  
+  String? get alamat => "Address";
+
+  @override  
+  String? get inputalamat => "Enter Address";
+
+  @override  
+  String? get tujuanalamat => "*Make sure the address you entered is correct so that it will be sent to your destination address";
+
+  @override
+  
+  String? get note => "Note";
+
+  @override  
+  String get validateRedeem => "is the data you entered is correct ?";  
 }

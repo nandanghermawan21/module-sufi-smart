@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:sufismart/model/menu_model.dart';
+import 'package:sufismart/model/merchant_model.dart';
 import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
@@ -13,12 +14,15 @@ import 'package:sufismart/view/change_password_view.dart';
 import 'package:sufismart/view/contact_view.dart';
 import 'package:sufismart/view/empty_page_view.dart';
 import 'package:sufismart/view/forgot_password_view.dart';
+import 'package:sufismart/view/history_point_view.dart';
 import 'package:sufismart/view/login_view.dart';
 import 'package:sufismart/view/main_menu_view.dart';
 import 'package:sufismart/view/background_service.dart';
 import 'package:sufismart/view/about_view.dart';
 import 'package:sufismart/view/home_view.dart';
 import 'package:sufismart/view/all_news_view.dart';
+import 'package:sufismart/view/merchant_detail_view.dart';
+import 'package:sufismart/view/merchant_view.dart';
 import 'package:sufismart/view/news_detail_view.dart';
 import 'package:sufismart/view/credit_simulation_view.dart';
 import 'package:sufismart/view/news_detail_view_deeplink.dart';
@@ -58,6 +62,9 @@ class RouteName {
   static const String applyUserview = "ApplyViewUser";
   static const String detailNewsDeepLink = "detailNewsDeepLink";
   static const String announcementView = "announcementView";
+  static const String historyPointView = "historyPointView";
+  static const String merchantPointView = "merchantPointView";
+  static const String merchantDetailPointView = "merchantDetailPointView";
 }
 
 enum ParamName {
@@ -68,7 +75,8 @@ enum ParamName {
   urlWebview,
   productSimulasi,
   newsdetailid,
-  notifid
+  notifid,
+  merchantid
 }
 
 Map<String, WidgetBuilder> route = {
@@ -131,7 +139,7 @@ Map<String, WidgetBuilder> route = {
                   });
                 },
                 gotoInstallment: () {
-                  if (System.data.global.customerNewModel != null) {
+                  if (System.data.global.customerNewModel?.userid != null) {
                     String? email = System.data.global.customerNewModel?.email;
                     Navigator.of(context)
                         .pushNamed(RouteName.webView, arguments: {
@@ -140,7 +148,10 @@ Map<String, WidgetBuilder> route = {
                               (email ?? ""),
                     });
                   } else {
-                    Navigator.of(context).pushNamed(RouteName.alertNoLogin);
+                    return System.data.showmodal(
+                        System.data.strings?.silahkanloginterlebihdulu,
+                        "Announcement");
+                    //Navigator.of(context).pushNamed(RouteName.alertNoLogin);
                   }
                   //Navigator.of(context).pushNamed(RouteName.alertNoLogin);
                 },
@@ -152,6 +163,14 @@ Map<String, WidgetBuilder> route = {
                         "https://sufismart.sfi.co.id/sufismart/api/credit_simulation_apply_all.php?userid=" +
                             (userid ?? ""),
                   });
+                },
+                goToRedeemPointHome: () {
+                  Navigator.of(context).pushNamed(
+                    RouteName.merchantPointView,
+                  );
+                },
+                goTolevel: () {
+                  System.data.showmodal("Coming Soon", "Announcement");
                 },
               );
             case 1:
@@ -186,6 +205,16 @@ Map<String, WidgetBuilder> route = {
                   },
                   goToListApply: () {
                     Navigator.of(context).pushNamed(RouteName.applyUserview);
+                  },
+                  goToListHistoryPoint: () {
+                    Navigator.of(context).pushNamed(RouteName.historyPointView);
+                  },
+                  goToRedeemPoint: () {
+                    Navigator.of(context)
+                        .pushNamed(RouteName.merchantPointView);
+                  },
+                  goToLevelUser: () {
+                    System.data.showmodal("Coming Soon", "Announcement");
                   },
                 );
               } else {
@@ -367,6 +396,24 @@ Map<String, WidgetBuilder> route = {
         {}) as Map<dynamic, dynamic>;
     return AnnouncementView(
       id: arg[ParamName.notifid],
+    );
+  },
+  RouteName.historyPointView: (BuildContext context) {
+    return const HistoryPointView();
+  },
+  RouteName.merchantPointView: (BuildContext context) {
+    return MerchantView(
+      onTapMerchantItems: (merchantmodel) {
+        Navigator.of(context).pushNamed(RouteName.merchantDetailPointView,
+            arguments: {ParamName.merchantid: merchantmodel});
+      },
+    );
+  },
+  RouteName.merchantDetailPointView: (BuildContext context) {
+    Map<dynamic, dynamic> arg = (ModalRoute.of(context)?.settings.arguments ??
+        {}) as Map<dynamic, dynamic>;
+    return MerchantDetailView(
+      merchantModel: arg[ParamName.merchantid],
     );
   }
 };

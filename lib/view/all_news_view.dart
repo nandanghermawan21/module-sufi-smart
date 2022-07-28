@@ -108,7 +108,9 @@ class _AllNewsViewState extends State<AllNewsView> {
         margin: const EdgeInsets.only(bottom: 10),
         width: width,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
           child: BasicComponent.newsImageContainer2(pm),
         ));
   }

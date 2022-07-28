@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
@@ -98,7 +97,7 @@ class _ApplyViewUser extends State<ApplyViewUser> {
   Widget listPageApply(ApplyModel modelApp) {
     return GestureDetector(
       onTap: () {
-        ModeUtil.debugPrint("${modelApp.viewdetail}");
+        //ModeUtil.debugPrint("${modelApp.viewdetail}");
         widget.tapDetailApply!(
           modelApp.viewdetail ?? "",
         );
@@ -107,10 +106,10 @@ class _ApplyViewUser extends State<ApplyViewUser> {
         child: Container(
           width: MediaQuery.of(System.data.context).size.width,
           padding:
-              const EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 10),
+              const EdgeInsets.only(top: 3, right: 10, left: 10, bottom: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children:[
               Container(
                 width: MediaQuery.of(System.data.context).size.width,
                 padding: const EdgeInsets.only(top: 10),
@@ -160,9 +159,10 @@ class _ApplyViewUser extends State<ApplyViewUser> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 5,
-              ),
+              const Divider(),
+              // const SizedBox(
+              //   height: 5,
+              // ),
               Text(
                 modelApp.orderno ?? "",
                 style: const TextStyle(

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-    import 'package:sufismart/util/mode_util.dart';
-    import 'package:http/http.dart' as http;
-    import 'package:sufismart/util/system.dart';
+import 'package:sufismart/util/mode_util.dart';
+import 'package:http/http.dart' as http;
+import 'package:sufismart/util/system.dart';
 
 class ProductListModel {
   String? productcode;
@@ -36,7 +36,7 @@ class ProductListModel {
         'product_price': productprice
       };
 
-  static Future<List<ProductListModel>> getProductList({  
+  static Future<List<ProductListModel>> getProductList({
     required String? categoryId,
   }) {
     //ModeUtil.debugPrint("call get product list api");
@@ -49,9 +49,9 @@ class ProductListModel {
       //ModeUtil.debugPrint("call get product list api 2");
       if (value.statusCode == 200) {
         var response = json.decode(value.body);
-        // ModeUtil.debugPrint(
-        //     "call get Product list api 4 + ${response["data"]}");
-        // ModeUtil.debugPrint("call get Product list api 3 ${value.body}");
+        ModeUtil.debugPrint(
+            "call get Product list api 4 + ${response["data"]}");
+        //ModeUtil.debugPrint("call get Product list api 3 ${value.body}");
 
         if (response["isSuccess"] == true) {
           return (response["data"] as List)

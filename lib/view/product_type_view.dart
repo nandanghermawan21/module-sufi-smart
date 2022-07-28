@@ -86,6 +86,7 @@ class _ProductTypeViewState extends State<ProductTypeView> {
                   //height: 200,
                   width: MediaQuery.of(context).size.width,
                   height: 200,
+                  margin: const EdgeInsets.only(bottom: 5.0),
                   decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius:
@@ -96,6 +97,7 @@ class _ProductTypeViewState extends State<ProductTypeView> {
                   //height: 200,
                   width: MediaQuery.of(context).size.width,
                   height: 200,
+                  margin: const EdgeInsets.only(bottom: 5.0),
                   decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: const BorderRadius.all(Radius.circular(5))),

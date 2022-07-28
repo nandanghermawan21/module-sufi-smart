@@ -1,7 +1,7 @@
 abstract class Strings {
   String get locale => "ID-id";
   String get appName => "Sufi Smart";
-  String get version => "Versi : 1.4";
+  String get version => "Versi : 1.4.0";
   String get home => "Dashboard";
   String get about => "Tentang";
   String get contact => "Kontak";
@@ -32,7 +32,7 @@ abstract class Strings {
   String get username => "nama pengguna";
   String get password => "kata sandi";
   String get enterThe => "masukan";
-  String get welcomeBack => "Hai Sobat, selamat datang kembali";
+  String get welcomeBack => "Selamat datang kembali";
   String get enterYourEmailAndPasswordRegisteredInTheSUFISMARTApplication =>
       "masukkan email dan kata sandi Anda yang terdaftar di aplikasi SUFISMART";
   String get cantBeEmpty => "tidak boleh kosong";
@@ -58,7 +58,7 @@ abstract class Strings {
   String get calculate => "Hitung";
   String get registration => "Registrasi";
   String get pleaseCompleteYourAccountInformation =>
-      "Silahkan lengkapi informasi akun anda";
+      "Silahkan lengkapi informasi data diri anda";
   String get nIK => "NIK";
   String get city => "Kota";
   String get logOut => "Keluar";
@@ -109,7 +109,7 @@ abstract class Strings {
 
   String get validatePassNewAndConfirm => "kata sandi Baru dan konfirmasi kata sandi tidak sama";
 
-  String get ajukanPembiayaan => "Pengajuan kendaraan";
+  String get ajukanPembiayaan => "Pengajuan kendaraan saya";
 
   String get descProfile => "Terimakasih sudah bergabung dan menjadi bagian dari Suzuki finance dan aplikasi Sufi smart";
 
@@ -146,5 +146,21 @@ abstract class Strings {
   String get seepromo => "Lihat Promo";
 
   String get welcomeUser => "Hai Sobat Sufi, ";
+
+  String get silahkanloginterlebihdulu => "Silahkan login untuk membuka menu ini";
+
+  String? get historyPoint => "Riwayat Transaksi Point";
+
+  String? get pointtidakcukup => "maaf poin anda tidak mencukupi";
+  
+  String? get alamat => "Alamat";
+
+  String? get inputalamat => "Masukan Alamat";
+
+  String? get tujuanalamat => "*Pastikan alamat yang anda masukan benar agar terkirim sampai tujuan alamat anda";
+
+  String? get note => "Note";
+
+  String get validateRedeem => "apakah data yang anda masukan sudah benar ?";
   
 }
