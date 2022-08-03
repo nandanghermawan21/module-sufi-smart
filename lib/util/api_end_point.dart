@@ -35,8 +35,8 @@ class ApiEndPoint {
   String getGenderUrl = "getGender";
   String getJobUrl = "getJob";
   String postCustomerRegisterNewUrl = "registrasiCustomerNew";
-  String getConfirmOtpUserUrl = "confirmasiUserOtp";
-  String getResendOtpUserUrl = "resendUserOtp";
+  String getConfirmOtpUserUrl = "confirmasiUserOtpNew";
+  String getResendOtpUserUrl = "resendUserOtpNew";
   String getDetailInfoUserUrl = "getDetailInfoUser";
   String postUpdateProfileUrl = "updateProfilNew";
   String getDataApplyUserUrl = "getListUserApply";
@@ -174,16 +174,18 @@ class ApiEndPoint {
   String confirmOtpUser({
     required String? otp,
     required String? userid,
+    required String? flag,
   }) {
     return urlSufiSmart +
-        "$getConfirmOtpUserUrl${otp != null ? "/$otp" : ""}${userid != null ? "/$userid" : ""}";
+        "$getConfirmOtpUserUrl${otp != null ? "/$otp" : ""}${userid != null ? "/$userid" : ""}${flag != null ? "/$flag" : ""}";
   }
 
   String resendOtpUser({
     required String? userid,
+    required String? flag,
   }) {
     return urlSufiSmart +
-        "$getResendOtpUserUrl${userid != null ? "/$userid" : ""}";
+        "$getResendOtpUserUrl${userid != null ? "/$userid" : ""}${flag != null ? "/$flag" : ""}";
   }
 
   String detailInfoUser({

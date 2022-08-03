@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:sufismart/component/cilcular_loader_component.dart';
+import 'package:sufismart/component/circular_loader_component.dart';
+
 import 'package:sufismart/component/pin_component.dart';
 import 'package:sufismart/model/customernew_model.dart';
 import 'package:sufismart/util/mode_util.dart';

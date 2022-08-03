@@ -299,13 +299,13 @@ class StringsEnUs implements Strings {
   String get infoLogout => "are you sure you want to log out \nfrom this account ?";
 
   @override  
-  String get applykendaraan => "Order Suzuki Cars & Motorcycles";
+  String get applykendaraan => "Let's Order Suzuki Vehicles";
 
   @override  
   String get apply => "Apply";
 
   @override  
-  String get doesNotHaveAcc => 'Does not have accounts yet? ';
+  String get doesNotHaveAcc => 'Does not have accounts yet ? ';
 
   @override  
   String get whatsapp => "Whatsapp";

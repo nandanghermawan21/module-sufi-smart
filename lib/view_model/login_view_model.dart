@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:sufismart/component/cilcular_loader_component.dart';
+import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:sufismart/component/pin_component.dart';
 import 'package:sufismart/model/customernew_model.dart';
 import 'package:sufismart/model/otp_new_model.dart';
@@ -223,7 +223,7 @@ class LoginViewModel extends ChangeNotifier {
                 onTapResend: (val) {
                   pinComponentController.value.loadingController.startLoading();
                   OtpNewModel.resendOtp(
-                    userid: value.userid!,
+                    userid: value.userid!, flag: 'login',
                   ).then((value) {
                     pinComponentController.value.loadingController.forceStop();
                     pinComponentController.value.timerController.start(
@@ -242,7 +242,7 @@ class LoginViewModel extends ChangeNotifier {
                   pinComponentController.value.loadingController.startLoading();
                   OtpNewModel.confirmOtp(
                     otp: val,
-                    userid: value.userid!,
+                    userid: value.userid!, flag: 'login',
                   ).then((value) {
                     if (value != null) {
                       if (value.status == "0") {

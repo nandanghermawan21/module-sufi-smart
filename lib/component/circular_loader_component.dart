@@ -113,8 +113,7 @@ class CircularLoaderComponent extends StatelessWidget {
       alignment: Alignment.center,
       child: Container(
         margin: const EdgeInsets.only(left: 40, right: 40),
-        padding: const EdgeInsets.all(15),
-        height: 150,
+        padding: const EdgeInsets.all(15),        
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -130,23 +129,27 @@ class CircularLoaderComponent extends StatelessWidget {
             )
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Icon(
-              FontAwesomeIcons.checkCircle,
-              color: Colors.green,
-              size: 50,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              controller.value.message ?? "Success",
-              textAlign: TextAlign.center,
-            )
-          ],
+        child: IntrinsicHeight(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Icon(
+                FontAwesomeIcons.checkCircle,
+                color: Colors.green,
+                size: 50,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: Text(
+                  controller.value.message ?? "Success",
+                  textAlign: TextAlign.center,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -158,7 +161,6 @@ class CircularLoaderComponent extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(left: 40, right: 40),
         padding: const EdgeInsets.all(15),
-        height: 150,
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -174,23 +176,25 @@ class CircularLoaderComponent extends StatelessWidget {
             )
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Icon(
-              FontAwesomeIcons.timesCircle,
-              color: Colors.red,
-              size: 50,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              controller.value.message ?? "Error",
-              textAlign: TextAlign.center,
-            )
-          ],
+        child: IntrinsicHeight(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Icon(
+                FontAwesomeIcons.timesCircle,
+                color: Colors.red,
+                size: 50,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                controller.value.message ?? "Error",
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );

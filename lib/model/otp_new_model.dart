@@ -41,10 +41,11 @@ class OtpNewModel {
   static Future<CustomerNewModel?> confirmOtp({
     required String? otp,
     required String? userid,
+    required String? flag,
   }) {
     return http
         .get(Uri.parse(
-            System.data.apiEndPoint.confirmOtpUser(otp: otp, userid: userid)))
+            System.data.apiEndPoint.confirmOtpUser(otp: otp, userid: userid, flag: flag)))
         .then((value) {
       if (value.statusCode == 200) {
         ModeUtil.debugPrint("call get confirmOtp new api ${value.body}");
@@ -59,10 +60,11 @@ class OtpNewModel {
 
   static Future<OtpNewModel?> resendOtp({
     required String? userid,
+    required String? flag,
   }) {
     return http
         .get(Uri.parse(System.data.apiEndPoint.resendOtpUser(
-      userid: userid,
+      userid: userid, flag: flag,
     )))
         .then((value) {
       if (value.statusCode == 200) {

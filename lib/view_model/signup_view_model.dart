@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sufismart/component/cilcular_loader_component.dart';
+import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/component/pin_component.dart';
 import 'package:sufismart/model/city_model.dart';

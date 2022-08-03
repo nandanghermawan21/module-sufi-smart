@@ -4,7 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
-import 'package:sufismart/component/cilcular_loader_component.dart';
+import 'package:sufismart/component/circular_loader_component.dart';
+
 import 'package:sufismart/component/image_picker_component.dart';
 import 'package:sufismart/model/city_model.dart';
 import 'package:sufismart/model/customer_model.dart';

@@ -135,11 +135,11 @@ abstract class Strings {
 
   String get infoLogout => "apakah anda yakin ingin keluar \ndari akun ini ?";
 
-  String get applykendaraan => "Order Mobil & Motor Suzuki";
+  String get applykendaraan => "Ayo, Order Kendaraan Suzuki";
 
   String get apply => "Apply";
 
-  String get doesNotHaveAcc => "Belum Punya akun? ";
+  String get doesNotHaveAcc => "Belum Punya akun ? ";
 
   String get whatsapp => "Whatsapp";
 

@@ -147,7 +147,7 @@ class RegisterViewModel extends ChangeNotifier {
               onTapResend: (val) {
                 pinComponentController.value.loadingController.startLoading();
                 OtpNewModel.resendOtp(
-                  userid: otp.userid!,
+                  userid: otp.userid!, flag: 'regis',
                 ).then((value) {
                   pinComponentController.value.loadingController.forceStop();
                   pinComponentController.value.timerController.start(
@@ -165,7 +165,7 @@ class RegisterViewModel extends ChangeNotifier {
                 pinComponentController.value.loadingController.startLoading();
                 OtpNewModel.confirmOtp(
                   otp: val,
-                  userid: otp.userid!,
+                  userid: otp.userid!, flag: 'regis',
                 ).then((value) {
                   if (value != null) {
                     if (value.status == "0") {

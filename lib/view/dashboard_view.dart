@@ -193,7 +193,7 @@ class _DashboardViewState extends State<DashboardView> {
                       child: menuProfilBar(
                           System.data.strings!.logOut,
                           "assets/ic_icon_password.png",
-                          FontAwesomeIcons.arrowCircleRight),
+                          FontAwesomeIcons.signOutAlt),
                     ),
                   ],
                 ),
