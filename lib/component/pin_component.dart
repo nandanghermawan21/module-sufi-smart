@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:sufismart/component/timer_component.dart';
-import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 
 class PinComponent extends StatelessWidget {

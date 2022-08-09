@@ -1,13 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
-import 'package:sufismart/model/customernew_model.dart';
 import 'package:sufismart/model/gendernew_model.dart';
 import 'package:sufismart/model/infodetailuser_model.dart';
 import 'package:sufismart/model/job_model.dart';
-import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/error_handling_util.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 import 'package:sufismart/model/apply_model.dart';
-import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/apply_view_model.dart';
 

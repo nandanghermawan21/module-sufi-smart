@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:sufismart/model/menu_model.dart';
-import 'package:sufismart/model/merchant_model.dart';
 import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';

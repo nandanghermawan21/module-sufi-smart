@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:sufismart/model/customernew_model.dart';
-import 'package:sufismart/model/customer_model.dart';
 import 'package:sufismart/model/lang_model.dart';
 import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/mode_util.dart';

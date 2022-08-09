@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
-import 'package:sufismart/model/news_model.dart';
+
 import 'package:sufismart/model/news_model_new.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/all_news_view_model.dart';

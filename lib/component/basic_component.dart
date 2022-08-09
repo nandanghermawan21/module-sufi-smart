@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:skeleton_text/skeleton_text.dart';
-import 'package:sufismart/model/banner_model.dart';
+
 import 'package:sufismart/model/branch_model.dart';
 import 'package:sufismart/model/news_model.dart';
 import 'package:sufismart/model/news_model_new.dart';
