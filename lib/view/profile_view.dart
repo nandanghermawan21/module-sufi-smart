@@ -10,6 +10,8 @@ import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/profile_view_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../component/basic_component.dart';
+
 class ProfileView extends StatefulWidget {
   const ProfileView({
     Key? key,
@@ -36,7 +38,7 @@ class ProfileViewState extends State<ProfileView> {
     return ChangeNotifierProvider.value(
       value: profileViewModel,
       child: Scaffold(
-        appBar: appBar(),
+        appBar: BasicComponent.appBar(),
         body: CircularLoaderComponent(
           controller: profileViewModel.loadingController,
           child: SingleChildScrollView(

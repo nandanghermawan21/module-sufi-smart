@@ -33,7 +33,7 @@ class _ProductListViewState extends State<ProductListView> {
     return ChangeNotifierProvider.value(
       value: productListViewModel,
       child: Scaffold(
-        appBar: appBar(),
+        appBar: BasicComponent.appBar(),
         backgroundColor: System.data.color!.background,
         body: productListPage(),
       ),

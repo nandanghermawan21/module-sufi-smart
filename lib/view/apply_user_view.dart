@@ -6,6 +6,8 @@ import 'package:sufismart/model/apply_model.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/apply_view_model.dart';
 
+import '../component/basic_component.dart';
+
 class ApplyViewUser extends StatefulWidget {
   final ValueChanged<String>? tapDetailApply;
   const ApplyViewUser({
@@ -27,7 +29,7 @@ class _ApplyViewUser extends State<ApplyViewUser> {
     return ChangeNotifierProvider.value(
       value: applyViewModel,
       child: Scaffold(
-        appBar: appBar(),
+        appBar: BasicComponent.appBar(),
         backgroundColor: System.data.color!.background,
         body: pageListApplyUser(),
       ),

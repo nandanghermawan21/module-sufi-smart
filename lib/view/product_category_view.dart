@@ -30,7 +30,7 @@ class _ProductCategoryViewState extends State<ProductCategoryView> {
     return ChangeNotifierProvider.value(
       value: productViewModel,
       child: Scaffold(
-        appBar: appBar(),
+        appBar: BasicComponent.appBar(),
         backgroundColor: System.data.color!.background,
         body: productPage(),
       ),

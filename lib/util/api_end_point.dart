@@ -136,7 +136,7 @@ class ApiEndPoint {
     required double? lng,
   }) {
     return urlSufiSmart +
-        "$getListDataBranchByIdUrl${kodeBranch != null ? "/$kodeBranch" : ""}${lat != null ? "/$lat" : ""}${lng != null ? "/$lng" : ""}";
+        "$getListDataBranchByIdUrl${kodeBranch != null ? "/$kodeBranch" : ""}${lat != null ? "/$lat" : 0}${lng != null ? "/$lng" : 0}";
   }
 
   String loginCustomerNew() {

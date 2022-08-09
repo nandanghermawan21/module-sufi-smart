@@ -38,7 +38,7 @@ class PointModel {
   static Future<PointModel?> getPointUser({
     required String? id,
   }) {
-    ModeUtil.debugPrint("call get list news api by id");
+    ModeUtil.debugPrint("call get Point api by id");
     return http
         .get(Uri.parse(System.data.apiEndPoint.getPointUserId(id: id)))
         .then((value) {

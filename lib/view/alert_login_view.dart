@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/util/system.dart';
 
 class AlertLoginView extends StatefulWidget {
@@ -16,7 +17,7 @@ class _AlertLoginViewState extends State<AlertLoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
+      appBar: BasicComponent.appBar(),
       backgroundColor: System.data.color!.background,
       body: pageNoLogin(),
     );
@@ -24,6 +25,7 @@ class _AlertLoginViewState extends State<AlertLoginView> {
 
   AppBar appBar() {
     return AppBar(
+      centerTitle:false,
       backgroundColor: System.data.color!.mainColor,
       title: Image.asset(
         "assets/logo_sfi_white.png",

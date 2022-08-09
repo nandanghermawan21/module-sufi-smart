@@ -7,6 +7,8 @@ import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/product_detaill_view_model.dart';
 
+import '../component/basic_component.dart';
+
 class ProductDetailView extends StatefulWidget {
   final ProductTypeModel? productTypeModel;
   final ValueChanged<String>? ontapSimulatiCreditProduct;
@@ -29,7 +31,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
     return ChangeNotifierProvider.value(
       value: productDetailViewModel,
       child: Scaffold(
-        appBar: appBar(),
+        appBar: BasicComponent.appBar(),
         backgroundColor: System.data.color!.background,
         body: productDetailpage(),
       ),

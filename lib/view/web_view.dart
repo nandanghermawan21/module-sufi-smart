@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/web_view_model.dart';
@@ -31,7 +32,7 @@ class _WebViewState extends State<WebViewSufi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
+      appBar: BasicComponent.appBar(),
       backgroundColor: System.data.color!.background,
       body: Stack(
         children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
@@ -27,7 +28,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       value: forgotPasswordViewModel,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appBar(),
+        appBar: BasicComponent.appBar(),
         body: CircularLoaderComponent(
           controller: forgotPasswordViewModel.circularLoaderController,
           child: SingleChildScrollView(

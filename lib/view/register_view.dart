@@ -12,6 +12,8 @@ import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/register_view_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../component/basic_component.dart';
+
 class RegisterView extends StatefulWidget {
   final ValueChanged<CustomerNewModel>? onRegisterSucces;
   const RegisterView({
@@ -32,7 +34,7 @@ class _RegisterViewState extends State<RegisterView> {
     return ChangeNotifierProvider.value(
       value: registerViewModel,
       child: Scaffold(
-        appBar: appBar(),
+        appBar: BasicComponent.appBar(),
         body: CircularLoaderComponent(
           controller: registerViewModel.loadingController,
           child: SingleChildScrollView(

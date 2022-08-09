@@ -6,6 +6,8 @@ import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/change_pass_view_model.dart';
 
+import '../component/basic_component.dart';
+
 class ChangePasswordView extends StatefulWidget {
   const ChangePasswordView({
     Key? key,
@@ -27,7 +29,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
       value: changePassViewModel,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appBar(),
+        appBar: BasicComponent.appBar(),
         body: CircularLoaderComponent(
           controller: changePassViewModel.circularLoaderController,
           child: SingleChildScrollView(

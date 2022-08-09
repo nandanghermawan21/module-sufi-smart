@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
+import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:sufismart/model/merchant_model.dart';
 import 'package:sufismart/util/mode_util.dart';
@@ -28,7 +29,7 @@ class _MerchantDetailView extends State<MerchantDetailView> {
     return ChangeNotifierProvider.value(
       value: merchantViewModel,
       child: Scaffold(
-        appBar: appBar(),
+        appBar: BasicComponent.appBar(),
         body: CircularLoaderComponent(
           controller: merchantViewModel.loadingController,
           child: SingleChildScrollView(

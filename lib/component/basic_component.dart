@@ -17,6 +17,7 @@ class BasicComponent {
     List<Widget>? actions,
   }) {
     return AppBar(
+      centerTitle:false,
       backgroundColor: System.data.color!.mainColor,
       title: Image.asset(
         "assets/logo_sfi_white.png",

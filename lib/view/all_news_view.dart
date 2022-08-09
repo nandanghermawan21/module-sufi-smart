@@ -31,7 +31,7 @@ class _AllNewsViewState extends State<AllNewsView> {
     return ChangeNotifierProvider.value(
       value: homeViewModel,
       child: Scaffold(
-        appBar: appBar(),
+        appBar: BasicComponent.appBar(),
         backgroundColor: System.data.color!.background,
         body: homePage(),
       ),
@@ -40,6 +40,7 @@ class _AllNewsViewState extends State<AllNewsView> {
 
   AppBar appBar() {
     return AppBar(
+      centerTitle:false,
       backgroundColor: System.data.color!.mainColor,
       title: Image.asset(
         "assets/logo_sfi_white.png",

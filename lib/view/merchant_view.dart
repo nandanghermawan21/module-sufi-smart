@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
+import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/model/merchant_model.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/view_model/merchant_view_model.dart';
@@ -28,7 +29,7 @@ class _MerchantViewState extends State<MerchantView> {
     return ChangeNotifierProvider.value(
       value: merchantViewModel,
       child: Scaffold(
-        appBar: appBar(),
+        appBar: BasicComponent.appBar(),
         backgroundColor: System.data.color!.background,
         body: pageListMerchantPoint(),
       ),
