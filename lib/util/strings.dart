@@ -162,5 +162,7 @@ abstract class Strings {
   String? get note => "Note";
 
   String get validateRedeem => "apakah data yang anda masukan sudah benar ?";
+
+  String? get notepointtidakcukup => "point tidak cukup";
   
 }

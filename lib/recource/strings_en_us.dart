@@ -340,5 +340,8 @@ class StringsEnUs implements Strings {
   String? get note => "Note";
 
   @override  
-  String get validateRedeem => "is the data you entered is correct ?";  
+  String get validateRedeem => "is the data you entered is correct ?";
+
+  @override  
+  String? get notepointtidakcukup => "not enough points";  
 }

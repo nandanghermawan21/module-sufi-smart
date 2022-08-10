@@ -120,7 +120,7 @@ class _MerchantViewState extends State<MerchantView> {
                 imageUrl: model.img ?? "",
                 imageBuilder: (context, imageProvider) => Container(
                   width: 110,
-                  height: 115,                  
+                  height: 115,
                   padding: const EdgeInsets.all(10),
                   child: Container(
                     decoration: BoxDecoration(
@@ -135,14 +135,14 @@ class _MerchantViewState extends State<MerchantView> {
                   //height: MediaQuery.of(context).size.height / 2,
                   width: 110,
                   height: 115,
-                  
+
                   decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: const BorderRadius.all(Radius.circular(5))),
                 )),
                 errorWidget: (context, url, error) => Container(
                   width: 110,
-                  height: 115,                  
+                  height: 115,
                   decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: const BorderRadius.all(Radius.circular(5))),
@@ -184,7 +184,18 @@ class _MerchantViewState extends State<MerchantView> {
                             : Colors.white),
                   ),
                 ),
-              )
+              ),
+              const SizedBox(height: 3),
+              model.claim == "0"
+                  ?  Text(
+                      System.data.strings?.notepointtidakcukup ?? "",
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontSize: 12,
+                      ),
+                      maxLines: 2,
+                    )
+                  : const SizedBox(height: 0),
             ],
           )
         ],
