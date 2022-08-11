@@ -164,5 +164,7 @@ abstract class Strings {
   String get validateRedeem => "apakah data yang anda masukan sudah benar ?";
 
   String? get notepointtidakcukup => "point tidak cukup";
+
+  String get passtoshort => "minimal 6 karakter";
   
 }

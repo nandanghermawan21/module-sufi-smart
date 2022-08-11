@@ -343,5 +343,8 @@ class StringsEnUs implements Strings {
   String get validateRedeem => "is the data you entered is correct ?";
 
   @override  
-  String? get notepointtidakcukup => "not enough points";  
+  String? get notepointtidakcukup => "not enough points";
+
+  @override  
+  String get passtoshort => "minimum 6 characters";  
 }

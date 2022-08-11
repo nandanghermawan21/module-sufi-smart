@@ -335,7 +335,8 @@ class _DashboardViewState extends State<DashboardView> {
             height: 10,
           ),
           Text(
-            "${System.data.strings!.welcomeUser}${System.data.global.customerNewModel?.name ?? ""}",
+            //"${System.data.strings!.welcomeUser}${System.data.global.customerNewModel?.name ?? ""}",
+            System.data.global.customerNewModel?.name ?? "",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,

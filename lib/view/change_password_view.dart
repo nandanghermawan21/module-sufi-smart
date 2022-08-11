@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
-import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/change_pass_view_model.dart';
 
@@ -125,6 +124,8 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                                 validator: (String? value) {
                                   if (value!.isEmpty) {
                                     return '${System.data.strings!.passwordBaru} ${System.data.strings!.cantBeEmpty}';
+                                  } else if (value.length < 6) {
+                                    return '${System.data.strings!.passwordBaru} ${System.data.strings!.passtoshort}';
                                   } else {
                                     return null;
                                   }
@@ -163,6 +164,8 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                                 validator: (String? value) {
                                   if (value!.isEmpty) {
                                     return '${System.data.strings!.passwordConfirm} ${System.data.strings!.cantBeEmpty}';
+                                  } else if (value.length < 6) {
+                                    return '${System.data.strings!.passwordBaru} ${System.data.strings!.passtoshort}';
                                   } else {
                                     return null;
                                   }
@@ -176,10 +179,10 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                                   if (changePassViewModel
                                       .formKeyContact.currentState!
                                       .validate()) {
-                                    ModeUtil.debugPrint(
-                                        "homeViewModel.formKeyContact.currentState ${changePassViewModel.formKeyContact.currentState}");
+                                    // ModeUtil.debugPrint(
+                                    //     "homeViewModel.formKeyContact.currentState ${changePassViewModel.formKeyContact.currentState}");
 
-                                    ModeUtil.debugPrint("masuk");
+                                    //ModeUtil.debugPrint("masuk");
                                     changePassViewModel.sendChangePassword();
                                   }
                                 },
