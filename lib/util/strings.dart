@@ -25,7 +25,7 @@ abstract class Strings {
   String get fullname => "nama lengkap";
   String get phoneNumber => "nomor telepon";
   String get message => "pesan";
-  String get send => "kirim";
+  String get send => "Konfirmasi";
   String get canNotBeEmpty => "tidak boleh kosong";
   String get login => "Masuk";
   String get signUp => "Daftar Sekarang";

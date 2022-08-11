@@ -142,7 +142,7 @@ class StringsEnUs implements Strings {
   String get promo => "Promo\n";
 
   @override
-  String get send => "Send";
+  String get send => "Confirm";
 
   @override
   String get showAll => "ShowAll";
