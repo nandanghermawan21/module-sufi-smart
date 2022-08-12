@@ -675,25 +675,32 @@ class _HomeViewState extends State<HomeView> {
               ),
               Container(
                 margin: const EdgeInsets.only(right: 10),
-                child: InkWell(
+                child: GestureDetector(
                   onTap: () {
                     if (widget.gotoShowAll != null) {
                       widget.gotoShowAll!();
                     }
                   },
-                  child: Container(
-                    width: 100,
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: System.data.color!.primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20))),
-                    child: Text(
-                      System.data.strings!.showAll,
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
-                      textAlign: TextAlign.center,
+                  child: Text(
+                    System.data.strings!.showAll,
+                    style: TextStyle(
+                      color: System.data.color!.primaryColor,
+                      fontSize: 14,                      
                     ),
                   ),
+                  // child: Container(
+                  //   width: 100,
+                  //   padding: const EdgeInsets.all(5),
+                  //   decoration: BoxDecoration(
+                  //       color: System.data.color!.primaryColor,
+                  //       borderRadius:
+                  //           const BorderRadius.all(Radius.circular(20))),
+                  //   child: Text(
+                  //     System.data.strings!.showAll,
+                  //     style: const TextStyle(color: Colors.white, fontSize: 12),
+                  //     textAlign: TextAlign.center,
+                  //   ),
+                  // ),
                 ),
               )
             ],

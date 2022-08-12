@@ -145,7 +145,7 @@ class StringsEnUs implements Strings {
   String get send => "Confirm";
 
   @override
-  String get showAll => "See More";
+  String get showAll => "See more";
 
   @override
   String get signUp => "Sign Up Now";

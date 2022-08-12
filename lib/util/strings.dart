@@ -7,7 +7,7 @@ abstract class Strings {
   String get contact => "Kontak";
   String get account => "Akun";
   String get features => "Fitur";
-  String get showAll => "Lihat Semua";
+  String get showAll => "Lihat semua";
   String get latestNews => "Berita Terbaru";
   String get paymentOption => "Opsi\nPembayaran";
   String get installmentStatus => "Fasilitas\n";
