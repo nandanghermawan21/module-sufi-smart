@@ -351,7 +351,7 @@ class BasicComponent {
             //text kepanjangan jadi titik-titik
             width: MediaQuery.of(System.data.context).size.width,
             padding: const EdgeInsets.only(
-                top: 10.0, bottom: 10.0, right: 3.0, left: 3.0),
+                top: 10.0, bottom: 10.0, right: 5.0, left: 5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[

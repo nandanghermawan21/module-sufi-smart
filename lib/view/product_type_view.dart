@@ -110,7 +110,7 @@ class _ProductTypeViewState extends State<ProductTypeView> {
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   margin: const EdgeInsets.only(
-                      top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                      top: 10.0, left: 5.0, right: 5.0, bottom: 10.0),
                   child: Text(
                     System.data.strings!.producttype,
                     style: const TextStyle(

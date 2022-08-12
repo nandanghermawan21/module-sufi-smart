@@ -110,7 +110,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                     Container(
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.only(
-                          top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                          top: 10.0, left: 10.0, right: 10.0, bottom: 0.0),
                       child: Text(
                         widget.productTypeModel?.productDetailName ?? "",
                         style: TextStyle(
@@ -130,9 +130,9 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                             top: 5, left: 10.0, right: 10.0, bottom: 10.0),
                         padding: const EdgeInsets.only(
                             top: 5, left: 10.0, right: 10.0, bottom: 10.0),
-                        decoration: const BoxDecoration(
-                          color: Color(0xff0d306b),
-                          borderRadius: BorderRadius.all(
+                        decoration: BoxDecoration(
+                          color: System.data.color!.whiteSmoke,
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(5),
                           ),
                         ),
@@ -143,8 +143,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                               Text(
                                 "Rp. "
                                 "${widget.productTypeModel?.productDetailPrice ?? ""}",
-                                style: const TextStyle(
-                                    fontSize: 20, color: Colors.white),
+                                style: TextStyle(
+                                    fontSize: 20, color: System.data.color!.primaryColor2),
                                 textAlign: TextAlign.left,
                               ),
                             ],
