@@ -76,6 +76,8 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>This app need to access your gallery to take picture for profile photo</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app need to access your camera to take picture for profile photo</string>
 	<key>NSMicrophoneUsageDescription</key>
