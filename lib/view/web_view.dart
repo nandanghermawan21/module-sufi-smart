@@ -56,7 +56,7 @@ class _WebViewState extends State<WebViewSufi> {
                   name: 'viewPdf',
                   onMessageReceived: (JavascriptMessage message) {
                     ModeUtil.debugPrint("message ${message.message}");
-                    webViewModel.openbrowser(message.message);
+                    webViewModel.openbrowser(Uri.parse(message.message));
                   }),
               JavascriptChannel(
                   name: 'telepon',
@@ -74,7 +74,7 @@ class _WebViewState extends State<WebViewSufi> {
                   name: 'Print',
                   onMessageReceived: (JavascriptMessage message) {
                     ModeUtil.debugPrint("message ${message.message}");
-                    webViewModel.openbrowser(message.message);
+                    webViewModel.openbrowser(Uri.parse(message.message));
                   }),
             }.toSet(),
           ),

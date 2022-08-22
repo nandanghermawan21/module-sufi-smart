@@ -20,13 +20,22 @@ class WebViewModel extends ChangeNotifier {
     commit();
   }
 
-  Future<void> openbrowser(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    } else {
+  Future<void> openbrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
       throw 'Could not launch $url';
     }
   }
+
+  // Future<void> openbrowser(String url) async {
+  //   if (await canLaunchUrl(Uri.parse(url))) {
+  //     await launchUrl(Uri.parse(url));
+  //   } else {
+  //     throw 'Could not launch $url';
+  //   }
+  // }
 
   void commit() {
     notifyListeners();
