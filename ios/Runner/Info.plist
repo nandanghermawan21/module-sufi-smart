@@ -57,6 +57,18 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app need to access your camera to take picture for profile photo</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>this application requires your location to ensure the accuracy of the pickup location.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>this application requires your location to ensure the accuracy of the pickup location.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>this application requires your location to ensure the accuracy of the pickup location.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>this application requires to use your microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app need to access your gallery to take picture for profile photo</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -76,17 +88,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-    <string>This app need to access your gallery to take picture for profile photo</string>
-	<key>NSCameraUsageDescription</key>
-	<string>This app need to access your camera to take picture for profile photo</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>this application requires to use your microphone</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>this application requires your location to ensure the accuracy of the pickup location.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>this application requires your location to ensure the accuracy of the pickup location.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>this application requires your location to ensure the accuracy of the pickup location.</string>
 </dict>
 </plist>
