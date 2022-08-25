@@ -503,37 +503,35 @@ class _DashboardViewState extends State<DashboardView> {
                   color: Colors.transparent,
                   child: Column(
                     children: [
-                      snapshot.data?.tipe == "Agent"
-                          ? Container(
-                              color: Colors.transparent,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    snapshot.data?.tipe ?? "",
-                                    style: TextStyle(
-                                      color: System.data.color!.greyColor,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  Text(
-                                    " - ",
-                                    style: TextStyle(
-                                      color: System.data.color!.greyColor,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  Text(
-                                    snapshot.data?.idkomunitas ?? "",
-                                    style: TextStyle(
-                                      color: System.data.color!.greyColor,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  )
-                                ],
+                      Container(
+                        color: Colors.transparent,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              snapshot.data?.tipe ?? "",
+                              style: TextStyle(
+                                color: System.data.color!.greyColor,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            Text(
+                              " - ",
+                              style: TextStyle(
+                                color: System.data.color!.greyColor,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            Text(
+                              snapshot.data?.idkomunitas ?? "",
+                              style: TextStyle(
+                                color: System.data.color!.greyColor,
+                                fontWeight: FontWeight.normal,
                               ),
                             )
-                          : Container(),
+                          ],
+                        ),
+                      ),
                       Row(
                         children: [
                           menuPoint(
