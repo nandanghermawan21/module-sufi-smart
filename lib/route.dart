@@ -181,6 +181,13 @@ Map<String, WidgetBuilder> route = {
                         "https://sufismart.sfi.co.id/sufismart/api/faq.php",
                   });
                 },
+                onTapWeb: () {
+                  Navigator.of(context)
+                      .pushNamed(RouteName.webView, arguments: {
+                    ParamName.urlWebview:
+                        "https://www.sfi.co.id",
+                  });
+                },
               );
             case 2:
               return const ContactView();

@@ -7,9 +7,11 @@ import 'package:sufismart/view_model/about_view_model.dart';
 
 class AboutView extends StatefulWidget {
   final VoidCallback? onTapFaq;
+  final VoidCallback? onTapWeb;
   const AboutView({
     Key? key,
     this.onTapFaq,
+    this.onTapWeb,
   }) : super(key: key);
 
   @override
@@ -176,6 +178,37 @@ class _AboutState extends State<AboutView> {
                             const Divider(),
                             GestureDetector(
                               onTap: () {
+                                widget.onTapWeb!();
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      System.data.strings!.websitekami,
+                                      style: TextStyle(
+                                        color: System.data.color!.primaryColor,
+                                        fontSize: 18,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      "https://www.sfi.co.id",
+                                      style: TextStyle(
+                                        color: System.data.color!.primaryColor,
+                                        fontSize: 18,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const Divider(),
+                            GestureDetector(
+                              onTap: () {
                                 widget.onTapFaq!();
                               },
                               child: Container(
@@ -251,7 +284,7 @@ class _AboutState extends State<AboutView> {
                         margin: const EdgeInsets.only(top: 50),
                         child: Column(
                           children: List.generate(
-                            4,
+                            5,
                             (index) {
                               return SkeletonAnimation(
                                 child: Container(

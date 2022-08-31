@@ -17,7 +17,7 @@ abstract class Strings {
   String get promo => "Promo\n";
   String get callCenter => "Pusat Bantuan";
   String get numberCallCenter => "123456";
-  String get email => "email";
+  String get email => "Email";
   String get emailCS => "sfi_care@sfi.co.id";
   String get contactUs => "Hubungi Kami";
   String get pleaseFillInTheInformationBelowForComplaintsAndOtherServices =>
@@ -166,5 +166,7 @@ abstract class Strings {
   String? get notepointtidakcukup => "point tidak cukup";
 
   String get passtoshort => "minimal 6 karakter";
+
+  String get websitekami => "Website Kami";
   
 }

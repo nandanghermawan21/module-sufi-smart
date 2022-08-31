@@ -346,5 +346,8 @@ class StringsEnUs implements Strings {
   String? get notepointtidakcukup => "not enough points";
 
   @override  
-  String get passtoshort => "minimum 6 characters";  
+  String get passtoshort => "minimum 6 characters";
+
+  @override  
+  String get websitekami => "Our Website";  
 }
