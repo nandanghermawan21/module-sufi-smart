@@ -173,22 +173,21 @@ Map<String, WidgetBuilder> route = {
                 },
               );
             case 1:
-              return AboutView(
-                onTapFaq: () {
-                  Navigator.of(context)
-                      .pushNamed(RouteName.webView, arguments: {
-                    ParamName.urlWebview:
-                        "https://sufismart.sfi.co.id/sufismart/api/faq.php",
-                  });
-                },
-                onTapWeb: () {
-                  Navigator.of(context)
-                      .pushNamed(RouteName.webView, arguments: {
-                    ParamName.urlWebview:
-                        "https://www.sfi.co.id",
-                  });
-                },
-              );
+              return AboutView(onTapFaq: () {
+                Navigator.of(context).pushNamed(RouteName.webView, arguments: {
+                  ParamName.urlWebview:
+                      "https://sufismart.sfi.co.id/sufismart/api/faq.php",
+                });
+              }, onTapWeb: () {
+                Navigator.of(context).pushNamed(RouteName.webView, arguments: {
+                  ParamName.urlWebview: "https://www.sfi.co.id",
+                });
+              }, onTapWebview: (url) {
+                Navigator.of(context).pushNamed(RouteName.webView, arguments: {
+                  ParamName.urlWebview: url,
+                });
+                ModeUtil.debugPrint("Url Webview" + url);
+              });
             case 2:
               return const ContactView();
             case 3:

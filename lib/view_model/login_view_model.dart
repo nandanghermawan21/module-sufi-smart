@@ -202,7 +202,7 @@ class LoginViewModel extends ChangeNotifier {
           isError: true,
           message: ErrorHandlingUtil.handleApiError(msg));
     } else {
-    // getPlatform.then((imei) {
+      // getPlatform.then((imei) {
       //deviceId = value.toString();
       //ModeUtil.debugPrint(imei.toString());
       CustomerNewModel.login(
@@ -211,6 +211,7 @@ class LoginViewModel extends ChangeNotifier {
         password: passwordTextEditingController.text,
         deviceId: Platform.operatingSystem,
         playerid: System.data.global.messagingToken,
+        version: System.data.strings!.versiapk,
       )).then((value) {
         if (value != null) {
           if (value.status == "1") {
@@ -223,7 +224,8 @@ class LoginViewModel extends ChangeNotifier {
                 onTapResend: (val) {
                   pinComponentController.value.loadingController.startLoading();
                   OtpNewModel.resendOtp(
-                    userid: value.userid!, flag: 'login',
+                    userid: value.userid!,
+                    flag: 'login',
                   ).then((value) {
                     pinComponentController.value.loadingController.forceStop();
                     pinComponentController.value.timerController.start(
@@ -242,7 +244,8 @@ class LoginViewModel extends ChangeNotifier {
                   pinComponentController.value.loadingController.startLoading();
                   OtpNewModel.confirmOtp(
                     otp: val,
-                    userid: value.userid!, flag: 'login',
+                    userid: value.userid!,
+                    flag: 'login',
                   ).then((value) {
                     if (value != null) {
                       if (value.status == "0") {
@@ -283,14 +286,22 @@ class LoginViewModel extends ChangeNotifier {
             //     });
           } else if (value.status == "2") {
             circularLoaderController.stopLoading(
-                duration: const Duration(seconds: 3),
-                isError: true,
-                message: ErrorHandlingUtil.handleApiError(value.msg));
+              duration: const Duration(seconds: 3),
+              isError: true,
+              message: ErrorHandlingUtil.handleApiError(value.msg),
+            );
           } else if (value.status == "3") {
             circularLoaderController.stopLoading(
-                duration: const Duration(seconds: 3),
-                isError: true,
-                message: ErrorHandlingUtil.handleApiError(value.msg));
+              duration: const Duration(seconds: 3),
+              isError: true,
+              message: ErrorHandlingUtil.handleApiError(value.msg),
+            );
+          } else {
+            circularLoaderController.stopLoading(
+              duration: const Duration(seconds: 3),
+              isError: true,
+              message: ErrorHandlingUtil.handleApiError(value.msg),
+            );
           }
         } else {
           circularLoaderController.forceStop();

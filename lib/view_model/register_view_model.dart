@@ -125,7 +125,8 @@ class RegisterViewModel extends ChangeNotifier {
                 pekerjaan: job?.value,
                 gender: gender?.value,
                 deviceplatform: Platform.operatingSystem,
-                token: System.data.global.messagingToken))
+                token: System.data.global.messagingToken,
+                version: System.data.strings!.versiapk))
         .then((otp) {
       if (otp != null) {
         if (otp.status == "0") {

@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/model/aplikasi_model.dart';
+import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/about_view_model.dart';
 
 class AboutView extends StatefulWidget {
   final VoidCallback? onTapFaq;
   final VoidCallback? onTapWeb;
+  final ValueChanged<String>? onTapWebview;
   const AboutView({
     Key? key,
     this.onTapFaq,
     this.onTapWeb,
+    this.onTapWebview,
   }) : super(key: key);
 
   @override
@@ -70,12 +73,25 @@ class _AboutState extends State<AboutView> {
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
-                            )
+                            ),
+                            snapshot.data?.versi !=
+                                    System.data.strings!.versiapk
+                                ? Text(
+                                    System.data.strings!.latestversion,
+                                    style: const TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  )
+                                : const SizedBox(),
+                            rowsosmed(snapshot.data!)
                           ],
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 50),
+                        margin: const EdgeInsets.only(top: 30),
                         width: MediaQuery.of(context).size.width,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,38 +109,6 @@ class _AboutState extends State<AboutView> {
                                   children: <Widget>[
                                     Text(
                                       System.data.strings!.callCenter,
-                                      style: TextStyle(
-                                        color: System.data.color!.primaryColor,
-                                        fontSize: 18,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      snapshot.data?.phone ?? "",
-                                      style: TextStyle(
-                                        color: System.data.color!.primaryColor,
-                                        fontSize: 18,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const Divider(),
-                            GestureDetector(
-                              onTap: () {
-                                aboutViewModel
-                                    .sendWhatsapp(snapshot.data?.phone ?? "");
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.only(bottom: 8),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      System.data.strings!.whatsapp,
                                       style: TextStyle(
                                         color: System.data.color!.primaryColor,
                                         fontSize: 18,
@@ -178,7 +162,10 @@ class _AboutState extends State<AboutView> {
                             const Divider(),
                             GestureDetector(
                               onTap: () {
-                                widget.onTapWeb!();
+                                //widget.onTapWeb!();
+                                aboutViewModel.openbrowser(
+                                  Uri.parse("https://www.sfi.co.id"),
+                                );
                               },
                               child: Container(
                                 margin: const EdgeInsets.only(bottom: 8),
@@ -201,6 +188,36 @@ class _AboutState extends State<AboutView> {
                                         fontSize: 18,
                                       ),
                                       textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const Divider(),
+                            GestureDetector(
+                              onTap: () {
+                                ModeUtil.debugPrint(
+                                    snapshot.data?.komunitas ?? "");
+                                widget.onTapWebview!(
+                                    snapshot.data?.komunitas ?? "");
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 8,right: 5),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,                                  
+                                  children: <Widget>[
+                                    Text(
+                                      System.data.strings!.komunitas,
+                                      style: TextStyle(
+                                        color: System.data.color!.primaryColor,
+                                        fontSize: 18,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Icon(
+                                      FontAwesomeIcons.userFriends,
+                                      color: System.data.color?.primaryColor,
                                     ),
                                   ],
                                 ),
@@ -275,13 +292,26 @@ class _AboutState extends State<AboutView> {
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
+                            ),
+                            SkeletonAnimation(
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                margin: const EdgeInsets.only(top: 5),
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
+                              ),
                             )
                           ],
                         ),
                       ),
                       Container(
                         color: Colors.transparent,
-                        margin: const EdgeInsets.only(top: 50),
+                        margin: const EdgeInsets.only(top: 30),
                         child: Column(
                           children: List.generate(
                             5,
@@ -308,6 +338,71 @@ class _AboutState extends State<AboutView> {
                 );
               }
             }),
+      ),
+    );
+  }
+
+  Widget rowsosmed(AplikasiModel model) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(top: 5),
+      decoration: BoxDecoration(
+        color: System.data.color!.whiteColor,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      child: Container(
+        color: Colors.transparent,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                menuSosmed(FontAwesomeIcons.instagram, Colors.pink[600],
+                    model.instagram!),
+                menuSosmed(FontAwesomeIcons.whatsapp, Colors.green,
+                    "https://wa.me/${model.phone!}?text=Hello"),
+                menuSosmed(
+                    FontAwesomeIcons.youtube, Colors.red, model.youtube!),
+                menuSosmed(FontAwesomeIcons.twitter, Colors.blueAccent,
+                    model.twitter!),
+                menuSosmed(FontAwesomeIcons.facebook,
+                    System.data.color!.primaryColor, model.facebook!),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget menuSosmed(IconData iconstr, colorChild, String? url) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          aboutViewModel.openbrowser(Uri.parse(url ?? ""));
+        },
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  color: Colors.transparent,
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Icon(
+                    iconstr,
+                    size: 24,
+                    color: colorChild,
+                  ),
+                ),
+                const SizedBox(
+                  width: 3,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

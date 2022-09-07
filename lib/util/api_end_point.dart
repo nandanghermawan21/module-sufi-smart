@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:sufismart/util/mode_util.dart';
 
 class ApiEndPoint {
@@ -27,14 +29,15 @@ class ApiEndPoint {
   String getListProductypeUrl = "getProductTypeNew";
   String getListBranchUrl = "getDataBranchNew";
   String getListDataBranchByIdUrl = "getDataBranchID_new";
-  String postLoginCustomerNewUrl = "actionLoginNew";
+  String postLoginCustomerNewUrl = "actionLoginNewVersion";
   String postContactUrl = "actionKeluhanNew";
   String postForgotPassUrl = "actionResetPasswordNew";
   String getAplikasiUrl = "getAplikasiNew";
+  String getAplikasiIosUrl = "getAplikasiNewIos";
   String postChangePassUrl = "updatePasswordNew";
   String getGenderUrl = "getGender";
   String getJobUrl = "getJob";
-  String postCustomerRegisterNewUrl = "registrasiCustomerNew";
+  String postCustomerRegisterNewUrl = "registrasiCustomerNewVersion";
   String getConfirmOtpUserUrl = "confirmasiUserOtpNew";
   String getResendOtpUserUrl = "resendUserOtpNew";
   String getDetailInfoUserUrl = "getDetailInfoUser";
@@ -42,6 +45,7 @@ class ApiEndPoint {
   String getDataApplyUserUrl = "getListUserApply";
   String getDataNewsByIdUrl = "getDetailNewsId";
   String getDataPointUserUrl = "getPointUser";
+  String getDataPointUserIosUrl = "getPointUserIos";
   String getDataNotifUrl = "getNotifAnnouncement";
   String getDataListMerchantUrl = "getListMerchant";
   String getDataHistoryPointUrl = "getHistoryPointUser";
@@ -152,7 +156,16 @@ class ApiEndPoint {
   }
 
   String getAplikasiSufismart() {
-    return urlSufiSmart + getAplikasiUrl;
+    if(Platform.isAndroid){
+      ModeUtil.debugPrint("check aplikasi android");
+      return urlSufiSmart + getAplikasiUrl;
+    }else if (Platform.isIOS){
+      ModeUtil.debugPrint("check aplikasi ios");
+      return urlSufiSmart + getAplikasiIosUrl;
+    }else{
+      ModeUtil.debugPrint("check aplikasi android");
+      return urlSufiSmart + getAplikasiUrl;
+    }
   }
 
   String updateChangePass() {
@@ -213,9 +226,15 @@ class ApiEndPoint {
   }
 
   String getPointUserId({
-    required String? id,
+    required String? id,    
   }) {
-    return urlSufiSmart + "$getDataPointUserUrl${id != null ? "/$id" : ""}";
+    if(Platform.isAndroid){
+      return urlSufiSmart + "$getDataPointUserUrl${id != null ? "/$id" : ""}";
+    }else if(Platform.isIOS){
+      return urlSufiSmart + "$getDataPointUserIosUrl${id != null ? "/$id" : ""}";
+    }else{
+      return urlSufiSmart + "$getDataPointUserUrl${id != null ? "/$id" : ""}";
+    }    
   }
 
   String getDataNotif({

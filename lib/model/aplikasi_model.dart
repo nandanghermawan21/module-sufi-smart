@@ -8,11 +8,21 @@ class AplikasiModel {
   String? versi;
   String? phone;
   String? email;
+  String? facebook;
+  String? twitter;
+  String? instagram;
+  String? youtube;
+  String? komunitas;
 
   AplikasiModel({
     this.versi,
     this.phone,
     this.email,
+    this.facebook,
+    this.twitter,
+    this.instagram,
+    this.youtube,
+    this.komunitas,
   });
 
   factory AplikasiModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +30,11 @@ class AplikasiModel {
       versi: json["versi"] as String?,
       phone: json["phone"] as String?,
       email: json["email"] as String?,
+      facebook: json["facebook"] as String?,
+      twitter: json["twitter"] as String?,
+      instagram: json["instagram"] as String?,
+      youtube: json["youtube"] as String?,
+      komunitas: json["komunitas"] as String?,
     );
   }
 
@@ -28,6 +43,11 @@ class AplikasiModel {
       'versi': versi,
       'phone': phone,
       'email': email,
+      'facebook': facebook,
+      'twitter': twitter,
+      'instagram': instagram,
+      'youtube': youtube,
+      'komunitas': komunitas,
     };
   }
 

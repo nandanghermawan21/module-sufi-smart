@@ -800,30 +800,35 @@ class _HomeViewState extends State<HomeView> {
                   Radius.circular(10),
                 ),
               ),
-              child: Row(
+              child: Column(
                 children: [
-                  menuPoint(
-                    "Points",
-                    snapshot.data?.point,
-                    FontAwesomeIcons.coins,
-                    Colors.amber,
-                    widget.goToRedeemPointHome,
+                  Row(
+                    children: [
+                      menuPoint(
+                        "Points",
+                        snapshot.data?.point,
+                        FontAwesomeIcons.coins,
+                        Colors.amber,
+                        widget.goToRedeemPointHome,
+                      ),
+                      Container(
+                        color: Colors.transparent,
+                        height: 40,
+                        child: VerticalDivider(
+                          color: System.data.color!.greyColor,
+                        ),
+                      ),
+                      menuPoint(
+                          "Level",
+                          snapshot.data?.leveluser,
+                          FontAwesomeIcons.medal,
+                          System.data.color!.primaryColor,
+                          widget.goTolevel),
+                    ],
                   ),
-                  Container(
-                    color: Colors.transparent,
-                    height: 40,
-                    child: VerticalDivider(
-                      color: System.data.color!.greyColor,
-                    ),
-                  ),
-                  menuPoint(
-                      "Level",
-                      snapshot.data?.leveluser,
-                      FontAwesomeIcons.medal,
-                      System.data.color!.primaryColor,
-                      widget.goTolevel),
                 ],
               ),
+              
               // child: Column(
               //   children: [
               //     menuPoint(

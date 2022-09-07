@@ -19,6 +19,15 @@ class AboutViewModel extends ChangeNotifier {
    return launch('https://wa.me/$notelp?text=Hello'); 
   }
 
+   Future<void> openbrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
+
   void commit() {
     notifyListeners();
   }

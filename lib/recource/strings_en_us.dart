@@ -8,7 +8,7 @@ class StringsEnUs implements Strings {
   String get account => "Account";
 
   @override
-  String get appName => "Aplication Name";
+  String get appName => "Sufi Smart";
 
   @override
   String get area => "Area";
@@ -160,7 +160,7 @@ class StringsEnUs implements Strings {
   String get username => "Username";
 
   @override
-  String get version => "Version";
+  String get version => "Version : 1.4.0";
 
   @override
   String get welcomeBack => "Welcome Back";
@@ -330,10 +330,10 @@ class StringsEnUs implements Strings {
   String? get alamat => "Address";
 
   @override  
-  String? get inputalamat => "Enter Address";
+  String? get inputalamat => "Enter Phone Number";
 
   @override  
-  String? get tujuanalamat => "*Make sure the address you entered is correct so that it will be sent to your destination address";
+  String? get tujuanalamat => "*Make sure the phone number you entered is correct so that you can be contacted after redeeming your points";
 
   @override
   
@@ -349,5 +349,23 @@ class StringsEnUs implements Strings {
   String get passtoshort => "minimum 6 characters";
 
   @override  
-  String get websitekami => "Our Website";  
+  String get websitekami => "Our Website";
+
+  @override  
+  String get versiapk => "1.4.0";
+
+  @override  
+  String get latestversion => "This application is already available for the latest version, please update on playstore or appstore";
+
+  @override  
+  String get instagram => "Instagram";
+
+  @override  
+  String get facebook => "Facebook";
+
+  @override  
+  String get twitter => "Twitter";
+
+  @override  
+  String get komunitas => "Community";  
 }

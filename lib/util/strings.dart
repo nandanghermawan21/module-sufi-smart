@@ -155,9 +155,9 @@ abstract class Strings {
   
   String? get alamat => "Alamat";
 
-  String? get inputalamat => "Masukan Alamat";
+  String? get inputalamat => "Masukan Nomor telepon";
 
-  String? get tujuanalamat => "*Pastikan alamat yang anda masukan benar agar terkirim sampai tujuan alamat anda";
+  String? get tujuanalamat => "*Pastikan nomor telepon yang anda masukan benar agar dapat dihubungi setelah menukarkan point";
 
   String? get note => "Note";
 
@@ -168,5 +168,17 @@ abstract class Strings {
   String get passtoshort => "minimal 6 karakter";
 
   String get websitekami => "Website Kami";
+
+  String get versiapk => "1.4.0";
+
+  String get latestversion => "Aplikasi ini sudah tersedia untuk versi terbaru silahkan untuk update di playstore atau appstore";
+
+  String get instagram => "Instagram";
+
+  String get facebook => "Facebook";
+
+  String get twitter => "Twitter";
+
+  String get komunitas => "Komunitas";
   
 }

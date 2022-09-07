@@ -9,12 +9,14 @@ class PointModel {
   String? leveluser;
   String? tipe;
   String? idkomunitas;
+  String? version;
 
   PointModel({
     this.point,
     this.leveluser,
     this.tipe,
     this.idkomunitas,
+    this.version,
   });
 
   factory PointModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class PointModel {
       leveluser: json["leveluser"] as String?,
       tipe: json["tipe"] as String?,
       idkomunitas: json["idkomunitas"] as String?,
+      version: json["version"] as String?,
     );
   }
 
@@ -32,6 +35,7 @@ class PointModel {
       "leveluser": leveluser,
       "tipe": tipe,
       "idkomunitas": idkomunitas,
+      "version": version,
     };
   }
 

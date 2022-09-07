@@ -16,6 +16,7 @@ class CustomerRegisterNewModel {
   String? gender;
   String? deviceplatform;
   String? token;
+  String? version;
 
   CustomerRegisterNewModel({
     this.namalengkap,
@@ -27,6 +28,7 @@ class CustomerRegisterNewModel {
     this.gender,
     this.deviceplatform,
     this.token,
+    this.version,
   });
 
   factory CustomerRegisterNewModel.fromJson(Map<String, dynamic> json) {
@@ -40,6 +42,7 @@ class CustomerRegisterNewModel {
       gender: json["gender"] as String?,
       deviceplatform: json["deviceplatform"] as String?,
       token: json["token"] as String?,
+      version: json["version"] as String?,
     );
   }
 
@@ -54,6 +57,7 @@ class CustomerRegisterNewModel {
       'gender': gender,
       'deviceplatform': deviceplatform,
       'token': token,
+      'version': version,
     };
   }
 

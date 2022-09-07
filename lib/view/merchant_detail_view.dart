@@ -231,7 +231,7 @@ class _MerchantDetailView extends State<MerchantDetailView> {
           borderSide: BorderSide(color: Colors.grey),
         ),
         prefixIcon: Icon(
-          Icons.home,
+          Icons.phone,
           color: System.data.color?.primaryColor,
         ),
         filled: true,
@@ -240,7 +240,7 @@ class _MerchantDetailView extends State<MerchantDetailView> {
       cursorColor: Colors.grey,
       validator: (String? value) {
         if (value!.isEmpty) {
-          return (System.data.strings!.alamat ?? "") +
+          return (System.data.strings!.phoneNumber) +
               (" " + System.data.strings!.canNotBeEmpty);
         }
         return null;

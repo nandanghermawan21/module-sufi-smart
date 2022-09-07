@@ -41,6 +41,7 @@ class _DashboardViewState extends State<DashboardView> {
   void initState() {
     super.initState();
   }
+
 //testcoms
   @override
   Widget build(BuildContext context) {
@@ -567,6 +568,26 @@ class _DashboardViewState extends State<DashboardView> {
                           //   System.data.color!.primaryColor,
                           // ),
                         ],
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.only(top: 3),
+                        child: Column(
+                          children: <Widget>[
+                            snapshot.data?.version !=
+                                    System.data.strings!.versiapk
+                                ? Text(
+                                    System.data.strings!.latestversion,
+                                    style: const TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  )
+                                :  Container()
+                          ],
+                        ),
                       ),
                     ],
                   ),
