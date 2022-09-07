@@ -17,7 +17,7 @@ class BasicComponent {
     List<Widget>? actions,
   }) {
     return AppBar(
-      centerTitle:false,
+      centerTitle: false,
       backgroundColor: System.data.color!.mainColor,
       title: Image.asset(
         "assets/logo_sfi_white.png",
@@ -31,8 +31,11 @@ class BasicComponent {
   static Future<void> opengooglemap(double lat, double lon) async {
     //final url = 'http://maps.google.com/maps?q=loc:${lat},${lon}(${tag})';
     final url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lon';
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      );
     } else {
       throw 'Could not launch $url';
     }
@@ -129,7 +132,7 @@ class BasicComponent {
             imageBuilder: (context, imageProvider) => Container(
               margin: const EdgeInsets.all(0),
               width: 110,
-              height: 115,              
+              height: 115,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -143,7 +146,7 @@ class BasicComponent {
               //height: MediaQuery.of(context).size.height / 2,
               width: 110,
               height: 115,
-              
+
               decoration: BoxDecoration(
                   color: Colors.grey[300],
                   borderRadius: const BorderRadius.all(Radius.circular(5))),
@@ -151,7 +154,6 @@ class BasicComponent {
             errorWidget: (context, url, error) => Container(
               width: 110,
               height: 115,
-              
               decoration: BoxDecoration(
                   color: Colors.grey[300],
                   borderRadius: const BorderRadius.all(Radius.circular(5))),
