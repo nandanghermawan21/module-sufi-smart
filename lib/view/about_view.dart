@@ -216,7 +216,7 @@ class _AboutState extends State<AboutView> {
                                       textAlign: TextAlign.center,
                                     ),
                                     Icon(
-                                      FontAwesomeIcons.userFriends,
+                                      FontAwesomeIcons.users,
                                       color: System.data.color?.primaryColor,
                                     ),
                                   ],
