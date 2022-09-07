@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:sufismart/util/mode_util.dart';
+import 'package:sufismart/util/system.dart';
 
 class OneSignalMessaging {
-  String? appId = "8857c98d-aba9-45c2-abd8-692ad94f9521";
+  String? appId = System.data.global.notifAppId;
   Map<OSiOSSettings, dynamic> settings = {
     OSiOSSettings.autoPrompt: false,
     OSiOSSettings.promptBeforeOpeningPushUrl: true

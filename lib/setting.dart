@@ -23,8 +23,8 @@ void setting() {
   ];
   //setting oneSignal notification
   System.data.oneSignalMessaging = OneSignalMessaging(
-    //appId: "5950883a-0066-4be7-ac84-3d240982ffaf",
-    appId: "8857c98d-aba9-45c2-abd8-692ad94f9521",
+    //appId: "8857c98d-aba9-45c2-abd8-692ad94f9521",
+    appId: System.data.global.notifAppId,
     notificationHandler: (notification) {
       //System.data.showmodal();
       ModeUtil.debugPrint("notification handler fire");
@@ -79,8 +79,8 @@ void setting() {
           },
         );
         break;
-      case "/notif":    
-        String? id = (uri?.queryParameters["id"]);  
+      case "/notif":
+        String? id = (uri?.queryParameters["id"]);
         Navigator.of(System.data.context).pushNamed(
           RouteName.announcementView,
           arguments: {
