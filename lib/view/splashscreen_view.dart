@@ -61,6 +61,22 @@ class _SplashScreenViewState extends State<SplashScreenView> {
           width: 250.0,
         ),
       ),
+      bottomNavigationBar: botimage(),
+    );
+  }
+
+  Widget botimage() {
+    return Container(
+      margin: const EdgeInsets.all(15),
+      color: Colors.transparent,
+      height: 50,
+      child: Center(
+        child: Image.asset(
+          "assets/ojk1.png",
+          height: 150.0,
+          width: 250.0,
+        ),
+      ),
     );
   }
 }
