@@ -101,77 +101,67 @@ Map<String, WidgetBuilder> route = {
         onCreateBody: (menu, index) {
           switch (index) {
             case 0:
-              return HomeView(
-                gotoShowAll: () {
-                  Navigator.of(context).pushNamed(RouteName.allNews);
-                },
-                gotoDetailNews: (news) {
-                  Navigator.of(context)
-                      .pushNamed(RouteName.detailNews, arguments: {
-                    ParamName.newsModel: news,
-                  });
-                },
-                gotoSimulation: () {
-                  String? userid = System.data.global.customerNewModel?.userid;
+              return HomeView(gotoShowAll: () {
+                Navigator.of(context).pushNamed(RouteName.allNews);
+              }, gotoDetailNews: (news) {
+                Navigator.of(context)
+                    .pushNamed(RouteName.detailNews, arguments: {
+                  ParamName.newsModel: news,
+                });
+              }, gotoSimulation: () {
+                String? userid = System.data.global.customerNewModel?.userid;
+                Navigator.of(context).pushNamed(RouteName.webView, arguments: {
+                  ParamName.urlWebview:
+                      "https://sufismart.sfi.co.id/sufismart/api/simulasi_page_sufismart.php?userid=" +
+                          (userid ?? ""),
+                });
+                //Navigator.of(context).pushNamed(RouteName.creditSimulation);
+              }, gotoPromo: () {
+                Navigator.of(context).pushNamed(RouteName.allNews);
+              }, gotoProduct: () {
+                Navigator.of(context).pushNamed(RouteName.productCategory);
+              }, gotoBranch: () {
+                Navigator.of(context).pushNamed(RouteName.branch);
+              }, gotoPayment: () {
+                Navigator.of(context).pushNamed(RouteName.webView, arguments: {
+                  ParamName.urlWebview:
+                      "https://sufismart.sfi.co.id/sufismart/api/layanan_2.php",
+                });
+              }, gotoInstallment: () {
+                if (System.data.global.customerNewModel?.userid != null) {
+                  String? email = System.data.global.customerNewModel?.email;
                   Navigator.of(context)
                       .pushNamed(RouteName.webView, arguments: {
                     ParamName.urlWebview:
-                        "https://sufismart.sfi.co.id/sufismart/api/simulasi_page_sufismart.php?userid=" +
-                            (userid ?? ""),
+                        "https://sufismart.sfi.co.id/sufismart/api/ic_product_sufismart.php?EMAIL=" +
+                            (email ?? ""),
                   });
-                  //Navigator.of(context).pushNamed(RouteName.creditSimulation);
-                },
-                gotoPromo: () {
-                  Navigator.of(context).pushNamed(RouteName.allNews);
-                },
-                gotoProduct: () {
-                  Navigator.of(context).pushNamed(RouteName.productCategory);
-                },
-                gotoBranch: () {
-                  Navigator.of(context).pushNamed(RouteName.branch);
-                },
-                gotoPayment: () {
-                  Navigator.of(context)
-                      .pushNamed(RouteName.webView, arguments: {
-                    ParamName.urlWebview:
-                        "https://sufismart.sfi.co.id/sufismart/api/layanan_2.php",
-                  });
-                },
-                gotoInstallment: () {
-                  if (System.data.global.customerNewModel?.userid != null) {
-                    String? email = System.data.global.customerNewModel?.email;
-                    Navigator.of(context)
-                        .pushNamed(RouteName.webView, arguments: {
-                      ParamName.urlWebview:
-                          "https://sufismart.sfi.co.id/sufismart/api/ic_product_sufismart.php?EMAIL=" +
-                              (email ?? ""),
-                    });
-                  } else {
-                    return System.data.showmodal(
-                        System.data.strings?.silahkanloginterlebihdulu,
-                        "Announcement");
-                    //Navigator.of(context).pushNamed(RouteName.alertNoLogin);
-                  }
+                } else {
+                  return System.data.showmodal(
+                      System.data.strings?.silahkanloginterlebihdulu,
+                      "Announcement");
                   //Navigator.of(context).pushNamed(RouteName.alertNoLogin);
-                },
-                gotoApply: () {
-                  String? userid = System.data.global.customerNewModel?.userid;
-                  Navigator.of(context)
-                      .pushNamed(RouteName.webView, arguments: {
-                    ParamName.urlWebview:
-                        "https://sufismart.sfi.co.id/sufismart/api/credit_simulation_apply_all.php?userid=" +
-                            (userid ?? ""),
-                  });
-                },
-                goToRedeemPointHome: () {
-                  Navigator.of(context).pushNamed(
-                    RouteName.merchantPointView,
-                  );
-                },
-                goTolevel: () {
-                  System.data.showmodal("Coming Soon", "Announcement");
-                },
-              );
+                }
+                //Navigator.of(context).pushNamed(RouteName.alertNoLogin);
+              }, gotoApply: () {
+                String? userid = System.data.global.customerNewModel?.userid;
+                Navigator.of(context).pushNamed(RouteName.webView, arguments: {
+                  ParamName.urlWebview:
+                      "https://sufismart.sfi.co.id/sufismart/api/credit_simulation_apply_all.php?userid=" +
+                          (userid ?? ""),
+                });
+              }, goToRedeemPointHome: () {
+                Navigator.of(context).pushNamed(
+                  RouteName.merchantPointView,
+                );
+              }, goTolevel: () {
+                System.data.showmodal("Coming Soon", "Announcement");
+              }, onTapWebviewRedeemHome: (url) {
+                Navigator.of(context).pushNamed(RouteName.webView, arguments: {
+                  ParamName.urlWebview: url,
+                });
+                ModeUtil.debugPrint("Url Webview" + url);
+              });
             case 1:
               return AboutView(onTapFaq: () {
                 Navigator.of(context).pushNamed(RouteName.webView, arguments: {
@@ -192,36 +182,33 @@ Map<String, WidgetBuilder> route = {
               return const ContactView();
             case 3:
               if (System.data.global.customerNewModel?.userid != null) {
-                return DashboardView(
-                  goToChangePass: () {
-                    Navigator.of(context).pushNamed(RouteName.changePassword);
-                  },
-                  goToChangeProfile: () {
-                    Navigator.of(context).pushNamed(RouteName.changeProfile);
-                  },
-                  goTologout: () {
-                    System.data.global.customerNewModel = null;
-                    System.data.global.token = '';
-                    System.data.session!.setString(SessionKey.user, "");
-                    ModeUtil.debugPrint(
-                        "new customer ${System.data.global.customerNewModel?.toJson()}");
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        RouteName.mainMenu, (r) => r.settings.name == "");
-                  },
-                  goToListApply: () {
-                    Navigator.of(context).pushNamed(RouteName.applyUserview);
-                  },
-                  goToListHistoryPoint: () {
-                    Navigator.of(context).pushNamed(RouteName.historyPointView);
-                  },
-                  goToRedeemPoint: () {
-                    Navigator.of(context)
-                        .pushNamed(RouteName.merchantPointView);
-                  },
-                  goToLevelUser: () {
-                    System.data.showmodal("Coming Soon", "Announcement");
-                  },
-                );
+                return DashboardView(goToChangePass: () {
+                  Navigator.of(context).pushNamed(RouteName.changePassword);
+                }, goToChangeProfile: () {
+                  Navigator.of(context).pushNamed(RouteName.changeProfile);
+                }, goTologout: () {
+                  System.data.global.customerNewModel = null;
+                  System.data.global.token = '';
+                  System.data.session!.setString(SessionKey.user, "");
+                  ModeUtil.debugPrint(
+                      "new customer ${System.data.global.customerNewModel?.toJson()}");
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      RouteName.mainMenu, (r) => r.settings.name == "");
+                }, goToListApply: () {
+                  Navigator.of(context).pushNamed(RouteName.applyUserview);
+                }, goToListHistoryPoint: () {
+                  Navigator.of(context).pushNamed(RouteName.historyPointView);
+                }, goToRedeemPoint: () {
+                  Navigator.of(context).pushNamed(RouteName.merchantPointView);
+                }, goToLevelUser: () {
+                  System.data.showmodal("Coming Soon", "Announcement");
+                }, onTapWebviewRedeem: (url) {
+                  Navigator.of(context)
+                      .pushNamed(RouteName.webView, arguments: {
+                    ParamName.urlWebview: url,
+                  });
+                  ModeUtil.debugPrint("Url Webview" + url);
+                });
               } else {
                 return LoginView(
                   gotoSignup: () {

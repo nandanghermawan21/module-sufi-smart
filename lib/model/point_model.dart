@@ -10,6 +10,9 @@ class PointModel {
   String? tipe;
   String? idkomunitas;
   String? version;
+  String? linkredem;
+  String? flagpoint;
+  
 
   PointModel({
     this.point,
@@ -17,6 +20,8 @@ class PointModel {
     this.tipe,
     this.idkomunitas,
     this.version,
+    this.linkredem,
+    this.flagpoint
   });
 
   factory PointModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +31,8 @@ class PointModel {
       tipe: json["tipe"] as String?,
       idkomunitas: json["idkomunitas"] as String?,
       version: json["version"] as String?,
+      linkredem: json["linkredem"] as String?,
+      flagpoint: json["flagpoint"] as String?,
     );
   }
 
@@ -36,6 +43,8 @@ class PointModel {
       "tipe": tipe,
       "idkomunitas": idkomunitas,
       "version": version,
+      "linkredem": linkredem,
+      "flagpoint": flagpoint,
     };
   }
 

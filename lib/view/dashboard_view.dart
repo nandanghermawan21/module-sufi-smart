@@ -15,17 +15,19 @@ class DashboardView extends StatefulWidget {
   final VoidCallback? goToListHistoryPoint;
   final VoidCallback? goToLevelUser;
   final VoidCallback? goToRedeemPoint;
+  final ValueChanged<String>? onTapWebviewRedeem;
 
-  const DashboardView({
-    Key? key,
-    this.goToChangePass,
-    this.goToChangeProfile,
-    this.goTologout,
-    this.goToListApply,
-    this.goToListHistoryPoint,
-    this.goToLevelUser,
-    this.goToRedeemPoint,
-  }) : super(key: key);
+  const DashboardView(
+      {Key? key,
+      this.goToChangePass,
+      this.goToChangeProfile,
+      this.goTologout,
+      this.goToListApply,
+      this.goToListHistoryPoint,
+      this.goToLevelUser,
+      this.goToRedeemPoint,
+      this.onTapWebviewRedeem})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -535,12 +537,72 @@ class _DashboardViewState extends State<DashboardView> {
                       ),
                       Row(
                         children: [
-                          menuPoint(
-                              "Points",
-                              snapshot.data?.point,
-                              FontAwesomeIcons.coins,
-                              Colors.amber,
-                              widget.goToRedeemPoint!),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                if (snapshot.data?.point == "0") {
+                                  System.data.showmodal(
+                                    System.data.strings?.pointtidakcukup,
+                                    "Announcement",
+                                  );
+                                } else {
+                                  if (snapshot.data?.flagpoint == "0") {
+                                    widget.goToRedeemPoint!();
+                                  } else {
+                                    widget.onTapWebviewRedeem!(
+                                        snapshot.data?.linkredem ?? "");
+                                  }
+                                }
+                              },
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "Points",
+                                    style: TextStyle(
+                                      color: System.data.color!.greyColor,
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        color: Colors.transparent,
+                                        padding:
+                                            const EdgeInsets.only(bottom: 5),
+                                        child: const Icon(
+                                          FontAwesomeIcons.coins,
+                                          size: 20,
+                                          color: Colors.amber,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        snapshot.data?.point ?? "",
+                                        style: TextStyle(
+                                          color: System.data.color!.greyColor,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          // menuPoint1(
+                          //     "Points",
+                          //     snapshot.data?.point,
+                          //     FontAwesomeIcons.coins,
+                          //     Colors.amber,
+                          //     widget.onTapWebviewRedeem!(snapshot.data?.linkredem ?? "")),
+                          // menuPoint(
+                          //     "Points",
+                          //     snapshot.data?.point,
+                          //     FontAwesomeIcons.coins,
+                          //     Colors.amber,
+                          //     widget.goToRedeemPoint!),
                           Container(
                             color: Colors.transparent,
                             height: 40,
@@ -585,7 +647,7 @@ class _DashboardViewState extends State<DashboardView> {
                                     ),
                                     textAlign: TextAlign.center,
                                   )
-                                :  Container()
+                                : Container()
                           ],
                         ),
                       ),
