@@ -50,6 +50,9 @@ class OneSignalMessaging {
     // await OneSignal.shared.init("${this.appId}", iOSSettings: settings);
     // OneSignal.shared
     //     .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+      debugPrint("Accepted permission: $accepted");
+    });
     OneSignal.shared.consentGranted(true);
   }
 
