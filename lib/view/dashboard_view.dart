@@ -657,43 +657,44 @@ class _DashboardViewState extends State<DashboardView> {
           } else {
             return SkeletonAnimation(
               child: Container(
-                color: Colors.transparent,
+                height: 76,
+                //color: Colors.red,
                 padding: const EdgeInsets.all(10),
-                // decoration: BoxDecoration(
-                //   color: System.data.color!.greyColor2,
-                //   borderRadius: const BorderRadius.all(
-                //     Radius.circular(10),
-                //   ),
-                // ),
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: System.data.color!.greyColor2,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                      height: 20,
-                      width: double.infinity,
-                      //color: Colors.transparent,
-                    ),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: System.data.color!.greyColor2,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                      height: 20,
-                      width: double.infinity,
-                      //color: Colors.transparent,
-                    ),
-                  ],
+                decoration: BoxDecoration(
+                  color: System.data.color!.greyColor2,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
                 ),
+                // child: Column(
+                //   children: [
+                //     Container(
+                //       decoration: BoxDecoration(
+                //         color: System.data.color!.greyColor2,
+                //         borderRadius: const BorderRadius.all(
+                //           Radius.circular(10),
+                //         ),
+                //       ),
+                //       height: 20,
+                //       width: double.infinity,
+                //       //color: Colors.transparent,
+                //     ),
+                //     const SizedBox(
+                //       height: 2,
+                //     ),
+                //     Container(
+                //       decoration: BoxDecoration(
+                //         color: System.data.color!.greyColor2,
+                //         borderRadius: const BorderRadius.all(
+                //           Radius.circular(10),
+                //         ),
+                //       ),
+                //       height: 20,
+                //       width: double.infinity,
+                //       //color: Colors.transparent,
+                //     ),
+                //   ],
+                // ),
               ),
             );
           }
