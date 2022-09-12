@@ -364,21 +364,23 @@ class PinComponent extends StatelessWidget {
       child: ValueListenableBuilder(
         valueListenable: controller.value.timerController,
         builder: (c, d, w) {
-          return Container(
-            height: 50,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: controller.value.timerController.value.secondLeft > 0
-                  ? System.data.color!.primaryColor
-                  : Colors.grey,
-            ),
-            child: Center(
-              child: Text(
-                System.data.strings!.send,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
+          return SafeArea(
+            child: Container(
+              height: 50,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: controller.value.timerController.value.secondLeft > 0
+                    ? System.data.color!.primaryColor
+                    : Colors.grey,
+              ),
+              child: Center(
+                child: Text(
+                  System.data.strings!.send,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
               ),
             ),

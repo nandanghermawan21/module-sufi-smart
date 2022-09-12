@@ -367,5 +367,8 @@ class StringsEnUs implements Strings {
   String get twitter => "Twitter";
 
   @override  
-  String get komunitas => "Community";  
+  String get komunitas => "Community";
+  @override
+  
+  String get submit => "Submitr";  
 }

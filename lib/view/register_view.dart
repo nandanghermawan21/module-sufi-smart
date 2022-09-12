@@ -171,7 +171,7 @@ class _RegisterViewState extends State<RegisterView> {
             borderRadius: const BorderRadius.all(Radius.circular(5))),
         child: Center(
           child: Text(
-            System.data.strings!.send,
+            System.data.strings!.submit,
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,

@@ -151,7 +151,7 @@ class RegisterViewModel extends ChangeNotifier {
                   userid: otp.userid!, flag: 'regis',
                 ).then((value) {
                   pinComponentController.value.loadingController.forceStop();
-                  pinComponentController.value.timerController.start(
+                  pinComponentController.value.timerController.start(                    
                     duration:
                         DateTime.now().toUtc().difference(value!.expired!) * -1,
                   );

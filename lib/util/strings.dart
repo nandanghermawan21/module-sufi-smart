@@ -180,5 +180,7 @@ abstract class Strings {
   String get twitter => "Twitter";
 
   String get komunitas => "Komunitas";
+
+  String get submit => "Submit";
   
 }
