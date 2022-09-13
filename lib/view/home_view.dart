@@ -660,13 +660,14 @@ class _HomeViewState extends State<HomeView> {
       children: [
         Container(
           color: Colors.white,
-          margin: const EdgeInsets.only(top: 10),
+          margin: const EdgeInsets.only(top: 10,left: 15,right: 15),
           padding: const EdgeInsets.only(top: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
-                margin: const EdgeInsets.only(left: 20),
+                color: Colors.transparent,
+                //margin: const EdgeInsets.only(left: 20),
                 child: Text(
                   System.data.strings!.latestNews,
                   style: TextStyle(
@@ -676,7 +677,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(right: 10),
+                color: Colors.transparent,
                 child: GestureDetector(
                   onTap: () {
                     if (widget.gotoShowAll != null) {
@@ -687,7 +688,7 @@ class _HomeViewState extends State<HomeView> {
                     System.data.strings!.showAll,
                     style: TextStyle(
                       color: System.data.color!.primaryColor,
-                      fontSize: 14,                      
+                      fontSize: 15,                      
                     ),
                   ),
                   // child: Container(
@@ -719,7 +720,7 @@ class _HomeViewState extends State<HomeView> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Container(
-                  margin: const EdgeInsets.only(top: 5),
+                  margin: const EdgeInsets.only(top: 5,left: 12,right: 12),
                   height: 250,
                   child: ListView.builder(
                     itemCount: snapshot.data?.length ?? 0,
@@ -921,12 +922,12 @@ class _HomeViewState extends State<HomeView> {
                           Radius.circular(10),
                         ),
                       ),
-                      height: 20,
+                      height: 19,
                       width: double.infinity,
                       //color: Colors.transparent,
                     ),
                     const SizedBox(
-                      height: 3,
+                      height: 2,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -935,7 +936,7 @@ class _HomeViewState extends State<HomeView> {
                           Radius.circular(10),
                         ),
                       ),
-                      height: 20,
+                      height: 19,
                       width: double.infinity,
                       //color: Colors.transparent,
                     ),

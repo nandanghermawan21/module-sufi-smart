@@ -2,6 +2,7 @@ abstract class Strings {
   String get locale => "ID-id";
   String get appName => "Sufi Smart";
   String get version => "Versi : 1.4.0";
+  String get versiapk => "1.4.0";
   String get home => "Dashboard";
   String get about => "Tentang";
   String get contact => "Kontak";
@@ -9,7 +10,7 @@ abstract class Strings {
   String get features => "Fitur";
   String get showAll => "Lihat semua";
   String get latestNews => "Berita Terbaru";
-  String get paymentOption => "Opsi\nPembayaran";
+  String get paymentOption => "Opsi\nPembayaran & Asuransi";
   String get installmentStatus => "Fasilitas\n";
   String get creditSimulation => "Simulasi\nKredit & Apply";
   String get branch => "Cabang\n";
@@ -167,9 +168,7 @@ abstract class Strings {
 
   String get passtoshort => "minimal 6 karakter";
 
-  String get websitekami => "Website Kami";
-
-  String get versiapk => "1.4.0";
+  String get websitekami => "Website Kami"; 
 
   String get latestversion => "Aplikasi ini sudah tersedia untuk versi terbaru silahkan untuk update di playstore atau appstore";
 

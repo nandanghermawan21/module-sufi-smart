@@ -117,7 +117,7 @@ class StringsEnUs implements Strings {
   String get password => "Password";
 
   @override
-  String get paymentOption => "Payment \n Option";
+  String get paymentOption => "Payment \n Option & Insurance";
 
   @override
   String get phoneNumber => "Phone Number";
@@ -161,6 +161,9 @@ class StringsEnUs implements Strings {
 
   @override
   String get version => "Version : 1.4.0";
+
+  @override  
+  String get versiapk => "1.4.0";
 
   @override
   String get welcomeBack => "Welcome Back";
@@ -349,10 +352,7 @@ class StringsEnUs implements Strings {
   String get passtoshort => "minimum 6 characters";
 
   @override  
-  String get websitekami => "Our Website";
-
-  @override  
-  String get versiapk => "1.4.0";
+  String get websitekami => "Our Website";  
 
   @override  
   String get latestversion => "This application is already available for the latest version, please update on playstore or appstore";

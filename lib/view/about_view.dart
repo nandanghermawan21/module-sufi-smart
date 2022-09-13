@@ -46,7 +46,7 @@ class _AboutState extends State<AboutView> {
                       Container(
                         margin: const EdgeInsets.only(top: 10),
                         child: Image.asset(
-                          'assets/logo_suzuki.png',
+                          'assets/sufismart.png',
                           height: 100.0,
                           width: 100.0,
                         ),
@@ -265,7 +265,7 @@ class _AboutState extends State<AboutView> {
                       Container(
                         margin: const EdgeInsets.only(top: 10),
                         child: Image.asset(
-                          'assets/logo_suzuki.png',
+                          'assets/sufismart.png',
                           height: 100.0,
                           width: 100.0,
                         ),
