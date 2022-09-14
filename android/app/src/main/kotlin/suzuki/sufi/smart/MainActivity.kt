@@ -1,4 +1,4 @@
-package com.example.sufismart
+package suzuki.sufi.smart
 
 import android.app.Notification
 import android.app.NotificationChannel
