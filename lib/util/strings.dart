@@ -1,7 +1,7 @@
 abstract class Strings {
   String get locale => "ID-id";
   String get appName => "Sufi Smart";
-  String get version => "Versi : 1.4.0";
+  String get version => "Versi : 1.4.1";
   String get home => "Dashboard";
   String get about => "Tentang";
   String get contact => "Kontak";
@@ -169,7 +169,7 @@ abstract class Strings {
 
   String get websitekami => "Website Kami";
 
-  String get versiapk => "1.4.0";
+  String get versiapk => "1.4.1";
 
   String get latestversion => "Aplikasi ini sudah tersedia untuk versi terbaru silahkan untuk update di playstore atau appstore";
 

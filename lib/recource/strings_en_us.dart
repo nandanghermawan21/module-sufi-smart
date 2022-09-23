@@ -160,7 +160,7 @@ class StringsEnUs implements Strings {
   String get username => "Username";
 
   @override
-  String get version => "Version : 1.4.0";
+  String get version => "Version : 1.4.1";
 
   @override
   String get welcomeBack => "Welcome Back";
@@ -352,7 +352,7 @@ class StringsEnUs implements Strings {
   String get websitekami => "Our Website";
 
   @override  
-  String get versiapk => "1.4.0";
+  String get versiapk => "1.4.1";
 
   @override  
   String get latestversion => "This application is already available for the latest version, please update on playstore or appstore";
