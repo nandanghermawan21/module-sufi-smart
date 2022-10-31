@@ -11,6 +11,8 @@ class HistoryModel {
   String? deskripsi;
   String? tipe;
   String? crtdate;
+  String? voidredeem;
+  String? link;
 
   HistoryModel({
     this.userid,
@@ -19,6 +21,8 @@ class HistoryModel {
     this.deskripsi,
     this.tipe,
     this.crtdate,
+    this.voidredeem,
+    this.link,
   });
 
   factory HistoryModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +33,8 @@ class HistoryModel {
       deskripsi: json["deskripsi"] as String,
       tipe: json["tipe"] as String,
       crtdate: json["crtdate"] as String,
+      voidredeem: json["voidredeem"] as String,
+      link: json["link"] as String,
     );
   }
 
@@ -40,6 +46,8 @@ class HistoryModel {
       "deskripsi": deskripsi,
       "tipe": tipe,
       "crtdate": crtdate,
+      "voidredeem": voidredeem,
+      "link": link,
     };
   }
 

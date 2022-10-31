@@ -1,8 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
+import '../util/mode_util.dart';
 
 class WebViewModel extends ChangeNotifier {
+  
+  late WebViewController controllerGlobal;
+
+  Future<bool> exitApp(BuildContext context) async {
+  // if (await controllerGlobal.canGoBack() == true) {
+  //   //ModeUtil.debugPrint("onwill goback");
+  //   controllerGlobal.goBack();
+  //   return Future.value(true);
+  // } else {
+  //   // Scaffold.of(context).showSnackBar(
+  //   //   const SnackBar(content: Text("No back history item")),
+  //   // );
+  //   return Future.value(false);
+  // }
+  
+  if (await controllerGlobal.canGoBack()) {
+    ModeUtil.debugPrint("onwill goback");
+    controllerGlobal.goBack();
+    return Future.value(true);
+  } else {
+    // Scaffold.of(context).showSnackBar(
+    //   const SnackBar(content: Text("No back history item")),
+    // );
+    ModeUtil.debugPrint("onwill goback");
+    return Future.value(false);
+  }
+}
 
   Future<void> openPhone(String phone) {
     //return launch("tel:$phone");

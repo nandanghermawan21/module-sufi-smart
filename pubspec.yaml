@@ -38,6 +38,7 @@ dependencies:
   flutter_widget_from_html: ^0.8.5
   webview_flutter: ^3.0.0  
   device_information: ^0.0.4
+  photo_view: ^0.14.0
 
 dev_dependencies:
   flutter_test:

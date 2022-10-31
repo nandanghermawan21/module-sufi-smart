@@ -391,7 +391,12 @@ Map<String, WidgetBuilder> route = {
     );
   },
   RouteName.historyPointView: (BuildContext context) {
-    return const HistoryPointView();
+    return HistoryPointView(onTapWebviewRedeem: (url) {
+      Navigator.of(context).pushNamed(RouteName.webView, arguments: {
+        ParamName.urlWebview: url,
+      });
+      ModeUtil.debugPrint("Url Webview" + url);
+    });
   },
   RouteName.merchantPointView: (BuildContext context) {
     return MerchantView(

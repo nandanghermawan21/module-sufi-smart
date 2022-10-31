@@ -16,10 +16,10 @@ class ApiEndPoint {
   String postSavePositionUrl = "Service/savelocation";
 
   //sufismart
-  String baseUrlSufismart = "https://sufismart.sfi.co.id/sufismart_ci/api_sufi/";
-  String baseUrlDebugSufismart = "https://sufismart.sfi.co.id/sufismart_ci/api_sufi/";
-  // String baseUrlSufismart = "https://uat.sfi.co.id/sufismart_ci/api_sufi/";
-  // String baseUrlDebugSufismart = "https://uat.sfi.co.id/sufismart_ci/api_sufi/";
+  // String baseUrlSufismart = "https://sufismart.sfi.co.id/sufismart_ci/api_sufi/";
+  // String baseUrlDebugSufismart = "https://sufismart.sfi.co.id/sufismart_ci/api_sufi/";
+  String baseUrlSufismart = "https://uat.sfi.co.id/sufismart_ci/api_sufi/";
+  String baseUrlDebugSufismart = "https://uat.sfi.co.id/sufismart_ci/api_sufi/";
 
   String getBannerUrl = "getBannerListNew";
   String getNewsHomeUrl = "getImgNewsNew";

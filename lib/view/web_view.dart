@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sufismart/component/basic_component.dart';
@@ -8,6 +9,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewSufi extends StatefulWidget {
   final String? urlweb;
+
   const WebViewSufi({
     Key? key,
     this.urlweb,
@@ -22,68 +24,87 @@ class WebViewSufi extends StatefulWidget {
 class _WebViewState extends State<WebViewSufi> {
   WebViewModel webViewModel = WebViewModel();
   bool isLoading = true;
+  //  final Completer<WebViewController> _controller =
+  //      Completer<WebViewController>();
+ late WebViewController _controllerGlobal;
+
   @override
   void initState() {
     super.initState();
     // Enable virtual display.
+    //WebViewController controllerGlobal;
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: BasicComponent.appBar(),
-      backgroundColor: System.data.color!.background,
-      body: Stack(
-        children: [
-          WebView(
-            initialUrl: widget.urlweb ?? "",
-            onPageFinished: (finish) {
-              setState(() {
-                isLoading = false;
-              });
-            },
-            
-            javascriptMode: JavascriptMode.unrestricted,
-            javascriptChannels: {
-              JavascriptChannel(
-                  name: 'backSuccess',
-                  onMessageReceived: (JavascriptMessage message) {
-                    ModeUtil.debugPrint("message ${message.message}");
-                    webViewModel.successOrder();
-                  }),
-              JavascriptChannel(
-                  name: 'viewPdf',
-                  onMessageReceived: (JavascriptMessage message) {
-                    ModeUtil.debugPrint("message ${message.message}");
-                    webViewModel.openbrowser(Uri.parse(message.message));
-                  }),
-              JavascriptChannel(
-                  name: 'telepon',
-                  onMessageReceived: (JavascriptMessage message) {
-                    ModeUtil.debugPrint("message ${message.message}");
-                    webViewModel.openPhone(message.message);
-                  }),
-              JavascriptChannel(
-                  name: 'sendEmail',
-                  onMessageReceived: (JavascriptMessage message) {
-                    ModeUtil.debugPrint("message ${message.message}");
-                    webViewModel.sendEmail(message.message);
-                  }),
-              JavascriptChannel(
-                  name: 'Print',
-                  onMessageReceived: (JavascriptMessage message) {
-                    ModeUtil.debugPrint("message ${message.message}");
-                    webViewModel.openbrowser(Uri.parse(message.message));
-                  }),
-            }.toSet(),
-          ),
-          isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Stack(),
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        //return false;
+        if (await _controllerGlobal.canGoBack()) {
+          _controllerGlobal.goBack();
+          return false;
+        } else {
+          return true;
+        }
+      },
+      //onWillPop: () => webViewModel.exitApp(context),
+      child: Scaffold(
+        appBar: BasicComponent.appBar(),
+        backgroundColor: System.data.color!.background,
+        body: Stack(
+          children: [
+            WebView(
+              initialUrl: widget.urlweb ?? "",
+              onPageFinished: (finish) {
+                setState(() {
+                  isLoading = false;
+                });
+              },
+              javascriptMode: JavascriptMode.unrestricted,
+              onWebViewCreated: (WebViewController webViewController) {
+                _controllerGlobal = webViewController;
+              },
+              javascriptChannels: {
+                JavascriptChannel(
+                    name: 'backSuccess',
+                    onMessageReceived: (JavascriptMessage message) {
+                      ModeUtil.debugPrint("message ${message.message}");
+                      webViewModel.successOrder();
+                    }),
+                JavascriptChannel(
+                    name: 'viewPdf',
+                    onMessageReceived: (JavascriptMessage message) {
+                      ModeUtil.debugPrint("message ${message.message}");
+                      webViewModel.openbrowser(Uri.parse(message.message));
+                    }),
+                JavascriptChannel(
+                    name: 'telepon',
+                    onMessageReceived: (JavascriptMessage message) {
+                      ModeUtil.debugPrint("message ${message.message}");
+                      webViewModel.openPhone(message.message);
+                    }),
+                JavascriptChannel(
+                    name: 'sendEmail',
+                    onMessageReceived: (JavascriptMessage message) {
+                      ModeUtil.debugPrint("message ${message.message}");
+                      webViewModel.sendEmail(message.message);
+                    }),
+                JavascriptChannel(
+                    name: 'Print',
+                    onMessageReceived: (JavascriptMessage message) {
+                      ModeUtil.debugPrint("message ${message.message}");
+                      webViewModel.openbrowser(Uri.parse(message.message));
+                    }),
+              }.toSet(),
+            ),
+            isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Stack(),
+          ],
+        ),
       ),
     );
   }
