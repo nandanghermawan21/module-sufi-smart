@@ -412,8 +412,9 @@ class BasicComponent {
                     fontSize: 14),
               ),
               const SizedBox(
-                height: 5,
+                height: 2,
               ),
+              const Divider(),
               Text(
                 pm.addr ?? "",
                 style: const TextStyle(
