@@ -67,6 +67,10 @@ class WebViewModel extends ChangeNotifier {
   //   }
   // }
 
+  void tapBackHome(){
+    Navigator.of(System.data.context).pop();
+  }
+
   void commit() {
     notifyListeners();
   }

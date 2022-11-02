@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
@@ -26,7 +27,7 @@ class _WebViewState extends State<WebViewSufi> {
   bool isLoading = true;
   //  final Completer<WebViewController> _controller =
   //      Completer<WebViewController>();
- late WebViewController _controllerGlobal;
+  late WebViewController _controllerGlobal;
 
   @override
   void initState() {
@@ -50,7 +51,9 @@ class _WebViewState extends State<WebViewSufi> {
       },
       //onWillPop: () => webViewModel.exitApp(context),
       child: Scaffold(
-        appBar: BasicComponent.appBar(),
+        appBar: BasicComponent.appBar(actions: [
+          backhome(),
+        ]),
         backgroundColor: System.data.color!.background,
         body: Stack(
           children: [
@@ -104,6 +107,22 @@ class _WebViewState extends State<WebViewSufi> {
                   )
                 : Stack(),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget backhome() {
+    return GestureDetector(
+      onTap: () {
+        webViewModel.tapBackHome();
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 20),
+        child: const Icon(
+          FontAwesomeIcons.home,
+          size: 20,
+          color: Colors.white,
         ),
       ),
     );
