@@ -9,7 +9,9 @@ class ProductListViewModel extends ChangeNotifier {
   }
 
   Future<void> onRefreshHomePage() async {
-    return Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
+    //getallProductList();
+    commit();
   }
 
   void commit() {
