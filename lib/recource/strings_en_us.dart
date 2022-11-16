@@ -160,10 +160,10 @@ class StringsEnUs implements Strings {
   String get username => "Username";
 
   @override
-  String get version => "Version : 1.4.0";
+  String get version => "Version : 1.4.1";
 
   @override  
-  String get versiapk => "1.4.0";
+  String get versiapk => "1.4.1";
 
   @override
   String get welcomeBack => "Welcome Back";
@@ -370,5 +370,8 @@ class StringsEnUs implements Strings {
   String get komunitas => "Community";
   @override
   
-  String get submit => "Submitr";  
+  String get submit => "Submitr";
+
+  @override  
+  String get save => "Save";  
 }

@@ -172,7 +172,7 @@ class ProfileViewState extends State<ProfileView> {
             borderRadius: const BorderRadius.all(Radius.circular(5))),
         child: Center(
           child: Text(
-            System.data.strings!.send,
+            System.data.strings!.save,
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,

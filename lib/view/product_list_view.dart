@@ -52,51 +52,47 @@ class _ProductListViewState extends State<ProductListView> {
   }
 
   Widget productListPage() {
-    return RefreshIndicator(
-      triggerMode: RefreshIndicatorTriggerMode.anywhere,
-      onRefresh: productListViewModel.onRefreshHomePage,
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        child: SingleChildScrollView(
-          child: FutureBuilder<List<ProductListModel>>(
-            future: productListViewModel.getallProductList(
-                categoryId: widget.productCategoryModel?.categorycode),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Column(
-                  children: List.generate(snapshot.data?.length ?? 0, (index) {
-                    return GestureDetector(
-                      onTap: () {
-                        widget.onTapProductItems!(snapshot.data![index]);
-                      },
-                      child: prodListImage(snapshot.data![index]),
-                    );
-                  }),
-                );
-              } else {
-                return Column(
-                  children: List.generate(
-                    6,
-                    (index) {
-                      return SkeletonAnimation(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 250,
-                          margin: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(5),
-                            ),
+    return Container(
+      padding: const EdgeInsets.all(5),
+      child: SingleChildScrollView(
+        child: FutureBuilder<List<ProductListModel>>(
+          future: productListViewModel.getallProductList(
+              categoryId: widget.productCategoryModel?.categorycode),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Column(
+                children: List.generate(snapshot.data?.length ?? 0, (index) {
+                  return GestureDetector(
+                    onTap: () {
+                      widget.onTapProductItems!(snapshot.data![index]);
+                    },
+                    child: prodListImage(snapshot.data![index]),
+                  );
+                }),
+              );
+            } else {
+              return Column(
+                children: List.generate(
+                  6,
+                  (index) {
+                    return SkeletonAnimation(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 250,
+                        margin: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(5),
                           ),
                         ),
-                      );
-                    },
-                  ),
-                );
-              }
-            },
-          ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            }
+          },
         ),
       ),
     );
