@@ -196,7 +196,7 @@ class _HistoryPointViewState extends State<HistoryPointView> {
               ),
               Text(
                 model.note ?? "",
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.justify,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: System.data.color?.mainColor,

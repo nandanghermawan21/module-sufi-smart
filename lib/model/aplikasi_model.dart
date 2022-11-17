@@ -13,6 +13,7 @@ class AplikasiModel {
   String? instagram;
   String? youtube;
   String? komunitas;
+  String? whatsapp;
 
   AplikasiModel({
     this.versi,
@@ -23,6 +24,7 @@ class AplikasiModel {
     this.instagram,
     this.youtube,
     this.komunitas,
+    this.whatsapp,
   });
 
   factory AplikasiModel.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class AplikasiModel {
       instagram: json["instagram"] as String?,
       youtube: json["youtube"] as String?,
       komunitas: json["komunitas"] as String?,
+      whatsapp: json["whatsapp"] as String?,
     );
   }
 
@@ -48,6 +51,7 @@ class AplikasiModel {
       'instagram': instagram,
       'youtube': youtube,
       'komunitas': komunitas,
+      'whatsapp': whatsapp,
     };
   }
 

@@ -182,5 +182,7 @@ abstract class Strings {
   String get komunitas => "Komunitas";
 
   String get submit => "Submit";
+
+  String get save => "Simpan";
   
 }

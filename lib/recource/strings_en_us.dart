@@ -370,5 +370,8 @@ class StringsEnUs implements Strings {
   String get komunitas => "Community";
   @override
   
-  String get submit => "Submitr";  
+  String get submit => "Submitr";
+
+  @override  
+  String get save => "Save";  
 }

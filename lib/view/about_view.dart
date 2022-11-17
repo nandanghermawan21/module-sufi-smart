@@ -361,7 +361,7 @@ class _AboutState extends State<AboutView> {
                 menuSosmed(FontAwesomeIcons.instagram, Colors.pink[600],
                     model.instagram!),
                 menuSosmed(FontAwesomeIcons.whatsapp, Colors.green,
-                    "https://wa.me/${model.phone!}?text=Hello"),
+                    "https://wa.me/${model.whatsapp!}?text=Hello"),
                 menuSosmed(
                     FontAwesomeIcons.youtube, Colors.red, model.youtube!),
                 menuSosmed(FontAwesomeIcons.twitter, Colors.blueAccent,
