@@ -70,7 +70,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app need to access your gallery to take picture for profile photo</string>
 	<key>OneSignal_app_groups_key</key>
-	<string>group.com.example.sufismart.onesignal</string>
+	<string>group.suzuki.sufi.smart.onesignal</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

@@ -1,10 +1,3 @@
-//
-//  NotificationService.m
-//  OneSignalNotificationServiceExtension
-//
-//  Created by SFI on 08/09/22.
-//
-
 #import <OneSignal/OneSignal.h>
 
 #import "NotificationService.h"

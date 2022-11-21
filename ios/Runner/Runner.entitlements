@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.example.sufismart.onesignal</string>
+		<string>group.suzuki.sufi.smart.onesignal</string>
 	</array>
 </dict>
 </plist>
