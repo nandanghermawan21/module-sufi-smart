@@ -114,7 +114,9 @@ class RegisterViewModel extends ChangeNotifier {
     // ModeUtil.debugPrint("gender, ${gender?.value}");
     // ModeUtil.debugPrint("token, ${System.data.global.messagingToken}");
     // ModeUtil.debugPrint("paltform, ${Platform.operatingSystem}");
-
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+    ModeUtil.debugPrint(formattedDate);
     CustomerRegisterNewModel.sendRegistrasi(
             customerRegisterNewModel: CustomerRegisterNewModel(
                 namalengkap: namaTextController.text,
@@ -126,7 +128,8 @@ class RegisterViewModel extends ChangeNotifier {
                 gender: gender?.value,
                 deviceplatform: Platform.operatingSystem,
                 token: System.data.global.messagingToken,
-                version: System.data.strings!.versiapk))
+                version: System.data.strings!.versiapk,
+                jamdevice: formattedDate))
         .then((otp) {
       if (otp != null) {
         if (otp.status == "0") {
@@ -147,11 +150,16 @@ class RegisterViewModel extends ChangeNotifier {
               timer: DateTime.now().toUtc().difference(otp.expired!) * -1,
               onTapResend: (val) {
                 pinComponentController.value.loadingController.startLoading();
+                DateTime now1 = DateTime.now();
+                String formattedDate2 = DateFormat("yyyy-MM-dd HH:mm:ss").format(now1);
+                ModeUtil.debugPrint(formattedDate2);
                 OtpNewModel.resendOtp(
-                  userid: otp.userid!, flag: 'regis',
+                  userid: otp.userid!,
+                  flag: 'regis',
+                  jamdevice: formattedDate2,
                 ).then((value) {
                   pinComponentController.value.loadingController.forceStop();
-                  pinComponentController.value.timerController.start(                    
+                  pinComponentController.value.timerController.start(
                     duration:
                         DateTime.now().toUtc().difference(value!.expired!) * -1,
                   );
@@ -166,7 +174,8 @@ class RegisterViewModel extends ChangeNotifier {
                 pinComponentController.value.loadingController.startLoading();
                 OtpNewModel.confirmOtp(
                   otp: val,
-                  userid: otp.userid!, flag: 'regis',
+                  userid: otp.userid!,
+                  flag: 'regis',
                 ).then((value) {
                   if (value != null) {
                     if (value.status == "0") {

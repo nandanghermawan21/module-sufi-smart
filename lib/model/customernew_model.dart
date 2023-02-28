@@ -22,6 +22,7 @@ class CustomerNewModel {
   String? tipe;
   String? reveralid;
   String? idkomunitas;
+  String? flagotp;
 
   CustomerNewModel(
       {this.userid,
@@ -39,7 +40,8 @@ class CustomerNewModel {
       this.expired,
       this.tipe,
       this.reveralid,
-      this.idkomunitas});
+      this.idkomunitas,
+      this.flagotp});
 
   factory CustomerNewModel.fromJson(Map<String, dynamic> json) {
     return CustomerNewModel(
@@ -61,6 +63,7 @@ class CustomerNewModel {
       tipe : json["tipe"] as String?,
       reveralid : json["reveralid"] as String?,
       idkomunitas : json["idkomunitas"] as String?,
+      flagotp : json["flagotp"] as String?,
     );
   }
 
@@ -82,6 +85,7 @@ class CustomerNewModel {
       'tipe' : tipe,
       'reveralid' : reveralid,
       'idkomunitas' : idkomunitas,
+      'flagotp' : flagotp,
     };
   }
 

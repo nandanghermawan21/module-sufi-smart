@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:sufismart/component/pin_component.dart';
 import 'package:sufismart/model/customernew_model.dart';
 import 'package:sufismart/model/otp_new_model.dart';
 import 'package:sufismart/model/user_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
+import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 
 class LoginViewModel extends ChangeNotifier {
@@ -193,7 +195,12 @@ class LoginViewModel extends ChangeNotifier {
     ValueChanged<CustomerNewModel>? onLoginSuccess2,
   }) {
     circularLoaderController.startLoading();
-
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+    // ModeUtil.debugPrint(emailTextEditingController.text);
+    // ModeUtil.debugPrint(passwordTextEditingController.text);
+    // ModeUtil.debugPrint(formattedDate);
+    // ModeUtil.debugPrint(DateTime.now().toUtc().difference(DateTime.parse('2023-01-23 12::55.755')) * -1);
     if (emailTextEditingController.text.isEmpty &&
         passwordTextEditingController.text.isEmpty) {
       String msg = "email dan kata sandi wajib di isi";
@@ -212,78 +219,96 @@ class LoginViewModel extends ChangeNotifier {
         deviceId: Platform.operatingSystem,
         playerid: System.data.global.messagingToken,
         version: System.data.strings!.versiapk,
+        jamdevice: formattedDate,
       )).then((value) {
         if (value != null) {
           if (value.status == "1") {
-            circularLoaderController.forceStop();
-            PinComponent.open(
-                context: System.data.context,
-                controller: pinComponentController,
-                title: "Input OTP",
-                timer: DateTime.now().toUtc().difference(value.expired!) * -1,
-                onTapResend: (val) {
-                  pinComponentController.value.loadingController.startLoading();
-                  OtpNewModel.resendOtp(
-                    userid: value.userid!,
-                    flag: 'login',
-                  ).then((value) {
-                    pinComponentController.value.loadingController.forceStop();
-                    pinComponentController.value.timerController.start(
-                      duration:
-                          DateTime.now().toUtc().difference(value!.expired!) *
-                              -1,
-                    );
-                  }).catchError((onError) {
-                    pinComponentController.value.loadingController.stopLoading(
-                      isError: true,
-                      message: ErrorHandlingUtil.handleApiError(onError),
-                    );
-                  });
-                },
-                onTapSend: (val) {
-                  pinComponentController.value.loadingController.startLoading();
-                  OtpNewModel.confirmOtp(
-                    otp: val,
-                    userid: value.userid!,
-                    flag: 'login',
-                  ).then((value) {
-                    if (value != null) {
-                      if (value.status == "0") {
-                        pinComponentController.value.loadingController
-                            .stopLoading(
-                          isError: false,
-                          message: value.msg!,
-                          duration: const Duration(seconds: 2),
-                          onCloseCallBack: () {
-                            if (onLoginSuccess2 != null) {
-                              onLoginSuccess2(value);
-                            }
-                          },
-                        );
-                      } else if (value.status == "1") {
-                        pinComponentController.value.loadingController
-                            .stopLoading(
-                          isError: true,
-                          duration: const Duration(seconds: 2),
-                          message: ErrorHandlingUtil.handleApiError(value.msg!),
-                        );
-                      }
-                    }
-                  }).catchError((onError) {
-                    pinComponentController.value.loadingController.stopLoading(
+            if (value.flagotp == "1") {
+              circularLoaderController.forceStop();
+              PinComponent.open(
+                  context: System.data.context,
+                  controller: pinComponentController,
+                  title: "Input OTP",
+                  timer: DateTime.now().toUtc().difference(value.expired!) * -1,
+                  onTapResend: (val) {
+                    pinComponentController.value.loadingController
+                        .startLoading();
+                    DateTime nowresend = DateTime.now();
+                    String formattedDate2 =
+                        DateFormat("yyyy-MM-dd HH:mm:ss").format(nowresend);
+                    // ModeUtil.debugPrint(value.userid!);
+                    // ModeUtil.debugPrint(formattedDate2);
+                    OtpNewModel.resendOtp(
+                      userid: value.userid!,
+                      flag: 'login',
+                      jamdevice: formattedDate2,
+                    ).then((value) {
+                      pinComponentController.value.loadingController
+                          .forceStop();
+                      pinComponentController.value.timerController.start(
+                        duration:
+                            DateTime.now().toUtc().difference(value!.expired!) *
+                                -1,
+                      );
+                    }).catchError((onError) {
+                      pinComponentController.value.loadingController
+                          .stopLoading(
                         isError: true,
-                        message: ErrorHandlingUtil.handleApiError(onError));
+                        message: ErrorHandlingUtil.handleApiError(onError),
+                      );
+                    });
+                  },
+                  onTapSend: (val) {
+                    pinComponentController.value.loadingController
+                        .startLoading();
+                    OtpNewModel.confirmOtp(
+                      otp: val,
+                      userid: value.userid!,
+                      flag: 'login',
+                    ).then((value) {
+                      if (value != null) {
+                        if (value.status == "0") {
+                          pinComponentController.value.loadingController
+                              .stopLoading(
+                            isError: false,
+                            message: value.msg!,
+                            duration: const Duration(seconds: 2),
+                            onCloseCallBack: () {
+                              if (onLoginSuccess2 != null) {
+                                onLoginSuccess2(value);
+                              }
+                            },
+                          );
+                        } else if (value.status == "1") {
+                          pinComponentController.value.loadingController
+                              .stopLoading(
+                            isError: true,
+                            duration: const Duration(seconds: 2),
+                            message:
+                                ErrorHandlingUtil.handleApiError(value.msg!),
+                          );
+                        }
+                      }
+                    }).catchError((onError) {
+                      pinComponentController.value.loadingController
+                          .stopLoading(
+                              isError: true,
+                              message:
+                                  ErrorHandlingUtil.handleApiError(onError));
+                    });
                   });
-                });
-            // circularLoaderController.stopLoading(
-            //     duration: const Duration(seconds: 3),
-            //     isError: false,
-            //     message: value.msg,
-            //     onCloseCallBack: () {
-            //       if (onLoginSuccess2 != null) {
-            //         onLoginSuccess2(value);
-            //       }
-            //     });
+            } else if (value.flagotp == "0") {
+              circularLoaderController.stopLoading(
+                duration: const Duration(seconds: 3),
+                isError: false,
+                message: value.msg,
+                onCloseCallBack: () {
+                  if (onLoginSuccess2 != null) {
+                    onLoginSuccess2(value);
+                  }
+                },
+              );
+            }
           } else if (value.status == "2") {
             circularLoaderController.stopLoading(
               duration: const Duration(seconds: 3),

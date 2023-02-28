@@ -51,6 +51,10 @@ class ApiEndPoint {
   String getDataHistoryPointUrl = "getHistoryPointUser";
   String postRedeemPointUrl = "submitRedeemPoint";
 
+  String postLoginCustomerNewUrl2 = "actionLoginNewVersion2";
+  String getResendOtpUserUrl2 = "resendUserOtpNewVersion2";
+  String postCustomerRegisterNewUrl2 = "registrasiCustomerNewVersion2";
+
   String get url {
     if (ModeUtil.debugMode == true) {
       return baseUrlDebug;
@@ -144,7 +148,7 @@ class ApiEndPoint {
   }
 
   String loginCustomerNew() {
-    return urlSufiSmart + postLoginCustomerNewUrl;
+    return urlSufiSmart + postLoginCustomerNewUrl2;
   }
 
   String contactCustomer() {
@@ -181,7 +185,7 @@ class ApiEndPoint {
   }
 
   String registerCustomer() {
-    return urlSufiSmart + postCustomerRegisterNewUrl;
+    return urlSufiSmart + postCustomerRegisterNewUrl2;
   }
 
   String confirmOtpUser({
@@ -196,9 +200,10 @@ class ApiEndPoint {
   String resendOtpUser({
     required String? userid,
     required String? flag,
+    required String? jamdevice
   }) {
     return urlSufiSmart +
-        "$getResendOtpUserUrl${userid != null ? "/$userid" : ""}${flag != null ? "/$flag" : ""}";
+        "$getResendOtpUserUrl2${userid != null ? "/$userid" : ""}${flag != null ? "/$flag" : ""}${jamdevice != null ? "/$jamdevice" : ""}";
   }
 
   String detailInfoUser({

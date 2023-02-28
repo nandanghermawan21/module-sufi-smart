@@ -4,6 +4,7 @@ class UserModel {
   final String? deviceId;
   final String? playerid;
   final String? version;
+  final String? jamdevice;
 
   UserModel({
     this.username,
@@ -11,6 +12,7 @@ class UserModel {
     this.deviceId,
     this.playerid,
     this.version,
+    this.jamdevice
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class UserModel {
       deviceId: json["deviceId"] as String?,
       playerid: json["playerid"] as String?,
       version: json["version"] as String?,
+      jamdevice: json["jamdevice"] as String?,
     );
   }
 
@@ -30,6 +33,7 @@ class UserModel {
       "deviceId": deviceId,
       "playerid": playerid,
       "version": version,
+      "jamdevice": jamdevice,
     };
   }
 }

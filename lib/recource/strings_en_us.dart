@@ -160,10 +160,10 @@ class StringsEnUs implements Strings {
   String get username => "Username";
 
   @override
-  String get version => "Version : 1.4.1";
+  String get version => "Version : 1.4.2";
 
   @override  
-  String get versiapk => "1.4.1";
+  String get versiapk => "1.4.2";
 
   @override
   String get welcomeBack => "Welcome Back";

@@ -1,8 +1,8 @@
 abstract class Strings {
   String get locale => "ID-id";
   String get appName => "Sufi Smart";
-  String get version => "Versi : 1.4.1";
-  String get versiapk => "1.4.1";
+  String get version => "Versi : 1.4.2";
+  String get versiapk => "1.4.2";
   String get home => "Beranda";
   String get about => "Tentang";
   String get contact => "Kontak";

@@ -43,6 +43,7 @@ class OtpNewModel {
     required String? userid,
     required String? flag,
   }) {
+    
     return http
         .get(Uri.parse(
             System.data.apiEndPoint.confirmOtpUser(otp: otp, userid: userid, flag: flag)))
@@ -61,17 +62,21 @@ class OtpNewModel {
   static Future<OtpNewModel?> resendOtp({
     required String? userid,
     required String? flag,
+    required String? jamdevice,
   }) {
+    
+    ModeUtil.debugPrint('jamresendotp.${jamdevice!}');
     return http
         .get(Uri.parse(System.data.apiEndPoint.resendOtpUser(
-      userid: userid, flag: flag,
+      userid: userid, flag: flag, jamdevice: jamdevice
     )))
         .then((value) {
       if (value.statusCode == 200) {
+        ModeUtil.debugPrint("call get resend OTP new api ${value.body}");
         return OtpNewModel.fromJson(json.decode(value.body));
       } else {
         throw value;
-      }
+      }      
     }).catchError((onError) {
       throw onError;
     });

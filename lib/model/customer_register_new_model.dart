@@ -17,6 +17,7 @@ class CustomerRegisterNewModel {
   String? deviceplatform;
   String? token;
   String? version;
+  String? jamdevice;
 
   CustomerRegisterNewModel({
     this.namalengkap,
@@ -29,6 +30,7 @@ class CustomerRegisterNewModel {
     this.deviceplatform,
     this.token,
     this.version,
+    this.jamdevice
   });
 
   factory CustomerRegisterNewModel.fromJson(Map<String, dynamic> json) {
@@ -43,6 +45,7 @@ class CustomerRegisterNewModel {
       deviceplatform: json["deviceplatform"] as String?,
       token: json["token"] as String?,
       version: json["version"] as String?,
+      jamdevice: json["jamdevice"] as String?,
     );
   }
 
@@ -58,6 +61,7 @@ class CustomerRegisterNewModel {
       'deviceplatform': deviceplatform,
       'token': token,
       'version': version,
+      'jamdevice': jamdevice,
     };
   }
 
