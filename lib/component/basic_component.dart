@@ -29,14 +29,22 @@ class BasicComponent {
   }
 
   static Future<void> opengooglemap(double lat, double lon) async {
-    //final url = 'http://maps.google.com/maps?q=loc:${lat},${lon}(${tag})';
+    //final url = 'http://maps.google.com/maps?q=loc:$lat,$lon';
+    //final url = 'https://www.google.com/maps/dir/$lat,$lon/$lat,$lon/@$lat,$lon,6.5z/data=!3m1!4b1!4m5!4m4!1m1!4e1!1m0!3e0';
     final url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lon';
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(
-        Uri.parse(url),
-        mode: LaunchMode.externalApplication,
-      );
-    } else {
+
+    // if (await canLaunchUrl(Uri.parse(url))) {
+    //   await launchUrl(
+    //     Uri.parse(url),
+    //     mode: LaunchMode.externalApplication,
+    //   );
+    // } else {
+    //   throw 'Could not launch $url';
+    // }
+     if (!await launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalApplication,
+    )) {
       throw 'Could not launch $url';
     }
   }
