@@ -15,7 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^6.0.1
   font_awesome_flutter: ^9.2.0
-  http: ^0.13.4
+  http: ^0.13.5
   dio: ^4.0.4
   card_swiper: ^1.0.4
   fancy_bottom_navigation: ^0.3.3
