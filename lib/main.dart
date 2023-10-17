@@ -18,13 +18,13 @@ import 'package:sufismart/util/system.dart';
 import 'package:sufismart/route.dart';
 import 'package:uni_links/uni_links.dart';
 import 'route.dart';
-import 'service.dart' as service;
 
 Data data = Data();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setting();
   data.initialize().then((val) async {
+    HttpOverrides.global = MyHttpOverrides();
     runApp(const MyApp());
     // initializeService().then((value) {
     //   runApp(const MyApp());
@@ -237,6 +237,12 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         break;
     }
   }
+}
 
-  
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
 }
