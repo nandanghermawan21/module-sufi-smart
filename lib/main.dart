@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_background_service_ios/flutter_background_service_ios.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -12,17 +11,15 @@ import 'package:provider/provider.dart';
 import 'package:sufismart/component/circular_loader_component.dart';
 import 'package:sufismart/setting.dart';
 import 'package:sufismart/util/data.dart';
-import 'package:sufismart/util/enum.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/route.dart';
 import 'package:uni_links/uni_links.dart';
-import 'route.dart';
-import 'service.dart' as service;
 
 Data data = Data();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
   setting();
   data.initialize().then((val) async {
     runApp(const MyApp());
@@ -32,20 +29,20 @@ Future<void> main() async {
   });
 }
 
-Future<void> initializeService() async {
-  await data.service.configure(
-    androidConfiguration: AndroidConfiguration(
-      onStart: onStartService,
-      autoStart: true,
-      isForegroundMode: false,
-    ),
-    iosConfiguration: IosConfiguration(
-      autoStart: true,
-      onForeground: onStartService,
-      onBackground: onStartService,
-    ),
-  );
-}
+// Future<void> initializeService() async {
+//   await data.service.configure(
+//     androidConfiguration: AndroidConfiguration(
+//       onStart: onStartService,
+//       autoStart: true,
+//       isForegroundMode: false,
+//     ),
+//     iosConfiguration: IosConfiguration(
+//       autoStart: true,
+//       onForeground: onStartService,
+//       onBackground: onStartService,
+//     ),
+//   );
+// }
 
 void onStartService() {
   debugPrint("start services default");
@@ -114,8 +111,8 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
     handleDeeplink();
     getPermission().then((value) {
       initOnesignal();
-    });    
-    WidgetsBinding.instance?.addObserver(this);
+    });
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -123,15 +120,15 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return MaterialApp(
       home: Stack(
         children: [
-          StreamBuilder<Map<String, dynamic>?>(
-            stream: data.service.onDataReceived,
-            builder: (c, d) {
-              if (d.hasData && d.data != null) {
-                data.service.sendData(d.data!);
-              }
-              return const SizedBox();
-            },
-          ),
+          // StreamBuilder<Map<String, dynamic>?>(
+          //   stream: data.service.onDataReceived,
+          //   builder: (c, d) {
+          //     if (d.hasData && d.data != null) {
+          //       data.service.sendData(d.data!);
+          //     }
+          //     return const SizedBox();
+          //   },
+          // ),
           ChangeNotifierProvider.value(
             value: System.data,
             child: Consumer<Data>(
@@ -214,16 +211,16 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void dispose() {
     ModeUtil.debugPrint("APP Disposed");
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     ModeUtil.debugPrint("APP LifeCycle State");
-    System.data.service.sendData({
-      ServiceKey.action: ServiceValueAction.sendToForeground,
-    });
+    // System.data.service.sendData({
+    //   ServiceKey.action: ServiceValueAction.sendToForeground,
+    // });
     switch (state) {
       case AppLifecycleState.resumed:
         ModeUtil.debugPrint("APP Resume");
@@ -235,8 +232,17 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         break;
       case AppLifecycleState.detached:
         break;
+      case AppLifecycleState.hidden:
+        break;
     }
   }
+}
 
-  
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }

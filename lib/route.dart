@@ -112,8 +112,7 @@ Map<String, WidgetBuilder> route = {
                 String? userid = System.data.global.customerNewModel?.userid;
                 Navigator.of(context).pushNamed(RouteName.webView, arguments: {
                   ParamName.urlWebview:
-                      "https://sufismart.sfi.co.id/sufismart/api/simulasi_page_sufismart.php?userid=" +
-                          (userid ?? ""),
+                      "https://sufismart.sfi.co.id/sufismart/api/simulasi_page_sufismart.php?userid=${userid ?? ""}",
                 });
                 //Navigator.of(context).pushNamed(RouteName.creditSimulation);
               }, gotoPromo: () {
@@ -133,8 +132,7 @@ Map<String, WidgetBuilder> route = {
                   Navigator.of(context)
                       .pushNamed(RouteName.webView, arguments: {
                     ParamName.urlWebview:
-                        "https://sufismart.sfi.co.id/sufismart/api/ic_product_sufismart.php?EMAIL=" +
-                            (email ?? ""),
+                        "https://sufismart.sfi.co.id/sufismart/api/ic_product_sufismart.php?EMAIL=${email ?? ""}",
                   });
                 } else {
                   return System.data.showmodal(
@@ -147,8 +145,7 @@ Map<String, WidgetBuilder> route = {
                 String? userid = System.data.global.customerNewModel?.userid;
                 Navigator.of(context).pushNamed(RouteName.webView, arguments: {
                   ParamName.urlWebview:
-                      "https://sufismart.sfi.co.id/sufismart/api/credit_simulation_apply_all.php?userid=" +
-                          (userid ?? ""),
+                      "https://sufismart.sfi.co.id/sufismart/api/credit_simulation_apply_all.php?userid=${userid ?? ""}",
                 });
               }, goToRedeemPointHome: () {
                 Navigator.of(context).pushNamed(
@@ -207,7 +204,7 @@ Map<String, WidgetBuilder> route = {
                       .pushNamed(RouteName.webView, arguments: {
                     ParamName.urlWebview: url,
                   });
-                  ModeUtil.debugPrint("Url Webview" + url);
+                  ModeUtil.debugPrint("Url Webview$url");
                 });
               } else {
                 return LoginView(
@@ -315,7 +312,7 @@ Map<String, WidgetBuilder> route = {
           Navigator.of(context).pushNamed(RouteName.webView, arguments: {
             ParamName.urlWebview: url,
           });
-          ModeUtil.debugPrint("Url Simulasi Product" + url);
+          ModeUtil.debugPrint("Url Simulasi Product$url");
         });
   },
   RouteName.webView: (BuildContext context) {
@@ -395,7 +392,7 @@ Map<String, WidgetBuilder> route = {
       Navigator.of(context).pushNamed(RouteName.webView, arguments: {
         ParamName.urlWebview: url,
       });
-      ModeUtil.debugPrint("Url Webview" + url);
+      ModeUtil.debugPrint("Url Webview$url");
     });
   },
   RouteName.merchantPointView: (BuildContext context) {
