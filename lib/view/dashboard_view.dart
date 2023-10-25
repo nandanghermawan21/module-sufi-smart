@@ -227,13 +227,13 @@ class _DashboardViewState extends State<DashboardView> {
                 Colors.indigo,
               ]),
           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50))),
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
-              const Expanded(
+              Expanded(
                 flex: 3,
                 child: Text(
                   "Welcome,",
@@ -247,7 +247,7 @@ class _DashboardViewState extends State<DashboardView> {
                 flex: 1,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
+                  children: [
                     Icon(
                       FontAwesomeIcons.userCircle,
                       color: Colors.white,
@@ -264,17 +264,17 @@ class _DashboardViewState extends State<DashboardView> {
               )
             ],
           ),
-          const Text(
+          Text(
             "Dear",
             style: TextStyle(
                 color: Colors.white, fontSize: 28, fontWeight: FontWeight.w900),
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
           ),
-          const SizedBox(
+          SizedBox(
             height: 5,
           ),
-          const Text(
+          Text(
             "Choose Suzuki Finance Indonesia \nfor your Suzuki credit",
             //"Pilih Suzuki Finance Indonesia \nUntuk kenyamanan kredit Suzuki anda",
             style: TextStyle(color: Colors.white, fontSize: 12),

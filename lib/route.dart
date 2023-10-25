@@ -179,33 +179,43 @@ Map<String, WidgetBuilder> route = {
               return const ContactView();
             case 3:
               if (System.data.global.customerNewModel?.userid != null) {
-                return DashboardView(goToChangePass: () {
-                  Navigator.of(context).pushNamed(RouteName.changePassword);
-                }, goToChangeProfile: () {
-                  Navigator.of(context).pushNamed(RouteName.changeProfile);
-                }, goTologout: () {
-                  System.data.global.customerNewModel = null;
-                  System.data.global.token = '';
-                  System.data.session!.setString(SessionKey.user, "");
-                  ModeUtil.debugPrint(
-                      "new customer ${System.data.global.customerNewModel?.toJson()}");
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      RouteName.mainMenu, (r) => r.settings.name == "");
-                }, goToListApply: () {
-                  Navigator.of(context).pushNamed(RouteName.applyUserview);
-                }, goToListHistoryPoint: () {
-                  Navigator.of(context).pushNamed(RouteName.historyPointView);
-                }, goToRedeemPoint: () {
-                  Navigator.of(context).pushNamed(RouteName.merchantPointView);
-                }, goToLevelUser: () {
-                  System.data.showmodal("Coming Soon", "Announcement");
-                }, onTapWebviewRedeem: (url) {
-                  Navigator.of(context)
-                      .pushNamed(RouteName.webView, arguments: {
-                    ParamName.urlWebview: url,
-                  });
-                  ModeUtil.debugPrint("Url Webview$url");
-                });
+                return DashboardView(
+                  goToChangePass: () {
+                    Navigator.of(context).pushNamed(RouteName.changePassword);
+                  },
+                  goToChangeProfile: () {
+                    Navigator.of(context).pushNamed(RouteName.changeProfile);
+                  },
+                  goTologout: () {
+                    System.data.global.customerNewModel = null;
+                    System.data.global.token = '';
+                    System.data.session!.setString(SessionKey.user, "");
+                    ModeUtil.debugPrint(
+                        "new customer ${System.data.global.customerNewModel?.toJson()}");
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        RouteName.mainMenu, (r) => r.settings.name == "");
+                  },
+                  goToListApply: () {
+                    Navigator.of(context).pushNamed(RouteName.applyUserview);
+                  },
+                  goToListHistoryPoint: () {
+                    Navigator.of(context).pushNamed(RouteName.historyPointView);
+                  },
+                  goToRedeemPoint: () {
+                    Navigator.of(context)
+                        .pushNamed(RouteName.merchantPointView);
+                  },
+                  goToLevelUser: () {
+                    System.data.showmodal("Coming Soon", "Announcement");
+                  },
+                  onTapWebviewRedeem: (url) {
+                    Navigator.of(context)
+                        .pushNamed(RouteName.webView, arguments: {
+                      ParamName.urlWebview: url,
+                    });
+                    ModeUtil.debugPrint("Url Webview$url");
+                  },
+                );
               } else {
                 return LoginView(
                   gotoSignup: () {
