@@ -162,13 +162,13 @@ class ImagePickerController extends ValueNotifier<ImagePickerValue> {
       Uint8List? _unit8Listcompressed;
       PickedFile? _picker;
       if (camera) {
-        _picker = await ImagePicker()
-            // ignore: deprecated_member_use
-            .getImage(source: ImageSource.camera, imageQuality: imageQuality);
+        _picker = (await ImagePicker().pickImage(
+            source: ImageSource.camera,
+            imageQuality: imageQuality)) as PickedFile?;
       } else {
-        _picker = await ImagePicker()
-            // ignore: deprecated_member_use
-            .getImage(source: ImageSource.gallery, imageQuality: imageQuality);
+        _picker = (await ImagePicker().pickImage(
+            source: ImageSource.gallery,
+            imageQuality: imageQuality)) as PickedFile?;
       }
 
       _image = File(_picker!.path);

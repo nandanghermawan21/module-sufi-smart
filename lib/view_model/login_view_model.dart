@@ -8,7 +8,7 @@ import 'package:sufismart/model/customernew_model.dart';
 import 'package:sufismart/model/otp_new_model.dart';
 import 'package:sufismart/model/user_model.dart';
 import 'package:sufismart/util/error_handling_util.dart';
-import 'package:sufismart/util/mode_util.dart';
+
 import 'package:sufismart/util/system.dart';
 
 class LoginViewModel extends ChangeNotifier {

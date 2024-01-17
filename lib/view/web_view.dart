@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sufismart/component/basic_component.dart';
@@ -28,7 +27,7 @@ class _WebViewState extends State<WebViewSufi> {
   void initState() {
     super.initState();
     // Enable virtual display.
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   @override
@@ -50,6 +49,68 @@ class _WebViewState extends State<WebViewSufi> {
         backgroundColor: System.data.color!.background,
         body: Stack(
           children: [
+            // WebViewWidget(
+            //     controller: WebViewController()
+            //       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+            //       ..setBackgroundColor(const Color(0x00000000))
+            //       ..setNavigationDelegate(
+            //         NavigationDelegate(
+            //           onProgress: (int progress) {
+            //             isLoading
+            //                 ? const Center(
+            //                     child: CircularProgressIndicator(),
+            //                   )
+            //                 : const Stack();
+            //           },
+            //           onPageStarted: (String url) {},
+            //           onPageFinished: (String url) {
+            //             isLoading = false;
+            //           },
+            //           onWebResourceError: (WebResourceError error) {},
+            //           onNavigationRequest: (NavigationRequest request) {
+            //             if (request.url.startsWith(widget.urlweb ?? "")) {
+            //               return NavigationDecision.prevent;
+            //             }
+            //             return NavigationDecision.navigate;
+            //           },
+            //         ),
+            //       )
+            //       ..addJavaScriptChannel(
+            //         'backSuccess',
+            //         onMessageReceived: (JavaScriptMessage message) {
+            //           ModeUtil.debugPrint("message ${message.message}");
+            //           webViewModel.successOrder();
+            //         },
+            //       )
+            //       ..addJavaScriptChannel(
+            //         'viewPdf',
+            //         onMessageReceived: (JavaScriptMessage message) {
+            //           ModeUtil.debugPrint("message ${message.message}");
+            //           webViewModel.openbrowser(Uri.parse(message.message));
+            //         },
+            //       )
+            //       ..addJavaScriptChannel(
+            //         'telepon',
+            //         onMessageReceived: (JavaScriptMessage message) {
+            //           ModeUtil.debugPrint("message ${message.message}");
+            //           webViewModel.openPhone(message.message);
+            //         },
+            //       )
+            //       ..addJavaScriptChannel(
+            //         'sendEmail',
+            //         onMessageReceived: (JavaScriptMessage message) {
+            //           ModeUtil.debugPrint("message ${message.message}");
+            //           webViewModel.sendEmail(message.message);
+            //         },
+            //       )
+            //       ..addJavaScriptChannel(
+            //         'Print',
+            //         onMessageReceived: (JavaScriptMessage message) {
+            //           ModeUtil.debugPrint("message ${message.message}");
+            //           webViewModel.openbrowser(Uri.parse(message.message));
+            //         },
+            //       )
+            //       ..loadRequest(Uri.parse(widget.urlweb ?? "")))
             WebView(
               initialUrl: widget.urlweb ?? "",
               onPageFinished: (finish) {
@@ -98,7 +159,7 @@ class _WebViewState extends State<WebViewSufi> {
                 ? const Center(
                     child: CircularProgressIndicator(),
                   )
-                : Stack(),
+                : const Stack(),
           ],
         ),
       ),

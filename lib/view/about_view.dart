@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+// import 'package:package_info_plus/package_info_plus.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/model/aplikasi_model.dart';
 import 'package:sufismart/util/mode_util.dart';
@@ -25,9 +27,21 @@ class AboutView extends StatefulWidget {
 
 class _AboutState extends State<AboutView> {
   AboutViewModel aboutViewModel = AboutViewModel();
+  String? strVersion;
+
+  Future<void> getPackageInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    strVersion = packageInfo.version;
+    ModeUtil.debugPrint("'App Name: ${packageInfo.appName}'");
+    ModeUtil.debugPrint("'Package  Name: ${packageInfo.packageName}'");
+    ModeUtil.debugPrint("'Version: ${packageInfo.version}'");
+    ModeUtil.debugPrint("'Build Number: ${packageInfo.buildNumber}'");
+  }
 
   @override
   void initState() {
+    getPackageInfo();
+    ModeUtil.debugPrint("'version Apk Name: $strVersion'");
     super.initState();
   }
 
@@ -66,7 +80,8 @@ class _AboutState extends State<AboutView> {
                               textAlign: TextAlign.center,
                             ),
                             Text(
-                              System.data.strings!.version,
+                              // System.data.strings!.version,
+                              "Version : $strVersion",
                               style: TextStyle(
                                 color: System.data.color!.primaryColor,
                                 fontSize: 12,
@@ -202,10 +217,11 @@ class _AboutState extends State<AboutView> {
                                     snapshot.data?.komunitas ?? "");
                               },
                               child: Container(
-                                margin: const EdgeInsets.only(bottom: 8,right: 5),
+                                margin:
+                                    const EdgeInsets.only(bottom: 8, right: 5),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,                                  
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Text(
                                       System.data.strings!.komunitas,
@@ -360,8 +376,8 @@ class _AboutState extends State<AboutView> {
               children: [
                 menuSosmed(FontAwesomeIcons.instagram, Colors.pink[600],
                     model.instagram!),
-                menuSosmed(FontAwesomeIcons.whatsapp, Colors.green,
-                    model.whatsapp!),
+                menuSosmed(
+                    FontAwesomeIcons.whatsapp, Colors.green, model.whatsapp!),
                 menuSosmed(
                     FontAwesomeIcons.youtube, Colors.red, model.youtube!),
                 menuSosmed(FontAwesomeIcons.twitter, Colors.blueAccent,

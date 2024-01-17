@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+// import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/model/news_model_new.dart';
 import 'package:sufismart/util/system.dart';
@@ -44,9 +44,9 @@ class _NewsDetailViewState extends State<NewsDetailView> {
             Container(
               padding: const EdgeInsets.all(10),
               width: double.infinity,
-              child: HtmlWidget(
-                widget.newsModel.desc ?? "",
-              ),
+              // child: HtmlWidget(
+              //   widget.newsModel.desc ?? "",
+              // ),
             )
           ],
         ),
