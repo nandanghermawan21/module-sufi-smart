@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/model/news_model_new.dart';
@@ -96,9 +96,9 @@ class _NewsDetailViewDeepLink extends State<NewsDetailViewDeepLink> {
                       Container(
                         padding: const EdgeInsets.all(10),
                         width: double.infinity,
-                        // child: HtmlWidget(
-                        //   snapshot.data?.desc ?? "",
-                        // ),
+                        child: HtmlWidget(
+                          snapshot.data?.desc ?? "",
+                        ),
                       )
                     ],
                   ),

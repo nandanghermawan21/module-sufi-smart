@@ -1,4 +1,4 @@
-package suzuki.sufi.smart
+package com.sufismarttrain.name
 
 //import android.app.*
 //import android.content.Intent

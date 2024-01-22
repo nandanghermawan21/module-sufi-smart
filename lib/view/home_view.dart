@@ -28,22 +28,22 @@ class HomeView extends StatefulWidget {
   final VoidCallback? goTolevel;
   final ValueChanged<String>? onTapWebviewRedeemHome;
 
-  const HomeView({
-    Key? key,
-    this.gotoForgotPassword,
-    this.gotoPromo,
-    this.gotoProduct,
-    this.gotoBranch,
-    this.gotoSimulation,
-    this.gotoInstallment,
-    this.gotoPayment,
-    this.gotoShowAll,
-    this.gotoDetailNews,
-    this.gotoApply,
-    this.goToRedeemPointHome,
-    this.goTolevel,
-    this.onTapWebviewRedeemHome
-  }) : super(key: key);
+  const HomeView(
+      {Key? key,
+      this.gotoForgotPassword,
+      this.gotoPromo,
+      this.gotoProduct,
+      this.gotoBranch,
+      this.gotoSimulation,
+      this.gotoInstallment,
+      this.gotoPayment,
+      this.gotoShowAll,
+      this.gotoDetailNews,
+      this.gotoApply,
+      this.goToRedeemPointHome,
+      this.goTolevel,
+      this.onTapWebviewRedeemHome})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -381,7 +381,7 @@ class _HomeViewState extends State<HomeView> {
               },
               itemCount: snapshot.data?.length ?? 0,
               pagination: const SwiperPagination(
-                alignment: Alignment.bottomRight,
+                alignment: Alignment.bottomCenter,
                 margin: EdgeInsets.only(right: 0, bottom: 10),
               ),
               //control: new SwiperControl(),
@@ -660,7 +660,7 @@ class _HomeViewState extends State<HomeView> {
       children: [
         Container(
           color: Colors.white,
-          margin: const EdgeInsets.only(top: 10,left: 15,right: 15),
+          margin: const EdgeInsets.only(top: 10, left: 15, right: 15),
           padding: const EdgeInsets.only(top: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -688,7 +688,7 @@ class _HomeViewState extends State<HomeView> {
                     System.data.strings!.showAll,
                     style: TextStyle(
                       color: System.data.color!.primaryColor,
-                      fontSize: 15,                      
+                      fontSize: 15,
                     ),
                   ),
                   // child: Container(
@@ -720,7 +720,7 @@ class _HomeViewState extends State<HomeView> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Container(
-                  margin: const EdgeInsets.only(top: 5,left: 12,right: 12),
+                  margin: const EdgeInsets.only(top: 5, left: 12, right: 12),
                   height: 250,
                   child: ListView.builder(
                     itemCount: snapshot.data?.length ?? 0,
@@ -808,59 +808,58 @@ class _HomeViewState extends State<HomeView> {
                   Row(
                     children: [
                       Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                if (snapshot.data?.point == "0") {
-                                  System.data.showmodal(
-                                    System.data.strings?.pointtidakcukup,
-                                    "Announcement",
-                                  );
-                                } else {
-                                  if (snapshot.data?.flagpoint == "0") {
-                                    widget.goToRedeemPointHome!();
-                                  } else {
-                                    widget.onTapWebviewRedeemHome!(
-                                        snapshot.data?.linkredem ?? "");
-                                  }
-                                }
-                              },
-                              child: Column(
+                        child: GestureDetector(
+                          onTap: () {
+                            if (snapshot.data?.point == "0") {
+                              System.data.showmodal(
+                                System.data.strings?.pointtidakcukup,
+                                "Announcement",
+                              );
+                            } else {
+                              if (snapshot.data?.flagpoint == "0") {
+                                widget.goToRedeemPointHome!();
+                              } else {
+                                widget.onTapWebviewRedeemHome!(
+                                    snapshot.data?.linkredem ?? "");
+                              }
+                            }
+                          },
+                          child: Column(
+                            children: [
+                              Text(
+                                "Points",
+                                style: TextStyle(
+                                  color: System.data.color!.greyColor,
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "Points",
-                                    style: TextStyle(
-                                      color: System.data.color!.greyColor,
+                                  Container(
+                                    color: Colors.transparent,
+                                    padding: const EdgeInsets.only(bottom: 5),
+                                    child: const Icon(
+                                      FontAwesomeIcons.coins,
+                                      size: 20,
+                                      color: Colors.amber,
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        color: Colors.transparent,
-                                        padding:
-                                            const EdgeInsets.only(bottom: 5),
-                                        child: const Icon(
-                                          FontAwesomeIcons.coins,
-                                          size: 20,
-                                          color: Colors.amber,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        snapshot.data?.point ?? "",
-                                        style: TextStyle(
-                                          color: System.data.color!.greyColor,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  Text(
+                                    snapshot.data?.point ?? "",
+                                    style: TextStyle(
+                                      color: System.data.color!.greyColor,
+                                      fontWeight: FontWeight.normal,
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
+                            ],
                           ),
+                        ),
+                      ),
                       // menuPoint(
                       //   "Points",
                       //   snapshot.data?.point,
@@ -885,7 +884,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ],
               ),
-              
+
               // child: Column(
               //   children: [
               //     menuPoint(
