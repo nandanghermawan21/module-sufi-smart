@@ -16,10 +16,6 @@ import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/route.dart';
 import 'package:uni_links/uni_links.dart';
-<<<<<<< HEAD
-=======
-import 'route.dart';
->>>>>>> 5ac9197dc26af66225e029d695d0242e7de038b2
 
 Data data = Data();
 Future<void> main() async {
@@ -244,19 +240,11 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 }
 
-<<<<<<< HEAD
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
       ..badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
-=======
-class MyHttpOverrides extends HttpOverrides{
-  @override
-  HttpClient createHttpClient(SecurityContext? context){
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
->>>>>>> 5ac9197dc26af66225e029d695d0242e7de038b2
   }
 }

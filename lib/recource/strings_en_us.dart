@@ -8,7 +8,7 @@ class StringsEnUs implements Strings {
   String get account => "Account";
 
   @override
-  String get appName => "Sufi Smart";
+  String get appName => "Sufi Smart Train";
 
   @override
   String get area => "Area";
@@ -162,7 +162,7 @@ class StringsEnUs implements Strings {
   @override
   String get version => "Version : 1.4.2";
 
-  @override  
+  @override
   String get versiapk => "1.4.2";
 
   @override
@@ -196,182 +196,184 @@ class StringsEnUs implements Strings {
   @override
   String get resend => "Resend";
 
-  @override  
+  @override
   String get startFrom => "Start From";
 
-  @override  
+  @override
   String get producttype => "Product Type";
 
-  @override  
-  String get noteProduct => "* Prices are subject to change at any time without prior notice";
+  @override
+  String get noteProduct =>
+      "* Prices are subject to change at any time without prior notice";
 
   @override
   String get description => "Description";
 
-  @override  
+  @override
   get descriptionLink => "Please visit https://www.sfi.co.id";
 
-  @override  
+  @override
   String get hitungCicilan => "Calculate Installments for this Product";
 
-  @override  
+  @override
   String get infoOtrJakarta => "Price List Above Using OTR Jakarta";
 
-  @override  
+  @override
   String get hitungcreditSimulation => "Credit Simulation & Apply";
 
-  @override  
+  @override
   String get cityBranch => "Choose City";
 
-  @override  
+  @override
   String get branchSfi => "Branch of Suzuki Finance";
 
-  @override  
+  @override
   String get viewLocation => "View Location";
 
-  @override  
+  @override
   String get forgotPassword => "Forgot Password";
 
-  @override  
-  String get fillForgotPassword => "if you want to recover your account, please fill in a valid email that has been registered in SUFI SMART application";
+  @override
+  String get fillForgotPassword =>
+      "if you want to recover your account, please fill in a valid email that has been registered in SUFI SMART application";
 
   @override
-  
   String get faq => "FAQ";
 
-  @override  
+  @override
   String get settingPassword => "Change Password";
 
-  @override  
+  @override
   String get updateProfile => "Update Profile";
 
-  @override  
+  @override
   String get passwordBaru => "New Password";
 
-  @override  
+  @override
   String get passwordConfirm => "Confirm Password";
 
-  @override  
+  @override
   String get passwordLama => "Old Password";
 
-  @override  
+  @override
   String get update => "Update";
 
-  @override  
-  String get validatePassNewAndConfirm => "New password and confirm password are not the same";
+  @override
+  String get validatePassNewAndConfirm =>
+      "New password and confirm password are not the same";
 
-  @override  
+  @override
   String get ajukanPembiayaan => "My vehicle application";
 
-  @override  
-  String get descProfile => "Thank you for joining and being a part of Suzuki finance and the Sufi smart application";
+  @override
+  String get descProfile =>
+      "Thank you for joining and being a part of Suzuki finance and the Sufi smart application";
 
-  @override  
+  @override
   String get chooseJob => "Choose Job";
 
-  @override  
+  @override
   String get chooseGender => "Choose Gender";
 
   @override
-  
   String get birthdate => "Birthdate";
 
-  @override  
+  @override
   String get gender => "Gender";
 
-  @override  
+  @override
   String get job => "Job";
 
-  @override    
-  String get infoNoKontrak => "fill in the information on your ID card and contract number if you are a suzuki finance customer";
+  @override
+  String get infoNoKontrak =>
+      "fill in the information on your ID card and contract number if you are a suzuki finance customer";
 
-  @override  
+  @override
   String get nomorKontrak1 => "Contract ID 1";
 
-  @override  
+  @override
   String get nomorKontrak2 => "Contract ID 2";
 
-  @override  
+  @override
   String get nomorKontrak3 => "Contract ID 3";
 
-  @override  
+  @override
   String get noKtp => "ID Card";
 
   @override
-  
-  String get infoLogout => "are you sure you want to log out \nfrom this account ?";
+  String get infoLogout =>
+      "are you sure you want to log out \nfrom this account ?";
 
-  @override  
+  @override
   String get applykendaraan => "Let's Order Suzuki Vehicles";
 
-  @override  
+  @override
   String get apply => "Apply";
 
-  @override  
+  @override
   String get doesNotHaveAcc => 'Does not have accounts yet ? ';
 
-  @override  
+  @override
   String get whatsapp => "Whatsapp";
 
-  @override  
+  @override
   String get seepromo => "See the promo";
 
-  @override  
+  @override
   String get welcomeUser => "Hi Buddy Sufi, ";
 
-  @override  
+  @override
   String get silahkanloginterlebihdulu => "Please login to open this menu";
 
-  @override  
+  @override
   String? get historyPoint => "History transaction Point";
 
-  @override  
+  @override
   String? get pointtidakcukup => "sorry your points are not enough";
 
   @override
-  
   String? get alamat => "Address";
 
-  @override  
+  @override
   String? get inputalamat => "Enter Phone Number";
 
-  @override  
-  String? get tujuanalamat => "*Make sure the phone number you entered is correct so that you can be contacted after redeeming your points";
+  @override
+  String? get tujuanalamat =>
+      "*Make sure the phone number you entered is correct so that you can be contacted after redeeming your points";
 
   @override
-  
   String? get note => "Note";
 
-  @override  
+  @override
   String get validateRedeem => "is the data you entered is correct ?";
 
-  @override  
+  @override
   String? get notepointtidakcukup => "not enough points";
 
-  @override  
+  @override
   String get passtoshort => "minimum 6 characters";
 
-  @override  
-  String get websitekami => "Our Website";  
+  @override
+  String get websitekami => "Our Website";
 
-  @override  
-  String get latestversion => "This application is already available for the latest version, please update on playstore or appstore";
+  @override
+  String get latestversion =>
+      "This application is already available for the latest version, please update on playstore or appstore";
 
-  @override  
+  @override
   String get instagram => "Instagram";
 
-  @override  
+  @override
   String get facebook => "Facebook";
 
-  @override  
+  @override
   String get twitter => "Twitter";
 
-  @override  
+  @override
   String get komunitas => "Community";
   @override
-  
   String get submit => "Submitr";
 
-  @override  
-  String get save => "Save";  
+  @override
+  String get save => "Save";
 }

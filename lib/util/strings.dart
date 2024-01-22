@@ -1,6 +1,6 @@
 abstract class Strings {
   String get locale => "ID-id";
-  String get appName => "Sufi Smart";
+  String get appName => "Sufi Smart Train";
   String get version => "Versi : 1.4.2";
   String get versiapk => "1.4.2";
   String get home => "Beranda";
@@ -72,7 +72,8 @@ abstract class Strings {
 
   String get producttype => "Tipe Produk";
 
-  String get noteProduct => "* Harga sewaktu-waktu dapat berubah tanpa pemberitahuan terlebih dahulu";
+  String get noteProduct =>
+      "* Harga sewaktu-waktu dapat berubah tanpa pemberitahuan terlebih dahulu";
 
   String get description => "Deskripsi";
 
@@ -92,7 +93,8 @@ abstract class Strings {
 
   String get forgotPassword => "Lupa Password";
 
-  String get fillForgotPassword => "jika ingin memulihkan akun anda, silahkan isi email valid yang sudah terdaftar dalam aplikasi SUFI SMART";
+  String get fillForgotPassword =>
+      "jika ingin memulihkan akun anda, silahkan isi email valid yang sudah terdaftar dalam aplikasi SUFI SMART";
 
   String get faq => "FAQ";
 
@@ -108,11 +110,13 @@ abstract class Strings {
 
   String get update => "Update";
 
-  String get validatePassNewAndConfirm => "kata sandi Baru dan konfirmasi kata sandi tidak sama";
+  String get validatePassNewAndConfirm =>
+      "kata sandi Baru dan konfirmasi kata sandi tidak sama";
 
   String get ajukanPembiayaan => "Pengajuan kendaraan saya";
 
-  String get descProfile => "Terimakasih sudah bergabung dan menjadi bagian dari Suzuki finance dan aplikasi Sufi smart";
+  String get descProfile =>
+      "Terimakasih sudah bergabung dan menjadi bagian dari Suzuki finance dan aplikasi Sufi smart";
 
   String get chooseJob => "Pilih Pekerjaan";
 
@@ -124,7 +128,8 @@ abstract class Strings {
 
   String get job => "Pekerjaan";
 
-  String get infoNoKontrak => "isi informasi no KTP dan nomor kontrak jika anda nasabah suzuki finance";
+  String get infoNoKontrak =>
+      "isi informasi no KTP dan nomor kontrak jika anda nasabah suzuki finance";
 
   String get nomorKontrak1 => "Nomor Kontrak 1";
 
@@ -148,17 +153,19 @@ abstract class Strings {
 
   String get welcomeUser => "Hai Sobat Sufi, ";
 
-  String get silahkanloginterlebihdulu => "Silahkan login untuk membuka menu ini";
+  String get silahkanloginterlebihdulu =>
+      "Silahkan login untuk membuka menu ini";
 
   String? get historyPoint => "Riwayat Transaksi Point";
 
   String? get pointtidakcukup => "maaf poin anda tidak mencukupi";
-  
+
   String? get alamat => "Alamat";
 
   String? get inputalamat => "Masukan Nomor telepon";
 
-  String? get tujuanalamat => "*Pastikan nomor telepon yang anda masukan benar agar dapat dihubungi setelah menukarkan point";
+  String? get tujuanalamat =>
+      "*Pastikan nomor telepon yang anda masukan benar agar dapat dihubungi setelah menukarkan point";
 
   String? get note => "Note";
 
@@ -168,9 +175,10 @@ abstract class Strings {
 
   String get passtoshort => "minimal 6 karakter";
 
-  String get websitekami => "Website Kami"; 
+  String get websitekami => "Website Kami";
 
-  String get latestversion => "Aplikasi ini sudah tersedia untuk versi terbaru silahkan untuk update di playstore atau appstore";
+  String get latestversion =>
+      "Aplikasi ini sudah tersedia untuk versi terbaru silahkan untuk update di playstore atau appstore";
 
   String get instagram => "Instagram";
 
@@ -183,5 +191,4 @@ abstract class Strings {
   String get submit => "Submit";
 
   String get save => "Simpan";
-  
 }
