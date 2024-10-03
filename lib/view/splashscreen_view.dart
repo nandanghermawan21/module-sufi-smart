@@ -71,8 +71,9 @@ class _SplashScreenViewState extends State<SplashScreenView> {
       color: Colors.transparent,
       height: 50,
       child: Center(
-        child: Image.asset(
-          "assets/ojk1.png",
+        child: Image.network(
+          //"assets/ojk1.png",
+          "https://access.sfi.co.id/crm_system/assets/img/splashscreen.png",
           height: 150.0,
           width: 250.0,
         ),

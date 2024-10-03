@@ -17,7 +17,27 @@ import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Build.VERSION_CODES
 
+import android.net.Uri
+import android.os.Bundle
+import android.webkit.WebView
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
+import android.webkit.GeolocationPermissions
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
+import android.provider.MediaStore
+import android.os.Environment
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 class MainActivity: FlutterActivity() {
+    private var mUploadMessage: ValueCallback<Array<Uri>>? = null
+    private val FILECHOOSER_RESULTCODE = 1
+
     private val CHANNEL = "samples.flutter.dev/battery"
 
     lateinit var notificationManager: NotificationManager
@@ -28,6 +48,61 @@ class MainActivity: FlutterActivity() {
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+
+        // Tambahkan WebChromeClient untuk menangani permintaan lokasi
+        val webView = WebView(this)
+        webView.settings.javaScriptEnabled = true
+        webView.settings.mediaPlaybackRequiresUserGesture = false
+        webView.settings.setGeolocationEnabled(true)
+        
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onGeolocationPermissionsShowPrompt(origin: String?, callback: GeolocationPermissions.Callback?) {
+                // Beri akses lokasi
+                callback?.invoke(origin, true, false)
+            }
+
+            override fun onShowFileChooser(
+                webView: WebView,
+                filePathCallback: ValueCallback<Array<Uri>>,
+                fileChooserParams: FileChooserParams
+            ): Boolean {
+                println("onShowFileChooser called")
+                mUploadMessage?.onReceiveValue(null)
+                mUploadMessage = filePathCallback
+
+                var takePictureIntent: Intent? = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                if (takePictureIntent?.resolveActivity(packageManager) != null) {
+                    val photoFile: File? = try {
+                        createImageFile()
+                    } catch (ex: IOException) {
+                        null
+                    }
+                    if (photoFile != null) {
+                        val photoURI: Uri = FileProvider.getUriForFile(
+                            this@MainActivity,
+                            "suzuki.sufi.smart.fileprovider",
+                            photoFile
+                        )
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    }
+                }
+
+                val contentSelectionIntent = Intent(Intent.ACTION_GET_CONTENT)
+                contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE)
+                contentSelectionIntent.type = "*/*"
+
+                val intentArray: Array<Intent?> = takePictureIntent?.let { arrayOf(it) } ?: arrayOfNulls(0)
+
+                val chooserIntent = Intent(Intent.ACTION_CHOOSER)
+                chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent)
+                chooserIntent.putExtra(Intent.EXTRA_TITLE, "Select File")
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray)
+
+                startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE)
+                return true
+            }
+        }
+        
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
             // Note: this method is invoked on the main thread.
             call, result ->
@@ -66,5 +141,31 @@ class MainActivity: FlutterActivity() {
         }
 
         return batteryLevel
+    }
+
+    private fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == FILECHOOSER_RESULTCODE) {
+            val results = if (resultCode == RESULT_OK) {
+                data?.data?.let { arrayOf(it) } ?: mUploadMessage?.let { 
+                    it.onReceiveValue(null) 
+                    null
+                }
+            } else {
+                null
+            }
+            mUploadMessage?.onReceiveValue(results)
+            mUploadMessage = null
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sufismart/component/basic_component.dart';
 import 'package:sufismart/util/mode_util.dart';
 import 'package:sufismart/util/system.dart';
 import 'package:sufismart/view_model/web_view_model.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_webview_pro/webview_flutter.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewSufi extends StatefulWidget {
   final String? urlweb;
@@ -23,11 +27,39 @@ class _WebViewState extends State<WebViewSufi> {
   WebViewModel webViewModel = WebViewModel();
   bool isLoading = true;
   late WebViewController _controllerGlobal;
+  late bool serviceEnabled;
+  late LocationPermission permission;
+
+  Future<void> checkLocationService() async {
+    // Cek apakah layanan lokasi aktif
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Minta pengguna untuk mengaktifkan layanan lokasi
+      await Geolocator.openLocationSettings();
+    }
+
+    // Cek apakah izin lokasi sudah diberikan
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        // Izin lokasi ditolak permanen
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.denied) {
+      // Izin belum diberikan, minta izin lokasi lagi
+      await Geolocator.requestPermission();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    checkLocationService(); // Pastikan layanan lokasi aktif
     // Enable virtual display.
-    // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   @override
@@ -122,6 +154,7 @@ class _WebViewState extends State<WebViewSufi> {
               onWebViewCreated: (WebViewController webViewController) {
                 _controllerGlobal = webViewController;
               },
+              geolocationEnabled: true, // Aktifkan geolocation
               javascriptChannels: {
                 JavascriptChannel(
                     name: 'backSuccess',

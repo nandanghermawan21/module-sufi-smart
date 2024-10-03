@@ -9,11 +9,12 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>   
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />  
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
        
     <application android:name="${applicationName}"
      android:icon="@mipmap/launcher_icon" android:label="Sufi Smart" 
      android:supportsRtl="true"
-    android:usesCleartextTraffic="true" >
+     android:usesCleartextTraffic="true" >
         <service android:name=".BackNotife" android:enabled="true" android:exported="true"></service>
         <service android:name=".MyIntentService" android:exported="false" />
         
@@ -60,6 +61,16 @@
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
         -->
         <meta-data android:name="flutterEmbedding" android:value="2" />
+
+        <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="suzuki.sufi.smart.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
